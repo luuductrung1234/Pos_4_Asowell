@@ -80,7 +80,7 @@
                    DragEnter="imgTable_DragEnter"
                    DragLeave="imgTable_DragLeave"
                    Drop="imgTable_Drop" />
-
+            
         </Grid>
 
     </Grid>

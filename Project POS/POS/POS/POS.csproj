@@ -192,6 +192,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Icon\Restaurant_52px.png" />
     <Resource Include="Icon\Vector-Iluustartor.png" />
     <Resource Include="Icon\icons8_Unpin_32px.png" />
     <Resource Include="Icon\icons8_Pin_32px_9.png" />
