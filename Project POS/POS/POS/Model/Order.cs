@@ -11,12 +11,17 @@ namespace POS.Model
     { 
         public string Name { get; set; }
         public string Status { get; set; }
+        public int Price { get; set; }
         public int Count { get; set; }
-
-        public static explicit operator Order(string v)
+        public int TotalPrice
         {
-            throw new NotImplementedException();
+            get
+            {
+                return Price * Count;
+            }
         }
+
+     
     }
     public class OrderData
     {

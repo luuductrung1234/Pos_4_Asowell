@@ -40,9 +40,16 @@ namespace POS
                 Order o = new Order();
                 Item it = (Item)lvCategory.SelectedItem;
                 o.Name = it.Name;
+                o.Price = it.Price;
                 o.Count = 1;
                 OrderData.Orderlist.Add(o);
+
             }
+            lvCategory.UnselectAll();
+            UcOder u = new UcOder();
+            
         }
+
+        
     }
 }
