@@ -32,6 +32,7 @@ Phần mềm được viết trên nền tảng C# .NET với giao diện đồ 
 
 # Software's procession:
   - **Database and WebService**:
+    - [] : connect to database (local/cloud azure) with ADO.NET Entity Framework
 
 
   - **LoginWindow**:
