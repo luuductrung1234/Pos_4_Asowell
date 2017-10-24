@@ -12,7 +12,7 @@ namespace POS.Model
     public class Item
     {
         private string _Name;
-
+        public int Price { get; set; }
         private BitmapImage _ImageData { get; set; }
         public string Name
         {
@@ -35,13 +35,13 @@ namespace POS.Model
     {
         public static Item[] ilist = new Item[]
           {
-                new Item {Name="Cocacola", ImageData=LoadImage("h1.jpg") },
-                new Item {Name="Capuchino", ImageData=LoadImage("h2.jpg") },
-                new Item {Name="Water", ImageData=LoadImage("h3.jpg") },
-                new Item {Name="Heniken Beer", ImageData=LoadImage("h4.jpg") },
-                new Item {Name="Tiger Beer", ImageData=LoadImage("h5.jpg") },
-                new Item {Name="Cup beer", ImageData=LoadImage("h6.jpg") },
-                new Item {Name="Tiger Beer", ImageData=LoadImage("h5.jpg") },
+                new Item {Name="Cocacola",Price=100000, ImageData=LoadImage("h2.jpg") },
+                new Item {Name="CapuchinoP",Price=150000, ImageData=LoadImage("h2.jpg") },
+                new Item {Name="Water",Price=100000, ImageData=LoadImage("h3.jpg") },
+                new Item {Name="Heniken Beer",Price=200000, ImageData=LoadImage("h4.jpg") },
+                new Item {Name="Tiger Beer",Price=580000, ImageData=LoadImage("h5.jpg") },
+                new Item {Name="Cup beer",Price=33000, ImageData=LoadImage("h6.jpg") },
+                new Item {Name="Tiger Beer",Price=690000, ImageData=LoadImage("h5.jpg") },
           };
         public static BitmapImage LoadImage(string filename)
         {
