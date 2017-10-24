@@ -1,0 +1,83 @@
+﻿<Page x:Class="POS.Table"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:POS"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Background="{DynamicResource MaterialDesignPaper}"
+      mc:Ignorable="d"
+      Title="Table"
+      Height="660"
+      Width="1366">
+    <Page.Resources>
+        <ContextMenu x:Key="cmbtntable">
+            <MenuItem x:Name="moveTable" Header="Move" Click="moveTable_Click"/>
+            <Separator />
+            <MenuItem x:Name="removeTable" Header="Remove" Click="removeTable_Click"/>
+        </ContextMenu>
+    </Page.Resources>
+
+    <Grid x:Name="grTable"
+          MouseMove="grTable_MouseMove"
+          Width="1366"
+          Height="660">
+        <Grid Width="1366"
+              Height="660">
+            <Button x:Name="btnTableBrowseImage"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Width="56"
+                    Panel.ZIndex="20"
+                    Height="35"
+                    ToolTip="Browse Image"
+                    Click="btnBrowseImage_Click">
+                <materialDesign:PackIcon Kind="Folder"
+                                         Width="20"
+                                         Height="20"
+                                         Margin="0" />
+            </Button>
+            <Button x:Name="btnTableButtonAdd"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Width="56"
+                    Panel.ZIndex="20"
+                    Height="36"
+                    ToolTip="Add Table"
+                    Click="btnTableButtonAdd_Click">
+                <materialDesign:PackIcon Kind="Plus"
+                                         Width="20"
+                                         Height="20"
+                                         Margin="0" />
+            </Button>
+            <Border BorderBrush="Black"
+                    BorderThickness="1"
+                    HorizontalAlignment="Left"
+                    Height="38"
+                    Margin="1185,612,0,0"
+                    VerticalAlignment="Top"
+                    Width="181"
+                    Panel.ZIndex="20">
+                <TextBlock x:Name="txbPointerPosition"
+                           TextWrapping="Wrap"
+                           Text="111:111"
+                           Foreground="White"
+                           FontSize="14"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+            <Image x:Name="imgTable"
+                   Source="Icon\icons8_Table_52px.png"
+                   Width="1366"
+                   Height="660"
+                   Stretch="Fill"
+                   AllowDrop="True"
+                   Panel.ZIndex="0"
+                   DragEnter="imgTable_DragEnter"
+                   DragLeave="imgTable_DragLeave"
+                   Drop="imgTable_Drop" />
+
+        </Grid>
+
+    </Grid>
+</Page>

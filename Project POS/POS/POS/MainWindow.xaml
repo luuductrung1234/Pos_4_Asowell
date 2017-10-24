@@ -1,0 +1,43 @@
+﻿<Window x:Class="POS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Background="{DynamicResource MaterialDesignPaper}"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="768" Width="1366">
+
+    <Grid Margin="0,0,0,0.4">
+        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center" Background="Black" Height="Auto" >
+            <Button x:Name="bntDash" Content="Dash" Height="42" Width="98" Click="bntDash_Click" />
+            <Button x:Name="bntTable"  Height="42" Width="98" Click="bntTable_Click"     >
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Icon\icons8_Table_52px.png" Height="30" Width="32" />
+                    <TextBlock Text="Table"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="bntEntry"  Height="42" Width="100" Click="bntEntry_Click" >
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Icon\icons8_Restaurant_50px.png" Height="30" Width="32" />
+                    <TextBlock Text="Entry"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="bntInfo"  Height="42" Width="98" Click="bntDash_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Icon\icons8_Info_52px.png" Height="30" Width="32" />
+                    <TextBlock Text="Info"/>
+                </StackPanel>
+            </Button>
+
+
+        </StackPanel>
+        <Grid VerticalAlignment="Bottom">
+            <Frame x:Name="myFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
+    </Grid>
+
+</Window>
