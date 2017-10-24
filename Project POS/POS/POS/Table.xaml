@@ -80,8 +80,6 @@
                    DragEnter="imgTable_DragEnter"
                    DragLeave="imgTable_DragLeave"
                    Drop="imgTable_Drop" />
-
-<<<<<<< HEAD
             <!--Rectangle x:Name="rec"
                        Height="60"
                        Width="120"
@@ -89,25 +87,23 @@
                        Fill="Red"
                        Opacity="0.65">
                 
-            </Rectangle>-->
-=======
-            <materialDesign:PackIcon Kind="Pin"
+            </Rectangle>
+                <materialDesign:PackIcon Kind="Pin"
                                      Panel.ZIndex="30"
                                      Width="50"
                                      Height="50"
                                      Margin="565,134,0,0"
                                      RenderTransformOrigin="0.5,0.5">
-                <materialDesign:PackIcon.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform />
-                        <SkewTransform />
-                        <RotateTransform Angle="90" />
-                        <TranslateTransform />
-                    </TransformGroup>
-                </materialDesign:PackIcon.RenderTransform>
-            </materialDesign:PackIcon>
->>>>>>> 64201e4091db7dc1bf0e955c00ed1345d0604c44
-
+                    <materialDesign:PackIcon.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform />
+                            <SkewTransform />
+                            <RotateTransform Angle="90" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </materialDesign:PackIcon.RenderTransform>
+                </materialDesign:PackIcon>
+            -->
         </Grid>
 
     </Grid>
