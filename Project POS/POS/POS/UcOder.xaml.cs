@@ -24,7 +24,21 @@ namespace POS
         public UcOder()
         {
             InitializeComponent();
+            loadDataTotal();
             lvData.ItemsSource = OrderData.Orderlist;
+
+        }
+
+        public  void loadDataTotal()
+        {
+
+            int Total = 0;
+            foreach (var item in OrderData.Orderlist)
+            {
+                Total = Total + item.TotalPrice;
+            }
+            txtTotal.Text = Total.ToString()+" VND";
+
         }
 
         private void bntDelete_Click(object sender, RoutedEventArgs e)
@@ -42,6 +56,7 @@ namespace POS
             int index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
             
             OrderData.Orderlist.RemoveAt(index);
+            loadDataTotal();
 
         }
 
@@ -49,6 +64,11 @@ namespace POS
         {
             ViewBill v = new ViewBill();
             v.Show();
+        }
+
+        private void bntPay_Click(object sender, RoutedEventArgs e)
+        {
+            loadDataTotal();
         }
     }
 }
