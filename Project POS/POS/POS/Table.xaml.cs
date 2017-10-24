@@ -158,6 +158,7 @@ namespace POS
                 buttonTableNumber++;
 
                 currentPosition = e.GetPosition(grTable);
+
                 Rectangle rec = new Rectangle();
                 if (buttonTableNumber < 10)
                 {
@@ -167,6 +168,7 @@ namespace POS
                 {
                     rec.Name = "table" + buttonTableNumber.ToString();
                 }
+
                 rec.HorizontalAlignment = HorizontalAlignment.Left;
                 rec.VerticalAlignment = VerticalAlignment.Top;
                 Thickness m = rec.Margin;
