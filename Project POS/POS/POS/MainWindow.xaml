@@ -22,7 +22,7 @@
             </Button>
             <Button x:Name="bntEntry"  Height="42" Width="100" Click="bntEntry_Click" >
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="Icon\icons8_Restaurant_50px.png" Height="30" Width="32" />
+                    <Image Source="Icon\Restaurant_52px.png" Height="30" Width="32" />
                     <TextBlock Text="Entry"/>
                 </StackPanel>
             </Button>

@@ -17,10 +17,10 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <Uc:UcMenu  RenderTransformOrigin="0.491,0.906" Margin="0,84,10.2,10" Width="Auto"/>
+            <Uc:UcMenu  RenderTransformOrigin="0.491,0.906" Margin="0,127,10.2,34" Width="Auto"/>
         </Grid>
         <Grid Grid.ColumnSpan="2" Margin="911,130,0.4,0">
-            <Uc:UcOder Margin="6,0,10,0" Height="519" VerticalAlignment="Top"/>
+            <Uc:UcOder Margin="6,0,0,0" Height="519" VerticalAlignment="Top"/>
         </Grid>
 
 

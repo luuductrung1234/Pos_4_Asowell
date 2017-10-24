@@ -6,7 +6,7 @@
              Background="DarkGray"
              xmlns:local="clr-namespace:POS"
              mc:Ignorable="d" 
-             d:DesignHeight="500" Width="500"
+             d:DesignHeight="500" Width="450"
             >
     <Grid>
         <Grid.RowDefinitions>
@@ -14,17 +14,22 @@
             <RowDefinition Height="3*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
-        <Grid VerticalAlignment="Top" Grid.Row="0">
+        <Grid VerticalAlignment="Top" Margin="0,0,0,0" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-            <StackPanel Orientation="Vertical">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
+                </Grid.Resources>
+                <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Day" Foreground="Black" />
-                    <TextBox x:Name="txtDay" Background="White" Width="100" Margin="45,0,0,0"/>
-                </StackPanel>
+                        <TextBlock x:Name="txtDay"  Width="100" Margin="69,0,0,0"/>
+                    </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Customers" Foreground="Black" Margin="2"/>
                     <ComboBox x:Name="cboCustomers" Background="White" Width="100" Margin="5,0,0,0"/>
@@ -50,19 +55,37 @@
             <ListView Name="lvData" VerticalAlignment="Top" Background="#FFED5C5C">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Item" Width="120" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Count" Width="100">
+                        <GridViewColumn Header="Item" Width="90" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Amt" Width="70">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="txtCoutn" Foreground="Black" Width="50" Background="White" Text="{Binding Count}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Price" Width="100" DisplayMemberBinding="{Binding Price}"/>
+                        <GridViewColumn Header="Price" Width="90" DisplayMemberBinding="{Binding Price}"/>
                         <GridViewColumn Header="Edit" Width="100">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="bntDelete" Content="x" Width="40" Click="bntDelete_Click"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="bntDelete" Content="x" Width="40" Click="bntDelete_Click"/>
+                                        <Button x:Name="bntEdit" Content="x" Width="40" Click="bntDelete_Click"/>
+                                    </StackPanel>
+                                    
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Status" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ComboBox x:Name="cboStatus" Background="White" Foreground="Black" IsReadOnly="True">
+                                            <TabItem Content="Appetizer"/>
+                                            <TabItem Content="bbbr"/>
+                                            <TabItem Content="cccr"/>
+                                        </ComboBox>
+                                    </StackPanel>
+
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -71,9 +94,9 @@
             </ListView>
         </Grid>
         <Grid Grid.Row="2">
-            <Button x:Name="bntPay" Content="Pay" HorizontalAlignment="Left" Margin="87,13,0,0" VerticalAlignment="Top" Width="75" Click="bntPay_Click"/>
-            <Button x:Name="bntPrint" Content="Print" HorizontalAlignment="Left" Margin="216,13,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button x:Name="bntDelete" Content="Delete" HorizontalAlignment="Left" Margin="345,13,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="2.162,0.464"/>
+            <Button x:Name="bntPay" Content="Pay" HorizontalAlignment="Left" Margin="55,13,0,0" VerticalAlignment="Top" Width="75" Click="bntPay_Click"/>
+            <Button x:Name="bntPrint" Content="Print" HorizontalAlignment="Left" Margin="184,13,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="bntDelete" Content="Delete" HorizontalAlignment="Left" Margin="315,13,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="2.162,0.464"/>
 
         </Grid>
     </Grid>
