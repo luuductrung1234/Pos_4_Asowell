@@ -12,9 +12,13 @@
       Width="1366">
     <Page.Resources>
         <ContextMenu x:Key="cmbtntable">
-            <MenuItem x:Name="moveTable" Header="Move" Click="moveTable_Click"/>
+            <MenuItem x:Name="moveTable"
+                      Header="Move"
+                      Click="moveTable_Click" />
             <Separator />
-            <MenuItem x:Name="removeTable" Header="Remove" Click="removeTable_Click"/>
+            <MenuItem x:Name="removeTable"
+                      Header="Remove"
+                      Click="removeTable_Click" />
         </ContextMenu>
     </Page.Resources>
 
@@ -76,6 +80,15 @@
                    DragEnter="imgTable_DragEnter"
                    DragLeave="imgTable_DragLeave"
                    Drop="imgTable_Drop" />
+
+            <!--Rectangle x:Name="rec"
+                       Height="60"
+                       Width="120"
+                       Panel.ZIndex="30"
+                       Fill="Red"
+                       Opacity="0.65">
+                
+            </Rectangle>-->
 
         </Grid>
 

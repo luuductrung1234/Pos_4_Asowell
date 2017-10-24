@@ -193,6 +193,8 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="Icon\Vector-Iluustartor.png" />
+    <Resource Include="Icon\icons8_Unpin_32px.png" />
+    <Resource Include="Icon\icons8_Pin_32px_9.png" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />
