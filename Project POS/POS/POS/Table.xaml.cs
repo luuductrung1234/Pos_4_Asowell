@@ -110,7 +110,7 @@ namespace POS
             }
             catch (Exception ex)
             {
-                MessageBoxResult mess = MessageBox.Show("Warning! Something went wrong!", "Table Image File is not found! Please try to add new Table Image", MessageBoxButton.YesNo);
+                MessageBoxResult mess = MessageBox.Show("Table Image File: \"" + fileName + "\" is not found! Do you want to add new Table Image?", "Warning! Something went wrong!", MessageBoxButton.YesNo);
                 if (mess == MessageBoxResult.Yes)
                 {
                     string browseFileName = "";
