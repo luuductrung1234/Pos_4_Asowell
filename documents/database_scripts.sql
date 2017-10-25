@@ -53,6 +53,7 @@ create table WareHouse(
 create table Product(
 	product_id varchar(10)				constraint pk_productid primary key,
 	name nvarchar(50) not null,
+	imageLink varchar(500) null,
 	info nvarchar(100) null,
 	price money not null,
 	is_todrink tinyint not null			constraint chk_isdrink_or_eat check (is_todrink = 1 or is_todrink = 0 or is_todrink = 2),     -- 1: thức ăn, 0: thức uống, 2: những thứ khác
@@ -103,7 +104,8 @@ create table OrderNoteDetails(
 	product_id varchar(10) not null		constraint fk_foodinmenu foreign key references Product(product_id),
 										constraint pk_OrderNotedetails primary key (ordernote_id, product_id),
 	quan int not null					constraint chk_OrderNote_quantity check(quan >= 0),
-	note varchar(500) null
+	note varchar(500) null,
+	stats varchar(100) null
 )
 go
 -- END INCOME

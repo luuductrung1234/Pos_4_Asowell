@@ -6,7 +6,7 @@
              Background="DarkGray"
              xmlns:local="clr-namespace:POS"
              mc:Ignorable="d" 
-             d:DesignHeight="500" Width="450"
+             d:DesignHeight="500" Width="460"
             >
     <Grid>
         <Grid.RowDefinitions>
@@ -22,13 +22,13 @@
             <Grid Grid.Column="0">
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
-                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="FontSize" Value="14"/>
                     </Style>
                 </Grid.Resources>
                 <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Day" Foreground="Black" />
-                        <TextBlock x:Name="txtDay"  Width="100" Margin="69,0,0,0"/>
+                        <TextBlock x:Name="txtDay"  Width="150" Margin="50,0,0,0"/>
                     </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Customers" Foreground="Black" Margin="2"/>
@@ -52,38 +52,38 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <ListView Name="lvData" VerticalAlignment="Top" Background="#FFED5C5C">
+            <ListView Name="lvData" Width="460" VerticalAlignment="Top" Background="#FFED5C5C">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Item" Width="90" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Amt" Width="70">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox x:Name="txtCoutn" Foreground="Black" Width="50" Background="White" Text="{Binding Count}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Price" Width="90" DisplayMemberBinding="{Binding Price}"/>
-                        <GridViewColumn Header="Edit" Width="100">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="bntDelete" Content="x" Width="40" Click="bntDelete_Click"/>
-                                        <Button x:Name="bntEdit" Content="x" Width="40" Click="bntDelete_Click"/>
-                                    </StackPanel>
-                                    
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        <GridViewColumn Header="Amt" Width="70" DisplayMemberBinding="{Binding Count}"/>
+                        <GridViewColumn Header="Price" Width="90" DisplayMemberBinding="{Binding TotalPrice}"/>
                         <GridViewColumn Header="Status" Width="100">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <ComboBox x:Name="cboStatus" Background="White" Foreground="Black" IsReadOnly="True">
-                                            <TabItem Content="Appetizer"/>
-                                            <TabItem Content="bbbr"/>
-                                            <TabItem Content="cccr"/>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <ComboBox x:Name="cboStatus" Background="White" Width="80" Foreground="Black" IsReadOnly="True">
+                                            <ComboBoxItem Content="Startor"/>
+                                            <ComboBoxItem Content="Maincose"/>
+                                            <ComboBoxItem Content="Dessert"/>
+                                            <ComboBoxItem Content="Drink"/>
                                         </ComboBox>
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Edit" Width="90">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="bntDelete" Content="x" BorderBrush="DarkGray" Background="DarkGray" Width="40" Click="bntDelete_Click" Margin="0 0 0 0"/>
+                                        <Button x:Name="bntEdit" Width="45" BorderBrush="DarkGray" Background="DarkGray" Margin="0 0 0 0" Click="bntEdit_Click">
+                                            <StackPanel HorizontalAlignment="Left">
+                                                <Image Source="Icon\Edit_52px.png" Margin="0,0,0,0" Height="15" Width="13"/>
+                                            </StackPanel>
+                                           
+                                        </Button>
                                     </StackPanel>
 
                                 </DataTemplate>

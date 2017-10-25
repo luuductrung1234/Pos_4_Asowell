@@ -10,8 +10,8 @@ namespace POS.Model
     {
         public int TableNumber { get; set; }
         public int ChairAmount { get; set; }
-        public Order TableOrder { get; set; }
-        public List<OrderProduct> TableOrderProduct { get; set; }   // OrderNote inside OrderProduct
+        public OrderNote TableOrder { get; set; }
+        public List<OrderNoteDetails> TableOrderProduct { get; set; }   // OrderNote inside OrderProduct
         public Employee EmpRespond { get; set; }
         public Customer CusOwner { get; set; }
         

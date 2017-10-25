@@ -85,14 +85,16 @@
     <Compile Include="Entry.xaml.cs">
       <DependentUpon>Entry.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InputNote.xaml.cs">
+      <DependentUpon>InputNote.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Ingredient.cs" />
-    <Compile Include="Model\Item.cs" />
-    <Compile Include="Model\Order.cs" />
-    <Compile Include="Model\OrderProduct.cs" />
+    <Compile Include="Model\OrderNote.cs" />
+    <Compile Include="Model\OrderNoteDetails.cs" />
     <Compile Include="Model\Product.cs" />
-    <Compile Include="Model\ProductIngredient.cs" />
+    <Compile Include="Model\ProductDetails.cs" />
     <Compile Include="Model\Table.cs" />
     <Compile Include="Table.xaml.cs">
       <DependentUpon>Table.xaml</DependentUpon>
@@ -103,14 +105,15 @@
     <Compile Include="UcOder.xaml.cs">
       <DependentUpon>UcOder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewBill.xaml.cs">
-      <DependentUpon>ViewBill.xaml</DependentUpon>
-    </Compile>
     <Page Include="Dash.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Entry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InputNote.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,10 +147,6 @@
     <Page Include="UcOder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewBill.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +195,8 @@
     <Resource Include="Icon\Vector-Iluustartor.png" />
     <Resource Include="Icon\icons8_Unpin_32px.png" />
     <Resource Include="Icon\icons8_Pin_32px_9.png" />
+    <Resource Include="Icon\Pencil Drawing_32px.png" />
+    <Resource Include="Icon\Edit_52px.png" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />

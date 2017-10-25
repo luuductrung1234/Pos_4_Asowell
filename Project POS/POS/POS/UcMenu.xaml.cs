@@ -24,11 +24,11 @@ namespace POS
     {
         public UcMenu()
         {
-            
+
             InitializeComponent();
-           
+
             lvCategory.ItemsSource = ItemData.ilist;
-           
+
         }
 
 
@@ -37,19 +37,30 @@ namespace POS
             var item = (sender as ListView).SelectedItem;
             if (item != null)
             {
-                Order o = new Order();
+                OrderNote o = new OrderNote();
                 Item it = (Item)lvCategory.SelectedItem;
-                o.Name = it.Name;
-                o.Price = it.Price;
-                o.Count = 1;
-                OrderData.Orderlist.Add(o);
+                var found = OrderData.Orderlist.FirstOrDefault(x => x.Name == it.Name);
+                int i = OrderData.Orderlist.IndexOf(found);
+                if (found == null)
+                {
+                    o.Name = it.Name;
+                    o.Price = it.Price;
+                    o.Count = 1;
+                    OrderData.Orderlist.Add(o);
+                }
+                else
+                {
+                    o.Name = it.Name;
+                    o.Price = it.Price;
+                    o.Count = OrderData.Orderlist[i].Count + 1;
+                    OrderData.Orderlist[i] = o;
+                }
+                lvCategory.UnselectAll();
+
 
             }
-            lvCategory.UnselectAll();
-            UcOder u = new UcOder();
-            
-        }
 
-        
+
+        }
     }
 }

@@ -22,10 +22,10 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ListView x:Name="lvCategory" Height="auto" Width="auto" HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="5" PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp" >
+                    <ListView x:Name="lvCategory" Height="Auto" Width="Auto" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="5" PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp" >
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="6" Height="250" Width="800" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                <UniformGrid Columns="6" Height="auto" Width="800" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
