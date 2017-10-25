@@ -12,6 +12,9 @@
       Width="1366">
     <Page.Resources>
         <ContextMenu x:Key="cmbtntable">
+            <!--<MenuItem x:Name="pinTable"
+                      Header="Pin Table"
+                      Click="pinTable_Click"/>-->
             <MenuItem x:Name="moveTable"
                       Header="Move"
                       Click="moveTable_Click" />
@@ -79,8 +82,9 @@
                    Panel.ZIndex="0"
                    DragEnter="imgTable_DragEnter"
                    DragLeave="imgTable_DragLeave"
-                   Drop="imgTable_Drop" />
-            
+                   Drop="imgTable_Drop"
+                   MouseRightButtonDown="imgTable_MouseRightContextMenu"/>
+
         </Grid>
 
     </Grid>
