@@ -32,49 +32,125 @@ namespace POS
         //load table data tu file "table.txt"
         private void initTable()
         {
-            initBackgroundTable(currentTableImage(0));
+            initBackgroundTable(readTableData(0, "tableImagePath.txt"));
+
+            readTableData(1, "tableRuntimeHistory.txt");
         }
 
         //lay thong tin table image, tat ca table hien co
-        private string currentTableImage(int line) //0: tableImagePath; 1: tableRuntimeHistory
+        private string readTableData(int line, string fileName) //0: tableImagePath; 1: tableRuntimeHistory
         {
             try
             {
                 if (line == 0)
                 {
-                    using (FileStream fs = new FileStream("tableImagePath.txt", FileMode.Open))
-                    using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
+                    using (FileStream fs = new FileStream(fileName, FileMode.Open))
                     {
-                        string tableImagePath = rd.ReadLine();
-                        return tableImagePath;
+                        using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
+                        {
+                            string tableImagePath = rd.ReadLine();
+                            return tableImagePath;
+                        }
                     }
                 }
 
                 if (line == 1)
                 {
-                    using (FileStream fs = new FileStream("tableRuntimeHistory.txt", FileMode.Open))
-                    using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
+                    using (FileStream fs = new FileStream(fileName, FileMode.Open))
                     {
-                        string tableRuntime = rd.ReadToEnd();
-                        return tableRuntime;
+                        using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
+                        {
+                            string tableRuntime;
+                            string[] pot;
+                            Rectangle rec;
+                            Thickness m;
+
+                            while (true)
+                            {
+                                tableRuntime = rd.ReadLine();
+
+                                pot = tableRuntime.Split('-');
+
+                                buttonTableNumber++;
+
+                                rec = new Rectangle();
+                                if (buttonTableNumber < 10)
+                                {
+                                    rec.Name = "table" + "0" + buttonTableNumber.ToString();
+                                }
+                                else
+                                {
+                                    rec.Name = "table" + buttonTableNumber.ToString();
+                                }
+
+                                rec.HorizontalAlignment = HorizontalAlignment.Left;
+                                rec.VerticalAlignment = VerticalAlignment.Top;
+                                m = rec.Margin;
+                                m.Left = Convert.ToInt32(int.Parse(pot[0]));
+                                m.Top = Convert.ToInt32(int.Parse(pot[1]));
+                                rec.Margin = m;
+                                rec.Width = 120;
+                                rec.Height = 60;
+                                rec.Fill = Brushes.Red;
+                                rec.Opacity = 0.65;
+                                rec.ToolTip = rec.Name;
+
+                                rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+                                rec.MouseMove += btnTableAdded_MoveDrag;
+                                rec.MouseLeftButtonDown += btnTableAdded_Click;
+                                rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+
+                                Panel.SetZIndex(rec, 30);
+                                grTable.Children.Add(rec);
+
+                                imgTable.MouseMove -= crossCursorToAdd;
+                                imgTable.MouseLeftButtonDown -= changeToNormalCursor;
+                                iii = 0;
+                            }
+
+                            //return "";
+                        }
                     }
                 }
 
                 return "";
             }
-            catch (FileNotFoundException)
+            catch (Exception ex)
             {
-                return "";
+                return ex.Message;
             }
         }
 
         //su kien luu table image path vao "fileName"
-        private void writeTableImage(string fileName, string browseFilePath)
+        private void writeTableData(int line, string fileName, string browseFilePath, Rectangle rec)
         {
-            using (FileStream fs = new FileStream(fileName, FileMode.Create))
-            using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+            try
             {
-                sWriter.WriteLine(browseFilePath);
+                if (line == 0)
+                {
+                    using (FileStream fs = new FileStream(fileName, FileMode.Create))
+                    {
+                        using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                        {
+                            sWriter.WriteLine(browseFilePath);
+                        }
+                    }
+                }
+
+                if (line == 1)
+                {
+                    using (FileStream fs = new FileStream(fileName, FileMode.Create))
+                    {
+                        using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                        {
+                            sWriter.WriteLine(rec.Margin.Left + "-" + rec.Margin.Top);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -93,7 +169,7 @@ namespace POS
                 browseFileName = browseFile.SafeFileName;
                 browseFilePath = browseFile.FileName;
 
-                writeTableImage("tableImagePath.txt", browseFilePath);
+                writeTableData(0, "tableImagePath.txt", browseFilePath, null);
                 initBackgroundTable(browseFilePath);
             }
         }
@@ -125,22 +201,28 @@ namespace POS
                         browseFileName = browseFile.SafeFileName;
                         browseFilePath = browseFile.FileName;
 
-                        writeTableImage("tableImagePath.txt", browseFilePath);
+                        writeTableData(0, "tableImagePath.txt", browseFilePath, null);
                         initBackgroundTable(browseFilePath);
                     }
                 }
                 if (mess == MessageBoxResult.No)
                 {
-                    writeTableImage("tableImagePath.txt", @"Icon\Vector-Iluustartor.png");
+                    writeTableData(0, "tableImagePath.txt", @"Icon\Vector-Iluustartor.png", null);
                 }
             }
         }
 
+        int iii = 0;
         //them table theo vi tri
         private void btnTableButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            imgTable.MouseMove += crossCursorToAdd;
-            imgTable.MouseLeftButtonDown += changeToNormalCursor;
+            iii++;
+
+            if(iii < 2)
+            {
+                imgTable.MouseMove += crossCursorToAdd;
+                imgTable.MouseLeftButtonDown += changeToNormalCursor;
+            }
         }
 
         int buttonTableNumber = 0;
@@ -193,7 +275,111 @@ namespace POS
 
                 imgTable.MouseMove -= crossCursorToAdd;
                 imgTable.MouseLeftButtonDown -= changeToNormalCursor;
+                iii = 0;
             }
+        }
+
+        //khoi tao popup menu cua table image
+        private void initcmimgTable()
+        {
+            ContextMenu cmRec = new ContextMenu();
+
+            MenuItem addNewTable = new MenuItem();
+            addNewTable.Name = "addNewTable";
+            addNewTable.Header = "Add Table";
+            addNewTable.Click += addNewTable_Click;
+
+            cmRec.Items.Add(addNewTable);
+
+            cmRec.PlacementTarget = imgTable;
+            cmRec.IsOpen = true;
+        }
+
+        //su kien show popup menu
+        private void imgTable_MouseRightContextMenu(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                currentPosition = e.GetPosition(grTable);
+
+                initcmimgTable();
+            }
+        }
+
+        //su kien khi chon add new tu popup menu
+        private void addNewTable_Click(object sender, RoutedEventArgs e)
+        {
+            buttonTableNumber++;
+
+            Rectangle rec = new Rectangle();
+            if (buttonTableNumber < 10)
+            {
+                rec.Name = "table" + "0" + buttonTableNumber.ToString();
+            }
+            else
+            {
+                rec.Name = "table" + buttonTableNumber.ToString();
+            }
+
+            rec.HorizontalAlignment = HorizontalAlignment.Left;
+            rec.VerticalAlignment = VerticalAlignment.Top;
+            Thickness m = rec.Margin;
+            m.Left = Convert.ToInt32(currentPosition.X);
+            m.Top = Convert.ToInt32(currentPosition.Y);
+            rec.Margin = m;
+            rec.Width = 120;
+            rec.Height = 60;
+            rec.Fill = Brushes.Red;
+            rec.Opacity = 0.65;
+            rec.ToolTip = rec.Name;
+
+            rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+            rec.MouseMove += btnTableAdded_MoveDrag;
+            rec.MouseLeftButtonDown += btnTableAdded_Click;
+            rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+
+            Panel.SetZIndex(rec, 30);
+            grTable.Children.Add(rec);
+
+            imgTable.MouseMove -= crossCursorToAdd;
+            imgTable.MouseLeftButtonDown -= changeToNormalCursor;
+            iii = 0;
+        }
+
+        //method tao popup menu cho table
+        private void initcmRec(string cmType)
+        {
+            ContextMenu cmRec = new ContextMenu();
+
+            MenuItem pinTable = new MenuItem();
+            pinTable.Name = "pinTable";
+            pinTable.Header = "Pin Table";
+            pinTable.Click += pinTable_Click;
+
+            MenuItem moveTable = new MenuItem();
+            moveTable.Name = "moveTable";
+            moveTable.Header = "Move Table";
+            moveTable.Click += moveTable_Click;
+
+            MenuItem removeTable = new MenuItem();
+            removeTable.Name = "removeTable";
+            removeTable.Header = "Remove Table";
+            removeTable.Click += removeTable_Click;
+
+            if (cmType.Equals("pinned"))
+            {
+                cmRec.Items.Add(moveTable);
+                cmRec.Items.Add(removeTable);
+            }
+
+            if (cmType.Equals("moved"))
+            {
+                cmRec.Items.Add(pinTable);
+                cmRec.Items.Add(removeTable);
+            }
+
+            cmRec.PlacementTarget = currentRec;
+            cmRec.IsOpen = true;
         }
 
         //su kien khi click table(single or double)
@@ -217,8 +403,8 @@ namespace POS
             {
                 if (clicks == 1)
                 {
-                    rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-                    rec.MouseMove += btnTableAdded_MoveDrag;
+                    //rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+                    //rec.MouseMove += btnTableAdded_MoveDrag;
                 }
                 else if (clicks == 2)
                 {
@@ -235,16 +421,49 @@ namespace POS
             {
                 currentRec = sender as Rectangle;
 
-                ContextMenu cm = this.FindResource("cmbtntable") as ContextMenu;
-                cm.PlacementTarget = sender as Rectangle;
-                cm.IsOpen = true;
+                //tao contextmenu bang xaml resources
+                //ContextMenu cm = this.FindResource("cmbtntable") as ContextMenu;
+                //cm.PlacementTarget = sender as Rectangle;
+                //cm.IsOpen = true;
+
+                if (currentRec.Opacity == 0.65)
+                {
+                    initcmRec("moved");
+                }
+
+                if (currentRec.Opacity == 1)
+                {
+                    initcmRec("pinned");
+                }
+            }
+        }
+
+        //su kien khi lua chon pin tu popup menu cua table
+        private void pinTable_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentRec.Opacity == 0.65)
+            {
+                currentRec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
+                currentRec.MouseMove -= btnTableAdded_MoveDrag;
+                currentRec.Opacity = 1;
+
+                currentRec.Cursor = Cursors.Arrow;
+
+                MessageBox.Show(readTableData(1, "tableRuntimeHistory.txt"));
             }
         }
 
         //su kien khi lua chon move tu popup menu cua table
         private void moveTable_Click(object sender, RoutedEventArgs e)
         {
+            if (currentRec.Opacity == 1)
+            {
+                currentRec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+                currentRec.MouseMove += btnTableAdded_MoveDrag;
+                currentRec.Opacity = 0.65;
 
+                currentRec.Cursor = Cursors.SizeAll;
+            }
         }
 
         //su kien khi lua chon remove tu popup menu cua table
@@ -254,11 +473,13 @@ namespace POS
         }
 
         Point startPoint;
+        Point startPointInTable;
         Point currentPosition;
         //su kien bat dau drag
         private void btnTableAdded_StartDrag(object sender, MouseButtonEventArgs e)
         {
-            startPoint = e.GetPosition(null);
+            startPoint = e.GetPosition(grTable);
+            startPointInTable = e.GetPosition(sender as Rectangle);
         }
 
         //su kien move drag
@@ -266,11 +487,14 @@ namespace POS
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
+                (sender as Rectangle).Cursor = Cursors.SizeAll;
+
                 currentPosition = e.GetPosition(grTable);
+
                 if (Math.Abs(Convert.ToInt32(startPoint.X - currentPosition.X)) > SystemParameters.MinimumHorizontalDragDistance ||
                     Math.Abs(Convert.ToInt32(startPoint.Y - currentPosition.Y)) > SystemParameters.MinimumVerticalDragDistance)
                 {
-                    Rectangle rec = e.Source as Rectangle;
+                    Rectangle rec = sender as Rectangle;
                     var dragData = new DataObject(typeof(Rectangle), rec);
                     DragDrop.DoDragDrop(rec, dragData, DragDropEffects.Move);
                 }
@@ -288,8 +512,17 @@ namespace POS
         //su kien drag di vao image
         private void imgTable_DragEnter(object sender, DragEventArgs e)
         {
-            currentPosition = e.GetPosition(imgTable);
-            txbPointerPosition.Text = Convert.ToInt32(currentPosition.X) + ":" + Convert.ToInt32(currentPosition.Y);
+            currentPosition = e.GetPosition(grTable);
+
+            Rectangle newRec = e.Data.GetData(typeof(Rectangle)) as Rectangle;
+
+            Thickness m = newRec.Margin;
+
+            createNewRectangleDroped(newRec, m, currentPosition, startPointInTable);
+
+            ckeckPosition(newRec, m);
+            
+            
         }
 
         //su kien drag ra khoi vung quy dinh
@@ -301,15 +534,31 @@ namespace POS
         //su kien drop ractangle vao table image
         private void imgTable_Drop(object sender, DragEventArgs e)
         {
+            currentPosition = e.GetPosition(grTable);
+
             Rectangle newRec = e.Data.GetData(typeof(Rectangle)) as Rectangle;
 
+            Thickness m = newRec.Margin;
+
+            createNewRectangleDroped(newRec, m, currentPosition, startPointInTable);
+
+            ckeckPosition(newRec, m);
+        }
+
+        //method tao recrangle moi
+        private void createNewRectangleDroped(Rectangle newRec, Thickness m, Point currentPosition, Point startPointInTable)
+        {
             newRec.HorizontalAlignment = HorizontalAlignment.Left;
             newRec.VerticalAlignment = VerticalAlignment.Top;
-            Thickness m = newRec.Margin;
-            m.Left = Convert.ToInt32(currentPosition.X);
-            m.Top = Convert.ToInt32(currentPosition.Y);
-            newRec.Margin = m;
 
+            m.Left = Convert.ToInt32(currentPosition.X) - Convert.ToInt32(startPointInTable.X);
+            m.Top = Convert.ToInt32(currentPosition.Y) - Convert.ToInt32(startPointInTable.Y);
+            newRec.Margin = m;
+        }
+
+        //method kiem tra vi tri table
+        private void ckeckPosition(Rectangle newRec, Thickness m)
+        {
             if (currentPosition.X < 0)
             {
                 if (currentPosition.Y < 0)
@@ -365,23 +614,14 @@ namespace POS
                 newRec.Margin = m;
             }
 
-            if (currentPosition.Y > 660 && (currentPosition.X > 0 && currentPosition.X < (1366 - newRec.Width)))
+            if (currentPosition.Y > (660 - newRec.Height) && (currentPosition.X > 0 && currentPosition.X < (1366 - newRec.Width)))
             {
                 m.Left = Convert.ToInt32(currentPosition.X);
                 m.Top = 660 - newRec.Height;
                 newRec.Margin = m;
             }
-
-            //newRec.Width = 120;
-            //newRec.Height = 60;
-            //newRec.Fill = Brushes.Red;
-            //newRec.MouseLeftButtonDown += btnAddTable_StartDrag;
-            //newRec.MouseMove += btnAddTable_MoveDrag;
-
-            //Panel.SetZIndex(newRec, 30);
-            //grTable.Children.Add(newRec);
         }
-
+        
     }
 
     //class de ghi nhan so lan click
