@@ -22,34 +22,51 @@ namespace POS
     /// </summary>
     public partial class UcMenu : UserControl
     {
+        public Table currentTable { get; set; }
+
         public UcMenu()
         {
-            
+
             InitializeComponent();
-           
-            lvCategory.ItemsSource = ItemData.ilist;
-           
+
+            lvCategory.ItemsSource = ProductData.PList;
+
         }
 
 
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var item = (sender as ListView).SelectedItem;
-            if (item != null)
+            if (((MainWindow)Application.Current.MainWindow).currentTable != null)
             {
-                Order o = new Order();
-                Item it = (Item)lvCategory.SelectedItem;
-                o.Name = it.Name;
-                o.Price = it.Price;
-                o.Count = 1;
-                OrderData.Orderlist.Add(o);
+                var item = (sender as ListView).SelectedItem;
+                if (item != null)
+                {
+                    OrderNoteDetails o = new OrderNoteDetails();
+                    Product it = (Product)lvCategory.SelectedItem;
+                    var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+                    var found = ordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
+                    int i = ordernotedetails.IndexOf(found);
+                    if (found == null)
+                    {
+                        o.Product_id = it.Product_id;
+                        o.Quan = 1;
+                        ordernotedetails.Add(o);
+                    }
+                    else
+                    {
+                        o.Product_id = it.Product_id;
+                        o.Quan = ordernotedetails[i].Quan + 1;
+                        o.SelectedStats = ordernotedetails[i].SelectedStats;
 
+
+                        ordernotedetails[i] = o;
+                    }
+                    lvCategory.UnselectAll();
+
+                    ((MainWindow)Application.Current.MainWindow).en.ucOrder.RefreshControl();
+                }
             }
-            lvCategory.UnselectAll();
-            UcOder u = new UcOder();
-            
-        }
 
-        
+        }
     }
 }

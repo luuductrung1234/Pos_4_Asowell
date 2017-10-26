@@ -506,17 +506,17 @@ namespace POS
                 //}
 
                 //deserialize
-                using (Stream stream = File.Open(serializationFile, FileMode.Open))
-                {
-                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                //using (Stream stream = File.Open(serializationFile, FileMode.Open))
+                //{
+                //    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 
-                    List<Item> il = (List<Item>)bformatter.Deserialize(stream);
+                //    List<Item> il = (List<Item>)bformatter.Deserialize(stream);
 
-                    foreach (var i in il)
-                    {
-                        MessageBox.Show(i.Name + ":" + i.Price);
-                    }
-                }
+                //    foreach (var i in il)
+                //    {
+                //        MessageBox.Show(i.Name + ":" + i.Price);
+                //    }
+                //}
             }
         }
 

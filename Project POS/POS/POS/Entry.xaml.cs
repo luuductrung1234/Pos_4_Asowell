@@ -23,6 +23,10 @@ namespace POS
         public Entry()
         {
             InitializeComponent();
+
+            
         }
+
+       
     }
 }
