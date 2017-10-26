@@ -19,5 +19,4 @@ namespace POS.Model
         public float customer_pay { get; set; }
         public float pay_back { get; set; }
     }
-
 }

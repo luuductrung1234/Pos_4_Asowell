@@ -15,6 +15,7 @@ namespace POS.Model
         private string _stats;
         private int _quan;
         private string _note;
+        private ObservableCollection<string> _statusItems = new ObservableCollection<string>{"Stater", "Main Cost", "Dessert", "Drink"};
 
         public string Ordernote_id
         {
@@ -40,16 +41,25 @@ namespace POS.Model
                 OnPropertyChanged("Product_id");
             }
         }
-        public string Stats
+        public ObservableCollection<string> StatusItems
         {
             get
             {
-                return _stats;
+                return _statusItems;
             }
             set
             {
+                _statusItems = value; OnPropertyChanged("SalesPeriods");
+            }
+        }
+        public string SelectedStats
+        {
+            get { return _stats; }
+            set
+            {
                 _stats = value;
-                OnPropertyChanged("Stats");
+                OnPropertyChanged("SelectedStats");
+                System.Windows.MessageBox.Show("New SelectedStats setting");
             }
         }
         public int Quan
@@ -62,6 +72,7 @@ namespace POS.Model
             {
                 _quan = value;
                 OnPropertyChanged("Quan");
+                System.Windows.MessageBox.Show("New Quan setting");
             }
         }
         public string Note
@@ -74,6 +85,7 @@ namespace POS.Model
             {
                 _note = value;
                 OnPropertyChanged("Note");
+                System.Windows.MessageBox.Show("New Note setting");
             }
         }
 
@@ -83,10 +95,5 @@ namespace POS.Model
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-    public class OrderDetailsData
-    {
-        public static ObservableCollection<OrderNoteDetails> OrderDetailslist = new ObservableCollection<OrderNoteDetails>();
-
     }
 }

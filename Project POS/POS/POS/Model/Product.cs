@@ -35,7 +35,7 @@ namespace POS.Model
 
     public class ProductData
     {
-        public static Product[] pList = new Product[]
+        public static Product[] PList = new Product[]
           {
                 new Product {Product_id = "P000000001", Name="Cocacola",Price=100000, ImageLink="h2.jpg" },
                 new Product {Product_id = "P000000002", Name="CapuchinoP",Price=150000, ImageLink="h2.jpg" },

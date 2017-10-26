@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,15 +21,17 @@ namespace POS
     /// </summary>
     public partial class MainWindow : Window
     {
+        public POS.Model.Table currentTable { get; set; }
+        internal Table b = new Table();
+        internal Dash d = new Dash();
+        internal Entry en = new Entry();
+
         public MainWindow()
         {
             InitializeComponent();
+            currentTable = null;
             
         }
-
-        Table b = new Table();
-        Dash d = new Dash();
-        Entry en = new Entry();
 
         private void bntDash_Click(object sender, RoutedEventArgs e)
         {
@@ -56,6 +59,12 @@ namespace POS
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = false;
             
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            currentTable = TableTempData.TbList.First();
+            this.en.ucOrder.RefreshControl();
         }
     }
 }

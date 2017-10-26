@@ -54,22 +54,16 @@
         <Grid Grid.Row="1">
             <ListView Name="lvData" Width="460" VerticalAlignment="Top" Background="#FFED5C5C">
                 <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Item" Width="90" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Amt" Width="70" DisplayMemberBinding="{Binding Count}"/>
-                        <GridViewColumn Header="Price" Width="90" DisplayMemberBinding="{Binding TotalPrice}"/>
+                    <GridView x:Name="gvShowDetails">
+                        <GridViewColumn Header="Item" Width="90" DisplayMemberBinding="{Binding ProductName}"/>
+                        <GridViewColumn Header="Amt" Width="70" DisplayMemberBinding="{Binding Quan}"/>
+                        <GridViewColumn Header="Price" Width="90" DisplayMemberBinding="{Binding Price}"/>
                         <GridViewColumn Header="Status" Width="100">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" >
-                                        <ComboBox x:Name="cboStatus" Background="White" Width="80" Foreground="Black" IsReadOnly="True">
-                                            <ComboBoxItem Content="Startor"/>
-                                            <ComboBoxItem Content="Maincose"/>
-                                            <ComboBoxItem Content="Dessert"/>
-                                            <ComboBoxItem Content="Drink"/>
-                                        </ComboBox>
-                                    </StackPanel>
-
+                                    <ComboBox x:Name="cboStatus" Background="White" Width="80" Foreground="Black" IsReadOnly="True"
+                                                  ItemsSource="{Binding StatusItems, Mode=TwoWay}" SelectedItem="{Binding SelectedStats, Mode=TwoWay}">
+                                    </ComboBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -82,10 +76,8 @@
                                             <StackPanel HorizontalAlignment="Left">
                                                 <Image Source="Icon\Edit_52px.png" Margin="0,0,0,0" Height="15" Width="13"/>
                                             </StackPanel>
-                                           
                                         </Button>
                                     </StackPanel>
-
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
