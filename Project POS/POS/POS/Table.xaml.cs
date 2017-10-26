@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using POS.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,9 +35,10 @@ namespace POS
         {
             initBackgroundTable(readTableData(0, "tableImagePath.txt"));
 
-            readTableData(1, "tableRuntimeHistory.txt");
+            //readTableData(1, "tableRuntimeHistory.txt");
         }
 
+        string allCurrentTableData;
         //lay thong tin table image, tat ca table hien co
         private string readTableData(int line, string fileName) //0: tableImagePath; 1: tableRuntimeHistory
         {
@@ -56,59 +58,70 @@ namespace POS
 
                 if (line == 1)
                 {
+                    using (Stream stream = File.Open(fileName, FileMode.Open))
+                    {
+                        var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                        List<Table> currentTableList = (List<Table>)bformatter.Deserialize(stream);
+                        Rectangle rec;
+                        Thickness m;
+
+                        foreach (var ctl in currentTableList)
+                        {
+
+                            maxTableCurrentNumber = 0;
+
+                            buttonTableCurrentNumber++;
+
+                            rec = new Rectangle();
+                            if (maxTableCurrentNumber < 10)
+                            {
+                                rec.Name = "0";
+                            }
+                            else
+                            {
+                                rec.Name = "0";
+                            }
+
+                            rec.HorizontalAlignment = HorizontalAlignment.Left;
+                            rec.VerticalAlignment = VerticalAlignment.Top;
+                            m = rec.Margin;
+                            m.Left = Convert.ToInt32(int.Parse("100"));
+                            m.Top = Convert.ToInt32(int.Parse("100"));
+                            rec.Margin = m;
+                            rec.Width = 120;
+                            rec.Height = 60;
+                            rec.Fill = Brushes.Red;
+                            rec.Opacity = 0.65;
+                            rec.ToolTip = rec.Name;
+
+                            rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+                            rec.MouseMove += btnTableAdded_MoveDrag;
+                            rec.MouseLeftButtonDown += btnTableAdded_Click;
+                            rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+
+                            rec.Cursor = Cursors.SizeAll;
+
+                            Panel.SetZIndex(rec, 30);
+                            grTable.Children.Add(rec);
+
+                            imgTable.MouseMove -= crossCursorToAdd;
+                            imgTable.MouseLeftButtonDown -= changeToNormalCursor;
+                            iii = 0;
+
+                            //return rd.ReadToEnd();
+                        }
+                    }
+                }
+
+                if (line == 2)
+                {
                     using (FileStream fs = new FileStream(fileName, FileMode.Open))
                     {
                         using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
                         {
-                            string tableRuntime;
-                            string[] pot;
-                            Rectangle rec;
-                            Thickness m;
-
-                            while (true)
-                            {
-                                tableRuntime = rd.ReadLine();
-
-                                pot = tableRuntime.Split('-');
-
-                                buttonTableNumber++;
-
-                                rec = new Rectangle();
-                                if (buttonTableNumber < 10)
-                                {
-                                    rec.Name = "table" + "0" + buttonTableNumber.ToString();
-                                }
-                                else
-                                {
-                                    rec.Name = "table" + buttonTableNumber.ToString();
-                                }
-
-                                rec.HorizontalAlignment = HorizontalAlignment.Left;
-                                rec.VerticalAlignment = VerticalAlignment.Top;
-                                m = rec.Margin;
-                                m.Left = Convert.ToInt32(int.Parse(pot[0]));
-                                m.Top = Convert.ToInt32(int.Parse(pot[1]));
-                                rec.Margin = m;
-                                rec.Width = 120;
-                                rec.Height = 60;
-                                rec.Fill = Brushes.Red;
-                                rec.Opacity = 0.65;
-                                rec.ToolTip = rec.Name;
-
-                                rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-                                rec.MouseMove += btnTableAdded_MoveDrag;
-                                rec.MouseLeftButtonDown += btnTableAdded_Click;
-                                rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
-
-                                Panel.SetZIndex(rec, 30);
-                                grTable.Children.Add(rec);
-
-                                imgTable.MouseMove -= crossCursorToAdd;
-                                imgTable.MouseLeftButtonDown -= changeToNormalCursor;
-                                iii = 0;
-                            }
-
-                            //return "";
+                            allCurrentTableData = rd.ReadToEnd();
+                            return allCurrentTableData;
                         }
                     }
                 }
@@ -122,7 +135,7 @@ namespace POS
         }
 
         //su kien luu table image path vao "fileName"
-        private void writeTableData(int line, string fileName, string browseFilePath, Rectangle rec)
+        private void writeTableData(int line, string fileName, string browseFilePath, Rectangle rec, bool isDrag)
         {
             try
             {
@@ -139,11 +152,32 @@ namespace POS
 
                 if (line == 1)
                 {
-                    using (FileStream fs = new FileStream(fileName, FileMode.Create))
+                    if (buttonTableCurrentNumber == 0)
                     {
-                        using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                        using (FileStream fs = new FileStream(fileName, FileMode.Create))
                         {
-                            sWriter.WriteLine(rec.Margin.Left + "-" + rec.Margin.Top);
+                            using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                            {
+
+                            }
+                        }
+                    }
+
+                    if (buttonTableCurrentNumber > 0)
+                    {
+                        if (!isDrag)
+                        {
+                            using (FileStream fs = new FileStream(fileName, FileMode.Append))
+                            {
+                                using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                                {
+
+                                }
+                            }
+                        }
+                        else
+                        {
+
                         }
                     }
                 }
@@ -169,7 +203,7 @@ namespace POS
                 browseFileName = browseFile.SafeFileName;
                 browseFilePath = browseFile.FileName;
 
-                writeTableData(0, "tableImagePath.txt", browseFilePath, null);
+                //writeTableData(0, "tableImagePath.txt", browseFilePath, null, false);
                 initBackgroundTable(browseFilePath);
             }
         }
@@ -201,13 +235,13 @@ namespace POS
                         browseFileName = browseFile.SafeFileName;
                         browseFilePath = browseFile.FileName;
 
-                        writeTableData(0, "tableImagePath.txt", browseFilePath, null);
+                        //writeTableData(0, "tableImagePath.txt", browseFilePath, null, false);
                         initBackgroundTable(browseFilePath);
                     }
                 }
                 if (mess == MessageBoxResult.No)
                 {
-                    writeTableData(0, "tableImagePath.txt", @"Icon\Vector-Iluustartor.png", null);
+                    //writeTableData(0, "tableImagePath.txt", @"Icon\Vector-Iluustartor.png", null, false);
                 }
             }
         }
@@ -218,14 +252,15 @@ namespace POS
         {
             iii++;
 
-            if(iii < 2)
+            if (iii < 2)
             {
                 imgTable.MouseMove += crossCursorToAdd;
                 imgTable.MouseLeftButtonDown += changeToNormalCursor;
             }
         }
 
-        int buttonTableNumber = 0;
+        int buttonTableCurrentNumber = 0;
+        int maxTableCurrentNumber = 0;
         //su kien xac dinh vi tri them ban
         private void crossCursorToAdd(object sender, MouseEventArgs e)
         {
@@ -237,18 +272,19 @@ namespace POS
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                buttonTableNumber++;
+                maxTableCurrentNumber++;
+                buttonTableCurrentNumber++;
 
                 currentPosition = e.GetPosition(grTable);
 
                 Rectangle rec = new Rectangle();
-                if (buttonTableNumber < 10)
+                if (maxTableCurrentNumber < 10)
                 {
-                    rec.Name = "table" + "0" + buttonTableNumber.ToString();
+                    rec.Name = "table" + "0" + maxTableCurrentNumber.ToString();
                 }
                 else
                 {
-                    rec.Name = "table" + buttonTableNumber.ToString();
+                    rec.Name = "table" + maxTableCurrentNumber.ToString();
                 }
 
                 rec.HorizontalAlignment = HorizontalAlignment.Left;
@@ -276,6 +312,8 @@ namespace POS
                 imgTable.MouseMove -= crossCursorToAdd;
                 imgTable.MouseLeftButtonDown -= changeToNormalCursor;
                 iii = 0;
+
+                //writeTableData(1, "tableRuntimeHistory.txt", "", rec, false);
             }
         }
 
@@ -309,16 +347,17 @@ namespace POS
         //su kien khi chon add new tu popup menu
         private void addNewTable_Click(object sender, RoutedEventArgs e)
         {
-            buttonTableNumber++;
+            maxTableCurrentNumber++;
+            buttonTableCurrentNumber++;
 
             Rectangle rec = new Rectangle();
-            if (buttonTableNumber < 10)
+            if (maxTableCurrentNumber < 10)
             {
-                rec.Name = "table" + "0" + buttonTableNumber.ToString();
+                rec.Name = "table" + "0" + maxTableCurrentNumber.ToString();
             }
             else
             {
-                rec.Name = "table" + buttonTableNumber.ToString();
+                rec.Name = "table" + maxTableCurrentNumber.ToString();
             }
 
             rec.HorizontalAlignment = HorizontalAlignment.Left;
@@ -338,12 +377,18 @@ namespace POS
             rec.MouseLeftButtonDown += btnTableAdded_Click;
             rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
+            rec.Cursor = Cursors.SizeAll;
+
             Panel.SetZIndex(rec, 30);
             grTable.Children.Add(rec);
 
             imgTable.MouseMove -= crossCursorToAdd;
             imgTable.MouseLeftButtonDown -= changeToNormalCursor;
             iii = 0;
+
+            ckeckPosition(rec, m);
+
+            //writeTableData(1, "tableRuntimeHistory.txt", "", rec, false);
         }
 
         //method tao popup menu cho table
@@ -449,7 +494,29 @@ namespace POS
 
                 currentRec.Cursor = Cursors.Arrow;
 
-                MessageBox.Show(readTableData(1, "tableRuntimeHistory.txt"));
+                string dir = "";
+                string serializationFile = System.IO.Path.Combine(dir, "salesmen.bin");
+
+                //serialize
+                //using (Stream stream = File.Open(serializationFile, FileMode.Create))
+                //{
+                //    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                //    bformatter.Serialize(stream, ItemData.ilist);
+                //}
+
+                //deserialize
+                using (Stream stream = File.Open(serializationFile, FileMode.Open))
+                {
+                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                    List<Item> il = (List<Item>)bformatter.Deserialize(stream);
+
+                    foreach (var i in il)
+                    {
+                        MessageBox.Show(i.Name + ":" + i.Price);
+                    }
+                }
             }
         }
 
@@ -470,6 +537,7 @@ namespace POS
         private void removeTable_Click(object sender, RoutedEventArgs e)
         {
             grTable.Children.Remove(currentRec);
+            buttonTableCurrentNumber--;
         }
 
         Point startPoint;
@@ -521,8 +589,6 @@ namespace POS
             createNewRectangleDroped(newRec, m, currentPosition, startPointInTable);
 
             ckeckPosition(newRec, m);
-            
-            
         }
 
         //su kien drag ra khoi vung quy dinh
@@ -621,7 +687,7 @@ namespace POS
                 newRec.Margin = m;
             }
         }
-        
+
     }
 
     //class de ghi nhan so lan click

@@ -10,20 +10,6 @@
       Title="Table"
       Height="660"
       Width="1366">
-    <Page.Resources>
-        <ContextMenu x:Key="cmbtntable">
-            <!--<MenuItem x:Name="pinTable"
-                      Header="Pin Table"
-                      Click="pinTable_Click"/>-->
-            <MenuItem x:Name="moveTable"
-                      Header="Move"
-                      Click="moveTable_Click" />
-            <Separator />
-            <MenuItem x:Name="removeTable"
-                      Header="Remove"
-                      Click="removeTable_Click" />
-        </ContextMenu>
-    </Page.Resources>
 
     <Grid x:Name="grTable"
           MouseMove="grTable_MouseMove"
