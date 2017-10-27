@@ -15,7 +15,7 @@ namespace POS.Model
         private int _ChairAmount { get; set; }
         private Point _Position { get; set; }
         private OrderNote _TableOrder { get; set; }
-        private List<OrderNoteDetails> _TableOrderDetails { get; set; }   // OrderNote inside OrderProduct
+        private List<OrderNoteDetails> _TableOrderDetails { get; set; }
 
         public int TableNumber {
             get { return _TableNumber; }
