@@ -8,6 +8,7 @@ using System.Windows;
 
 namespace POS.Model
 {
+    [Serializable]
     public class Table: INotifyPropertyChanged
     {
         private int _TableNumber { get; set; }
@@ -19,7 +20,7 @@ namespace POS.Model
         public int TableNumber {
             get { return _TableNumber; }
             set { _TableNumber = value;
-                OnPropertyChanged("TableNumbe");
+                OnPropertyChanged("TableNumber");
             }
         }
         public int ChairAmount
@@ -64,7 +65,7 @@ namespace POS.Model
     {
         private static List<Table> _tbList = new List<Table>()
                 {
-                    new Table {TableNumber = 1, ChairAmount = 5, Position = new Point(),
+                    new Table {TableNumber = 1, ChairAmount = 5, Position = new Point(100, 100),
                                     TableOrder = new OrderNote { ordernote_id = "ORN0000001",
                                                                     cus_id = "CUS0000001",
                                                                     emp_id = "EMP0000001",
@@ -74,21 +75,21 @@ namespace POS.Model
                                                                 new OrderNoteDetails{Product_id="P000000001", Ordernote_id="ORN000001", Quan=1, Note="", SelectedStats="Drink" } ,
 },
                     },
-                    new Table {TableNumber = 2, ChairAmount = 10, Position = new Point(),
+                    new Table {TableNumber = 2, ChairAmount = 10, Position = new Point(500, 500),
                                     TableOrder = new OrderNote { ordernote_id = "ORN0000002",
                                                                     cus_id = "CUS0000002",
                                                                     emp_id = "EMP0000001",
                                                                     ordertable = 2,
                                                                     ordertime = DateTime.Now},
                                     TableOrderDetails = new List<OrderNoteDetails>()},
-                    new Table {TableNumber = 3, ChairAmount = 20, Position = new Point(),
+                    new Table {TableNumber = 3, ChairAmount = 20, Position = new Point(100, 500),
                                     TableOrder = new OrderNote { ordernote_id = "ORN0000003",
                                                                     cus_id = "CUS0000003",
                                                                     emp_id = "EMP0000001",
                                                                     ordertable = 3,
                                                                     ordertime = DateTime.Now},
                                     TableOrderDetails = new List<OrderNoteDetails>()},
-                    new Table {TableNumber = 4, ChairAmount = 4, Position = new Point(),
+                    new Table {TableNumber = 4, ChairAmount = 4, Position = new Point(500, 100),
                                     TableOrder = new OrderNote { ordernote_id = "ORN0000004",
                                                                     cus_id = "CUS0000004",
                                                                     emp_id = "EMP0000001",
@@ -99,10 +100,13 @@ namespace POS.Model
 
         public static List<Table> TbList
         {
-
             get
             {
                 return _tbList;
+            }
+            set
+            {
+                _tbList = value;
             }
         }
     }

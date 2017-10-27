@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace POS.Model
 {
+    [Serializable]
     public class OrderNote
     {
         public string ordernote_id { get; set; }

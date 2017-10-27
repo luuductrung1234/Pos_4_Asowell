@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace POS.Model
 {
+    [Serializable]
     public class OrderNoteDetails : INotifyPropertyChanged
     {
         private string _ordernote_id;
