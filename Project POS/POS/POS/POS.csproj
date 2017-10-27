@@ -99,6 +99,9 @@
     <Compile Include="Table.xaml.cs">
       <DependentUpon>Table.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TableSettingDialog.xaml.cs">
+      <DependentUpon>TableSettingDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UcMenu.xaml.cs">
       <DependentUpon>UcMenu.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Table.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TableSettingDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

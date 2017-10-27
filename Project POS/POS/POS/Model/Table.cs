@@ -72,7 +72,7 @@ namespace POS.Model
                                                                     ordertable = 1,
                                                                     ordertime = DateTime.Now},
                                     TableOrderDetails = new List<OrderNoteDetails>() {
-                                                                new OrderNoteDetails{Product_id="P000000001", Ordernote_id="ORN000001", Quan=1, Note="", SelectedStats="Drink" } ,
+                                                                new OrderNoteDetails{Product_id="P000000001", Ordernote_id="ORN0000001", Quan=1, Note="", SelectedStats="Drink" } ,
 },
                     },
                     new Table {TableNumber = 2, ChairAmount = 10, Position = new Point(500, 500),

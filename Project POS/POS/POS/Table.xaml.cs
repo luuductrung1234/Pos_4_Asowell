@@ -43,7 +43,6 @@ namespace POS
                 using (Stream stream = File.Open(serializationFile, FileMode.Create))
                 {
                     var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
                     bformatter.Serialize(stream, TableTempData.TbList);
                 }
             }
@@ -181,7 +180,6 @@ namespace POS
                         using (Stream stream = File.Open(serializationFile, FileMode.Create))
                         {
                             var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
                             bformatter.Serialize(stream, TableTempData.TbList);
                         }
 
@@ -206,7 +204,6 @@ namespace POS
                         using (Stream stream = File.Open(serializationFile, FileMode.Create))
                         {
                             var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
                             bformatter.Serialize(stream, TableTempData.TbList);
                         }
 
@@ -216,9 +213,7 @@ namespace POS
                     Model.Table newTable = new Model.Table()
                     {
                         TableNumber = int.Parse(rec.Name.Substring(5)),
-                        Position = new Point(rec.Margin.Left, rec.Margin.Top),
-                        TableOrder = new OrderNote(),
-                        TableOrderDetails = new List<OrderNoteDetails>()
+                        Position = new Point(rec.Margin.Left, rec.Margin.Top)
                     };
 
                     TableTempData.TbList.Add(newTable);
@@ -226,7 +221,6 @@ namespace POS
                     using (Stream stream = File.Open(serializationFile, FileMode.Create))
                     {
                         var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
                         bformatter.Serialize(stream, TableTempData.TbList);
                     }
 
@@ -512,7 +506,27 @@ namespace POS
                 }
                 else if (clicks == 2)
                 {
-                    MessageBox.Show("Go to order with " + rec.Name);
+                    if(rec.Opacity == 0.65)
+                    {
+                        MessageBoxResult mess = MessageBox.Show("You must be pin this table before you want to create new order. Do you want to pin now?", "Warning!", MessageBoxButton.YesNo);
+                        if(mess == MessageBoxResult.Yes)
+                        {
+                            currentRec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
+                            currentRec.MouseMove -= btnTableAdded_MoveDrag;
+                            currentRec.Opacity = 1;
+
+                            currentRec.Cursor = Cursors.Arrow;
+
+                            writeTableData(1, "tableRuntimeHistory.bin", "", currentRec, true, false);
+
+                            //pass
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Go to order with " + rec.Name);
+                        //pass
+                    }
                 }
             }
         }
@@ -548,9 +562,6 @@ namespace POS
 
                 currentRec.Cursor = Cursors.Arrow;
 
-                string dir = "";
-                string serializationFile = System.IO.Path.Combine(dir, "tableRuntimeHistory.bin");
-
                 writeTableData(1, "tableRuntimeHistory.bin", "", currentRec, true, false);
             }
         }
@@ -571,7 +582,17 @@ namespace POS
         //su kien khi chon change chair tu table
         private void changeChairTable_Click(object sender, RoutedEventArgs e)
         {
+            foreach(Model.Table t in TableTempData.TbList)
+            {
+                if(t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
+                {
+                    TableSettingDialog tablleSetting = new TableSettingDialog(t);
+                    tablleSetting.ShowDialog();
 
+                    writeTableData(1, "tableRuntimeHistory.bin", "", null, false, false);
+                    break;
+                }
+            }
         }
 
         //su kien khi lua chon remove tu popup menu cua table
@@ -609,10 +630,11 @@ namespace POS
                     DragDrop.DoDragDrop(rec, dragData, DragDropEffects.Move);
                 }
             }
+
+            (sender as Rectangle).ToolTip = setTooltip(sender as Rectangle);
         }
 
         Point currentPointer;
-
         //su kien lay vi tri pointer
         private void grTable_MouseMove(object sender, MouseEventArgs e)
         {
@@ -735,6 +757,7 @@ namespace POS
             }
         }
 
+        //method set tooltip cho table
         private string setTooltip(Rectangle rec)
         {
             foreach(Model.Table table in TableTempData.TbList)
@@ -743,7 +766,35 @@ namespace POS
                 {
                     string tt = "Table: " + table.TableNumber;
                     tt += "\nChair Amount: " + table.ChairAmount;
-                    tt += "\nPosition(W:H): " + Convert.ToInt32(table.Position.X) + ":" + Convert.ToInt32(table.Position.Y);
+                    //tt += "\nPosition(W:H): " + Convert.ToInt32(table.Position.X) + ":" + Convert.ToInt32(table.Position.Y);
+
+                    if(table.TableOrder != null)
+                    {
+                        foreach(var cus in CustomerData.CusList)
+                        {
+                            if(table.TableOrder.cus_id.Equals(cus.Cus_id))
+                            {
+                                tt += "\nOrder Customer: " + cus.Name;
+                            }
+                        }  
+                        
+                        foreach(var tableOD in table.TableOrderDetails)
+                        {
+                            if(table.TableOrder.ordernote_id.Equals(tableOD.Ordernote_id))
+                            {
+                                foreach(var pro in ProductData.PList)
+                                {
+                                    if(pro.Product_id.Equals(tableOD.Product_id))
+                                    {
+                                        tt += "\nProduct Name: " + pro.Name;
+                                    }
+                                }
+
+                                tt += ", Quantity: " + tableOD.Quan;
+                            }
+                        } 
+                    }
+
                     return tt;
                 }
             }
