@@ -36,6 +36,7 @@ namespace POS
             {
                 // lay ordernotedetails cua ban thu nhat
                 var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+                var ordertabledetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrder;
                 // chuyen product_id thanh product name
                 var query = from orderdetails in ordernotedetails
                             join product in ProductData.PList
@@ -46,7 +47,8 @@ namespace POS
                                 Product = product
                             };
                 lvData.ItemsSource = query;
-                txtDay.Text = DateTime.Now.ToString("dd/MM/yyyy H:mm:ss");
+                txtDay.Text = ordertabledetails.ordertime.ToString("dd/MM/yyyy H:mm:ss");
+                txtTable.Text = ordertabledetails.ordertable.ToString();
 
                 loadDataTotal();
             }

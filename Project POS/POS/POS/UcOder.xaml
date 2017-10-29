@@ -3,11 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Background="DarkGray"
              xmlns:local="clr-namespace:POS"
              mc:Ignorable="d" 
-             d:DesignHeight="500" Width="460"
+             d:DesignHeight="500" Width="450"
             >
+    <GroupBox Header="Order Detail"
+              materialDesign:ColorZoneAssist.Mode="PrimaryDark"
+              >
+        
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -26,28 +31,28 @@
                     </Style>
                 </Grid.Resources>
                 <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Day" Foreground="Black" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Day" Foreground="Black" />
                         <TextBlock x:Name="txtDay"  Width="150" Margin="50,0,0,0"/>
                     </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Customers" Foreground="Black" Margin="2"/>
-                    <ComboBox x:Name="cboCustomers" Background="White" Width="100" Margin="5,0,0,0"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Table" Foreground="Black" Margin="2"/>
-                    <TextBlock x:Name="txtTable" Foreground="Black" Text="5" Width="100" Margin="33.5,0,0,0"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Total Bill" Foreground="Black" Margin="2"/>
-                    <TextBlock x:Name="txtTotal" Foreground="Black" Text="0" Width="100" Margin="17,0,0,0"/>
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Customers" Foreground="Black" Margin="2"/>
+                        <ComboBox x:Name="cboCustomers" Background="White" Width="100" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Table" Foreground="Black" Margin="2"/>
+                        <TextBlock x:Name="txtTable" Foreground="Black"  Width="100" Margin="33.5,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Total Bill" Foreground="Black" Margin="2"/>
+                        <TextBlock x:Name="txtTotal" Foreground="Black" Text="0" Width="100" Margin="17,0,0,0"/>
+                    </StackPanel>
 
-            </StackPanel>
+                </StackPanel>
             </Grid>
             <Grid Grid.Column="1">
                 <WrapPanel x:Name="wp">
-                    
+
                 </WrapPanel>
             </Grid>
         </Grid>
@@ -86,10 +91,11 @@
             </ListView>
         </Grid>
         <Grid Grid.Row="2">
-            <Button x:Name="bntPay" Content="Pay" HorizontalAlignment="Left" Margin="55,13,0,0" VerticalAlignment="Top" Width="75" Click="bntPay_Click"/>
-            <Button x:Name="bntPrint" Content="Print" HorizontalAlignment="Left" Margin="184,13,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button x:Name="bntDelete" Content="Delete" HorizontalAlignment="Left" Margin="315,13,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="2.162,0.464"/>
+            <Button x:Name="bntPay" Content="Pay" HorizontalAlignment="Left" Margin="33,13,0,0" VerticalAlignment="Top" Width="111" Click="bntPay_Click"/>
+            <Button x:Name="bntPrint" Content="Print" HorizontalAlignment="Left" Margin="176,13,0,0" VerticalAlignment="Top" Width="111"/>
+            <Button x:Name="bntDelete" Content="Delete" HorizontalAlignment="Left" Margin="315,13,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.162,0.464"/>
 
         </Grid>
     </Grid>
+    </GroupBox>
 </UserControl>

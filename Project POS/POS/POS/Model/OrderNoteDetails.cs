@@ -60,7 +60,7 @@ namespace POS.Model
             {
                 _stats = value;
                 OnPropertyChanged("SelectedStats");
-                System.Windows.MessageBox.Show("New SelectedStats setting");
+               // System.Windows.MessageBox.Show("New SelectedStats setting");
             }
         }
         public int Quan
@@ -73,7 +73,7 @@ namespace POS.Model
             {
                 _quan = value;
                 OnPropertyChanged("Quan");
-                System.Windows.MessageBox.Show("New Quan setting");
+                //System.Windows.MessageBox.Show("New Quan setting");
             }
         }
         public string Note
@@ -86,7 +86,7 @@ namespace POS.Model
             {
                 _note = value;
                 OnPropertyChanged("Note");
-                System.Windows.MessageBox.Show("New Note setting");
+               // System.Windows.MessageBox.Show("New Note setting");
             }
         }
 

@@ -32,7 +32,16 @@ namespace POS
             lvCategory.ItemsSource = ProductData.PList;
 
         }
+        public override void OnApplyTemplate()
+        {
+            DependencyObject ButtonControlInTemplate = GetTemplateChild("searchbutton");// set the name as the x:Name for the controls in your xaml.
+            Button SearchButton = (Button)ButtonControlInTemplate;
+            DependencyObject TextBoxInTemplate = GetTemplateChild("searchinputfield"); // set the name as the x:Name for the controls in your xaml.
+            TextBox InputTextBox = (TextBox)TextBoxInTemplate;
+            base.OnApplyTemplate();
 
+
+        }
 
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -66,6 +75,11 @@ namespace POS
                     ((MainWindow)Application.Current.MainWindow).en.ucOrder.RefreshControl();
                 }
             }
+
+        }
+
+        private void Search_OnKeyDown(object sender, KeyEventArgs e)
+        {
 
         }
     }
