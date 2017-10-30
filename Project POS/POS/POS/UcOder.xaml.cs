@@ -23,11 +23,10 @@ namespace POS
     /// </summary>
     public partial class UcOder : UserControl
     {
-
         public UcOder()
         {
             InitializeComponent();
-            
+
         }
 
         public void RefreshControl()
@@ -46,15 +45,37 @@ namespace POS
                                 OrderDetails = orderdetails,
                                 Product = product
                             };
+
+
+                // binding
                 lvData.ItemsSource = query;
                 txtDay.Text = ordertabledetails.ordertime.ToString("dd/MM/yyyy H:mm:ss");
                 txtTable.Text = ordertabledetails.ordertable.ToString();
-
-                loadDataTotal();
+                loadTotalPrice();
+                //loadCustomerOwner();
+                loadChair();
             }
             catch (Exception ex)
             {
                 Console.WriteLine();
+            }
+        }
+
+        private void loadChair()
+        {
+            for(int i = 0; i < ((MainWindow)Application.Current.MainWindow).currentTable.ChairAmount; i++)
+            {
+                Button button = new Button();
+                button.Name = "chair" + (i + 1);
+                button.Content = (i + 1).ToString();
+                button.Width = 24;
+                button.Height = 24;
+                Thickness m = button.Margin;
+                m.Left = 5;
+                m.Top = 5;
+                button.Margin = m;
+                button.SetValue(StyleProperty, FindResource("MaterialDesignFloatingActionMiniButton"));
+                wp.Children.Add(button);
             }
         }
 
@@ -125,9 +146,7 @@ namespace POS
 
 
 
-
-
-        public void loadDataTotal()
+        public void loadTotalPrice()
         {
             var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
             // chuyen product_id thanh product name
@@ -175,19 +194,16 @@ namespace POS
                 ordernotedetails.RemoveAt(index);
             }
             RefreshControl();
-            loadDataTotal();
+            loadTotalPrice();
 
         }
-
 
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
-            loadDataTotal();
+            loadTotalPrice();
             lvData.Items.Refresh();
             RefreshControl();
         }
-
-
 
         private void txtCoutn_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

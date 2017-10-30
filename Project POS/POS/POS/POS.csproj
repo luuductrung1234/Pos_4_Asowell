@@ -91,6 +91,7 @@
     <Compile Include="InputNote.xaml.cs">
       <DependentUpon>InputNote.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Chair.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Ingredient.cs" />

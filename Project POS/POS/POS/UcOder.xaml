@@ -41,8 +41,11 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Table" Foreground="Black" Margin="2"/>
-                        <TextBlock x:Name="txtTable" Foreground="Black"  Width="100" Margin="33.5,0,0,0"/>
-                    </StackPanel>
+                            <TextBlock x:Name="txtTable"
+                                       Foreground="Black"
+                                       Width="100"
+                                       Margin="33.5,0,0,0" />
+                        </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Total Bill" Foreground="Black" Margin="2"/>
                         <TextBlock x:Name="txtTotal" Foreground="Black" Text="0" Width="100" Margin="17,0,0,0"/>
@@ -52,7 +55,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <WrapPanel x:Name="wp">
-
+                        
                 </WrapPanel>
             </Grid>
         </Grid>

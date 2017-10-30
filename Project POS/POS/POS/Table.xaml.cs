@@ -27,6 +27,12 @@ namespace POS
         {
             InitializeComponent();
 
+            foreach (Employee e in EmployeeData.EmpList)
+            {
+                App.Current.Properties["EmpLogin"] = e;
+                break;
+            }
+
             initTableData();
         }
 
@@ -122,6 +128,7 @@ namespace POS
 
                             rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
                             rec.MouseMove += btnTableAdded_MoveDrag;
+                            rec.MouseMove += btnTableAdded_MouseMove;
                             rec.MouseLeftButtonDown += btnTableAdded_Click;
                             rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
@@ -134,7 +141,7 @@ namespace POS
                             imgTable.MouseLeftButtonDown -= changeToNormalCursor;
                             iii = 0;
 
-                            if(t.IsPinned)
+                            if (t.IsPinned)
                             {
                                 rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
                                 rec.MouseMove -= btnTableAdded_MoveDrag;
@@ -149,14 +156,19 @@ namespace POS
                                 rec.Opacity = 0.65;
                             }
 
-                            if (t.TableOrder != null)
+                            if (t.TableOrder.cus_id != null && t.TableOrderDetails.Count != 0)
                             {
                                 rec.Fill = Brushes.DarkCyan;
+                                rec.MouseMove += btnTableAdded_MouseMove;
+                                rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
                             }
 
-                            if (t.TableOrder == null)
+                            if (t.TableOrder.cus_id == null && t.TableOrderDetails.Count == 0)
                             {
                                 rec.Fill = Brushes.Red;
+
+                                rec.MouseMove += btnTableAdded_MouseMove;
+                                rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
                             }
 
                             rec.ToolTip = setTooltip(rec);
@@ -197,6 +209,27 @@ namespace POS
 
                     if (isDrag)
                     {
+                        if (browseFilePath.Equals("chair"))
+                        {
+                            foreach (Model.Table curTable in TableTempData.TbList)
+                            {
+                                if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
+                                {
+                                    curTable.TableNumber = int.Parse(rec.Name.Substring(5));
+                                    curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
+                                    break;
+                                }
+                            }
+
+                            using (Stream stream = File.Open(serializationFile, FileMode.Create))
+                            {
+                                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                                bformatter.Serialize(stream, TableTempData.TbList);
+                            }
+
+                            return;
+                        }
+
                         foreach (Model.Table curTable in TableTempData.TbList)
                         {
                             if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
@@ -241,7 +274,7 @@ namespace POS
                         return;
                     }
 
-                    if(isPayed)
+                    if (isPayed)
                     {
                         foreach (Model.Table curTable in TableTempData.TbList)
                         {
@@ -249,8 +282,8 @@ namespace POS
                             {
                                 curTable.TableNumber = int.Parse(rec.Name.Substring(5));
                                 curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                                curTable.TableOrder = null;
-                                curTable.TableOrderDetails = null;
+                                curTable.TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id };
+                                curTable.TableOrderDetails = new List<OrderNoteDetails>();
                                 break;
                             }
                         }
@@ -263,12 +296,14 @@ namespace POS
 
                         return;
                     }
-                    
+
                     Model.Table newTable = new Model.Table()
                     {
                         TableNumber = int.Parse(rec.Name.Substring(5)),
                         Position = new Point(rec.Margin.Left, rec.Margin.Top),
-                        IsPinned = false
+                        IsPinned = false,
+                        TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id },
+                        TableOrderDetails = new List<OrderNoteDetails>()
                     };
 
                     TableTempData.TbList.Add(newTable);
@@ -581,6 +616,15 @@ namespace POS
                         MessageBoxResult mess = MessageBox.Show("You must be pin this table before you want to create new order. Do you want to pin now?", "Warning!", MessageBoxButton.YesNo);
                         if (mess == MessageBoxResult.Yes)
                         {
+                            foreach (Model.Table t in TableTempData.TbList)
+                            {
+                                if (t.TableNumber == int.Parse(rec.Name.Substring(5)) && t.ChairAmount == 0)
+                                {
+                                    MessageBox.Show("You must be set Chair Amount greater than 0!");
+                                    return;
+                                }
+                            }
+
                             rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
                             rec.MouseMove -= btnTableAdded_MoveDrag;
                             rec.Opacity = 1;
@@ -590,14 +634,30 @@ namespace POS
                             writeTableData(1, "", rec, true, true, false, false);
 
                             //pass
+                            foreach (Model.Table t in TableTempData.TbList)
+                            {
+                                if (t.TableNumber == int.Parse(rec.Name.Substring(5)))
+                                {
+                                    ((MainWindow)Application.Current.MainWindow).currentTable = t;
+                                    var orderControl = (Entry)((MainWindow)Application.Current.MainWindow).en;
+                                    orderControl.ucOrder.RefreshControl();
+                                    ((MainWindow)Application.Current.MainWindow).myFrame.Navigate(orderControl);
+                                }
+                            }
                         }
                     }
                     else
                     {
                         foreach (Model.Table t in TableTempData.TbList)
                         {
-                            if (!t.IsPinned && t.TableOrder == null)
+                            if (t.IsPinned && t.TableNumber == int.Parse(rec.Name.Substring(5)))
                             {
+                                if (t.TableNumber == int.Parse(rec.Name.Substring(5)) && t.ChairAmount == 0)
+                                {
+                                    MessageBox.Show("You must be set Chair Amount greater than 0!");
+                                    return;
+                                }
+
                                 rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
                                 rec.MouseMove -= btnTableAdded_MoveDrag;
                                 rec.Opacity = 1;
@@ -606,12 +666,22 @@ namespace POS
 
                                 writeTableData(1, "", rec, true, true, false, false);
 
-                                MessageBox.Show("Go to order with " + rec.Name);
+                                MessageBox.Show("Go to order with table " + t.TableNumber);
                                 break;
                             }
                         }
 
                         //pass
+                        foreach (Model.Table t in TableTempData.TbList)
+                        {
+                            if (t.TableNumber == int.Parse(rec.Name.Substring(5)))
+                            {
+                                ((MainWindow)Application.Current.MainWindow).currentTable = t;
+                                var orderControl = (Entry)((MainWindow)Application.Current.MainWindow).en;
+                                orderControl.ucOrder.RefreshControl();
+                                ((MainWindow)Application.Current.MainWindow).myFrame.Navigate(orderControl);
+                            }
+                        }
                     }
                 }
             }
@@ -625,7 +695,7 @@ namespace POS
             {
                 currentRec = sender as Rectangle;
 
-                foreach(Model.Table t in TableTempData.TbList)
+                foreach (Model.Table t in TableTempData.TbList)
                 {
                     if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                     {
@@ -683,6 +753,8 @@ namespace POS
                         writeTableData(1, "", currentRec, true, false, false, false);
                     }
                 }
+
+                currentRec.ToolTip = setTooltip(currentRec);
             }
         }
 
@@ -696,7 +768,7 @@ namespace POS
                     TableSettingDialog tablleSetting = new TableSettingDialog(t);
                     tablleSetting.ShowDialog();
 
-                    //writeTableData(1, "", null, false, false, false);
+                    writeTableData(1, "chair", null, true, false, false, false);
                     break;
                 }
             }
@@ -705,10 +777,21 @@ namespace POS
         //su kien khi lua chon remove tu popup menu cua table
         private void removeTable_Click(object sender, RoutedEventArgs e)
         {
-            if (currentRec.Fill == Brushes.DarkCyan)
+            foreach (Model.Table t in TableTempData.TbList)
             {
-                MessageBox.Show("This table is ordering! You can not remove this table");
-                return;
+                if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)) && t.TableOrderDetails.Count != 0)
+                {
+                    MessageBox.Show("This table is ordering! You can not remove this table");
+                    return;
+                }
+
+                if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)) && t.TableOrderDetails.Count == 0)
+                {
+                    writeTableData(1, "", currentRec, false, false, true, false);
+                    grTable.Children.Remove(currentRec);
+                    buttonTableCurrentNumber--;
+                    return;
+                }
             }
 
             writeTableData(1, "", currentRec, false, false, true, false);
@@ -719,11 +802,11 @@ namespace POS
         //su kien demo payed
         private void payedTable_Click(object sender, RoutedEventArgs e)
         {
-            foreach(Model.Table t in TableTempData.TbList)
+            foreach (Model.Table t in TableTempData.TbList)
             {
                 if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                 {
-                    if(t.IsPinned)
+                    if (t.IsPinned)
                     {
                         currentRec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
                         currentRec.MouseMove -= btnTableAdded_MoveDrag;
@@ -745,6 +828,8 @@ namespace POS
                     }
                 }
             }
+
+            currentRec.ToolTip = setTooltip(currentRec);
         }
 
         Point startPoint;
@@ -776,7 +861,11 @@ namespace POS
 
                 return;
             }
+        }
 
+        //su kien khi move qua Table
+        private void btnTableAdded_MouseMove(object sender, MouseEventArgs e)
+        {
             (sender as Rectangle).ToolTip = setTooltip(sender as Rectangle);
         }
 
@@ -916,17 +1005,17 @@ namespace POS
 
                     if (table.TableOrder != null)
                     {
-                        foreach (var cus in CustomerData.CusList)
+                        if (table.TableOrder.cus_id != null)
                         {
-                            if (table.TableOrder.cus_id.Equals(cus.Cus_id))
+                            foreach (var cus in CustomerData.CusList)
                             {
-                                tt += "\nOrder Customer: " + cus.Name;
+                                if (table.TableOrder.cus_id.Equals(cus.Cus_id))
+                                {
+                                    tt += "\nOrder Customer: " + cus.Name;
+                                }
                             }
-                        }
 
-                        foreach (var tableOD in table.TableOrderDetails)
-                        {
-                            if (table.TableOrder.ordernote_id.Equals(tableOD.Ordernote_id))
+                            foreach (var tableOD in table.TableOrderDetails)
                             {
                                 foreach (var pro in ProductData.PList)
                                 {
@@ -941,7 +1030,7 @@ namespace POS
                         }
                     }
 
-                    if(table.IsPinned)
+                    if (table.IsPinned)
                     {
                         tt += "\nPinned";
                     }

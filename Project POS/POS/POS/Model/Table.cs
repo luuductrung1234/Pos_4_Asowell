@@ -13,6 +13,7 @@ namespace POS.Model
     {
         private int _TableNumber { get; set; }
         private int _ChairAmount { get; set; }
+        //private List<Chair> _ChairData{ get; set; }
         private Point _Position { get; set; }
         private bool _IsPinned { get; set; }
         private OrderNote _TableOrder { get; set; }
