@@ -9,36 +9,137 @@
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1366">
-
-    <Grid Margin="0,0,0,0.4">
-        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center" Background="Black" Height="Auto" >
-            <Button x:Name="bntDash" Content="Dash" Height="42" Width="98" Click="bntDash_Click" />
-            <Button x:Name="bntTable"  Height="42" Width="98" Click="bntTable_Click"     >
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Icon\icons8_Table_52px.png" Height="30" Width="32" />
-                    <TextBlock Text="Table"/>
-                </StackPanel>
-            </Button>
-            <Button x:Name="bntEntry"  Height="42" Width="100" Click="bntEntry_Click" >
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Icon\Restaurant_52px.png" Height="30" Width="32" />
-                    <TextBlock Text="Entry"/>
-                </StackPanel>
-            </Button>
-            <Button x:Name="bntInfo"  Height="42" Width="98" Click="bntInfo_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Icon\icons8_Info_52px.png" Height="30" Width="32" />
-                    <TextBlock Text="Info"/>
-                </StackPanel>
-            </Button>
+        Title="MainWindow"
+        Height="768"
+        Width="1366">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
 
-        </StackPanel>
-        <Grid VerticalAlignment="Bottom">
-            <Frame x:Name="myFrame" NavigationUIVisibility="Hidden"/>
-        </Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="89,49,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-    </Grid>
+
+            <!-- data template used for the dialogs example, defines a View for a ViewModel of type DateTime  -->
+
+        </ResourceDictionary>
+    </Window.Resources>
+    <materialDesign:DialogHost Identifier="RootDialog"
+                               SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="212">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                  DockPanel.Dock="Top"
+                                  HorizontalAlignment="Right"
+                                  Margin="16"
+                                  IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                    <ListBox x:Name="DemoItemsListBox"
+                             Margin="0 16 0 16"
+                             SelectedIndex="0"
+                             PreviewMouseLeftButtonUp="DemoItemsListBox_PreviewMouseLeftButtonUp">
+                        <ListBoxItem Content="change the look"
+                                     PreviewMouseLeftButtonUp="ListBoxItem_PreviewMouseLeftButtonUp" />
+                    </ListBox>
+                </DockPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <DockPanel>
+                <materialDesign:ColorZone Padding="16"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                          Mode="PrimaryDark"
+                                          DockPanel.Dock="Top">
+                    <DockPanel>
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                      IsChecked="False"
+                                      x:Name="MenuToggleButton" />
+                        <materialDesign:PopupBox DockPanel.Dock="Right"
+                                                 PlacementMode="BottomAndAlignRightEdges"
+                                                 StaysOpen="False">
+                            <StackPanel>
+                                <Button Content="Hello World" />
+                                <Button Content="Nice Popup" />
+                                <Button Content="Can't Touch This"
+                                        IsEnabled="False" />
+                                <Separator />
+                                <Button Content="Goodbye" />
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="22">Material Design In XAML Toolkit</TextBlock>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="11*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                Background="Black"
+                                Height="Auto">
+                        <Button x:Name="bntDash"
+                                Content="Dash"
+                                Height="42"
+                                Width="98"
+                                Click="bntDash_Click" />
+                        <Button x:Name="bntTable"
+                                Height="42"
+                                Width="98"
+                                Click="bntTable_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Icon\icons8_Table_52px.png"
+                                       Height="30"
+                                       Width="32" />
+                                <TextBlock Text="Table" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="bntEntry"
+                                Height="42"
+                                Width="100"
+                                Click="bntEntry_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Icon\Restaurant_52px.png"
+                                       Height="30"
+                                       Width="32" />
+                                <TextBlock Text="Entry" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="bntInfo"
+                                Height="42"
+                                Width="98"
+                                Click="bntDash_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Icon\icons8_Info_52px.png"
+                                       Height="30"
+                                       Width="32" />
+                                <TextBlock Text="Info" />
+                            </StackPanel>
+                        </Button>
+
+
+
+                    </StackPanel>
+
+                    <Grid VerticalAlignment="Center"
+                          Grid.Row="1">
+                        <Frame x:Name="myFrame"
+                               NavigationUIVisibility="Hidden" />
+                    </Grid>
+                    <Button x:Name="button"
+                            Content="Button"
+                            Grid.Row="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Width="75"
+                            Click="button_Click" />
+                </Grid>
+            </DockPanel>
+        </materialDesign:DrawerHost>
+    </materialDesign:DialogHost>
 
 </Window>

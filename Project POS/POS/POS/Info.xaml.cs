@@ -28,20 +28,20 @@ namespace POS
         {
             InitializeComponent();
 
-            initEmployeeInfo();
+            //initEmployeeInfo();
         }
 
-        private void initEmployeeInfo()
-        {
-            txtUsername.Text = emp.Username;
-            txtPass.Password = emp.Pass.ToString(); ;
-            txtName.Text = emp.Name;
-            txtBirth.Text = emp.Birth.ToString(formatDate);
-            txtAddr.Text = emp.Addr;
-            txtEmail.Text = emp.Email;
-            txtPhone.Text = emp.Phone;
-            txtStartDay.Text = emp.Startday.ToString(formatDate);
-            txtHourWage.Text = emp.Hour_wage.ToString();
-        }
+        //private void initEmployeeInfo()
+        //{
+        //    txtUsername.Text = emp.Username;
+        //    txtPass.Password = emp.Pass.ToString(); ;
+        //    txtName.Text = emp.Name;
+        //    txtBirth.Text = emp.Birth.ToString(formatDate);
+        //    txtAddr.Text = emp.Addr;
+        //    txtEmail.Text = emp.Email;
+        //    txtPhone.Text = emp.Phone;
+        //    txtStartDay.Text = emp.Startday.ToString(formatDate);
+        //    txtHourWage.Text = emp.Hour_wage.ToString();
+        //}
     }
 }

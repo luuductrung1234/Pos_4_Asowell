@@ -5,11 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz" 
              xmlns:local="clr-namespace:POS"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             Height="500" Width="700" FontFamily="Segoe UI Black">
+             Height="700" Width="800" FontFamily="Segoe UI Black">
     <Grid>
-        <dragablz:TabablzControl  x:Name="tabControl" Background="DarkGray">
+        <materialDesign:ColorZone Mode="PrimaryDark" Grid.Row="0" Margin="0 8 0 0" CornerRadius="2" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+            <StackPanel Orientation="Horizontal" Margin="8">
+                <Border Background="White" MaxHeight="30" CornerRadius="3" ToolTip="Enter to search, ignore case">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" 
+                                Command="{Binding SearchCommand}" x:Name="SearchButton"
+                                CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
+                                Height="24" Width="24">
+                            <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                        </Button>
+                        <TextBox Foreground="Black" Grid.Column="1" Margin="5 0 0 0" KeyDown="Search_OnKeyDown"
+                             materialDesign:HintAssist.Hint="Search" x:Name="SearchBox"
+                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0"
+                             MinWidth="200" VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <dragablz:TabablzControl Height="600"  x:Name="tabControl" Background="DarkGray" >
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -50,6 +73,7 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </dragablz:TabablzControl>
+      
 
     </Grid>
 </UserControl>

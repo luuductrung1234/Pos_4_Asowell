@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Images\Search_50px.png" />
     <Resource Include="Icon\Restaurant_52px.png" />
     <Resource Include="Icon\Vector-Iluustartor.png" />
     <Resource Include="Icon\icons8_Unpin_32px.png" />
