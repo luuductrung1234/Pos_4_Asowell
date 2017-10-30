@@ -20,14 +20,14 @@
 
             <TextBlock Text="Login Form" FontSize="35" TextAlignment="Center"/>
         </materialDesign:ColorZone>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="51,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="User Name" FontSize="15"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="51,10.4,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Grid.Row="1" FontSize="15"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="191,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
-        <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="191,7.4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147" Grid.Row="1"/>
-        <Button  x:Name="button"  HorizontalAlignment="Left" Margin="51,89.4,0,0" VerticalAlignment="Top" Width="75" Grid.Row="1" Click="button_Click">
+        <TextBlock x:Name="txbUserName" HorizontalAlignment="Left" Margin="51,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="User Name" FontSize="15"/>
+        <TextBlock x:Name="txbPass" HorizontalAlignment="Left" Margin="51,10.4,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Grid.Row="1" FontSize="15"/>
+        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="23" Margin="191,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
+        <PasswordBox x:Name="txtPass" HorizontalAlignment="Left" Height="23" Margin="191,7.4,0,0" VerticalAlignment="Top" Width="147" Grid.Row="1"/>
+        <Button  x:Name="btnLogin"  HorizontalAlignment="Left" Margin="51,89.4,0,0" VerticalAlignment="Top" Width="75" Grid.Row="1" Click="btnLogin_Click">
             Login
         </Button>
-        <Button Style="{DynamicResource MaterialDesignFloatingActionButton}" Foreground="Yellow" x:Name="button1" HorizontalAlignment="Left" Margin="191,89.4,0,0" VerticalAlignment="Top" Width="38" Grid.Row="1" Height="32" Click="button1_Click">
+        <Button Style="{DynamicResource MaterialDesignFloatingActionButton}" Foreground="Yellow" x:Name="btnDatabase" HorizontalAlignment="Left" Margin="191,89.4,0,0" VerticalAlignment="Top" Width="38" Grid.Row="1" Height="32" Click="btnDatabase_Click">
             <materialDesign:PackIcon Kind="Database"  Foreground="Black"/>
             <Button.ToolTip>
                 Database Configuration

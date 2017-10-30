@@ -26,7 +26,7 @@
                     <TextBlock Text="Entry"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="bntInfo"  Height="42" Width="98" Click="bntDash_Click">
+            <Button x:Name="bntInfo"  Height="42" Width="98" Click="bntInfo_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="Icon\icons8_Info_52px.png" Height="30" Width="32" />
                     <TextBlock Text="Info"/>

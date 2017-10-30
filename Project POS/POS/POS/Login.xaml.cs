@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,16 +23,36 @@ namespace POS
         public Login()
         {
             InitializeComponent();
+
+            this.WindowState = WindowState.Normal;
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            string username = txtUsername.Text;
+            string pass = txtPass.Password;
 
+            List<Employee> empList = EmployeeData.EmpList;
+
+            foreach(Employee emp in empList)
+            {
+                if(emp.Username.Equals(username) && emp.Pass.Equals(pass))
+                {
+                    App.Current.Properties["EmpLogin"] = emp;
+
+                    MainWindow main = new MainWindow();
+                    main.Show();
+
+                    break;
+                }
+            }
+
+            this.Close();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void btnDatabase_Click(object sender, RoutedEventArgs e)
         {
-         
+
         }
     }
 }

@@ -27,11 +27,11 @@ namespace POS
         {
             InitializeComponent();
 
-            initTable();
+            initTableData();
         }
 
-        //load table data tu file "table.txt"
-        private void initTable()
+        //load table data
+        private void initTableData()
         {
             initBackgroundTable(readTableData(0, "tableImagePath.txt"));
 
@@ -115,9 +115,10 @@ namespace POS
                             rec.Fill = Brushes.Red;
                             rec.Opacity = 0.65;
 
-                            ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
-                            backImg.Stretch = Stretch.Fill;
-                            rec.Fill = backImg;
+                            //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
+                            //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
+                            //backImg.Stretch = Stretch.Fill;
+                            //rec.Fill = backImg;
 
                             rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
                             rec.MouseMove += btnTableAdded_MoveDrag;

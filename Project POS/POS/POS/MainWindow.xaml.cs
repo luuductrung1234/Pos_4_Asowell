@@ -25,6 +25,7 @@ namespace POS
         internal Table b = new Table();
         internal Dash d = new Dash();
         internal Entry en = new Entry();
+        internal Info info = new Info();
 
         public MainWindow()
         {
@@ -38,18 +39,18 @@ namespace POS
             bntTable.IsEnabled = true;
             bntDash.IsEnabled = false;
             bntEntry.IsEnabled = true;
+            bntInfo.IsEnabled = true;
             myFrame.Navigate(d);
 
         }
-
-       
-
+        
         private void bntTable_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(b); 
             bntTable.IsEnabled = false;
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = true;
+            bntInfo.IsEnabled = true;
         }
 
         private void bntEntry_Click(object sender, RoutedEventArgs e)
@@ -58,7 +59,16 @@ namespace POS
             bntTable.IsEnabled = true;
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = false;
-            
+            bntInfo.IsEnabled = true;
+        }
+
+        private void bntInfo_Click(object sender, RoutedEventArgs e)
+        {
+            myFrame.Navigate(info);
+            bntTable.IsEnabled = true;
+            bntDash.IsEnabled = true;
+            bntEntry.IsEnabled = true;
+            bntInfo.IsEnabled = false;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
