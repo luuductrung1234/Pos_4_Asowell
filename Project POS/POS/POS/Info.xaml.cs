@@ -28,7 +28,7 @@ namespace POS
         {
             InitializeComponent();
 
-            //initEmployeeInfo();
+          //  initEmployeeInfo();
         }
 
         //private void initEmployeeInfo()
