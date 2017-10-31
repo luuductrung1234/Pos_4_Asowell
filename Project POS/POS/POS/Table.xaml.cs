@@ -274,7 +274,7 @@ namespace POS
                             {
                                 curTable.TableNumber = int.Parse(rec.Name.Substring(5));
                                 curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                                curTable.TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)) };
+                                curTable.TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)), ordertime = DateTime.Now };
                                 curTable.TableOrderDetails = new List<OrderNoteDetails>();
                                 break;
                             }
@@ -294,7 +294,7 @@ namespace POS
                         TableNumber = int.Parse(rec.Name.Substring(5)),
                         Position = new Point(rec.Margin.Left, rec.Margin.Top),
                         IsPinned = false,
-                        TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)) },
+                        TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)), ordertime = DateTime.Now },
                         TableOrderDetails = new List<OrderNoteDetails>()
                     };
 

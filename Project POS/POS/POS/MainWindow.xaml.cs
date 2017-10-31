@@ -23,6 +23,7 @@ namespace POS
     public partial class MainWindow : Window
     {
         public POS.Model.Table currentTable { get; set; }
+        public Model.Chair currentChair { get; set; }
         internal Table b = new Table();
         internal Dash d = new Dash();
         internal Entry en = new Entry();

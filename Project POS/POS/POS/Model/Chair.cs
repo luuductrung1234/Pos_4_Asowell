@@ -11,6 +11,7 @@ namespace POS.Model
     public class Chair : INotifyPropertyChanged
     {
         private int _ChairNumber { get; set; }
+        private int _TableOfChair { get; set; }
         private List<OrderNoteDetails> _ChairOrderDetails { get; set; }
 
         public int ChairNumber
@@ -23,6 +24,18 @@ namespace POS.Model
             {
                 _ChairNumber = value;
                 OnPropertyChanged("ChairNumber");
+            }
+        }
+
+        public int TableOfChair
+        {
+            get
+            {
+                return _TableOfChair;
+            }
+            set
+            {
+                _TableOfChair = value;
             }
         }
 

@@ -24,13 +24,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0"
+                      Margin="0,0,10,0">
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontSize" Value="14"/>
                     </Style>
                 </Grid.Resources>
-                <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical"
+                                Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Day" Foreground="Black" />
                         <TextBlock x:Name="txtDay"  Width="150" Margin="50,0,0,0"/>
@@ -53,11 +55,15 @@
 
                 </StackPanel>
             </Grid>
-            <Grid Grid.Column="1">
-                <WrapPanel x:Name="wp">
-                        
-                </WrapPanel>
-            </Grid>
+            <Grid Grid.ColumnSpan="2"
+                      Margin="206,0,0,0">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  VerticalAlignment="Stretch">
+                        <WrapPanel x:Name="wp">
+
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Grid>
         </Grid>
         <Grid Grid.Row="1">
             <ListView Name="lvData" Width="460" VerticalAlignment="Top" Background="#FFED5C5C">

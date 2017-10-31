@@ -39,42 +39,63 @@ namespace POS
             DependencyObject TextBoxInTemplate = GetTemplateChild("searchinputfield"); // set the name as the x:Name for the controls in your xaml.
             TextBox InputTextBox = (TextBox)TextBoxInTemplate;
             base.OnApplyTemplate();
-
-
         }
 
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //if (((MainWindow)Application.Current.MainWindow).currentTable != null)
-            //{
-                var item = (sender as ListView).SelectedItem;
-                if (item != null)
+            if (((MainWindow)Application.Current.MainWindow).currentTable == null)
+            {
+                return;
+            }
+
+            var item = (sender as ListView).SelectedItem;
+            if (item != null)
+            {
+                OrderNoteDetails o = new OrderNoteDetails();
+                Product it = (Product)lvCategory.SelectedItem;
+                //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+                //var chairordernotedetails = ((MainWindow)Application.Current.MainWindow).currentChair.ChairOrderDetails;
+                //var found = ordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
+                //int i = ordernotedetails.IndexOf(found);
+                //if (found == null)
+                //{
+                //    o.Product_id = it.Product_id;
+                //    o.Quan = 1;
+                //    ordernotedetails.Add(o);
+                //}
+                //else
+                //{
+                //    o.Product_id = it.Product_id;
+                //    o.Quan = ordernotedetails[i].Quan + 1;
+                //    o.SelectedStats = ordernotedetails[i].SelectedStats;
+
+                //    ordernotedetails[i] = o;
+                //}
+
+                //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+                var chairordernotedetails = ((MainWindow)Application.Current.MainWindow).currentChair.ChairOrderDetails;
+                var found = chairordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
+                int i = chairordernotedetails.IndexOf(found);
+                if (found == null)
                 {
-                    OrderNoteDetails o = new OrderNoteDetails();
-                    Product it = (Product)lvCategory.SelectedItem;
-                    var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
-                    var found = ordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
-                    int i = ordernotedetails.IndexOf(found);
-                    if (found == null)
-                    {
-                        o.Product_id = it.Product_id;
-                        o.Quan = 1;
-                        ordernotedetails.Add(o);
-                    }
-                    else
-                    {
-                        o.Product_id = it.Product_id;
-                        o.Quan = ordernotedetails[i].Quan + 1;
-                        o.SelectedStats = ordernotedetails[i].SelectedStats;
-
-
-                        ordernotedetails[i] = o;
-                    }
-                    lvCategory.UnselectAll();
-
-                    ((MainWindow)Application.Current.MainWindow).en.ucOrder.RefreshControl();
+                    o.Product_id = it.Product_id;
+                    o.Quan = 1;
+                    chairordernotedetails.Add(o);
                 }
-            //}
+                else
+                {
+                    o.Product_id = it.Product_id;
+                    o.Quan = chairordernotedetails[i].Quan + 1;
+                    o.SelectedStats = chairordernotedetails[i].SelectedStats;
+
+                    chairordernotedetails[i] = o;
+                }
+
+                lvCategory.UnselectAll();
+
+                ((MainWindow)Application.Current.MainWindow).en.ucOrder.RefreshControl();
+            }
+
 
         }
 

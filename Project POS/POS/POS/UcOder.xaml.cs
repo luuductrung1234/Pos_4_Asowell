@@ -27,26 +27,48 @@ namespace POS
         public UcOder()
         {
             InitializeComponent();
+            
+            this.Loaded += UcOder_Loaded;
+        }
 
+        private void UcOder_Loaded(object sender, RoutedEventArgs e)
+        {
+            loadChair();
         }
 
         public void RefreshControl()
         {
             try
             {
+                //// lay ordernotedetails cua ban thu nhat
+                //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+                //var ordertabledetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrder;
+                //// chuyen product_id thanh product name
+                //var query = from orderdetails in ordernotedetails
+                //            join product in ProductData.PList
+                //            on orderdetails.Product_id equals product.Product_id
+                //            select new OrderDetails_Product_Joiner
+                //            {
+                //                OrderDetails = orderdetails,
+                //                Product = product
+                //            };
+
                 // lay ordernotedetails cua ban thu nhat
-                var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+                //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+                var chairoftable = ((MainWindow)Application.Current.MainWindow).currentTable.ChairData;
+                var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Application.Current.MainWindow).currentChair.ChairNumber) && x.TableOfChair.Equals(((MainWindow)Application.Current.MainWindow).currentChair.TableOfChair));
+                var chairordernotedetails = foundchair.ChairOrderDetails;
                 var ordertabledetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrder;
                 // chuyen product_id thanh product name
-                var query = from orderdetails in ordernotedetails
+                var query = from orderdetails in chairordernotedetails
                             join product in ProductData.PList
                             on orderdetails.Product_id equals product.Product_id
+
                             select new OrderDetails_Product_Joiner
                             {
                                 OrderDetails = orderdetails,
                                 Product = product
                             };
-
 
                 // binding
                 lvData.ItemsSource = query;
@@ -54,7 +76,8 @@ namespace POS
                 txtTable.Text = ordertabledetails.ordertable.ToString();
                 loadTotalPrice();
                 //loadCustomerOwner();
-                loadChair();
+                //loadChair();
+                
             }
             catch (Exception ex)
             {
@@ -62,6 +85,7 @@ namespace POS
             }
         }
 
+        ToggleButton curChair;
         private void loadChair()
         {
             wp.Children.Clear();
@@ -79,20 +103,48 @@ namespace POS
                 button.SetValue(StyleProperty, FindResource("MaterialDesignActionToggleButton"));
                 button.Checked += buttonChair_Checked;
                 button.Unchecked += buttonChair_Unchecked;
+
+                Chair chair = new Chair()
+                {
+                    ChairNumber = i + 1,
+                    TableOfChair = ((MainWindow)Application.Current.MainWindow).currentTable.TableNumber,
+                    ChairOrderDetails = new List<OrderNoteDetails>()
+                };
+                ChairData.ChairList.Add(chair);
+
                 wp.Children.Add(button);
             }
         }
 
         private void buttonChair_Checked(object sender, RoutedEventArgs e)
         {
-            ToggleButton button = sender as ToggleButton;
-            txtTable.Text = button.Name;
+            curChair = sender as ToggleButton;
+
+            foreach (Model.Chair chair in ChairData.ChairList)
+            {
+                if(chair.ChairNumber == int.Parse(curChair.Name.Substring(5)) && chair.TableOfChair == ((MainWindow)Application.Current.MainWindow).currentTable.TableNumber)
+                {
+                    ((MainWindow)Application.Current.MainWindow).currentChair = chair;
+                    break;
+                }
+            }
+
+            foreach (ToggleButton btn in wp.Children)
+            {
+                if(!btn.Name.Equals(curChair.Name))
+                {
+                    btn.IsChecked = false;
+                }
+            }
+
+            MessageBox.Show(((MainWindow)Application.Current.MainWindow).currentChair.ChairNumber + "\n" + ((MainWindow)Application.Current.MainWindow).currentChair.TableOfChair);
+
+            txtTable.Text = curChair.Name;
         }
 
         private void buttonChair_Unchecked(object sender, RoutedEventArgs e)
         {
-            ToggleButton button = sender as ToggleButton;
-            txtTable.Text = ((MainWindow)Application.Current.MainWindow).currentTable.TableNumber.ToString();
+            
         }
 
         public class OrderDetails_Product_Joiner : INotifyPropertyChanged
