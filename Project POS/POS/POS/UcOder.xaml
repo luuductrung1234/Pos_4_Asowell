@@ -10,7 +10,7 @@
              d:DesignHeight="500" Width="450"
             >
     <GroupBox Header="Order Detail"
-              materialDesign:ColorZoneAssist.Mode="PrimaryDark"
+              materialDesign:ColorZoneAssist.Mode="PrimaryMid"
               >
         
     <Grid>
@@ -34,23 +34,30 @@
                 <StackPanel Orientation="Vertical"
                                 Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Day" Foreground="Black" />
-                        <TextBlock x:Name="txtDay"  Width="150" Margin="50,0,0,0"/>
+                        <TextBlock Text="Day" Foreground="Black"
+                                       FontFamily="Segoe WP Black" />
+                            <TextBlock FontFamily="Segoe WP Black"
+                                       x:Name="txtDay"  Width="150" Margin="50,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Customers" Foreground="Black" Margin="2"/>
-                        <ComboBox x:Name="cboCustomers" Background="White" Width="100" Margin="5,0,0,0"/>
+                            <TextBlock FontFamily="Segoe WP Black"
+                                       Text="Customers" Foreground="Black" Margin="2"/>
+                            <ComboBox FontFamily="Segoe WP Black"
+                                      x:Name="cboCustomers" Background="White" Width="100" Margin="5,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Table" Foreground="Black" Margin="2"/>
-                            <TextBlock x:Name="txtTable"
+                    <StackPanel  Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe WP Black"
+                                       Text="Table" Foreground="Black" Margin="2"/>
+                            <TextBlock  FontFamily="Segoe WP Black"
+                                        x:Name="txtTable"
                                        Foreground="Black"
                                        Width="100"
                                        Margin="33.5,0,0,0" />
                         </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Total Bill" Foreground="Black" Margin="2"/>
-                        <TextBlock x:Name="txtTotal" Foreground="Black" Text="0" Width="100" Margin="17,0,0,0"/>
+                            <TextBlock FontFamily="Segoe WP Black"
+                                       Text="Total Bill" Foreground="Black" Margin="2"/>
+                        <TextBlock FontFamily="Segoe WP Black" x:Name="txtTotal" Foreground="Black" Text="0" Width="100" Margin="17,0,0,0"/>
                     </StackPanel>
 
                 </StackPanel>

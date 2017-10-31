@@ -27,11 +27,11 @@ namespace POS
         {
             InitializeComponent();
 
-            foreach (Employee e in EmployeeData.EmpList)
-            {
-                App.Current.Properties["EmpLogin"] = e;
-                break;
-            }
+            //foreach (Employee e in EmployeeData.EmpList)
+            //{
+            //    App.Current.Properties["EmpLogin"] = e;
+            //    break;
+            //}
 
             initTableData();
         }

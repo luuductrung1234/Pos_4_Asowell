@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS"
+        xmlns:wpf="clr-namespace:POS.Model"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
@@ -49,7 +50,8 @@
                 <materialDesign:ColorZone Padding="16"
                                           materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                           Mode="PrimaryDark"
-                                          DockPanel.Dock="Top">
+                                          DockPanel.Dock="Top"
+                                          Height="74">
                     <DockPanel>
                         <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
                                       IsChecked="False"
@@ -57,18 +59,32 @@
                         <materialDesign:PopupBox DockPanel.Dock="Right"
                                                  PlacementMode="BottomAndAlignRightEdges"
                                                  StaysOpen="False">
+
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:Chip x:Name="cUser"
+                                                     Margin="0,0,6,4"
+                                                     Background="White"
+                                                     IsEnabled="False">
+                                    <materialDesign:Chip.IconBackground>
+                                        <SolidColorBrush Color="Black" />
+                                    </materialDesign:Chip.IconBackground>
+                                    <materialDesign:Chip.Icon>
+                                        <materialDesign:PackIcon Kind="Account" />
+                                    </materialDesign:Chip.Icon>
+                                </materialDesign:Chip>
+                            </materialDesign:PopupBox.ToggleContent>
+
                             <StackPanel>
-                                <Button Content="Hello World" />
+                                <Button Content="View Detail" />
                                 <Button Content="Nice Popup" />
-                                <Button Content="Can't Touch This"
-                                        IsEnabled="False" />
+                                <Button Content="Log out" />
                                 <Separator />
                                 <Button Content="Goodbye" />
                             </StackPanel>
                         </materialDesign:PopupBox>
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   FontSize="22">Material Design In XAML Toolkit</TextBlock>
+                                   FontSize="22">ASOWELL POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>
@@ -76,67 +92,59 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="11*" />
                     </Grid.RowDefinitions>
-                    <StackPanel VerticalAlignment="Center"
-                                Orientation="Horizontal"
-                                Grid.Row="0"
-                                HorizontalAlignment="Center"
-                                Background="Black"
-                                Height="Auto">
-                        <Button x:Name="bntDash"
-                                Content="Dash"
-                                Height="42"
-                                Width="98"
-                                Click="bntDash_Click" />
-                        <Button x:Name="bntTable"
-                                Height="42"
-                                Width="98"
-                                Click="bntTable_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="Icon\icons8_Table_52px.png"
-                                       Height="30"
-                                       Width="32" />
-                                <TextBlock Text="Table" />
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="bntEntry"
-                                Height="42"
-                                Width="100"
-                                Click="bntEntry_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="Icon\Restaurant_52px.png"
-                                       Height="30"
-                                       Width="32" />
-                                <TextBlock Text="Entry" />
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="bntInfo"
-                                Height="42"
-                                Width="98"
-                                Click="bntDash_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="Icon\icons8_Info_52px.png"
-                                       Height="30"
-                                       Width="32" />
-                                <TextBlock Text="Info" />
-                            </StackPanel>
-                        </Button>
-
-
-
-                    </StackPanel>
-
+                    <Border BorderBrush="Red"
+                            BorderThickness="2"
+                            Grid.Row="0">
+                        <StackPanel VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Left"
+                                    Height="58"
+                                    Width="auto">
+                            
+                            <Button x:Name="bntDash"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Content="Dash"
+                                    Height="42"
+                                    Width="98"
+                                    Click="bntDash_Click"
+                                    FontSize="18" />
+                            <Button x:Name="bntTable"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Height="42"
+                                    Width="98"
+                                    Click="bntTable_Click"
+                                    FontSize="18">
+                               
+                         
+                                    Table
+                                
+                            </Button>
+                            <Button x:Name="bntEntry"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Height="42"
+                                    Width="100"
+                                    Click="bntEntry_Click"
+                                    FontSize="18">
+                               
+                                 Entry
+                             
+                            </Button>
+                            <Button x:Name="bntInfo"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Height="42"
+                                    Width="98"
+                                    Click="bntDash_Click"
+                                    FontSize="18">
+                               
+                            Info
+                            </Button>
+                        </StackPanel>
+                    </Border>
                     <Grid VerticalAlignment="Center"
                           Grid.Row="1">
                         <Frame x:Name="myFrame"
                                NavigationUIVisibility="Hidden" />
                     </Grid>
-                    <Button x:Name="button"
-                            Content="Button"
-                            Grid.Row="0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Width="75"
-                            Click="button_Click" />
                 </Grid>
             </DockPanel>
         </materialDesign:DrawerHost>

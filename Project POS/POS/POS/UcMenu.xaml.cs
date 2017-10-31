@@ -43,11 +43,6 @@ namespace POS
 
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (((MainWindow)Application.Current.MainWindow).currentTable == null)
-            {
-                return;
-            }
-
             var item = (sender as ListView).SelectedItem;
             if (item != null)
             {
@@ -95,7 +90,6 @@ namespace POS
 
                 ((MainWindow)Application.Current.MainWindow).en.ucOrder.RefreshControl();
             }
-
 
         }
 

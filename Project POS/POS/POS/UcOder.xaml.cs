@@ -88,6 +88,11 @@ namespace POS
         ToggleButton curChair;
         private void loadChair()
         {
+            if(((MainWindow)Application.Current.MainWindow).currentTable == null)
+            {
+                return;
+            }
+
             wp.Children.Clear();
             for(int i = 0; i < ((MainWindow)Application.Current.MainWindow).currentTable.ChairAmount; i++)
             {
