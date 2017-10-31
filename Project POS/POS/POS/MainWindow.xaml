@@ -84,7 +84,7 @@
                         </materialDesign:PopupBox>
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   FontSize="22">Material Design In XAML Toolkit</TextBlock>
+                                   FontSize="22">ASOWELL POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>
@@ -106,42 +106,37 @@
                                     Content="Dash"
                                     Height="42"
                                     Width="98"
-                                    Click="bntDash_Click" />
+                                    Click="bntDash_Click"
+                                    FontSize="18" />
                             <Button x:Name="bntTable"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Height="42"
                                     Width="98"
-                                    Click="bntTable_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Icon\icons8_Table_52px.png"
-                                           Height="30"
-                                           Width="32" />
-                                    <TextBlock Text="Table" />
-                                </StackPanel>
+                                    Click="bntTable_Click"
+                                    FontSize="18">
+                               
+                         
+                                    Table
+                                
                             </Button>
                             <Button x:Name="bntEntry"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Height="42"
                                     Width="100"
-                                    Click="bntEntry_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Icon\Restaurant_52px.png"
-                                           Height="30"
-                                           Width="32" />
-                                    <TextBlock Text="Entry" />
-                                </StackPanel>
+                                    Click="bntEntry_Click"
+                                    FontSize="18">
+                               
+                                 Entry
+                             
                             </Button>
                             <Button x:Name="bntInfo"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Height="42"
                                     Width="98"
-                                    Click="bntDash_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Icon\icons8_Info_52px.png"
-                                           Height="30"
-                                           Width="32" />
-                                    <TextBlock Text="Info" />
-                                </StackPanel>
+                                    Click="bntDash_Click"
+                                    FontSize="18">
+                               
+                            Info
                             </Button>
                         </StackPanel>
                     </Border>

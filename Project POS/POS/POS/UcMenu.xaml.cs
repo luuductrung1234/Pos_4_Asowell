@@ -47,9 +47,7 @@ namespace POS
         {
             //if (((MainWindow)Application.Current.MainWindow).currentTable != null)
             //{
-                var item = (sender as ListView).SelectedItem;
-                if (item != null)
-                {
+                
                     OrderNoteDetails o = new OrderNoteDetails();
                     Product it = (Product)lvCategory.SelectedItem;
                     var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
@@ -73,7 +71,7 @@ namespace POS
                     lvCategory.UnselectAll();
 
                     ((MainWindow)Application.Current.MainWindow).en.ucOrder.RefreshControl();
-                }
+                
             //}
 
         }

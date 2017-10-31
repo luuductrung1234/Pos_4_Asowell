@@ -27,7 +27,7 @@ namespace POS
         internal Dash d = new Dash();
         internal Entry en = new Entry();
         internal Info info = new Info();
-        internal Login login = new Login();
+        //internal Login login = new Login();
 
         public MainWindow()
         {
