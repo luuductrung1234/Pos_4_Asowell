@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -63,9 +64,10 @@ namespace POS
 
         private void loadChair()
         {
+            wp.Children.Clear();
             for(int i = 0; i < ((MainWindow)Application.Current.MainWindow).currentTable.ChairAmount; i++)
             {
-                Button button = new Button();
+                ToggleButton button = new ToggleButton();
                 button.Name = "chair" + (i + 1);
                 button.Content = (i + 1).ToString();
                 button.Width = 24;
@@ -74,9 +76,23 @@ namespace POS
                 m.Left = 5;
                 m.Top = 5;
                 button.Margin = m;
-                button.SetValue(StyleProperty, FindResource("MaterialDesignFloatingActionMiniButton"));
+                button.SetValue(StyleProperty, FindResource("MaterialDesignActionToggleButton"));
+                button.Checked += buttonChair_Checked;
+                button.Unchecked += buttonChair_Unchecked;
                 wp.Children.Add(button);
             }
+        }
+
+        private void buttonChair_Checked(object sender, RoutedEventArgs e)
+        {
+            ToggleButton button = sender as ToggleButton;
+            txtTable.Text = button.Name;
+        }
+
+        private void buttonChair_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ToggleButton button = sender as ToggleButton;
+            txtTable.Text = ((MainWindow)Application.Current.MainWindow).currentTable.TableNumber.ToString();
         }
 
         public class OrderDetails_Product_Joiner : INotifyPropertyChanged
@@ -142,10 +158,7 @@ namespace POS
                     PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-
-
-
+        
         public void loadTotalPrice()
         {
             var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
