@@ -13,7 +13,7 @@ namespace POS.Model
     {
         private int _TableNumber { get; set; }
         private int _ChairAmount { get; set; }
-        //private List<Chair> _ChairData{ get; set; }
+        private List<Chair> _ChairData { get; set; }
         private Point _Position { get; set; }
         private bool _IsPinned { get; set; }
         private OrderNote _TableOrder { get; set; }
@@ -35,6 +35,15 @@ namespace POS.Model
             {
                 _ChairAmount = value;
                 OnPropertyChanged("ChairAmount");
+            }
+        }
+        public List<Chair> ChairData
+        {
+            get { return _ChairData; }
+            set
+            {
+                _ChairData = value;
+                OnPropertyChanged("ChairData");
             }
         }
         public Point Position
@@ -83,6 +92,8 @@ namespace POS.Model
         private static List<Table> _tbList = new List<Table>()
                 {
                     new Table {TableNumber = 1, ChairAmount = 5, Position = new Point(100, 100), IsPinned = true,
+                        ChairData = new List<Chair> { new Chair { ChairNumber = 1, ChairOrderDetails = new List<OrderNoteDetails>() },
+                                                      new Chair { ChairNumber = 2, ChairOrderDetails = new List<OrderNoteDetails>() }, },
                                     TableOrder = new OrderNote { ordernote_id = "ORN0000001",
                                                                     cus_id = "CUS0000001",
                                                                     emp_id = "EMP0000001",

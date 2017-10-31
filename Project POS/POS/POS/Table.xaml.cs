@@ -156,17 +156,9 @@ namespace POS
                                 rec.Opacity = 0.65;
                             }
 
-                            if (t.TableOrder.cus_id != null && t.TableOrderDetails.Count != 0)
+                            if (t.TableOrder.cus_id != null || t.TableOrderDetails.Count != 0)
                             {
                                 rec.Fill = Brushes.DarkCyan;
-                                rec.MouseMove += btnTableAdded_MouseMove;
-                                rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
-                            }
-
-                            if (t.TableOrder.cus_id == null && t.TableOrderDetails.Count == 0)
-                            {
-                                rec.Fill = Brushes.Red;
-
                                 rec.MouseMove += btnTableAdded_MouseMove;
                                 rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
                             }
@@ -282,7 +274,7 @@ namespace POS
                             {
                                 curTable.TableNumber = int.Parse(rec.Name.Substring(5));
                                 curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                                curTable.TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id };
+                                curTable.TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)) };
                                 curTable.TableOrderDetails = new List<OrderNoteDetails>();
                                 break;
                             }
@@ -302,7 +294,7 @@ namespace POS
                         TableNumber = int.Parse(rec.Name.Substring(5)),
                         Position = new Point(rec.Margin.Left, rec.Margin.Top),
                         IsPinned = false,
-                        TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id },
+                        TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)) },
                         TableOrderDetails = new List<OrderNoteDetails>()
                     };
 
@@ -772,6 +764,8 @@ namespace POS
                     break;
                 }
             }
+
+            currentRec.ToolTip = setTooltip(currentRec);
         }
 
         //su kien khi lua chon remove tu popup menu cua table
