@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\asowell_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.197\lib\net45\Dragablz.dll</HintPath>
@@ -220,6 +223,7 @@
     <Resource Include="Icon\icons8_Pin_32px_9.png" />
     <Resource Include="Icon\Pencil Drawing_32px.png" />
     <Resource Include="Icon\Edit_52px.png" />
+    <Resource Include="Images\asowell_icon.ico" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />
