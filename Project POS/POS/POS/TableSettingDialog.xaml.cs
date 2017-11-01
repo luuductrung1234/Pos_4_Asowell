@@ -48,15 +48,7 @@ namespace POS
                 {
                     t.ChairAmount = int.Parse(txtChairAmount.Text);
 
-                    string dir = "";
-                    string serializationFile = System.IO.Path.Combine(dir, "tableRuntimeHistory.bin");
-
-                    using (Stream stream = File.Open(serializationFile, FileMode.Create))
-                    {
-                        var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-                        bformatter.Serialize(stream, TableTempData.TbList);
-                    }
+                    ReadWriteData.writeOnUpdateChair(t);
                 }
             }
 

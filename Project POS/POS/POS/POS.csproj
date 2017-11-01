@@ -105,6 +105,7 @@
     <Compile Include="Model\OrderNoteDetails.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductDetails.cs" />
+    <Compile Include="Model\ReadWriteData.cs" />
     <Compile Include="Model\Table.cs" />
     <Compile Include="StartupWindows.xaml.cs">
       <DependentUpon>StartupWindows.xaml</DependentUpon>
@@ -223,6 +224,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="TableTemp\tableImagePath.txt" />
     <Resource Include="Images\Search_50px.png" />
     <Resource Include="Icon\Restaurant_52px.png" />
     <Resource Include="Icon\Vector-Iluustartor.png" />

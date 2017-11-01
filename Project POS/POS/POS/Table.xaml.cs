@@ -27,24 +27,25 @@ namespace POS
         {
             InitializeComponent();
 
-            //foreach (Employee e in EmployeeData.EmpList)
-            //{
-            //    App.Current.Properties["EmpLogin"] = e;
-            //    break;
-            //}
-
+            foreach (Employee e in EmployeeData.EmpList)
+            {
+                App.Current.Properties["EmpLogin"] = e;
+                break;
+            }
+            
             initTableData();
         }
 
+        string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         //load table data
         private void initTableData()
         {
-            initBackgroundTable(readTableData(0, "tableImagePath.txt"));
+            initBackgroundTable(ReadWriteData.readTableImagePath());
 
-            if (!File.Exists("tableRuntimeHistory.bin"))
+            if (!ReadWriteData.checkBinFileExist())
             {
-                string dir = "";
-                string serializationFile = System.IO.Path.Combine(dir, "tableRuntimeHistory.bin");
+                string dir = startupProjectPath;
+                string serializationFile = System.IO.Path.Combine(dir, "TableTemp\\tableRuntimeHistory.bin");
 
                 using (Stream stream = File.Open(serializationFile, FileMode.Create))
                 {
@@ -53,120 +54,105 @@ namespace POS
                 }
             }
 
-            readTableData(1, "tableRuntimeHistory.bin");
+            readTableData(startupProjectPath + "\\TableTemp\\tableRuntimeHistory.bin");
         }
 
         //lay thong tin table image, tat ca table hien co
-        private string readTableData(int line, string fileName) //0: tableImagePath; 1: tableRuntimeHistory
+        private string readTableData(string fileName) //0: tableImagePath; 1: tableRuntimeHistory
         {
             try
             {
-                if (line == 0)
+                string dir = "";
+                string serializationFile = System.IO.Path.Combine(dir, fileName);
+
+                using (Stream stream = File.Open(serializationFile, FileMode.Open))
                 {
-                    using (FileStream fs = new FileStream(fileName, FileMode.Open))
+                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                    List<Model.Table> currentTableList = (List<Model.Table>)bformatter.Deserialize(stream);
+                    Rectangle rec;
+                    Thickness m;
+
+                    TableTempData.TbList = currentTableList;
+
+                    foreach (Model.Table t in currentTableList)
                     {
-                        using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
+                        if (maxTableCurrentNumber < t.TableNumber)
                         {
-                            string tableImagePath = rd.ReadLine();
-                            return tableImagePath;
+                            maxTableCurrentNumber = t.TableNumber;
                         }
                     }
-                }
 
-                if (line == 1)
-                {
-                    string dir = "";
-                    string serializationFile = System.IO.Path.Combine(dir, fileName);
-
-                    using (Stream stream = File.Open(serializationFile, FileMode.Open))
+                    foreach (Model.Table t in currentTableList)
                     {
-                        var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                        buttonTableCurrentNumber++;
 
-                        List<Model.Table> currentTableList = (List<Model.Table>)bformatter.Deserialize(stream);
-                        Rectangle rec;
-                        Thickness m;
-
-                        TableTempData.TbList = currentTableList;
-
-                        foreach (Model.Table t in currentTableList)
+                        rec = new Rectangle();
+                        if (t.TableNumber < 10)
                         {
-                            if (maxTableCurrentNumber < t.TableNumber)
-                            {
-                                maxTableCurrentNumber = t.TableNumber;
-                            }
+                            rec.Name = "table" + "0" + t.TableNumber;
+                        }
+                        else
+                        {
+                            rec.Name = "table" + t.TableNumber;
                         }
 
-                        foreach (Model.Table t in currentTableList)
+                        rec.HorizontalAlignment = HorizontalAlignment.Left;
+                        rec.VerticalAlignment = VerticalAlignment.Top;
+                        m = rec.Margin;
+                        m.Left = Convert.ToInt32(t.Position.X);
+                        m.Top = Convert.ToInt32(t.Position.Y);
+                        rec.Margin = m;
+                        rec.Width = 120;
+                        rec.Height = 60;
+                        rec.Fill = Brushes.Red;
+                        rec.Opacity = 0.65;
+
+                        //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
+                        //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
+                        //backImg.Stretch = Stretch.Fill;
+                        //rec.Fill = backImg;
+
+                        rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+                        rec.MouseMove += btnTableAdded_MoveDrag;
+                        rec.MouseMove += btnTableAdded_MouseMove;
+                        rec.MouseLeftButtonDown += btnTableAdded_Click;
+                        rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+
+                        rec.Cursor = Cursors.SizeAll;
+
+                        Panel.SetZIndex(rec, 30);
+                        grTable.Children.Add(rec);
+
+                        imgTable.MouseMove -= crossCursorToAdd;
+                        imgTable.MouseLeftButtonDown -= changeToNormalCursor;
+                        iii = 0;
+
+                        if (t.IsPinned)
                         {
-                            buttonTableCurrentNumber++;
+                            rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
+                            rec.MouseMove -= btnTableAdded_MoveDrag;
+                            rec.Opacity = 1;
+                            rec.Cursor = Cursors.Arrow;
+                        }
 
-                            rec = new Rectangle();
-                            if (t.TableNumber < 10)
-                            {
-                                rec.Name = "table" + "0" + t.TableNumber;
-                            }
-                            else
-                            {
-                                rec.Name = "table" + t.TableNumber;
-                            }
-
-                            rec.HorizontalAlignment = HorizontalAlignment.Left;
-                            rec.VerticalAlignment = VerticalAlignment.Top;
-                            m = rec.Margin;
-                            m.Left = Convert.ToInt32(t.Position.X);
-                            m.Top = Convert.ToInt32(t.Position.Y);
-                            rec.Margin = m;
-                            rec.Width = 120;
-                            rec.Height = 60;
+                        if (!t.IsPinned)
+                        {
+                            rec.Cursor = Cursors.SizeAll;
                             rec.Fill = Brushes.Red;
                             rec.Opacity = 0.65;
-
-                            //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
-                            //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
-                            //backImg.Stretch = Stretch.Fill;
-                            //rec.Fill = backImg;
-
-                            rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-                            rec.MouseMove += btnTableAdded_MoveDrag;
-                            rec.MouseMove += btnTableAdded_MouseMove;
-                            rec.MouseLeftButtonDown += btnTableAdded_Click;
-                            rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
-
-                            rec.Cursor = Cursors.SizeAll;
-
-                            Panel.SetZIndex(rec, 30);
-                            grTable.Children.Add(rec);
-
-                            imgTable.MouseMove -= crossCursorToAdd;
-                            imgTable.MouseLeftButtonDown -= changeToNormalCursor;
-                            iii = 0;
-
-                            if (t.IsPinned)
-                            {
-                                rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
-                                rec.MouseMove -= btnTableAdded_MoveDrag;
-                                rec.Opacity = 1;
-                                rec.Cursor = Cursors.Arrow;
-                            }
-
-                            if (!t.IsPinned)
-                            {
-                                rec.Cursor = Cursors.SizeAll;
-                                rec.Fill = Brushes.Red;
-                                rec.Opacity = 0.65;
-                            }
-
-                            if (t.TableOrder.cus_id != null || t.TableOrderDetails.Count != 0)
-                            {
-                                rec.Fill = Brushes.DarkCyan;
-                                rec.MouseMove += btnTableAdded_MouseMove;
-                                rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
-                            }
-
-                            rec.ToolTip = setTooltip(rec);
-
-                            //return rd.ReadToEnd();
                         }
+
+                        if (t.TableOrder.cus_id != null || t.TableOrderDetails.Count != 0)
+                        {
+                            rec.Fill = Brushes.DarkCyan;
+                            rec.MouseMove += btnTableAdded_MouseMove;
+                            rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+                        }
+
+                        rec.ToolTip = setTooltip(rec);
+
+                        //return rd.ReadToEnd();
                     }
                 }
 
@@ -177,143 +163,7 @@ namespace POS
                 return ex.Message;
             }
         }
-
-        //su kien luu table image path vao "fileName"
-        private void writeTableData(int line, string browseFilePath, Rectangle rec, bool isDrag, bool isPinned, bool isRemove, bool isPayed)
-        {
-            try
-            {
-                if (line == 0)
-                {
-                    using (FileStream fs = new FileStream("tableImagePath.txt", FileMode.Create))
-                    {
-                        using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
-                        {
-                            sWriter.WriteLine(browseFilePath);
-                        }
-                    }
-                }
-
-                if (line == 1)
-                {
-                    string dir = "";
-                    string serializationFile = System.IO.Path.Combine(dir, "tableRuntimeHistory.bin");
-
-                    if (isDrag)
-                    {
-                        if (browseFilePath.Equals("chair"))
-                        {
-                            foreach (Model.Table curTable in TableTempData.TbList)
-                            {
-                                if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                                {
-                                    curTable.TableNumber = int.Parse(rec.Name.Substring(5));
-                                    curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                                    break;
-                                }
-                            }
-
-                            using (Stream stream = File.Open(serializationFile, FileMode.Create))
-                            {
-                                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                                bformatter.Serialize(stream, TableTempData.TbList);
-                            }
-
-                            return;
-                        }
-
-                        foreach (Model.Table curTable in TableTempData.TbList)
-                        {
-                            if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                            {
-                                curTable.TableNumber = int.Parse(rec.Name.Substring(5));
-                                curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                                curTable.IsPinned = isPinned;
-                                break;
-                            }
-                        }
-
-                        using (Stream stream = File.Open(serializationFile, FileMode.Create))
-                        {
-                            var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                            bformatter.Serialize(stream, TableTempData.TbList);
-                        }
-
-                        return;
-                    }
-
-                    if (isRemove)
-                    {
-                        Model.Table delTable = new Model.Table();
-
-                        foreach (Model.Table curTable in TableTempData.TbList)
-                        {
-                            if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                            {
-                                delTable = curTable;
-                                break;
-                            }
-                        }
-
-                        TableTempData.TbList.Remove(delTable);
-
-                        using (Stream stream = File.Open(serializationFile, FileMode.Create))
-                        {
-                            var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                            bformatter.Serialize(stream, TableTempData.TbList);
-                        }
-
-                        return;
-                    }
-
-                    if (isPayed)
-                    {
-                        foreach (Model.Table curTable in TableTempData.TbList)
-                        {
-                            if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                            {
-                                curTable.TableNumber = int.Parse(rec.Name.Substring(5));
-                                curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                                curTable.TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)), ordertime = DateTime.Now };
-                                curTable.TableOrderDetails = new List<OrderNoteDetails>();
-                                break;
-                            }
-                        }
-
-                        using (Stream stream = File.Open(serializationFile, FileMode.Create))
-                        {
-                            var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                            bformatter.Serialize(stream, TableTempData.TbList);
-                        }
-
-                        return;
-                    }
-
-                    Model.Table newTable = new Model.Table()
-                    {
-                        TableNumber = int.Parse(rec.Name.Substring(5)),
-                        Position = new Point(rec.Margin.Left, rec.Margin.Top),
-                        IsPinned = false,
-                        TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)), ordertime = DateTime.Now },
-                        TableOrderDetails = new List<OrderNoteDetails>()
-                    };
-
-                    TableTempData.TbList.Add(newTable);
-
-                    using (Stream stream = File.Open(serializationFile, FileMode.Create))
-                    {
-                        var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                        bformatter.Serialize(stream, TableTempData.TbList);
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
-        }
-
+        
         //browse table image
         private void btnBrowseImage_Click(object sender, RoutedEventArgs e)
         {
@@ -329,8 +179,8 @@ namespace POS
                 browseFileName = browseFile.SafeFileName;
                 browseFilePath = browseFile.FileName;
 
-                writeTableData(0, browseFilePath, null, false, false, false, false);
-                initBackgroundTable(browseFilePath);
+                ReadWriteData.writeTableImagePath(browseFilePath);
+                initBackgroundTable(ReadWriteData.readTableImagePath());
             }
         }
 
@@ -361,13 +211,14 @@ namespace POS
                         browseFileName = browseFile.SafeFileName;
                         browseFilePath = browseFile.FileName;
 
-                        writeTableData(0, browseFilePath, null, false, false, false, false);
-                        initBackgroundTable(browseFilePath);
+                        ReadWriteData.writeTableImagePath(browseFilePath);
+                        initBackgroundTable(ReadWriteData.readTableImagePath());
                     }
                 }
                 if (mess == MessageBoxResult.No)
                 {
-                    writeTableData(0, @"Icon\Vector-Iluustartor.png", null, false, false, false, false);
+                    ReadWriteData.writeTableImagePath(startupProjectPath + "\\Images\\map.png");
+                    initBackgroundTable(ReadWriteData.readTableImagePath());
                 }
             }
         }
@@ -438,7 +289,7 @@ namespace POS
                 imgTable.MouseLeftButtonDown -= changeToNormalCursor;
                 iii = 0;
 
-                writeTableData(1, "", rec, false, false, false, false);
+                ReadWriteData.writeOnAddNew(rec);
 
                 rec.ToolTip = setTooltip(rec);
             }
@@ -514,7 +365,7 @@ namespace POS
 
             ckeckPosition(rec, m);
 
-            writeTableData(1, "", rec, false, false, false, false);
+            ReadWriteData.writeOnAddNew(rec);
 
             rec.ToolTip = setTooltip(rec);
         }
@@ -623,8 +474,6 @@ namespace POS
                             rec.Cursor = Cursors.Arrow;
                             rec.Fill = Brushes.DarkCyan;
 
-                            writeTableData(1, "", rec, true, true, false, false);
-
                             //pass
                             foreach (Model.Table t in TableTempData.TbList)
                             {
@@ -655,8 +504,6 @@ namespace POS
                                 rec.Opacity = 1;
                                 rec.Cursor = Cursors.Arrow;
                                 rec.Fill = Brushes.DarkCyan;
-
-                                writeTableData(1, "", rec, true, true, false, false);
 
                                 MessageBox.Show("Go to order with table " + t.TableNumber);
                                 break;
@@ -719,7 +566,7 @@ namespace POS
                 {
                     if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                     {
-                        writeTableData(1, "", currentRec, true, true, false, false);
+                        ReadWriteData.writeOnPin(currentRec);
                     }
                 }
 
@@ -742,7 +589,7 @@ namespace POS
                 {
                     if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                     {
-                        writeTableData(1, "", currentRec, true, false, false, false);
+                        ReadWriteData.writeOnMove(currentRec);
                     }
                 }
 
@@ -760,7 +607,6 @@ namespace POS
                     TableSettingDialog tablleSetting = new TableSettingDialog(t);
                     tablleSetting.ShowDialog();
 
-                    writeTableData(1, "chair", null, true, false, false, false);
                     break;
                 }
             }
@@ -781,14 +627,14 @@ namespace POS
 
                 if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)) && t.TableOrderDetails.Count == 0)
                 {
-                    writeTableData(1, "", currentRec, false, false, true, false);
+                    ReadWriteData.writeOnRemove(currentRec);
                     grTable.Children.Remove(currentRec);
                     buttonTableCurrentNumber--;
                     return;
                 }
             }
 
-            writeTableData(1, "", currentRec, false, false, true, false);
+            ReadWriteData.writeOnRemove(currentRec);
             grTable.Children.Remove(currentRec);
             buttonTableCurrentNumber--;
         }
@@ -808,7 +654,7 @@ namespace POS
                         currentRec.Cursor = Cursors.Arrow;
                         currentRec.Fill = Brushes.Red;
 
-                        writeTableData(1, "", currentRec, false, true, false, true);
+                        ReadWriteData.writeOnPay(currentRec);
                     }
                     else
                     {
@@ -818,7 +664,7 @@ namespace POS
                         currentRec.Cursor = Cursors.SizeAll;
                         currentRec.Fill = Brushes.Red;
 
-                        writeTableData(1, "", currentRec, false, false, false, true);
+                        ReadWriteData.writeOnPay(currentRec);
                     }
                 }
             }
@@ -884,7 +730,7 @@ namespace POS
 
             ckeckPosition(newRec, m);
 
-            writeTableData(1, "", newRec, true, false, false, false);
+            ReadWriteData.writeOnDrag(newRec);
         }
 
         //su kien drag ra khoi vung quy dinh
@@ -906,7 +752,7 @@ namespace POS
 
             ckeckPosition(newRec, m);
 
-            writeTableData(1, "", newRec, true, false, false, false);
+            ReadWriteData.writeOnDrag(newRec);
         }
 
         //method tao recrangle moi

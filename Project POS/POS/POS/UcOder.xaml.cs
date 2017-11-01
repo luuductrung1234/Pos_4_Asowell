@@ -27,38 +27,25 @@ namespace POS
         public UcOder()
         {
             InitializeComponent();
-            
+
             this.Loaded += UcOder_Loaded;
         }
 
         private void UcOder_Loaded(object sender, RoutedEventArgs e)
         {
-            loadChair();
+            loadTableChairData();
+            loadCustomerOwner();
         }
 
         public void RefreshControl()
         {
             try
             {
-                //// lay ordernotedetails cua ban thu nhat
-                //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
-                //var ordertabledetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrder;
-                //// chuyen product_id thanh product name
-                //var query = from orderdetails in ordernotedetails
-                //            join product in ProductData.PList
-                //            on orderdetails.Product_id equals product.Product_id
-                //            select new OrderDetails_Product_Joiner
-                //            {
-                //                OrderDetails = orderdetails,
-                //                Product = product
-                //            };
-
                 // lay ordernotedetails cua ban thu nhat
-                //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
                 var chairoftable = ((MainWindow)Application.Current.MainWindow).currentTable.ChairData;
                 var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Application.Current.MainWindow).currentChair.ChairNumber) && x.TableOfChair.Equals(((MainWindow)Application.Current.MainWindow).currentChair.TableOfChair));
                 var chairordernotedetails = foundchair.ChairOrderDetails;
-                var ordertabledetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrder;
+
                 // chuyen product_id thanh product name
                 var query = from orderdetails in chairordernotedetails
                             join product in ProductData.PList
@@ -72,12 +59,8 @@ namespace POS
 
                 // binding
                 lvData.ItemsSource = query;
-                txtDay.Text = ordertabledetails.ordertime.ToString("dd/MM/yyyy H:mm:ss");
-                txtTable.Text = ordertabledetails.ordertable.ToString();
                 loadTotalPrice();
-                //loadCustomerOwner();
-                //loadChair();
-                
+                ReadWriteData.writeToBinFile();
             }
             catch (Exception ex)
             {
@@ -85,20 +68,53 @@ namespace POS
             }
         }
 
-        ToggleButton curChair;
-        private void loadChair()
+        public void RefreshControlAllChair()
         {
-            if(((MainWindow)Application.Current.MainWindow).currentTable == null)
+            // lay ordernotedetails cua ban thu nhat
+            var chairoftable = ((MainWindow)Application.Current.MainWindow).currentTable.ChairData;
+            List<OrderNoteDetails> ordernotedetailstemp = new List<OrderNoteDetails>();
+            var chairordernotedetails = ordernotedetailstemp;
+            foreach (Chair ch in chairoftable)
+            {
+                if (ch != null)
+                {
+                    chairordernotedetails = chairordernotedetails.Concat(ch.ChairOrderDetails).ToList();
+                }
+            }
+
+            // chuyen product_id thanh product name
+            var query = from orderdetails in chairordernotedetails
+                        join product in ProductData.PList
+                        on orderdetails.Product_id equals product.Product_id
+
+                        select new OrderDetails_Product_Joiner
+                        {
+                            OrderDetails = orderdetails,
+                            Product = product
+                        };
+
+            // binding
+            lvData.ItemsSource = query;
+            loadTotalPrice();
+        }
+
+        ToggleButton curChair;
+        private void loadTableChairData()
+        {
+            if (((MainWindow)Application.Current.MainWindow).currentTable == null)
             {
                 return;
             }
 
+            var ordertabledetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrder;
+            txtDay.Text = ordertabledetails.ordertime.ToString("dd/MM/yyyy H:mm:ss");
+            txtTable.Text = ordertabledetails.ordertable.ToString();
             wp.Children.Clear();
-            for(int i = 0; i < ((MainWindow)Application.Current.MainWindow).currentTable.ChairAmount; i++)
+            foreach (Chair ch in ((MainWindow)Application.Current.MainWindow).currentTable.ChairData)
             {
                 ToggleButton button = new ToggleButton();
-                button.Name = "chair" + (i + 1);
-                button.Content = (i + 1).ToString();
+                button.Name = "chair" + (ch.ChairNumber);
+                button.Content = (ch.ChairNumber).ToString();
                 button.Width = 24;
                 button.Height = 24;
                 Thickness m = button.Margin;
@@ -109,15 +125,39 @@ namespace POS
                 button.Checked += buttonChair_Checked;
                 button.Unchecked += buttonChair_Unchecked;
 
-                Chair chair = new Chair()
-                {
-                    ChairNumber = i + 1,
-                    TableOfChair = ((MainWindow)Application.Current.MainWindow).currentTable.TableNumber,
-                    ChairOrderDetails = new List<OrderNoteDetails>()
-                };
-                ChairData.ChairList.Add(chair);
-
                 wp.Children.Add(button);
+            }
+        }
+
+        private void loadCustomerOwner()
+        {
+            cboCustomers.ItemsSource = CustomerData.CusList;
+            cboCustomers.SelectedValuePath = "Cus_id";
+            cboCustomers.DisplayMemberPath = "Name";
+            cboCustomers.SelectionChanged += cboCustomers_SeSelectionChanged;
+            
+            if(((MainWindow)Application.Current.MainWindow).currentTable != null && ((MainWindow)Application.Current.MainWindow).currentTable.TableOrder.cus_id != null)
+            {
+                cboCustomers.SelectedValue = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrder.cus_id;
+            }
+        }
+
+        private void cboCustomers_SeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                foreach (Model.Table t in TableTempData.TbList)
+                {
+                    if (((MainWindow)Application.Current.MainWindow).currentTable.TableNumber == t.TableNumber)
+                    {
+                        t.TableOrder.cus_id = cboCustomers.SelectedValue.ToString();
+                    }
+                }
+                ReadWriteData.writeToBinFile();
+            }
+            catch(Exception ex)
+            {
+
             }
         }
 
@@ -125,9 +165,9 @@ namespace POS
         {
             curChair = sender as ToggleButton;
 
-            foreach (Model.Chair chair in ChairData.ChairList)
+            foreach (Model.Chair chair in ((MainWindow)Application.Current.MainWindow).currentTable.ChairData)
             {
-                if(chair.ChairNumber == int.Parse(curChair.Name.Substring(5)) && chair.TableOfChair == ((MainWindow)Application.Current.MainWindow).currentTable.TableNumber)
+                if (chair.ChairNumber == int.Parse(curChair.Name.Substring(5)) && chair.TableOfChair == ((MainWindow)Application.Current.MainWindow).currentTable.TableNumber)
                 {
                     ((MainWindow)Application.Current.MainWindow).currentChair = chair;
                     break;
@@ -136,27 +176,33 @@ namespace POS
 
             foreach (ToggleButton btn in wp.Children)
             {
-                if(!btn.Name.Equals(curChair.Name))
+                if (!btn.Name.Equals(curChair.Name))
                 {
                     btn.IsChecked = false;
                 }
             }
 
-            MessageBox.Show(((MainWindow)Application.Current.MainWindow).currentChair.ChairNumber + "\n" + ((MainWindow)Application.Current.MainWindow).currentChair.TableOfChair);
-
-            txtTable.Text = curChair.Name;
+            RefreshControl();
         }
 
         private void buttonChair_Unchecked(object sender, RoutedEventArgs e)
         {
-            
+            RefreshControlAllChair();
         }
 
         public class OrderDetails_Product_Joiner : INotifyPropertyChanged
         {
+            public Chair ChairOrder { get; set; }
             public OrderNoteDetails OrderDetails { get; set; }
             public Product Product { get; set; }
 
+            public int ChairOrderNumber
+            {
+                get
+                {
+                    return ChairOrder.ChairNumber;
+                }
+            }
             public string ProductName
             {
                 get
@@ -215,12 +261,22 @@ namespace POS
                     PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        
+
         public void loadTotalPrice()
         {
-            var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+            //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
+            var chairordernotedetails = new List<OrderNoteDetails>();
+            var chairoftable = ((MainWindow)Application.Current.MainWindow).currentTable.ChairData;
+            foreach (Chair ch in chairoftable)
+            {
+                if (ch != null)
+                {
+                    chairordernotedetails = chairordernotedetails.Concat(ch.ChairOrderDetails).ToList();
+                }
+            }
+
             // chuyen product_id thanh product name
-            var query_item_in_ordertails = from orderdetails in ordernotedetails
+            var query_item_in_ordertails = from orderdetails in chairordernotedetails
                                            join product in ProductData.PList
                                            on orderdetails.Product_id equals product.Product_id
                                            select new
