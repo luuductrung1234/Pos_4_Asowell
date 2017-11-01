@@ -24,15 +24,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0"
-                      Margin="0,0,10,0">
+            <Grid Grid.Column="0">
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontSize" Value="14"/>
                     </Style>
                 </Grid.Resources>
-                <StackPanel Orientation="Vertical"
-                                Margin="0,0,10,0">
+                <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Day" Foreground="Black"
                                        FontFamily="Segoe WP Black" />
@@ -65,7 +63,8 @@
             <Grid Grid.ColumnSpan="2"
                       Margin="206,0,0,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  VerticalAlignment="Stretch">
+                                  VerticalAlignment="Stretch"
+                                  Margin="10,0,-10,0">
                         <WrapPanel x:Name="wp">
 
                         </WrapPanel>

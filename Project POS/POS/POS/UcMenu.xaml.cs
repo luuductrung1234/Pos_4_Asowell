@@ -43,32 +43,21 @@ namespace POS
 
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var item = (sender as ListView).SelectedItem;
+            if(((MainWindow)Application.Current.MainWindow).currentTable == null || ((MainWindow)Application.Current.MainWindow).currentChair == null)
+            {
+                MessageBox.Show("Chair must be choice!");
+                return;
+            }
+
+            var item = (sender as ListBox).SelectedItem;
             if (item != null)
             {
                 OrderNoteDetails o = new OrderNoteDetails();
                 Product it = (Product)lvCategory.SelectedItem;
-                //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
-                //var chairordernotedetails = ((MainWindow)Application.Current.MainWindow).currentChair.ChairOrderDetails;
-                //var found = ordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
-                //int i = ordernotedetails.IndexOf(found);
-                //if (found == null)
-                //{
-                //    o.Product_id = it.Product_id;
-                //    o.Quan = 1;
-                //    ordernotedetails.Add(o);
-                //}
-                //else
-                //{
-                //    o.Product_id = it.Product_id;
-                //    o.Quan = ordernotedetails[i].Quan + 1;
-                //    o.SelectedStats = ordernotedetails[i].SelectedStats;
 
-                //    ordernotedetails[i] = o;
-                //}
-
-                //var ordernotedetails = ((MainWindow)Application.Current.MainWindow).currentTable.TableOrderDetails;
-                var chairordernotedetails = ((MainWindow)Application.Current.MainWindow).currentChair.ChairOrderDetails;
+                var chairoftable = ((MainWindow)Application.Current.MainWindow).currentTable.ChairData;
+                var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Application.Current.MainWindow).currentChair.ChairNumber) && x.TableOfChair.Equals(((MainWindow)Application.Current.MainWindow).currentChair.TableOfChair));
+                var chairordernotedetails = foundchair.ChairOrderDetails;
                 var found = chairordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
                 int i = chairordernotedetails.IndexOf(found);
                 if (found == null)
@@ -89,6 +78,7 @@ namespace POS
                 lvCategory.UnselectAll();
 
                 ((MainWindow)Application.Current.MainWindow).en.ucOrder.RefreshControl();
+                ((MainWindow)Application.Current.MainWindow).en.ucOrder.RefreshControlAllChair();
             }
 
         }
