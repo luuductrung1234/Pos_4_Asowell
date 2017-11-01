@@ -23,7 +23,7 @@
             <Uc:UcMenu  x:Name="ucMenu"
                         RenderTransformOrigin="0.488,0.794"
                         Width="Auto"
-                        Margin="0,-80,10,-19" />
+                        Margin="0,-77,10,75" />
         </Grid>
         <Grid Grid.Column="1">
             <Uc:UcOder x:Name="ucOrder"

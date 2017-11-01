@@ -7,9 +7,8 @@
              xmlns:local="clr-namespace:POS"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DesignHeight="300"
              d:DesignWidth="300"
-             Height="700"
+             Height="609.804"
              Width="800"
              FontFamily="Segoe UI Black">
     <Grid>
@@ -54,7 +53,7 @@
         </materialDesign:ColorZone>
         <dragablz:TabablzControl x:Name="tabControl"
                                  Background="DarkGray"
-                                 Margin="0,10,0,145">
+                                 Margin="0,10,0,49.6">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -77,13 +76,12 @@
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel ItemHeight="100"
-                                            ItemWidth="100" />
+                                           ItemWidth="100" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel 
-                                           Width="80"
+                                <DockPanel Width="80"
                                            Height="80"
                                            Background="Transparent">
                                     <TextBlock Text="{Binding Name}"
@@ -92,10 +90,10 @@
                                                TextTrimming="CharacterEllipsis"
                                                HorizontalAlignment="Center" />
                                     <Image Source="{Binding ImageData}"
-                                                             VerticalAlignment="Center"
-                                                             HorizontalAlignment="Center"
-                                                             Width="32"
-                                                             Height="32"/>
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Width="32"
+                                           Height="32" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

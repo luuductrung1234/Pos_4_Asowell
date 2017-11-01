@@ -55,6 +55,9 @@ namespace POS.Model
                                     Pass = "password6", Name="Le Huu Phat", Birth = new DateTime(1997, 12, 1),
                                     Startday = new DateTime(2017, 10, 1), Hour_wage = 10, Addr="11/16 Nguyen Van Quy, q7",
                                     Email="employee6email@gmail.com", Phone = "0906666666", Emp_role=1, Deleted = false},
+
+
+
                 };
             }
         }
