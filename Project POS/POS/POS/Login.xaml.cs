@@ -29,24 +29,24 @@ namespace POS
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            //string username = txtUsername.Text;
-            //string pass = txtPass.Password;
+            string username = txtUsername.Text;
+            string pass = txtPass.Password;
 
-            //List<Employee> empList = EmployeeData.EmpList;
-            //foreach(Employee emp in empList)
-            //{
-            //    if(emp.Username.Equals(username) && emp.Pass.Equals(pass))
-            //    {
-            //        App.Current.Properties["EmpLogin"] = emp;
+            List<Employee> empList = EmployeeData.EmpList;
+            foreach (Employee emp in empList)
+            {
+                if (emp.Username.Equals(username) && emp.Pass.Equals(pass))
+                {
+                    App.Current.Properties["EmpLogin"] = emp;
 
-            //        MainWindow main = new MainWindow();
-            //        main.Show();
+                    MainWindow main = new MainWindow();
+                    main.Show();
 
-            //        break;
-            //    }
-            //}
+                    break;
+                }
+            }
 
-            //this.Close();
+            this.Close();
         }
 
         private void btnDatabase_Click(object sender, RoutedEventArgs e)

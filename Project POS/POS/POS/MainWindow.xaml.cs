@@ -28,15 +28,15 @@ namespace POS
         internal Dash d = new Dash();
         internal Entry en = new Entry();
         internal Info info = new Info();
-        //internal Login login = new Login();
+        internal Login login = new Login();
 
         public MainWindow()
         {
             InitializeComponent();
             currentTable = null;
-            //Employee emp = App.Current.Properties["EmpLogin"] as Employee;
+            Employee emp = App.Current.Properties["EmpLogin"] as Employee;
 
-            //cUser.Content= emp.Username;
+            cUser.Content= emp.Username;
 
 
 
@@ -100,6 +100,20 @@ namespace POS
         private void ListBoxItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            EmployeeDetail emd = new EmployeeDetail(cUser.Content.ToString());
+            emd.ShowDialog();
+        }
+
+        private void bntLogout_Click(object sender, RoutedEventArgs e)
+        {
+
+            this.Close();
+            login.Show();
+            
         }
     }
 }

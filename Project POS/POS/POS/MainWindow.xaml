@@ -66,7 +66,7 @@
                                                      Background="White"
                                                      IsEnabled="False">
                                     <materialDesign:Chip.IconBackground>
-                                        <SolidColorBrush Color="Black" />
+                                        <SolidColorBrush Color="SkyBlue" />
                                     </materialDesign:Chip.IconBackground>
                                     <materialDesign:Chip.Icon>
                                         <materialDesign:PackIcon Kind="Account" />
@@ -75,16 +75,20 @@
                             </materialDesign:PopupBox.ToggleContent>
 
                             <StackPanel>
-                                <Button Content="View Detail" />
+                                <Button Content="View Detail"
+                                        Click="Button_Click_1" />
                                 <Button Content="Nice Popup" />
-                                <Button Content="Log out" />
+                                <Button x:Name="bntLogout" Content="Log out"
+                                        Click="bntLogout_Click" />
                                 <Separator />
                                 <Button Content="Goodbye" />
                             </StackPanel>
                         </materialDesign:PopupBox>
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   FontSize="22">ASOWELL POS</TextBlock>
+                                   FontSize="30"
+                                   FontWeight="Bold"
+                                   FontFamily="Wide Latin">ASOWEL POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>
@@ -103,6 +107,7 @@
                             
                             <Button x:Name="bntDash"
                                     Style="{StaticResource MaterialDesignFlatButton}"
+                                    Foreground="DeepSkyBlue"
                                     Content="Dash"
                                     Height="42"
                                     Width="98"
@@ -110,6 +115,7 @@
                                     FontSize="18" />
                             <Button x:Name="bntTable"
                                     Style="{StaticResource MaterialDesignFlatButton}"
+                                    Foreground="DeepSkyBlue"
                                     Height="42"
                                     Width="98"
                                     Click="bntTable_Click"
@@ -122,6 +128,7 @@
                             <Button x:Name="bntEntry"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Height="42"
+                                    Foreground="DeepSkyBlue"
                                     Width="100"
                                     Click="bntEntry_Click"
                                     FontSize="18">
@@ -132,6 +139,7 @@
                             <Button x:Name="bntInfo"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Height="42"
+                                    Foreground="DeepSkyBlue"
                                     Width="98"
                                     Click="bntDash_Click"
                                     FontSize="18">
