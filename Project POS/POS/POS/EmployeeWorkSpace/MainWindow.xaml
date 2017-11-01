@@ -1,0 +1,162 @@
+﻿<Window x:Class="POS.EmployeeWorkSpace.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Background="{DynamicResource MaterialDesignPaper}"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS"
+        xmlns:wpf="clr-namespace:POS.Model"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="768"
+        Width="1366">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+
+            <!-- data template used for the dialogs example, defines a View for a ViewModel of type DateTime  -->
+
+        </ResourceDictionary>
+    </Window.Resources>
+    <materialDesign:DialogHost Identifier="RootDialog"
+                               SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="212">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                  DockPanel.Dock="Top"
+                                  HorizontalAlignment="Right"
+                                  Margin="16"
+                                  IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                    <ListBox x:Name="DemoItemsListBox"
+                             Margin="0 16 0 16"
+                             SelectedIndex="0"
+                             PreviewMouseLeftButtonUp="DemoItemsListBox_PreviewMouseLeftButtonUp">
+                        <ListBoxItem Content="change the look"
+                                     PreviewMouseLeftButtonUp="ListBoxItem_PreviewMouseLeftButtonUp" />
+                    </ListBox>
+                </DockPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <DockPanel>
+                <materialDesign:ColorZone Padding="16"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                          Mode="PrimaryDark"
+                                          DockPanel.Dock="Top"
+                                          Height="74">
+                    <DockPanel>
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                      IsChecked="False"
+                                      x:Name="MenuToggleButton" />
+                        <materialDesign:PopupBox DockPanel.Dock="Right"
+                                                 PlacementMode="BottomAndAlignRightEdges"
+                                                 StaysOpen="False">
+
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:Chip x:Name="cUser"
+                                                     Margin="0,0,6,4"
+                                                     Background="White"
+                                                     IsEnabled="False">
+                                    <materialDesign:Chip.IconBackground>
+                                        <SolidColorBrush Color="SkyBlue" />
+                                    </materialDesign:Chip.IconBackground>
+                                    <materialDesign:Chip.Icon>
+                                        <materialDesign:PackIcon Kind="Account" />
+                                    </materialDesign:Chip.Icon>
+                                </materialDesign:Chip>
+                            </materialDesign:PopupBox.ToggleContent>
+
+                            <StackPanel>
+                                <Button Content="View Detail"
+                                        Click="Button_Click_1" />
+                                <Button Content="Nice Popup" />
+                                <Button x:Name="bntLogout" Content="Log out"
+                                        Click="bntLogout_Click" />
+                                <Separator />
+                                <Button Content="Goodbye" />
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="36"
+                                   FontWeight="Bold"
+                                   Margin="0,-3"
+                                   Width="239">ASOWEL POS</TextBlock>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="11*" />
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="Red"
+                            BorderThickness="2"
+                            Grid.Row="0">
+                        <StackPanel VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Left"
+                                    Height="58"
+                                    Width="auto">
+                            
+                            <Button x:Name="bntDash"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Foreground="DeepSkyBlue"
+                                    Content="Dash"
+                                    Height="42"
+                                    Width="98"
+                                    Click="bntDash_Click"
+                                    FontSize="18" />
+                            <Button x:Name="bntTable"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Foreground="DeepSkyBlue"
+                                    Height="42"
+                                    Width="98"
+                                    Click="bntTable_Click"
+                                    FontSize="18">
+                               
+                         
+                                    Table
+                                
+                            </Button>
+                            <Button x:Name="bntEntry"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Height="42"
+                                    Foreground="DeepSkyBlue"
+                                    Width="100"
+                                    Click="bntEntry_Click"
+                                    FontSize="18">
+                               
+                                 Entry
+                             
+                            </Button>
+                            <Button x:Name="bntInfo"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Height="42"
+                                    Foreground="DeepSkyBlue"
+                                    Width="98"
+                                    Click="bntDash_Click"
+                                    FontSize="18">
+                               
+                            Info
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                    <Grid VerticalAlignment="Center"
+                          Grid.Row="1">
+                        <Frame x:Name="myFrame"
+                               NavigationUIVisibility="Hidden" />
+                    </Grid>
+                </Grid>
+            </DockPanel>
+        </materialDesign:DrawerHost>
+    </materialDesign:DialogHost>
+
+</Window>

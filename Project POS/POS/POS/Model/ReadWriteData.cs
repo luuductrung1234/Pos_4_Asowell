@@ -19,13 +19,13 @@ namespace POS.Model
         //check file bin isExist
         public static bool checkBinFileExist()
         {
-            return File.Exists(startupProjectPath + "\\TableTemp\\tableRuntimeHistory.bin");
+            return File.Exists(startupProjectPath + "\\SerializedData\\tableRuntimeHistory.bin");
         }
 
         //read file tableImagePath
         public static string readTableImagePath()
         {
-            using (FileStream fs = new FileStream(startupProjectPath + "\\TableTemp\\tableImagePath.txt", FileMode.Open))
+            using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\tableImagePath.txt", FileMode.Open))
             {
                 using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
                 {
@@ -38,7 +38,7 @@ namespace POS.Model
         //write file tableImagePath
         public static void writeTableImagePath(string browseFilePath)
         {
-            using (FileStream fs = new FileStream(startupProjectPath + "\\TableTemp\\tableImagePath.txt", FileMode.Create))
+            using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\tableImagePath.txt", FileMode.Create))
             {
                 using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
                 {
