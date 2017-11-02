@@ -594,8 +594,8 @@ namespace POS.EmployeeWorkSpace
             {
                 if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                 {
-                    TableSettingDialog tablleSetting = new TableSettingDialog(t);
-                    tablleSetting.ShowDialog();
+                    TableSettingDialog tableSetting = new TableSettingDialog(t);
+                    tableSetting.ShowDialog();
 
                     break;
                 }

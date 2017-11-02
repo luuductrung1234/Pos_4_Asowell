@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using POS.Model;
+using System.Collections.Generic;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -28,15 +29,28 @@ namespace POS.EmployeeWorkSpace
             this.Top = Convert.ToInt32(curTable.Position.Y);
         }
 
+        List<Chair> chList = new List<Chair>();
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             foreach(Model.Table t in TableTempData.TbList)
             {
                 if(t.TableNumber == curTable.TableNumber)
                 {
-                    t.ChairAmount = int.Parse(txtChairAmount.Text);
+                    foreach(Chair ch in t.ChairData)
+                    {
+                        if(ch.ChairOrderDetails.Count != 0)
+                        {
+                            chList.Add(ch);
+                        }
+                    }
 
-                    ReadWriteData.writeOnUpdateChair(t);
+                    if(chList.Count > int.Parse(txtChairAmount.Text))
+                    {
+                        MessageBox.Show("Can not change Chair Amount now! This table have " + chList.Count + " chair(s) on order!");
+                        return;
+                    }
+
+                    ReadWriteData.writeOnUpdateChair(t, chList, int.Parse(txtChairAmount.Text));
                 }
             }
 
