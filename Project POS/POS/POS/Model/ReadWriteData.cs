@@ -74,6 +74,7 @@ namespace POS.Model
                 {
                     curTable.TableNumber = table.TableNumber;
                     curTable.Position = table.Position;
+                    curTable.ChairAmount = table.ChairAmount;
 
                     foreach (Chair ch in curTable.ChairData)
                     {
@@ -205,7 +206,7 @@ namespace POS.Model
         public static void writeToBinFile()
         {
             string dir = startupProjectPath;
-            string serializationFile = System.IO.Path.Combine(dir, "TableTemp\\tableRuntimeHistory.bin");
+            string serializationFile = System.IO.Path.Combine(dir, "SerializedData\\tableRuntimeHistory.bin");
 
             using (Stream stream = File.Open(serializationFile, FileMode.Create))
             {

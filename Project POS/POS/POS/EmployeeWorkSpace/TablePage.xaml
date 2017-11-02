@@ -60,7 +60,7 @@
                            VerticalAlignment="Center" />
             </Border>
             <Image x:Name="imgTable"
-                   Source="Icon\icons8_Table_52px.png"
+                   Source="..\Icon\icons8_Table_52px.png"
                    Width="1366"
                    Height="660"
                    Stretch="Fill"
