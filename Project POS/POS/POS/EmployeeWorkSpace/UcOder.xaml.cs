@@ -64,19 +64,20 @@ namespace POS.EmployeeWorkSpace
         public void RefreshControlAllChair()
         {
             // lay ordernotedetails cua ban thu nhat
-            var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
-            List<OrderNoteDetails> ordernotedetailstemp = new List<OrderNoteDetails>();
-            var chairordernotedetails = ordernotedetailstemp;
-            foreach (Chair ch in chairoftable)
-            {
-                if (ch != null)
-                {
-                    chairordernotedetails = chairordernotedetails.Concat(ch.ChairOrderDetails).ToList();
-                }
-            }
+            var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
+            //var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
+            //List<OrderNoteDetails> ordernotedetailstemp = new List<OrderNoteDetails>();
+            //var chairordernotedetails = ordernotedetailstemp;
+            //foreach (Chair ch in chairoftable)
+            //{
+            //    if (ch != null)
+            //    {
+            //        chairordernotedetails = chairordernotedetails.Concat(ch.ChairOrderDetails).ToList();
+            //    }
+            //}
 
             // chuyen product_id thanh product name
-            var query = from orderdetails in chairordernotedetails
+            var query = from orderdetails in tableordernotedetails
                         join product in ProductData.PList
                         on orderdetails.Product_id equals product.Product_id
 

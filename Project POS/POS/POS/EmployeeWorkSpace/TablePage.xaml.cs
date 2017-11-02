@@ -22,12 +22,6 @@ namespace POS.EmployeeWorkSpace
         public Table()
         {
             InitializeComponent();
-
-            foreach (Employee e in EmployeeData.EmpList)
-            {
-                App.Current.Properties["EmpLogin"] = e;
-                break;
-            }
             
             initTableData();
         }

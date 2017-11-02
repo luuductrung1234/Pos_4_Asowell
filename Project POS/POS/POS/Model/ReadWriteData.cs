@@ -74,6 +74,7 @@ namespace POS.Model
                 {
                     curTable.TableNumber = table.TableNumber;
                     curTable.Position = table.Position;
+                    curTable.ChairAmount = table.ChairAmount;
 
                     foreach (Chair ch in curTable.ChairData)
                     {
