@@ -29,6 +29,14 @@ namespace POS.EmployeeWorkSpace
             this.Top = Convert.ToInt32(curTable.Position.Y);
         }
 
+        private void txtChairAmount_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if(!string.IsNullOrEmpty(e.Text))
+            {
+                e.Handled = !Char.IsNumber(e.Text[0]);
+            }
+        }
+
         List<Chair> chList = new List<Chair>();
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
@@ -44,13 +52,13 @@ namespace POS.EmployeeWorkSpace
                         }
                     }
 
-                    if(chList.Count > int.Parse(txtChairAmount.Text))
+                    if(chList.Count > int.Parse(txtChairAmount.Text.Trim()))
                     {
                         MessageBox.Show("Can not change Chair Amount now! This table have " + chList.Count + " chair(s) on order!");
                         return;
                     }
 
-                    ReadWriteData.writeOnUpdateChair(t, chList, int.Parse(txtChairAmount.Text));
+                    ReadWriteData.writeOnUpdateChair(t, chList, int.Parse(txtChairAmount.Text.Trim()));
                 }
             }
 

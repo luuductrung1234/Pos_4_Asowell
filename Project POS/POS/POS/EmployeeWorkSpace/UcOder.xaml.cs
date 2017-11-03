@@ -157,7 +157,30 @@ namespace POS.EmployeeWorkSpace
 
         private void buttonChair_Checked(object sender, RoutedEventArgs e)
         {
+            int ii = 0;
             curChair = sender as ToggleButton;
+            if(int.Parse(curChair.Name.Substring(5)) != 1)
+            {
+                if (int.Parse(curChair.Name.Substring(5)) - ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber > 1)
+                {
+                    
+                    for (int i = ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber; i < int.Parse(curChair.Name.Substring(5)); i++)
+                    {
+                        foreach(var ch in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
+                        {
+                            if(ch.ChairNumber == i)
+                            {
+                                if(ch.ChairOrderDetails.Count == 0)
+                                {
+                                    MessageBox.Show("You seem ignore chair number " + i + " of this table!");
+                                    curChair.IsChecked = false;
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             foreach (Model.Chair chair in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
             {
@@ -290,32 +313,98 @@ namespace POS.EmployeeWorkSpace
 
         private void bntDelete_Click(object sender, RoutedEventArgs e)
         {
-            var ordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-
-            while ((dep != null) && !(dep is ListViewItem))
+            int i = 0;
+            foreach (ToggleButton btn in wp.Children)
             {
-                dep = VisualTreeHelper.GetParent(dep);
+                if (btn.IsChecked == false)
+                {
+                    i++;
+                }
             }
-
-            if (dep == null)
+            if(i == 0)
+            {
+                MessageBox.Show("Choose exactly which chair you want to decrease food's quantity!");
                 return;
+            }
 
-            int index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
             OrderNoteDetails o = new OrderNoteDetails();
-            if (ordernotedetails[index].Quan > 1)
-            {
-                o.Product_id = ordernotedetails[index].Product_id;
-                o.Quan = ordernotedetails[index].Quan - 1;
-                ordernotedetails[index] = o;
-            }
-            else
-            {
-                ordernotedetails.RemoveAt(index);
-            }
-            RefreshControl();
-            loadTotalPrice();
+            int index;
+            int indext = 0;
 
+            foreach (ToggleButton btn in wp.Children)
+            {
+                if (btn.IsChecked == true)
+                {
+                    //delete chair order note
+                    var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
+                    var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
+                    var chairordernotedetails = foundchair.ChairOrderDetails;
+                    
+                    while ((dep != null) && !(dep is ListViewItem))
+                    {
+                        dep = VisualTreeHelper.GetParent(dep);
+                    }
+
+                    if (dep == null)
+                        return;
+
+                    index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
+                    if (chairordernotedetails[index].Quan > 1)
+                    {
+                        o.Product_id = chairordernotedetails[index].Product_id;
+                        o.Quan = chairordernotedetails[index].Quan - 1;
+                        chairordernotedetails[index] = o;
+
+                        foreach(var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
+                        {
+                            if(od.Product_id.Equals(o.Product_id))
+                            {
+                                od.Quan--;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        o.Product_id = chairordernotedetails[index].Product_id;
+                        chairordernotedetails.RemoveAt(index);
+
+                        foreach (var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
+                        {
+                            if (od.Product_id.Equals(o.Product_id))
+                            {
+                                o = od;
+                            }
+                        }
+
+                        foreach(var chList in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
+                        {
+                            foreach(var chOrder in chList.ChairOrderDetails)
+                            {
+                                if(chOrder.Product_id.Equals(o.Product_id))
+                                {
+                                    indext++;
+                                    foreach (var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
+                                    {
+                                        if (od.Product_id.Equals(o.Product_id))
+                                        {
+                                            od.Quan--;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if(indext == 0)
+                        {
+                            ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails.Remove(o);
+                        }
+                    }
+
+                    RefreshControl();
+                    break;
+                }
+            }
         }
 
         private void bntPay_Click(object sender, RoutedEventArgs e)

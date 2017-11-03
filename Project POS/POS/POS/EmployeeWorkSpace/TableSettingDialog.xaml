@@ -44,7 +44,8 @@
                      Width="250"
                      Height="30"
                      FontSize="18"
-                     Foreground="White"/>
+                     Foreground="White"
+                     PreviewTextInput="txtChairAmount_PreviewTextInput"/>
         </StackPanel>
         <!--<StackPanel Orientation="Horizontal"
                     Grid.Row="1"

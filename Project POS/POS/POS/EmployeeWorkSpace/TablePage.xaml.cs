@@ -93,8 +93,8 @@ namespace POS.EmployeeWorkSpace
                         m.Left = Convert.ToInt32(t.Position.X);
                         m.Top = Convert.ToInt32(t.Position.Y);
                         rec.Margin = m;
-                        rec.Width = 120;
-                        rec.Height = 60;
+                        rec.Width = 30;
+                        rec.Height = 30;
                         rec.Fill = Brushes.Red;
                         rec.Opacity = 0.65;
 
@@ -260,8 +260,8 @@ namespace POS.EmployeeWorkSpace
                 m.Left = Convert.ToInt32(currentPosition.X);
                 m.Top = Convert.ToInt32(currentPosition.Y);
                 rec.Margin = m;
-                rec.Width = 120;
-                rec.Height = 60;
+                rec.Width = 30;
+                rec.Height = 30;
                 rec.Fill = Brushes.Red;
                 rec.Opacity = 0.65;
 
@@ -334,8 +334,8 @@ namespace POS.EmployeeWorkSpace
             m.Left = Convert.ToInt32(currentPosition.X);
             m.Top = Convert.ToInt32(currentPosition.Y);
             rec.Margin = m;
-            rec.Width = 120;
-            rec.Height = 60;
+            rec.Width = 30;
+            rec.Height = 30;
             rec.Fill = Brushes.Red;
             rec.Opacity = 0.65;
 

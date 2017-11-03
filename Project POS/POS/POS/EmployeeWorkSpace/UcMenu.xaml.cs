@@ -20,7 +20,19 @@ namespace POS.EmployeeWorkSpace
             InitializeComponent();
 
             lvCategory.ItemsSource = ProductData.PList;
+            this.Loaded += UcMenu_Loaded;
         }
+
+        private void UcMenu_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(((MainWindow)Window.GetWindow(this)).currentTable == null)
+            {
+                return;
+            }
+
+            ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
+        }
+
         public override void OnApplyTemplate()
         {
             DependencyObject ButtonControlInTemplate = GetTemplateChild("searchbutton");// set the name as the x:Name for the controls in your xaml.
@@ -45,36 +57,49 @@ namespace POS.EmployeeWorkSpace
                 OrderNoteDetails oo = new OrderNoteDetails();
                 Product it = (Product)lvCategory.SelectedItem;
 
+                //tong order table
                 var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
                 var foundtable = tableordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
-                var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
-                var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
-                var chairordernotedetails = foundchair.ChairOrderDetails;
-                var found = chairordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
-                int i = chairordernotedetails.IndexOf(found);
                 int ii = tableordernotedetails.IndexOf(foundtable);
-                if (found == null)
+                if (foundtable == null)
                 {
-                    o.Product_id = it.Product_id;
                     oo.Product_id = it.Product_id;
-                    o.Quan = 1;
                     oo.Quan = 1;
-                    chairordernotedetails.Add(o);
                     tableordernotedetails.Add(oo);
                 }
                 else
                 {
-                    o.Product_id = it.Product_id;
                     oo.Product_id = it.Product_id;
-                    o.Quan = chairordernotedetails[i].Quan + 1;
                     oo.Quan = tableordernotedetails[ii].Quan + 1;
-                    o.SelectedStats = chairordernotedetails[i].SelectedStats;
                     oo.SelectedStats = tableordernotedetails[ii].SelectedStats;
-
-                    chairordernotedetails[i] = o;
+                    
                     tableordernotedetails[ii] = oo;
                 }
 
+                //order tung ghe
+                var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
+                var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
+                var chairordernotedetails = foundchair.ChairOrderDetails;
+                var found = chairordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
+
+                int i = chairordernotedetails.IndexOf(found);
+                
+                if (found == null)
+                {
+                    o.Product_id = it.Product_id;
+                    o.Quan = 1;
+                    chairordernotedetails.Add(o);
+                }
+                else
+                {
+                    o.Product_id = it.Product_id;
+                    o.Quan = chairordernotedetails[i].Quan + 1;
+                    o.SelectedStats = chairordernotedetails[i].SelectedStats;
+
+                    chairordernotedetails[i] = o;
+                }
+
+                //
                 lvCategory.UnselectAll();
 
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl();

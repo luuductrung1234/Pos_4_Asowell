@@ -143,7 +143,7 @@
                                                     Margin="0 0 0 0"
                                                     Click="bntEdit_Click">
                                                 <StackPanel HorizontalAlignment="Left">
-                                                    <Image Source="Icon\Edit_52px.png"
+                                                    <Image Source="..\Icon\Edit_52px.png"
                                                            Margin="0,0,0,0"
                                                            Height="15"
                                                            Width="13" />

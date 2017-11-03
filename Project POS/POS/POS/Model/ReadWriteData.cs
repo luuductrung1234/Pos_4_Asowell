@@ -185,6 +185,8 @@ namespace POS.Model
                     curTable.TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)), ordertime = DateTime.Now };
                     curTable.TableOrderDetails = new List<OrderNoteDetails>();
 
+                    curTable.ChairData = new List<Chair>();
+
                     for (int i = 0; i < curTable.ChairAmount; i++)
                     {
                         Chair newChair = new Chair();
