@@ -120,6 +120,9 @@
     <Compile Include="EmployeeWorkSpace\InputNote.xaml.cs">
       <DependentUpon>InputNote.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeWorkSpace\SettingFood.xaml.cs">
+      <DependentUpon>SettingFood.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Chair.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Employee.cs" />
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\InputNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\SettingFood.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
