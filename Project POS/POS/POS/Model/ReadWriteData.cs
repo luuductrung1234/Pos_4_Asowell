@@ -16,6 +16,12 @@ namespace POS.Model
 
         private static List<Chair> chairTemp = new List<Chair>();
 
+        //check file txt isExist
+        public static bool checkTxtFileExist()
+        {
+            return File.Exists(startupProjectPath + "\\SerializedData\\tableImagePath.txt");
+        }
+
         //check file bin isExist
         public static bool checkBinFileExist()
         {

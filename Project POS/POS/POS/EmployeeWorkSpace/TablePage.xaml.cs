@@ -30,6 +30,11 @@ namespace POS.EmployeeWorkSpace
         //load table data
         private void initTableData()
         {
+            if(!ReadWriteData.checkTxtFileExist())
+            {
+                ReadWriteData.writeTableImagePath(startupProjectPath + "\\Images\\map.png");
+            }
+
             initBackgroundTable(ReadWriteData.readTableImagePath());
 
             if (!ReadWriteData.checkBinFileExist())

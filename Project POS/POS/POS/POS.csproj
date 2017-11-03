@@ -267,7 +267,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SerializedData\tableImagePath.txt" />
     <Resource Include="Images\Search_50px.png" />
     <Resource Include="Icon\Restaurant_52px.png" />
     <Resource Include="Icon\Vector-Iluustartor.png" />
@@ -285,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminWorkSpace\" />
+    <Folder Include="SerializedData\" />
     <Folder Include="WareHouseWorkSpace\" />
   </ItemGroup>
   <ItemGroup>
