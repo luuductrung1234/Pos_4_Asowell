@@ -60,13 +60,22 @@ namespace POS.Model
                 TableOrderDetails = new List<OrderNoteDetails>()
             };
 
+            for (int i = 0; i < newTable.ChairAmount; i++)
+            {
+                Chair newChair = new Chair();
+                newChair.ChairNumber = i + 1;
+                newChair.TableOfChair = newTable.TableNumber;
+                newChair.ChairOrderDetails = new List<OrderNoteDetails>();
+                newTable.ChairData.Add(newChair);
+            }
+
             TableTempData.TbList.Add(newTable);
 
             writeToBinFile();
         }
 
         //write khi update
-        public static void writeOnUpdateChair(Table table)
+        public static void writeOnUpdateChair(Table table, List<Chair> chList, int chairAmount)
         {
             foreach (Table curTable in TableTempData.TbList)
             {
@@ -74,28 +83,17 @@ namespace POS.Model
                 {
                     curTable.TableNumber = table.TableNumber;
                     curTable.Position = table.Position;
-                    curTable.ChairAmount = table.ChairAmount;
+                    curTable.ChairAmount = chairAmount;
 
-                    foreach (Chair ch in curTable.ChairData)
+                    curTable.ChairData = chList;
+
+                    for (int i = chList.Count; i < chairAmount; i++)
                     {
-                        if (ch.ChairOrderDetails.Count != 0)
-                        {
-                            chairTemp.Add(ch);
-                        }
-                    }
-
-                    curTable.ChairData = chairTemp;
-
-                    if (curTable.ChairAmount > curTable.ChairData.Count)
-                    {
-                        for (int i = curTable.ChairData.Count; i < curTable.ChairAmount; i++)
-                        {
-                            Chair newChair = new Chair();
-                            newChair.ChairNumber = i + 1;
-                            newChair.TableOfChair = curTable.TableNumber;
-                            newChair.ChairOrderDetails = new List<OrderNoteDetails>();
-                            curTable.ChairData.Add(newChair);
-                        }
+                        Chair newChair = new Chair();
+                        newChair.ChairNumber = i + 1;
+                        newChair.TableOfChair = curTable.TableNumber;
+                        newChair.ChairOrderDetails = new List<OrderNoteDetails>();
+                        curTable.ChairData.Add(newChair);
                     }
                 }
             }

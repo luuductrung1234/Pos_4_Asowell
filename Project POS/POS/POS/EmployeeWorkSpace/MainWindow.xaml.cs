@@ -19,6 +19,7 @@ namespace POS.EmployeeWorkSpace
         internal Entry en = new Entry();
         internal Info info = new Info();
         internal Login login = new Login();
+        internal SettingFood st = new SettingFood();
 
         public MainWindow()
         {
@@ -89,7 +90,7 @@ namespace POS.EmployeeWorkSpace
 
         private void ListBoxItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            myFrame.Navigate(st);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

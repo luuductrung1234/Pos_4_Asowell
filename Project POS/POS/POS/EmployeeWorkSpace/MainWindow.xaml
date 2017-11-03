@@ -41,7 +41,7 @@
                              Margin="0 16 0 16"
                              SelectedIndex="0"
                              PreviewMouseLeftButtonUp="DemoItemsListBox_PreviewMouseLeftButtonUp">
-                        <ListBoxItem Content="change the look"
+                        <ListBoxItem Content="Food List"
                                      PreviewMouseLeftButtonUp="ListBoxItem_PreviewMouseLeftButtonUp" />
                     </ListBox>
                 </DockPanel>
@@ -55,7 +55,8 @@
                     <DockPanel>
                         <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
                                       IsChecked="False"
-                                      x:Name="MenuToggleButton" />
+                                      x:Name="MenuToggleButton"
+                                      RenderTransformOrigin="0.5,0.503" />
                         <materialDesign:PopupBox DockPanel.Dock="Right"
                                                  PlacementMode="BottomAndAlignRightEdges"
                                                  StaysOpen="False">
