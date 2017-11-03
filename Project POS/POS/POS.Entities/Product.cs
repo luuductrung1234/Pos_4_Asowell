@@ -9,6 +9,10 @@
 // ReSharper disable RedundantOverridenMember
 // ReSharper disable UseNameofExpression
 // TargetFrameworkVersion = 4.6
+
+using System;
+using System.ComponentModel.DataAnnotations;
+
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
@@ -16,6 +20,7 @@ namespace POS.Entities
 {
 
     // Product
+    [Serializable]
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Product
     {
@@ -25,6 +30,8 @@ namespace POS.Entities
         public decimal Price { get; set; } // price
         public byte IsTodrink { get; set; } // is_todrink
         public int Deleted { get; set; } // deleted
+        [MaxLength]
+        public string ImageLink { get; set; }
 
         // Reverse navigation
 

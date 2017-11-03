@@ -9,6 +9,9 @@
 // ReSharper disable RedundantOverridenMember
 // ReSharper disable UseNameofExpression
 // TargetFrameworkVersion = 4.6
+
+using System;
+
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
@@ -16,6 +19,7 @@ namespace POS.Entities
 {
 
     // Customer
+    [Serializable]
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Customer
     {

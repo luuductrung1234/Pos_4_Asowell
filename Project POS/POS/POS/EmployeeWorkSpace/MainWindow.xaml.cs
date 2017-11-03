@@ -3,7 +3,8 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using POS.Model;
+using POS.BusinessModel;
+using POS.Entities;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -12,8 +13,8 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class MainWindow : Window
     {
-        public POS.Model.Table currentTable { get; set; }
-        public Model.Chair currentChair { get; set; }
+        public BusinessModel.Table currentTable { get; set; }
+        public Chair currentChair { get; set; }
         internal Table b = new Table();
         internal Dash d = new Dash();
         internal Entry en = new Entry();

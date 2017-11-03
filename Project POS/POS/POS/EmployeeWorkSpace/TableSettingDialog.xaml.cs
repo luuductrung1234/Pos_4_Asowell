@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
-using POS.Model;
 using System.Collections.Generic;
+using POS.BusinessModel;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -10,9 +10,9 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class TableSettingDialog : Window
     {
-        Model.Table curTable = new Model.Table();
+        BusinessModel.Table curTable = new BusinessModel.Table();
 
-        public TableSettingDialog(Model.Table table)
+        public TableSettingDialog(BusinessModel.Table table)
         {
             InitializeComponent();
 
@@ -40,7 +40,7 @@ namespace POS.EmployeeWorkSpace
         List<Chair> chList = new List<Chair>();
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            foreach(Model.Table t in TableTempData.TbList)
+            foreach(BusinessModel.Table t in TableTempData.TbList)
             {
                 if(t.TableNumber == curTable.TableNumber)
                 {

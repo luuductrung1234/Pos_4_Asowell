@@ -67,6 +67,10 @@
     <Compile Include="MigrationConfiguration.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711031534079_AddImageLinkToProduct.cs" />
+    <Compile Include="Migrations\201711031534079_AddImageLinkToProduct.Designer.cs">
+      <DependentUpon>201711031534079_AddImageLinkToProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +99,11 @@
       <Project>{f3ac2858-0745-4a74-8b80-e09c32b48ba4}</Project>
       <Name>POS.Mapping</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711031534079_AddImageLinkToProduct.resx">
+      <DependentUpon>201711031534079_AddImageLinkToProduct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

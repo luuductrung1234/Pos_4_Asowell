@@ -9,6 +9,11 @@
 // ReSharper disable RedundantOverridenMember
 // ReSharper disable UseNameofExpression
 // TargetFrameworkVersion = 4.6
+
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
@@ -16,13 +21,90 @@ namespace POS.Entities
 {
 
     // OrderNoteDetails
+    [Serializable]
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class OrderNoteDetail
+    public partial class OrderNoteDetail : INotifyPropertyChanged
     {
-        public string OrdernoteId { get; set; } // ordernote_id (Primary key) (length: 10)
-        public string ProductId { get; set; } // product_id (Primary key) (length: 10)
-        public int Quan { get; set; } // quan
-        public string Note { get; set; } // note (length: 500)
+        private string _ordernoteId;
+        private string _productId;
+        private string _stats;
+        private int _quan;
+        private string _note;
+        private ObservableCollection<string> _statusItems = new ObservableCollection<string> { "Stater", "Main Cost", "Dessert", "Drink" };
+
+        public string OrdernoteId
+        {
+            get
+            {
+                return _ordernoteId;
+            }
+            set
+            {
+                _ordernoteId = value;
+                OnPropertyChanged("Ordernote_id");
+            }
+        }
+        public string ProductId
+        {
+            get
+            {
+                return _productId;
+            }
+            set
+            {
+                _productId = value;
+                OnPropertyChanged("Product_id");
+            }
+        }
+        public ObservableCollection<string> StatusItems
+        {
+            get
+            {
+                return _statusItems;
+            }
+            set
+            {
+                _statusItems = value; OnPropertyChanged("SalesPeriods");
+            }
+        }
+        public string SelectedStats
+        {
+            get { return _stats; }
+            set
+            {
+                _stats = value;
+                OnPropertyChanged("SelectedStats");
+                // System.Windows.MessageBox.Show("New SelectedStats setting");
+            }
+        }
+        public int Quan
+        {
+            get
+            {
+                return _quan;
+            }
+            set
+            {
+                _quan = value;
+                OnPropertyChanged("Quan");
+                //System.Windows.MessageBox.Show("New Quan setting");
+            }
+        }
+        public string Note
+        {
+            get
+            {
+                return _note;
+            }
+            set
+            {
+                _note = value;
+                OnPropertyChanged("Note");
+                // System.Windows.MessageBox.Show("New Note setting");
+            }
+        }
+
+
 
         // Foreign keys
 
@@ -42,6 +124,13 @@ namespace POS.Entities
         }
 
         partial void InitializePartial();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
 }

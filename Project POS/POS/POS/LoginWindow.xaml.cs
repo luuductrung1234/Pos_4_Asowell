@@ -1,5 +1,4 @@
-﻿using POS.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using POS.Context;
+using POS.Entities;
+using POS.Repository;
+using POS.Repository.Interfaces;
 
 namespace POS
 {
@@ -20,8 +23,11 @@ namespace POS
     /// </summary>
     public partial class Login : Window
     {
+        private IEmployeeRepository _employeeRepository;
+
         public Login()
         {
+            _employeeRepository = new EmployeeRepository(new AsowellContext());
             InitializeComponent();
 
             this.WindowState = WindowState.Normal;
@@ -32,7 +38,7 @@ namespace POS
             string username = txtUsername.Text;
             string pass = txtPass.Password;
 
-            List<Employee> empList = EmployeeData.EmpList;
+            List<Employee> empList = _employeeRepository.GetAllEmployees().ToList();
             foreach (Employee emp in empList)
             {
                 if (emp.Username.Equals(username) && emp.Pass.Equals(pass))

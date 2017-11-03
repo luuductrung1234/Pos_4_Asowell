@@ -10,7 +10,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
-using POS.Model;
+using POS.BusinessModel;
+using POS.Context;
+using POS.Repository;
+using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -19,8 +22,13 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class Table : Page
     {
+        private IProductRepository _productRepository;
+        private ICustomerRepository _customerRepository;
+
         public Table()
         {
+            _productRepository = new ProductRepository(new AsowellContext());
+            _customerRepository = new CustomerRepository(new AsowellContext());
             InitializeComponent();
             
             initTableData();
@@ -55,7 +63,7 @@ namespace POS.EmployeeWorkSpace
         }
 
 
-        private List<Model.Table> currentTableList = new List<Model.Table>();
+        private List<BusinessModel.Table> currentTableList = new List<BusinessModel.Table>();
         //lay thong tin table image, tat ca table hien co
         private string readTableData(string fileName) //0: tableImagePath; 1: tableRuntimeHistory
         {
@@ -68,13 +76,13 @@ namespace POS.EmployeeWorkSpace
                 {
                     var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 
-                    currentTableList = (List<Model.Table>)bformatter.Deserialize(stream);
+                    currentTableList = (List<BusinessModel.Table>)bformatter.Deserialize(stream);
                     Rectangle rec;
                     Thickness m;
 
                     TableTempData.TbList = currentTableList;
 
-                    foreach (Model.Table t in currentTableList)
+                    foreach (BusinessModel.Table t in currentTableList)
                     {
                         if (maxTableCurrentNumber < t.TableNumber)
                         {
@@ -82,7 +90,7 @@ namespace POS.EmployeeWorkSpace
                         }
                     }
 
-                    foreach (Model.Table t in currentTableList)
+                    foreach (BusinessModel.Table t in currentTableList)
                     {
                         buttonTableCurrentNumber++;
 
@@ -142,7 +150,7 @@ namespace POS.EmployeeWorkSpace
                             rec.Opacity = 0.65;
                         }
 
-                        if (t.TableOrder.cus_id != null || t.TableOrderDetails.Count != 0)
+                        if (t.TableOrder.CusId != null || t.TableOrderDetails.Count != 0)
                         {
                             rec.Fill = Brushes.DarkCyan;
                             rec.MouseMove += btnTableAdded_MouseMove;
@@ -152,6 +160,8 @@ namespace POS.EmployeeWorkSpace
                         rec.ToolTip = setTooltip(rec);
 
                         //return rd.ReadToEnd();
+
+                        t.VisualTable = rec;
                     }
                 }
 
@@ -167,53 +177,51 @@ namespace POS.EmployeeWorkSpace
 
         public void TablePage_loaded(Object sender, EventArgs args)
         {
-            Rectangle rec;
-            Thickness m;
-
-            foreach (Model.Table t in currentTableList)
+            
+            foreach (BusinessModel.Table t in currentTableList)
             {
                 buttonTableCurrentNumber++;
 
-                rec = new Rectangle();
-                if (t.TableNumber < 10)
-                {
-                    rec.Name = "table" + "0" + t.TableNumber;
-                }
-                else
-                {
-                    rec.Name = "table" + t.TableNumber;
-                }
+                Rectangle rec = t.VisualTable;
+                //if (t.TableNumber < 10)
+                //{
+                //    rec.Name = "table" + "0" + t.TableNumber;
+                //}
+                //else
+                //{
+                //    rec.Name = "table" + t.TableNumber;
+                //}
 
-                rec.HorizontalAlignment = HorizontalAlignment.Left;
-                rec.VerticalAlignment = VerticalAlignment.Top;
-                m = rec.Margin;
-                m.Left = Convert.ToInt32(t.Position.X);
-                m.Top = Convert.ToInt32(t.Position.Y);
-                rec.Margin = m;
-                rec.Width = 30;
-                rec.Height = 30;
-                rec.Fill = Brushes.Red;
-                rec.Opacity = 0.65;
+                //rec.HorizontalAlignment = HorizontalAlignment.Left;
+                //rec.VerticalAlignment = VerticalAlignment.Top;
+                //Thickness m = rec.Margin;
+                //m.Left = Convert.ToInt32(t.Position.X);
+                //m.Top = Convert.ToInt32(t.Position.Y);
+                //rec.Margin = m;
+                //rec.Width = 30;
+                //rec.Height = 30;
+                //rec.Fill = Brushes.Red;
+                //rec.Opacity = 0.65;
 
-                //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
-                //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
-                //backImg.Stretch = Stretch.Fill;
-                //rec.Fill = backImg;
+                ////ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
+                ////ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
+                ////backImg.Stretch = Stretch.Fill;
+                ////rec.Fill = backImg;
 
-                rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-                rec.MouseMove += btnTableAdded_MoveDrag;
-                rec.MouseMove += btnTableAdded_MouseMove;
-                rec.MouseLeftButtonDown += btnTableAdded_Click;
-                rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+                //rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+                //rec.MouseMove += btnTableAdded_MoveDrag;
+                //rec.MouseMove += btnTableAdded_MouseMove;
+                //rec.MouseLeftButtonDown += btnTableAdded_Click;
+                //rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
-                rec.Cursor = Cursors.SizeAll;
+                //rec.Cursor = Cursors.SizeAll;
 
-                Panel.SetZIndex(rec, 30);
-                grTable.Children.Add(rec);
+                //Panel.SetZIndex(rec, 30);
+                //grTable.Children.Add(rec);
 
-                imgTable.MouseMove -= crossCursorToAdd;
-                imgTable.MouseLeftButtonDown -= changeToNormalCursor;
-                iii = 0;
+                //imgTable.MouseMove -= crossCursorToAdd;
+                //imgTable.MouseLeftButtonDown -= changeToNormalCursor;
+                //iii = 0;
 
                 if (t.IsPinned)
                 {
@@ -230,7 +238,7 @@ namespace POS.EmployeeWorkSpace
                     rec.Opacity = 0.65;
                 }
 
-                if (t.TableOrder.cus_id != null || t.TableOrderDetails.Count != 0)
+                if (t.TableOrder.CusId != null || t.TableOrderDetails.Count != 0)
                 {
                     rec.Fill = Brushes.DarkCyan;
                     rec.MouseMove += btnTableAdded_MouseMove;
@@ -449,6 +457,8 @@ namespace POS.EmployeeWorkSpace
             ReadWriteData.writeOnAddNew(rec);
 
             rec.ToolTip = setTooltip(rec);
+
+
         }
 
         //method tao popup menu cho table
@@ -540,7 +550,7 @@ namespace POS.EmployeeWorkSpace
                         MessageBoxResult mess = MessageBox.Show("You must be pin this table before you want to create new order. Do you want to pin now?", "Warning!", MessageBoxButton.YesNo);
                         if (mess == MessageBoxResult.Yes)
                         {
-                            foreach (Model.Table t in TableTempData.TbList)
+                            foreach (BusinessModel.Table t in TableTempData.TbList)
                             {
                                 if (t.TableNumber == int.Parse(rec.Name.Substring(5)) && t.ChairAmount == 0)
                                 {
@@ -556,7 +566,7 @@ namespace POS.EmployeeWorkSpace
                             rec.Fill = Brushes.DarkCyan;
 
                             //pass
-                            foreach (Model.Table t in TableTempData.TbList)
+                            foreach (BusinessModel.Table t in TableTempData.TbList)
                             {
                                 if (t.TableNumber == int.Parse(rec.Name.Substring(5)))
                                 {
@@ -574,7 +584,7 @@ namespace POS.EmployeeWorkSpace
                     }
                     else
                     {
-                        foreach (Model.Table t in TableTempData.TbList)
+                        foreach (BusinessModel.Table t in TableTempData.TbList)
                         {
                             if (t.IsPinned && t.TableNumber == int.Parse(rec.Name.Substring(5)))
                             {
@@ -596,7 +606,7 @@ namespace POS.EmployeeWorkSpace
                         }
 
                         //pass
-                        foreach (Model.Table t in TableTempData.TbList)
+                        foreach (BusinessModel.Table t in TableTempData.TbList)
                         {
                             if (t.TableNumber == int.Parse(rec.Name.Substring(5)))
                             {
@@ -623,7 +633,7 @@ namespace POS.EmployeeWorkSpace
             {
                 currentRec = sender as Rectangle;
 
-                foreach (Model.Table t in TableTempData.TbList)
+                foreach (BusinessModel.Table t in TableTempData.TbList)
                 {
                     if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                     {
@@ -651,7 +661,7 @@ namespace POS.EmployeeWorkSpace
 
                 currentRec.Cursor = Cursors.Arrow;
 
-                foreach (Model.Table t in TableTempData.TbList)
+                foreach (BusinessModel.Table t in TableTempData.TbList)
                 {
                     if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                     {
@@ -674,7 +684,7 @@ namespace POS.EmployeeWorkSpace
 
                 currentRec.Cursor = Cursors.SizeAll;
 
-                foreach (Model.Table t in TableTempData.TbList)
+                foreach (BusinessModel.Table t in TableTempData.TbList)
                 {
                     if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                     {
@@ -689,7 +699,7 @@ namespace POS.EmployeeWorkSpace
         //su kien khi chon change chair tu table
         private void changeChairTable_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Model.Table t in TableTempData.TbList)
+            foreach (BusinessModel.Table t in TableTempData.TbList)
             {
                 if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                 {
@@ -706,7 +716,7 @@ namespace POS.EmployeeWorkSpace
         //su kien khi lua chon remove tu popup menu cua table
         private void removeTable_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Model.Table t in TableTempData.TbList)
+            foreach (BusinessModel.Table t in TableTempData.TbList)
             {
                 if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)) && t.TableOrderDetails.Count != 0)
                 {
@@ -731,7 +741,7 @@ namespace POS.EmployeeWorkSpace
         //su kien demo payed
         private void payedTable_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Model.Table t in TableTempData.TbList)
+            foreach (BusinessModel.Table t in TableTempData.TbList)
             {
                 if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)))
                 {
@@ -924,7 +934,7 @@ namespace POS.EmployeeWorkSpace
         //method set tooltip cho table
         private string setTooltip(Rectangle rec)
         {
-            foreach (Model.Table table in TableTempData.TbList)
+            foreach (BusinessModel.Table table in TableTempData.TbList)
             {
                 if (table.TableNumber == int.Parse(rec.Name.Substring(5)))
                 {
@@ -934,11 +944,11 @@ namespace POS.EmployeeWorkSpace
 
                     if (table.TableOrder != null)
                     {
-                        if (table.TableOrder.cus_id != null)
+                        if (table.TableOrder.CusId != null)
                         {
-                            foreach (var cus in CustomerData.CusList)
+                            foreach (var cus in _customerRepository.GetAllCustomers())
                             {
-                                if (table.TableOrder.cus_id.Equals(cus.Cus_id))
+                                if (table.TableOrder.CusId.Equals(cus.CusId))
                                 {
                                     tt += "\nOrder Customer: " + cus.Name;
                                 }
@@ -946,9 +956,9 @@ namespace POS.EmployeeWorkSpace
 
                             foreach (var tableOD in table.TableOrderDetails)
                             {
-                                foreach (var pro in ProductData.PList)
+                                foreach (var pro in _productRepository.GetAllProducts())
                                 {
-                                    if (pro.Product_id.Equals(tableOD.Product_id))
+                                    if (pro.ProductId.Equals(tableOD.ProductId))
                                     {
                                         tt += "\nProduct Name: " + pro.Name;
                                     }

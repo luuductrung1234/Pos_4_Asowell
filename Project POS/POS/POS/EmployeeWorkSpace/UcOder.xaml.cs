@@ -8,7 +8,11 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using POS.Model;
+using POS.BusinessModel;
+using POS.Context;
+using POS.Entities;
+using POS.Repository;
+using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -17,11 +21,13 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class UcOder : UserControl
     {
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-
+        private IProductRepository _productRepository;
+        private ICustomerRepository _customerRepository;
 
         public UcOder()
         {
+            _productRepository = new ProductRepository(new AsowellContext());
+            _customerRepository = new CustomerRepository(new AsowellContext());
             InitializeComponent();
 
             this.Loaded += UcOder_Loaded;
@@ -51,8 +57,8 @@ namespace POS.EmployeeWorkSpace
 
                 // chuyen product_id thanh product name
                 var query = from orderdetails in chairordernotedetails
-                            join product in ProductData.PList
-                            on orderdetails.Product_id equals product.Product_id
+                    join product in _productRepository.GetAllProducts()
+                            on orderdetails.ProductId equals product.ProductId
 
                             select new OrderDetails_Product_Joiner
                             {
@@ -93,8 +99,8 @@ namespace POS.EmployeeWorkSpace
 
             // chuyen product_id thanh product name
             var query = from orderdetails in tableordernotedetails
-                        join product in ProductData.PList
-                        on orderdetails.Product_id equals product.Product_id
+                        join product in _productRepository.GetAllProducts()
+                        on orderdetails.ProductId equals product.ProductId
 
                         select new OrderDetails_Product_Joiner
                         {
@@ -116,8 +122,8 @@ namespace POS.EmployeeWorkSpace
             }
 
             var ordertabledetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder;
-            txtDay.Text = ordertabledetails.ordertime.ToString("dd/MM/yyyy H:mm:ss");
-            txtTable.Text = ordertabledetails.ordertable.ToString();
+            txtDay.Text = ordertabledetails.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
+            txtTable.Text = ordertabledetails.Ordertable.ToString();
             wp.Children.Clear();
             foreach (Chair ch in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
             {
@@ -140,7 +146,7 @@ namespace POS.EmployeeWorkSpace
 
         private void loadCustomerOwner()
         {
-            cboCustomers.ItemsSource = CustomerData.CusList;
+            cboCustomers.ItemsSource = _customerRepository.GetAllCustomers();
             cboCustomers.SelectedValuePath = "Cus_id";
             cboCustomers.DisplayMemberPath = "Name";
             cboCustomers.MouseEnter += (sender, args) =>
@@ -153,9 +159,9 @@ namespace POS.EmployeeWorkSpace
             };
             cboCustomers.SelectionChanged += cboCustomers_SeSelectionChanged;
             
-            if(((MainWindow)Window.GetWindow(this)).currentTable != null && ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.cus_id != null)
+            if(((MainWindow)Window.GetWindow(this)).currentTable != null && ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.CusId != null)
             {
-                cboCustomers.SelectedValue = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.cus_id;
+                cboCustomers.SelectedValue = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.CusId;
             }
         }
 
@@ -163,11 +169,11 @@ namespace POS.EmployeeWorkSpace
         {
             try
             {
-                foreach (Model.Table t in TableTempData.TbList)
+                foreach (BusinessModel.Table t in TableTempData.TbList)
                 {
                     if (((MainWindow)Window.GetWindow(this)).currentTable.TableNumber == t.TableNumber)
                     {
-                        t.TableOrder.cus_id = cboCustomers.SelectedValue.ToString();
+                        t.TableOrder.CusId = cboCustomers.SelectedValue.ToString();
                     }
                 }
                 ReadWriteData.writeToBinFile();
@@ -205,7 +211,7 @@ namespace POS.EmployeeWorkSpace
                 }
             }
 
-            foreach (Model.Chair chair in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
+            foreach (Chair chair in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
             {
                 if (chair.ChairNumber == int.Parse(curChair.Name.Substring(5)) && chair.TableOfChair == ((MainWindow)Window.GetWindow(this)).currentTable.TableNumber)
                 {
@@ -233,7 +239,7 @@ namespace POS.EmployeeWorkSpace
         public class OrderDetails_Product_Joiner : INotifyPropertyChanged
         {
             public Chair ChairOrder { get; set; }
-            public OrderNoteDetails OrderDetails { get; set; }
+            public OrderNoteDetail OrderDetails { get; set; }
             public Product Product { get; set; }
 
             public int ChairOrderNumber
@@ -250,7 +256,7 @@ namespace POS.EmployeeWorkSpace
                     return Product.Name;
                 }
             }
-            public float Price
+            public decimal Price
             {
                 get
                 {
@@ -305,7 +311,7 @@ namespace POS.EmployeeWorkSpace
         public void loadTotalPrice()
         {
             //var ordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
-            var chairordernotedetails = new List<OrderNoteDetails>();
+            var chairordernotedetails = new List<OrderNoteDetail>();
             var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
             foreach (Chair ch in chairoftable)
             {
@@ -317,15 +323,15 @@ namespace POS.EmployeeWorkSpace
 
             // chuyen product_id thanh product name
             var query_item_in_ordertails = from orderdetails in chairordernotedetails
-                                           join product in ProductData.PList
-                                           on orderdetails.Product_id equals product.Product_id
+                                           join product in _productRepository.GetAllProducts()
+                                           on orderdetails.ProductId equals product.ProductId
                                            select new
                                            {
                                                item_quan = orderdetails.Quan,
                                                item_price = product.Price
                                            };
 
-            float Total = 0;
+            decimal Total = 0;
             foreach (var item in query_item_in_ordertails)
             {
                 Total = Total + item.item_quan * item.item_price;
@@ -351,7 +357,7 @@ namespace POS.EmployeeWorkSpace
             }
 
             DependencyObject dep = (DependencyObject)e.OriginalSource;
-            OrderNoteDetails o = new OrderNoteDetails();
+            OrderNoteDetail o = new OrderNoteDetail();
             int index;
             int indext = 0;
 
@@ -375,13 +381,13 @@ namespace POS.EmployeeWorkSpace
                     index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
                     if (chairordernotedetails[index].Quan > 1)
                     {
-                        o.Product_id = chairordernotedetails[index].Product_id;
+                        o.ProductId = chairordernotedetails[index].ProductId;
                         o.Quan = chairordernotedetails[index].Quan - 1;
                         chairordernotedetails[index] = o;
 
                         foreach(var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
                         {
-                            if(od.Product_id.Equals(o.Product_id))
+                            if(od.ProductId.Equals(o.ProductId))
                             {
                                 od.Quan--;
                             }
@@ -389,12 +395,12 @@ namespace POS.EmployeeWorkSpace
                     }
                     else
                     {
-                        o.Product_id = chairordernotedetails[index].Product_id;
+                        o.ProductId = chairordernotedetails[index].ProductId;
                         chairordernotedetails.RemoveAt(index);
 
                         foreach (var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
                         {
-                            if (od.Product_id.Equals(o.Product_id))
+                            if (od.ProductId.Equals(o.ProductId))
                             {
                                 o = od;
                             }
@@ -404,12 +410,12 @@ namespace POS.EmployeeWorkSpace
                         {
                             foreach(var chOrder in chList.ChairOrderDetails)
                             {
-                                if(chOrder.Product_id.Equals(o.Product_id))
+                                if(chOrder.ProductId.Equals(o.ProductId))
                                 {
                                     indext++;
                                     foreach (var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
                                     {
-                                        if (od.Product_id.Equals(o.Product_id))
+                                        if (od.ProductId.Equals(o.ProductId))
                                         {
                                             od.Quan--;
                                         }
@@ -464,13 +470,13 @@ namespace POS.EmployeeWorkSpace
                 return;
 
             int index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
-            OrderNoteDetails o = new OrderNoteDetails();
+            OrderNoteDetail o = new OrderNoteDetail();
             InputNote inputnote = new InputNote(ordernotedetails[index].Note);
             if (ordernotedetails[index].Note == null || ordernotedetails[index].Note.Equals(inputnote.Note))
             {
                 if (inputnote.ShowDialog() == true)
                 {
-                    o.Product_id = ordernotedetails[index].Product_id;
+                    o.ProductId = ordernotedetails[index].ProductId;
                     o.Quan = ordernotedetails[index].Quan;
                     o.SelectedStats = ordernotedetails[index].SelectedStats;
                     o.Note = inputnote.Note;

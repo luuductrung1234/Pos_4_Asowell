@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using POS.Entities;
 
-namespace POS.Model
+namespace POS.BusinessModel
 {
     [Serializable]
     public class Chair : INotifyPropertyChanged
     {
         private int _ChairNumber { get; set; }
         private int _TableOfChair { get; set; }
-        private List<OrderNoteDetails> _ChairOrderDetails { get; set; }
+        private List<OrderNoteDetail> _ChairOrderDetails { get; set; }
 
         public int ChairNumber
         {
@@ -39,7 +37,7 @@ namespace POS.Model
             }
         }
 
-        public List<OrderNoteDetails> ChairOrderDetails
+        public List<OrderNoteDetail> ChairOrderDetails
         {
             get
             {
@@ -63,10 +61,7 @@ namespace POS.Model
 
     public class ChairData
     {
-        private static List<Chair> _chairList = new List<Chair>
-        {
-            
-        };
+        private static List<Chair> _chairList = new List<Chair>();
 
         public static List<Chair> ChairList
         {

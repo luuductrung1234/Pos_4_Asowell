@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shapes;
+using POS.Entities;
 
-namespace POS.Model
+namespace POS.BusinessModel
 {
     public class ReadWriteData
     {
@@ -58,12 +57,13 @@ namespace POS.Model
         {
             Table newTable = new Table()
             {
+                VisualTable = rec,
                 TableNumber = int.Parse(rec.Name.Substring(5)),
                 ChairData = new List<Chair>(),
                 Position = new Point(rec.Margin.Left, rec.Margin.Top),
                 IsPinned = false,
-                TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)), ordertime = DateTime.Now },
-                TableOrderDetails = new List<OrderNoteDetails>()
+                TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now },
+                TableOrderDetails = new List<OrderNoteDetail>()
             };
 
             for (int i = 0; i < newTable.ChairAmount; i++)
@@ -71,7 +71,7 @@ namespace POS.Model
                 Chair newChair = new Chair();
                 newChair.ChairNumber = i + 1;
                 newChair.TableOfChair = newTable.TableNumber;
-                newChair.ChairOrderDetails = new List<OrderNoteDetails>();
+                newChair.ChairOrderDetails = new List<OrderNoteDetail>();
                 newTable.ChairData.Add(newChair);
             }
 
@@ -98,7 +98,7 @@ namespace POS.Model
                         Chair newChair = new Chair();
                         newChair.ChairNumber = i + 1;
                         newChair.TableOfChair = curTable.TableNumber;
-                        newChair.ChairOrderDetails = new List<OrderNoteDetails>();
+                        newChair.ChairOrderDetails = new List<OrderNoteDetail>();
                         curTable.ChairData.Add(newChair);
                     }
                 }
@@ -188,8 +188,8 @@ namespace POS.Model
                 {
                     curTable.TableNumber = int.Parse(rec.Name.Substring(5));
                     curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                    curTable.TableOrder = new OrderNote() { emp_id = (App.Current.Properties["EmpLogin"] as Employee).Emp_id, ordertable = int.Parse(rec.Name.Substring(5)), ordertime = DateTime.Now };
-                    curTable.TableOrderDetails = new List<OrderNoteDetails>();
+                    curTable.TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now };
+                    curTable.TableOrderDetails = new List<OrderNoteDetail>();
 
                     curTable.ChairData = new List<Chair>();
 
@@ -198,7 +198,7 @@ namespace POS.Model
                         Chair newChair = new Chair();
                         newChair.ChairNumber = i + 1;
                         newChair.TableOfChair = curTable.TableNumber;
-                        newChair.ChairOrderDetails = new List<OrderNoteDetails>();
+                        newChair.ChairOrderDetails = new List<OrderNoteDetail>();
                         curTable.ChairData.Add(newChair);
                     }
                     break;

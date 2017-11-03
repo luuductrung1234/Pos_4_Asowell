@@ -331,7 +331,9 @@ insert into Ingredient values
 go
 
 
-insert into Product values		-- đồ uống
+insert into Product
+	([product_id], [name], [info], [price], [is_todrink], [deleted])
+values		-- đồ uống
 ('P000000030',	N'pepsi',					N'',		25,		0, 0),
 ('P000000031',	N'7up',						N'',		25,		0, 0),
 ('P000000032',	N'water',					N'',		25,		0, 0),
@@ -362,7 +364,9 @@ insert into Product values		-- đồ uống
 ('P000000057',	N'orange juice (trái vừa)',	N'',		40,		0, 0)
 go
 
-insert into Product values		-- thức ăn
+insert into Product 
+	([product_id], [name], [info], [price], [is_todrink], [deleted])
+values		-- thức ăn
 ('P000000001',	N'plain yogurt',			N'',		25,		1, 0),
 ('P000000002',	N'choco fondue',			N'',		70,		1, 0),
 ('P000000003',	N'choco cloud',				N'',		55,		1, 0),

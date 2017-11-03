@@ -1,5 +1,8 @@
 ﻿using System.Windows;
-using POS.Model;
+using POS.Context;
+using POS.Entities;
+using POS.Repository;
+using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -8,15 +11,19 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class EmployeeDetail : Window
     {
+        private IEmployeeRepository _employeeRepository;
+
+
         public EmployeeDetail(string UserName)
         {
+            _employeeRepository = new EmployeeRepository(new AsowellContext());
             InitializeComponent();
             loadData(UserName);
         }
         private void loadData(string UserName)
         {
             Employee em = new Employee();
-            foreach (var item in EmployeeData.EmpList)
+            foreach (var item in _employeeRepository.GetAllEmployees())
             {
                 if (item.Username.Equals(UserName))
                 {
@@ -26,7 +33,7 @@ namespace POS.EmployeeWorkSpace
                     em.Birth = item.Birth;
                     em.Addr = item.Addr;
                     em.Startday = item.Startday;
-                    em.Hour_wage = item.Hour_wage;
+                    em.HourWage = item.HourWage;
                     em.Username = item.Username;
                     
                 }

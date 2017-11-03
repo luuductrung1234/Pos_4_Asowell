@@ -3,8 +3,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using POS.Model;
 using System.Windows.Controls.Primitives;
+using POS.Context;
+using POS.Repository;
+using POS.Entities;
+using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -13,14 +16,15 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class UcMenu : UserControl
     {
+        private IProductRepository _productRepository;
         public Table currentTable { get; set; }
 
         public UcMenu()
         {
-
+            _productRepository = new ProductRepository(new AsowellContext());
             InitializeComponent();
 
-            lvCategory.ItemsSource = ProductData.PList;
+            lvCategory.ItemsSource = _productRepository.GetAllProducts();
             this.Loaded += UcMenu_Loaded;
         }
 
@@ -61,23 +65,23 @@ namespace POS.EmployeeWorkSpace
             var item = (sender as ListBox).SelectedItem;
             if (item != null)
             {
-                OrderNoteDetails o = new OrderNoteDetails();
-                OrderNoteDetails oo = new OrderNoteDetails();
+                OrderNoteDetail o = new OrderNoteDetail();
+                OrderNoteDetail oo = new OrderNoteDetail();
                 Product it = (Product)lvCategory.SelectedItem;
 
                 //tong order table
                 var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
-                var foundtable = tableordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
+                var foundtable = tableordernotedetails.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
                 int ii = tableordernotedetails.IndexOf(foundtable);
                 if (foundtable == null)
                 {
-                    oo.Product_id = it.Product_id;
+                    oo.ProductId = it.ProductId;
                     oo.Quan = 1;
                     tableordernotedetails.Add(oo);
                 }
                 else
                 {
-                    oo.Product_id = it.Product_id;
+                    oo.ProductId = it.ProductId;
                     oo.Quan = tableordernotedetails[ii].Quan + 1;
                     oo.SelectedStats = tableordernotedetails[ii].SelectedStats;
                     
@@ -88,19 +92,19 @@ namespace POS.EmployeeWorkSpace
                 var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
                 var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
                 var chairordernotedetails = foundchair.ChairOrderDetails;
-                var found = chairordernotedetails.SingleOrDefault(x => x.Product_id.Equals(it.Product_id));
+                var found = chairordernotedetails.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
 
                 int i = chairordernotedetails.IndexOf(found);
                 
                 if (found == null)
                 {
-                    o.Product_id = it.Product_id;
+                    o.ProductId = it.ProductId;
                     o.Quan = 1;
                     chairordernotedetails.Add(o);
                 }
                 else
                 {
-                    o.Product_id = it.Product_id;
+                    o.ProductId = it.ProductId;
                     o.Quan = chairordernotedetails[i].Quan + 1;
                     o.SelectedStats = chairordernotedetails[i].SelectedStats;
 

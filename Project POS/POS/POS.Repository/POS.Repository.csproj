@@ -47,11 +47,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminReRepository.cs" />
+    <Compile Include="CustomerRepository.cs" />
+    <Compile Include="EmployeeRepository.cs" />
+    <Compile Include="Interfaces\IAdminRepository.cs" />
+    <Compile Include="IngredientRepository.cs" />
+    <Compile Include="Interfaces\ICustomerRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeRepository.cs" />
+    <Compile Include="Interfaces\IIngredientRepository.cs" />
+    <Compile Include="Interfaces\IProductRepository.cs" />
+    <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\POS.Context\POS.Context.csproj">
+      <Project>{92783F25-A5DA-49C9-B3A4-474BB4648EB3}</Project>
+      <Name>POS.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS.Entities\POS.Entities.csproj">
+      <Project>{4B925329-F8C2-4546-968B-4D9E010EC56D}</Project>
+      <Name>POS.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
