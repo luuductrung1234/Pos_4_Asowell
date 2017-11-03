@@ -51,7 +51,7 @@
                                   Height="46">
             <StackPanel  Orientation="Horizontal">
                 <TextBlock Margin="16,0,0,0"
-                           VerticalAlignment="Center"><Run Text="food information" /></TextBlock>
+                           VerticalAlignment="Center"><Run Text="Food information" /></TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <StackPanel HorizontalAlignment="Left"
@@ -59,46 +59,42 @@
                     Margin="635,63,0,0"
                     DataContext="{Binding Selected SelectedItem,ElementName=lvData}"
                     VerticalAlignment="Top"
-                    Width="483"
-                    >
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="ID"
-                           FontSize="18"
-                           Margin="0,0,10,0"
-                           Foreground="White" />
-                <TextBlock x:Name="txtID"
-                           Text="{Binding Product_id }"
-                           Width="172"
-                           Height="26" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Name"
-                           FontSize="18"
-                           Margin="0,20,10,0"
-                           Foreground="White" />
-                <TextBlock x:Name="txtName"
-                           Width="207"
-                           Text="{Binding Name}"/>
+                    Width="483">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize"
+                            Value="18" />
+                    <Setter Property="HorizontalAlignment"
+                            Value="Center" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Center" />
+                    <Setter Property="Width"
+                            Value="150" />
+                    <Setter Property="Height"
+                            Value="25" />
+                    <Setter Property="Foreground"
+                            Value="White" />
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <TextBlock Text="ID" />
+                <TextBlock x:Name="txtID" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
-                        Margin="0,20,0.2,0">
-                <TextBlock Text="Price"
-                           FontSize="18"
-                           Margin="0,0,10,0"
-                           Foreground="White" />
-                <TextBlock x:Name="txtPrice"
-                           Width="173"
-                           Height="38" />
+                        Margin="10">
+                <TextBlock Text="Name" />
+                <TextBlock x:Name="txtName" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
-                        Margin="0,20,0.2,0">
-                <TextBlock Text="promotion"
-                           FontSize="18"
-                           Margin="0,0,10,0"
-                           Foreground="White" />
-                <TextBlock x:Name="txtpromotion"
-                           Width="132"
-                           Height="40" />
+                        Margin="10">
+                <TextBlock Text="Price" />
+                <TextBlock x:Name="txtPrice" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="10">
+                <TextBlock Text="Promotion" />
+                <TextBlock x:Name="txtpromotion" />
             </StackPanel>
         </StackPanel>
         <Image x:Name="image"

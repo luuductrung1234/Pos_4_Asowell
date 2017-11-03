@@ -29,7 +29,11 @@ namespace POS.EmployeeWorkSpace
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Product pro = lvData.SelectedItem as Product;
 
+            txtID.Text = pro.Product_id;
+            txtName.Text = pro.Name;
+            txtPrice.Text = pro.Price.ToString();
         }
     }
 }
