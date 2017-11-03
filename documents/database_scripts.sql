@@ -483,6 +483,8 @@ select * from AdminRes
 go
 select * from Employee
 go
+select * from Customer
+go
 select * from Ingredient
 go
  

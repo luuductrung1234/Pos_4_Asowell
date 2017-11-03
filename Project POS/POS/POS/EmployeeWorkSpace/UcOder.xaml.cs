@@ -17,6 +17,9 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class UcOder : UserControl
     {
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+
+
         public UcOder()
         {
             InitializeComponent();
@@ -26,8 +29,15 @@ namespace POS.EmployeeWorkSpace
 
         private void UcOder_Loaded(object sender, RoutedEventArgs e)
         {
-            loadTableChairData();
-            loadCustomerOwner();
+            try
+            {
+                loadTableChairData();
+                loadCustomerOwner();
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         public void RefreshControl()
@@ -63,6 +73,11 @@ namespace POS.EmployeeWorkSpace
 
         public void RefreshControlAllChair()
         {
+            if (((MainWindow)Window.GetWindow(this)).currentTable == null)
+            {
+                return;
+            }
+
             // lay ordernotedetails cua ban thu nhat
             var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
             //var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
@@ -128,6 +143,14 @@ namespace POS.EmployeeWorkSpace
             cboCustomers.ItemsSource = CustomerData.CusList;
             cboCustomers.SelectedValuePath = "Cus_id";
             cboCustomers.DisplayMemberPath = "Name";
+            cboCustomers.MouseEnter += (sender, args) =>
+            {
+                cboCustomers.Background.Opacity = 100;
+            };
+            cboCustomers.MouseLeave += (sender, args) =>
+            {
+                cboCustomers.Background.Opacity = 0;
+            };
             cboCustomers.SelectionChanged += cboCustomers_SeSelectionChanged;
             
             if(((MainWindow)Window.GetWindow(this)).currentTable != null && ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.cus_id != null)
@@ -460,10 +483,6 @@ namespace POS.EmployeeWorkSpace
             {
                 inputnote.ShowDialog();
             }
-
-
-
-
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,12 +26,19 @@ namespace POS.EmployeeWorkSpace
 
         private void UcMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            if(((MainWindow)Window.GetWindow(this)).currentTable == null)
+            try
             {
-                return;
-            }
+                if (((MainWindow) Window.GetWindow(this)).currentTable == null)
+                {
+                    return;
+                }
 
-            ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
+                ((MainWindow) Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         public override void OnApplyTemplate()
