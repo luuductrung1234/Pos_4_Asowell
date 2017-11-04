@@ -21,10 +21,8 @@ namespace POS.EmployeeWorkSpace
 
         public UcMenu()
         {
-            _productRepository = new ProductRepository(new AsowellContext());
             InitializeComponent();
 
-            lvCategory.ItemsSource = _productRepository.GetAllProducts();
             this.Loaded += UcMenu_Loaded;
         }
 
@@ -32,11 +30,15 @@ namespace POS.EmployeeWorkSpace
         {
             try
             {
+                _productRepository = ((MainWindow)Window.GetWindow(this))._productRepository;
+                lvCategory.ItemsSource = _productRepository.GetAllProducts();
+
                 if (((MainWindow) Window.GetWindow(this)).currentTable == null)
                 {
                     return;
                 }
 
+                
                 ((MainWindow) Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
             }
             catch (Exception ex)

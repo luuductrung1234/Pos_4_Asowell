@@ -26,8 +26,6 @@ namespace POS.EmployeeWorkSpace
 
         public UcOder()
         {
-            _productRepository = new ProductRepository(new AsowellContext());
-            _customerRepository = new CustomerRepository(new AsowellContext());
             InitializeComponent();
 
             this.Loaded += UcOder_Loaded;
@@ -37,6 +35,15 @@ namespace POS.EmployeeWorkSpace
         {
             try
             {
+                _productRepository = ((MainWindow)Window.GetWindow(this))._productRepository;
+                _customerRepository = ((MainWindow)Window.GetWindow(this))._customerRepository;
+
+                if (((MainWindow)Window.GetWindow(this)).currentTable == null)
+                {
+                    return;
+                }
+
+                
                 loadTableChairData();
                 loadCustomerOwner();
             }

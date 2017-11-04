@@ -63,7 +63,7 @@ namespace POS.Repository
                     context.Dispose();
                 }
             }
-            Dispose();
+            disposed = true;
         }
 
         public void Dispose()

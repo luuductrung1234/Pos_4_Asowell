@@ -26,11 +26,13 @@ namespace POS.EmployeeWorkSpace
     {
         private IProductRepository _productRepository;
 
-        public SettingFood()
+        public SettingFood(IProductRepository productRepository)
         {
-            _productRepository = new ProductRepository(new AsowellContext());
+            _productRepository = productRepository;
             InitializeComponent();
             lvData.ItemsSource = _productRepository.GetAllProducts();
+
+            
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -41,5 +43,7 @@ namespace POS.EmployeeWorkSpace
             txtName.Text = pro.Name;
             txtPrice.Text = pro.Price.ToString();
         }
+
+        
     }
 }

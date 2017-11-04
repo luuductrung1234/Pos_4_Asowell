@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,16 @@ namespace POS
             InitializeComponent();
 
             this.WindowState = WindowState.Normal;
+
+            this.Closing += Closing_LoginWindos;
+        }
+
+        public Login(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+            InitializeComponent();
+
+            this.WindowState = WindowState.Normal;
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -58,6 +69,11 @@ namespace POS
         private void btnDatabase_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Closing_LoginWindos(object sender, EventArgs args)
+        {
+            _employeeRepository.Dispose();
         }
     }
 }

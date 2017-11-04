@@ -4,7 +4,10 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using POS.BusinessModel;
+using POS.Context;
 using POS.Entities;
+using POS.Repository;
+using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -13,14 +16,18 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class MainWindow : Window
     {
+        internal IProductRepository _productRepository;
+        internal ICustomerRepository _customerRepository;                                                                                                                                                                                                                                                                                                                                                        
+
+
         public BusinessModel.Table currentTable { get; set; }
         public Chair currentChair { get; set; }
-        internal Table b = new Table();
-        internal Dash d = new Dash();
-        internal Entry en = new Entry();
-        internal Info info = new Info();
-        internal Login login = new Login();
-        internal SettingFood st = new SettingFood();
+        internal Table b;
+        internal Dash d;
+        internal Entry en;
+        internal Info info;
+        internal Login login;
+        internal SettingFood st;
 
         public MainWindow()
         {
@@ -30,8 +37,20 @@ namespace POS.EmployeeWorkSpace
 
             cUser.Content= emp.Username;
 
+            _productRepository = new ProductRepository(new AsowellContext());
+            _customerRepository = new CustomerRepository(new AsowellContext());
+            b = new Table(_productRepository, _customerRepository);
+            d = new Dash();
+            en = new Entry();
+            info = new Info();
+            login = new Login();
+            st = new SettingFood(_productRepository);
 
-
+            this.Closing += (sender, args) =>
+            {
+                _productRepository.Dispose();
+                _customerRepository.Dispose();
+            };
         }
 
         private void bntDash_Click(object sender, RoutedEventArgs e)
@@ -92,6 +111,10 @@ namespace POS.EmployeeWorkSpace
         private void ListBoxItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(st);
+            bntTable.IsEnabled = true;
+            bntDash.IsEnabled = true;
+            bntEntry.IsEnabled = true;
+            bntInfo.IsEnabled = true;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

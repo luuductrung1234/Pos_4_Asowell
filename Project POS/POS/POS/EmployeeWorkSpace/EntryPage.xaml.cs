@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -7,6 +8,7 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class Entry : Page
     {
+
         public Entry()
         {
             InitializeComponent();

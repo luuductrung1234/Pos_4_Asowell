@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using POS.Context;
 using POS.Entities;
 using POS.Repository;
@@ -19,7 +20,17 @@ namespace POS.EmployeeWorkSpace
             _employeeRepository = new EmployeeRepository(new AsowellContext());
             InitializeComponent();
             loadData(UserName);
+
+            this.Closing += Closing_EmployeeDetailWindow;
         }
+
+        public EmployeeDetail(string UserName, IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+            InitializeComponent();
+            loadData(UserName);
+        }
+
         private void loadData(string UserName)
         {
             Employee em = new Employee();
@@ -39,6 +50,11 @@ namespace POS.EmployeeWorkSpace
                 }
             }
             this.EmployeeInfo.DataContext = em;
+        }
+
+        private void Closing_EmployeeDetailWindow(object sender, EventArgs args)
+        {
+            _employeeRepository.Dispose();
         }
     }
 }

@@ -25,10 +25,10 @@ namespace POS.EmployeeWorkSpace
         private IProductRepository _productRepository;
         private ICustomerRepository _customerRepository;
 
-        public Table()
+        public Table(IProductRepository productRepository, ICustomerRepository customerRepository)
         {
-            _productRepository = new ProductRepository(new AsowellContext());
-            _customerRepository = new CustomerRepository(new AsowellContext());
+            _productRepository = productRepository;
+            _customerRepository = customerRepository;
             InitializeComponent();
             
             initTableData();
