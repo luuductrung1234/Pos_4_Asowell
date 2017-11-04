@@ -67,9 +67,9 @@
     <Compile Include="MigrationConfiguration.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711041332307_initial.cs" />
-    <Compile Include="Migrations\201711041332307_initial.Designer.cs">
-      <DependentUpon>201711041332307_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201711041622236_AddDIscountToProduct.cs" />
+    <Compile Include="Migrations\201711041622236_AddDIscountToProduct.Designer.cs">
+      <DependentUpon>201711041622236_AddDIscountToProduct.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -101,8 +101,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711041332307_initial.resx">
-      <DependentUpon>201711041332307_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711041622236_AddDIscountToProduct.resx">
+      <DependentUpon>201711041622236_AddDIscountToProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

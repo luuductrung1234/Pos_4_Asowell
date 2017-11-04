@@ -14,6 +14,7 @@
 
 #Runtime results
 SerializedData/
+../POS.Context/Migrations/
 
 # Build results
 [Dd]ebug/
