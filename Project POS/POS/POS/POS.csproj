@@ -261,6 +261,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\miy.jpg" />
+    <Resource Include="Images\softwarepdate.jpg" />
     <Resource Include="Images\Search_50px.png" />
     <Resource Include="Icon\Restaurant_52px.png" />
     <Resource Include="Icon\Vector-Iluustartor.png" />
