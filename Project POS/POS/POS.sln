@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS", "POS\POS.csproj", "{EF6CA9C2-949C-45CE-BA7B-C943E3E9D671}"
+	ProjectSection(ProjectDependencies) = postProject
+		{92783F25-A5DA-49C9-B3A4-474BB4648EB3} = {92783F25-A5DA-49C9-B3A4-474BB4648EB3}
+		{4B925329-F8C2-4546-968B-4D9E010EC56D} = {4B925329-F8C2-4546-968B-4D9E010EC56D}
+		{81743988-1EBF-42EC-812F-2574A4F0F3A3} = {81743988-1EBF-42EC-812F-2574A4F0F3A3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Entities", "POS.Entities\POS.Entities.csproj", "{4B925329-F8C2-4546-968B-4D9E010EC56D}"
 EndProject

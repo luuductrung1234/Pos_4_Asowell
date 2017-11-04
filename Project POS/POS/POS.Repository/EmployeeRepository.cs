@@ -38,7 +38,7 @@ namespace POS.Repository
         public void DeleteEmployee(int employeeId)
         {
             Employee employee = context.Employees.Find(employeeId);
-            context.Employees.Remove(employee ?? throw new InvalidOperationException());
+            context.Employees.Remove(employee);
         }
 
         public void UpdateEmployee(Employee employee)

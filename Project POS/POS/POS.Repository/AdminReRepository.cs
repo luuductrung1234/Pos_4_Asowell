@@ -37,7 +37,7 @@ namespace POS.Repository
         public void DeleteAdminRe(int adminreId)
         {
             AdminRe adminre = context.AdminRes.Find(adminreId);
-            context.AdminRes.Remove(adminre ?? throw new InvalidOperationException());
+            context.AdminRes.Remove(adminre);
         }
 
         public void UpdateAdminRe(AdminRe adminre)

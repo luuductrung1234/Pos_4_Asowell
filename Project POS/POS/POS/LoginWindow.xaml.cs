@@ -61,6 +61,11 @@ namespace POS
 
                     break;
                 }
+                else
+                {
+                    MessageBox.Show("incorrect username or password");
+                    return;
+                }
             }
 
             this.Close();

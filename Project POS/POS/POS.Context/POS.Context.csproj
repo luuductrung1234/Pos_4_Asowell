@@ -67,13 +67,9 @@
     <Compile Include="MigrationConfiguration.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711031534079_AddImageLinkToProduct.cs" />
-    <Compile Include="Migrations\201711031534079_AddImageLinkToProduct.Designer.cs">
-      <DependentUpon>201711031534079_AddImageLinkToProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711040428213_update.cs" />
-    <Compile Include="Migrations\201711040428213_update.Designer.cs">
-      <DependentUpon>201711040428213_update.cs</DependentUpon>
+    <Compile Include="Migrations\201711041332307_initial.cs" />
+    <Compile Include="Migrations\201711041332307_initial.Designer.cs">
+      <DependentUpon>201711041332307_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -105,11 +101,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711031534079_AddImageLinkToProduct.resx">
-      <DependentUpon>201711031534079_AddImageLinkToProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711040428213_update.resx">
-      <DependentUpon>201711040428213_update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711041332307_initial.resx">
+      <DependentUpon>201711041332307_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
