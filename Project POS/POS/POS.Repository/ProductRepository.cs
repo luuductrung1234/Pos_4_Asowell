@@ -24,7 +24,7 @@ namespace POS.Repository
             return context.Products.ToList();
         }
 
-        public Product GetProductById(int productId)
+        public Product GetProductById(string productId)
         {
             return context.Products.Find(productId);
         }
@@ -34,7 +34,7 @@ namespace POS.Repository
             context.Products.Add(product);
         }
 
-        public void DeleteProduct(int productId)
+        public void DeleteProduct(string productId)
         {
             Product product = context.Products.Find(productId);
             context.Products.Remove(product);

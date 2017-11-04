@@ -10,9 +10,9 @@ namespace POS.Repository.Interfaces
     public interface ICustomerRepository : IDisposable
     {
         IEnumerable<Customer> GetAllCustomers();
-        Customer GetCustomerById(int customerId);
+        Customer GetCustomerById(string customerId);
         void InsertCustomer(Customer customer);
-        void DeleteCustomer(int customerId);
+        void DeleteCustomer(string customerId);
         void UpdateCustomer(Customer customer);
         void Save();
     }

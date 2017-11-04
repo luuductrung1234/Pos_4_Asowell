@@ -25,7 +25,7 @@ namespace POS.Repository
             return context.Employees.ToList();
         }
 
-        public Employee GetEmployeeById(int employeeId)
+        public Employee GetEmployeeById(string employeeId)
         {
             return context.Employees.Find(employeeId);
         }
@@ -35,7 +35,7 @@ namespace POS.Repository
             context.Employees.Add(employee);
         }
 
-        public void DeleteEmployee(int employeeId)
+        public void DeleteEmployee(string employeeId)
         {
             Employee employee = context.Employees.Find(employeeId);
             context.Employees.Remove(employee);

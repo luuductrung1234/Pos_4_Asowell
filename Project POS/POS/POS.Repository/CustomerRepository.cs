@@ -24,7 +24,7 @@ namespace POS.Repository
             return context.Customers.ToList();
         }
 
-        public Customer GetCustomerById(int customerId)
+        public Customer GetCustomerById(string customerId)
         {
             return context.Customers.Find(customerId);
         }
@@ -34,7 +34,7 @@ namespace POS.Repository
             context.Customers.Add(customer);
         }
 
-        public void DeleteCustomer(int customerId)
+        public void DeleteCustomer(string customerId)
         {
             Customer customer = context.Customers.Find(customerId);
             context.Customers.Remove(customer);

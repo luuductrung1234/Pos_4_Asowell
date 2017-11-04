@@ -24,7 +24,7 @@ namespace POS.Repository
             return context.Ingredients.ToList();
         }
 
-        public Ingredient GetIngredientById(int ingredientId)
+        public Ingredient GetIngredientById(string ingredientId)
         {
             return context.Ingredients.Find(ingredientId);
         }
@@ -34,7 +34,7 @@ namespace POS.Repository
             context.Ingredients.Add(ingredient);
         }
 
-        public void DeleteIngredient(int ingredientId)
+        public void DeleteIngredient(string ingredientId)
         {
             Ingredient ingredient = context.Ingredients.Find(ingredientId);
             context.Ingredients.Remove(ingredient);

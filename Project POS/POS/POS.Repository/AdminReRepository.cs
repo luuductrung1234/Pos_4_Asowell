@@ -24,7 +24,7 @@ namespace POS.Repository
             return context.AdminRes.ToList();
         }
 
-        public AdminRe GetAdminReById(int adminreId)
+        public AdminRe GetAdminReById(string adminreId)
         {
             return context.AdminRes.Find(adminreId);
         }
@@ -34,7 +34,7 @@ namespace POS.Repository
             context.AdminRes.Add(adminre);
         }
 
-        public void DeleteAdminRe(int adminreId)
+        public void DeleteAdminRe(string adminreId)
         {
             AdminRe adminre = context.AdminRes.Find(adminreId);
             context.AdminRes.Remove(adminre);

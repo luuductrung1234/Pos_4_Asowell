@@ -10,9 +10,9 @@ namespace POS.Repository.Interfaces
     public interface IProductRepository : IDisposable
     {
         IEnumerable<Product> GetAllProducts();
-        Product GetProductById(int productId);
+        Product GetProductById(string productId);
         void InsertProduct(Product product);
-        void DeleteProduct(int productId);
+        void DeleteProduct(string productId);
         void UpdateProduct(Product product);
         void Save();
     }
