@@ -37,7 +37,7 @@ namespace POS.Repository
         public void DeleteProduct(int productId)
         {
             Product product = context.Products.Find(productId);
-            context.Products.Remove(product ?? throw new InvalidOperationException());
+            context.Products.Remove(product);
         }
 
         public void UpdateProduct(Product product)

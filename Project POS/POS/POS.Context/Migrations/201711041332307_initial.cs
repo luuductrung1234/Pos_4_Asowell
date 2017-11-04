@@ -3,7 +3,7 @@ namespace POS.Context
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddImageLinkToProduct : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -78,6 +78,7 @@ namespace POS.Context
                     {
                         ordernote_id = c.String(nullable: false, maxLength: 10, unicode: false),
                         product_id = c.String(nullable: false, maxLength: 10, unicode: false),
+                        SelectedStats = c.String(),
                         quan = c.Int(nullable: false),
                         note = c.String(maxLength: 500, unicode: false),
                     })
@@ -97,7 +98,7 @@ namespace POS.Context
                         price = c.Decimal(nullable: false, storeType: "money"),
                         is_todrink = c.Byte(nullable: false),
                         deleted = c.Int(nullable: false),
-                        ImageLink = c.String(nullable: true),
+                        ImageLink = c.String(),
                     })
                 .PrimaryKey(t => t.product_id);
             

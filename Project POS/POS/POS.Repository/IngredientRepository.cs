@@ -37,7 +37,7 @@ namespace POS.Repository
         public void DeleteIngredient(int ingredientId)
         {
             Ingredient ingredient = context.Ingredients.Find(ingredientId);
-            context.Ingredients.Remove(ingredient ?? throw new InvalidOperationException());
+            context.Ingredients.Remove(ingredient);
         }
 
         public void UpdateIngredient(Ingredient ingredient)

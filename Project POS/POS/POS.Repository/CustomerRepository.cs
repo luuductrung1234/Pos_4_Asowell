@@ -37,7 +37,7 @@ namespace POS.Repository
         public void DeleteCustomer(int customerId)
         {
             Customer customer = context.Customers.Find(customerId);
-            context.Customers.Remove(customer ?? throw new InvalidOperationException());
+            context.Customers.Remove(customer);
         }
 
         public void UpdateCustomer(Customer customer)
