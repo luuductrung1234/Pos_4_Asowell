@@ -2,47 +2,45 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using POS.Context;
 using POS.Entities;
 using POS.Repository.Interfaces;
 
-namespace POS.Repository
+namespace POS.Repository.DAL
 {
-    public class CustomerRepository : Interfaces.ICustomerRepository
+    public class AdminReRepository : IAdminRepository
     {
         private AsowellContext context;
 
-        public CustomerRepository(AsowellContext context)
+        public AdminReRepository(AsowellContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<Customer> GetAllCustomers()
+        public IEnumerable<AdminRe> GetAllAdminRes()
         {
-            return context.Customers.ToList();
+            return context.AdminRes.ToList();
         }
 
-        public Customer GetCustomerById(string customerId)
+        public AdminRe GetAdminReById(string adminreId)
         {
-            return context.Customers.Find(customerId);
+            return context.AdminRes.Find(adminreId);
         }
 
-        public void InsertCustomer(Customer customer)
+        public void InsertAdminRe(AdminRe adminre)
         {
-            context.Customers.Add(customer);
+            context.AdminRes.Add(adminre);
         }
 
-        public void DeleteCustomer(string customerId)
+        public void DeleteAdminRe(string adminreId)
         {
-            Customer customer = context.Customers.Find(customerId);
-            context.Customers.Remove(customer);
+            AdminRe adminre = context.AdminRes.Find(adminreId);
+            context.AdminRes.Remove(adminre);
         }
 
-        public void UpdateCustomer(Customer customer)
+        public void UpdateAdminRe(AdminRe adminre)
         {
-            context.Entry(customer).State = EntityState.Modified;
+            context.Entry(adminre).State = EntityState.Modified;
         }
 
         public void Save()

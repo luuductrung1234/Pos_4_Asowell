@@ -2,47 +2,45 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using POS.Context;
 using POS.Entities;
 using POS.Repository.Interfaces;
 
-namespace POS.Repository
+namespace POS.Repository.DAL
 {
-    public class AdminReRepository : IAdminRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         private AsowellContext context;
 
-        public AdminReRepository(AsowellContext context)
+        public EmployeeRepository(AsowellContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<AdminRe> GetAllAdminRes()
+        public IEnumerable<Employee> GetAllEmployees()
         {
-            return context.AdminRes.ToList();
+            return context.Employees.ToList();
         }
 
-        public AdminRe GetAdminReById(string adminreId)
+        public Employee GetEmployeeById(string employeeId)
         {
-            return context.AdminRes.Find(adminreId);
+            return context.Employees.Find(employeeId);
         }
 
-        public void InsertAdminRe(AdminRe adminre)
+        public void InsertEmployee(Employee employee)
         {
-            context.AdminRes.Add(adminre);
+            context.Employees.Add(employee);
         }
 
-        public void DeleteAdminRe(string adminreId)
+        public void DeleteEmployee(string employeeId)
         {
-            AdminRe adminre = context.AdminRes.Find(adminreId);
-            context.AdminRes.Remove(adminre);
+            Employee employee = context.Employees.Find(employeeId);
+            context.Employees.Remove(employee);
         }
 
-        public void UpdateAdminRe(AdminRe adminre)
+        public void UpdateEmployee(Employee employee)
         {
-            context.Entry(adminre).State = EntityState.Modified;
+            context.Entry(employee).State = EntityState.Modified;
         }
 
         public void Save()

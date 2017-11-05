@@ -2,48 +2,44 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using POS.Context;
 using POS.Entities;
-using POS.Repository.Interfaces;
 
-namespace POS.Repository
+namespace POS.Repository.DAL
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class CustomerRepository : Interfaces.ICustomerRepository
     {
         private AsowellContext context;
 
-        public EmployeeRepository(AsowellContext context)
+        public CustomerRepository(AsowellContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<Employee> GetAllEmployees()
+        public IEnumerable<Customer> GetAllCustomers()
         {
-            return context.Employees.ToList();
+            return context.Customers.ToList();
         }
 
-        public Employee GetEmployeeById(string employeeId)
+        public Customer GetCustomerById(string customerId)
         {
-            return context.Employees.Find(employeeId);
+            return context.Customers.Find(customerId);
         }
 
-        public void InsertEmployee(Employee employee)
+        public void InsertCustomer(Customer customer)
         {
-            context.Employees.Add(employee);
+            context.Customers.Add(customer);
         }
 
-        public void DeleteEmployee(string employeeId)
+        public void DeleteCustomer(string customerId)
         {
-            Employee employee = context.Employees.Find(employeeId);
-            context.Employees.Remove(employee);
+            Customer customer = context.Customers.Find(customerId);
+            context.Customers.Remove(customer);
         }
 
-        public void UpdateEmployee(Employee employee)
+        public void UpdateCustomer(Customer customer)
         {
-            context.Entry(employee).State = EntityState.Modified;
+            context.Entry(customer).State = EntityState.Modified;
         }
 
         public void Save()

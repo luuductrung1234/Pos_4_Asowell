@@ -47,16 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminReRepository.cs" />
-    <Compile Include="CustomerRepository.cs" />
-    <Compile Include="EmployeeRepository.cs" />
+    <Compile Include="DAL\AdminReRepository.cs" />
+    <Compile Include="DAL\CustomerRepository.cs" />
+    <Compile Include="DAL\EmployeeRepository.cs" />
+    <Compile Include="DAL\EmployeewsOfAsowell.cs" />
+    <Compile Include="Generic\GenericRepository.cs" />
     <Compile Include="Interfaces\IAdminRepository.cs" />
-    <Compile Include="IngredientRepository.cs" />
+    <Compile Include="DAL\IngredientRepository.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="Interfaces\IEmployeeRepository.cs" />
     <Compile Include="Interfaces\IIngredientRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
-    <Compile Include="ProductRepository.cs" />
+    <Compile Include="DAL\ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -73,5 +75,6 @@
       <Name>POS.Entities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
