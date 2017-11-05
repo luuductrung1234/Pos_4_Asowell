@@ -106,6 +106,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminWorkSpace\AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeWorkSpace\DashPage.xaml.cs">
       <DependentUpon>DashPage.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,13 @@
     <Compile Include="EmployeeWorkSpace\UcOder.xaml.cs">
       <DependentUpon>UcOder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WareHouseWorkSpace\WareHouseWindow.xaml.cs">
+      <DependentUpon>WareHouseWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AdminWorkSpace\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EmployeeWorkSpace\DashPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\UcOder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WareHouseWorkSpace\WareHouseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -279,9 +293,7 @@
     <Resource Include="Images\h3.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AdminWorkSpace\" />
     <Folder Include="SerializedData\" />
-    <Folder Include="WareHouseWorkSpace\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
