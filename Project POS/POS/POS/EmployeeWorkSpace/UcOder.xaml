@@ -119,7 +119,7 @@
                                             DisplayMemberBinding="{Binding Quan}" />
                             <GridViewColumn Header="Price"
                                             Width="90"
-                                            DisplayMemberBinding="{Binding Price}" />
+                                            DisplayMemberBinding="{Binding Price,StringFormat=0.000}" />
                             <GridViewColumn Header="Status"
                                             Width="100">
                                 <GridViewColumn.CellTemplate>
