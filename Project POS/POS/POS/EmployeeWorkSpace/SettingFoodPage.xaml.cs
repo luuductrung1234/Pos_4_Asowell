@@ -1,22 +1,9 @@
 ﻿using POS.Entities;
-using POS.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using POS.Context;
-using POS.Repository.Interfaces;
 using System.Text.RegularExpressions;
+using POS.Repository.DAL;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -25,13 +12,13 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class SettingFoodPage : Page
     {
-        private IProductRepository _productRepository;
+        private EmployeewsOfAsowell _unitofwork;
 
-        public SettingFoodPage(IProductRepository productRepository)
+        public SettingFoodPage(EmployeewsOfAsowell unitofwork)
         {
-            _productRepository = productRepository;
+            _unitofwork = unitofwork;
             InitializeComponent();
-            lvData.ItemsSource = _productRepository.GetAllProducts();
+            lvData.ItemsSource = _unitofwork.ProductRepository.Get();
             for(int i = 0; i <= 100; i++)
             {
                 cbopromotion.Items.Add(i.ToString());
@@ -61,10 +48,10 @@ namespace POS.EmployeeWorkSpace
                 bntUpdate.Content = "Save";
             }else if (bntUpdate.Content.Equals("Save"))
             {
-                Product p = _productRepository.GetProductById(txtID.Text);
+                Product p = _unitofwork.ProductRepository.GetById(txtID.Text);
                 p.Discount= int.Parse(cbopromotion.SelectedValue.ToString());
-               _productRepository.UpdateProduct(p);
-                _productRepository.Save();
+               _unitofwork.ProductRepository.Update(p);
+                _unitofwork.Save();
 
 
                 txtName.IsEnabled = false;

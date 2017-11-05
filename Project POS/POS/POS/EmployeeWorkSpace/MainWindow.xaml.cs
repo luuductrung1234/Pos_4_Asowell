@@ -17,8 +17,11 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal IProductRepository _productRepository;
-        internal ICustomerRepository _customerRepository;                                                                                                                                                                                                                                                                                                                                                        
+        /// <summary>
+        /// the object that store all repository you want to get data DBAsowell
+        /// in Employee WorkSpace
+        /// </summary>
+        internal EmployeewsOfAsowell _unitofwork;                                                                                                                                                                                                                                                                                                                                                   
 
 
         public BusinessModel.Table currentTable { get; set; }
@@ -38,19 +41,18 @@ namespace POS.EmployeeWorkSpace
 
             cUser.Content= emp.Username;
 
-            _productRepository = new ProductRepository(new AsowellContext());
-            _customerRepository = new CustomerRepository(new AsowellContext());
-            b = new Table(_productRepository, _customerRepository);
+            
+            _unitofwork = new EmployeewsOfAsowell();
+            b = new Table(_unitofwork);
             d = new Dash();
             en = new Entry();
             info = new Info();
             login = new Login();
-            st = new SettingFoodPage(_productRepository);
+            st = new SettingFoodPage(_unitofwork);
 
             this.Closing += (sender, args) =>
             {
-                _productRepository.Dispose();
-                _customerRepository.Dispose();
+                _unitofwork.Dispose();
             };
         }
 
@@ -91,11 +93,6 @@ namespace POS.EmployeeWorkSpace
             bntInfo.IsEnabled = false;
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            currentTable = TableTempData.TbList.First();
-            this.en.ucOrder.RefreshControl();
-        }
 
         private void DemoItemsListBox_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -120,7 +117,7 @@ namespace POS.EmployeeWorkSpace
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            EmployeeDetail emd = new EmployeeDetail(cUser.Content.ToString());
+            EmployeeDetail emd = new EmployeeDetail(cUser.Content.ToString(), _unitofwork);
             emd.ShowDialog();
         }
 

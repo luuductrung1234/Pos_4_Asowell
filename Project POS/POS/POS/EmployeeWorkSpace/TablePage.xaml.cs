@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using POS.BusinessModel;
 using POS.Context;
 using POS.Repository;
+using POS.Repository.DAL;
 using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
@@ -22,13 +23,11 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class Table : Page
     {
-        private IProductRepository _productRepository;
-        private ICustomerRepository _customerRepository;
+        private EmployeewsOfAsowell _unitofwork;
 
-        public Table(IProductRepository productRepository, ICustomerRepository customerRepository)
+        public Table(EmployeewsOfAsowell unitofwork)
         {
-            _productRepository = productRepository;
-            _customerRepository = customerRepository;
+            _unitofwork = unitofwork;
             InitializeComponent();
             
             initTableData();
@@ -946,7 +945,7 @@ namespace POS.EmployeeWorkSpace
                     {
                         if (table.TableOrder.CusId != null)
                         {
-                            foreach (var cus in _customerRepository.GetAllCustomers())
+                            foreach (var cus in _unitofwork.CustomerRepository.Get())
                             {
                                 if (table.TableOrder.CusId.Equals(cus.CusId))
                                 {
@@ -956,7 +955,7 @@ namespace POS.EmployeeWorkSpace
 
                             foreach (var tableOD in table.TableOrderDetails)
                             {
-                                foreach (var pro in _productRepository.GetAllProducts())
+                                foreach (var pro in _unitofwork.ProductRepository.Get())
                                 {
                                     if (pro.ProductId.Equals(tableOD.ProductId))
                                     {

@@ -13,21 +13,12 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class EmployeeDetail : Window
     {
-        private IEmployeeRepository _employeeRepository;
+        private EmployeewsOfAsowell _unitofwork;
 
 
-        public EmployeeDetail(string UserName)
+        public EmployeeDetail(string UserName, EmployeewsOfAsowell unitofwork)
         {
-            _employeeRepository = new EmployeeRepository(new AsowellContext());
-            InitializeComponent();
-            loadData(UserName);
-
-            this.Closing += Closing_EmployeeDetailWindow;
-        }
-
-        public EmployeeDetail(string UserName, IEmployeeRepository employeeRepository)
-        {
-            _employeeRepository = employeeRepository;
+            _unitofwork = unitofwork;
             InitializeComponent();
             loadData(UserName);
         }
@@ -35,7 +26,7 @@ namespace POS.EmployeeWorkSpace
         private void loadData(string UserName)
         {
             Employee em = new Employee();
-            foreach (var item in _employeeRepository.GetAllEmployees())
+            foreach (var item in  _unitofwork.EmployeeRepository.Get())
             {
                 if (item.Username.Equals(UserName))
                 {
@@ -51,11 +42,6 @@ namespace POS.EmployeeWorkSpace
                 }
             }
             this.EmployeeInfo.DataContext = em;
-        }
-
-        private void Closing_EmployeeDetailWindow(object sender, EventArgs args)
-        {
-            _employeeRepository.Dispose();
         }
     }
 }

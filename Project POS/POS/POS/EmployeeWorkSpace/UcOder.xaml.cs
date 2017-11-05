@@ -12,6 +12,7 @@ using POS.BusinessModel;
 using POS.Context;
 using POS.Entities;
 using POS.Repository;
+using POS.Repository.DAL;
 using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
@@ -21,8 +22,7 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class UcOder : UserControl
     {
-        private IProductRepository _productRepository;
-        private ICustomerRepository _customerRepository;
+        private EmployeewsOfAsowell _unitofwork;
 
         public UcOder()
         {
@@ -35,9 +35,7 @@ namespace POS.EmployeeWorkSpace
         {
             try
             {
-                _productRepository = ((MainWindow)Window.GetWindow(this))._productRepository;
-                _customerRepository = ((MainWindow)Window.GetWindow(this))._customerRepository;
-
+                _unitofwork = ((MainWindow) Window.GetWindow(this))._unitofwork;
                 if (((MainWindow)Window.GetWindow(this)).currentTable == null)
                 {
                     return;
@@ -53,6 +51,11 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+
+        /// <summary>
+        /// show all orderdetails in the current checked chair.
+        /// allow to modify these orderdetails
+        /// </summary>
         public void RefreshControl()
         {
             try
@@ -64,7 +67,7 @@ namespace POS.EmployeeWorkSpace
 
                 // chuyen product_id thanh product name
                 var query = from orderdetails in chairordernotedetails
-                    join product in _productRepository.GetAllProducts()
+                    join product in _unitofwork.ProductRepository.Get()
                             on orderdetails.ProductId equals product.ProductId
 
                             select new OrderDetails_Product_Joiner
@@ -84,6 +87,11 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+
+        /// <summary>
+        /// show all orderdetails of all chairs in the table.
+        /// but not allow to modify these orderdetails
+        /// </summary>
         public void RefreshControlAllChair()
         {
             if (((MainWindow)Window.GetWindow(this)).currentTable == null)
@@ -93,20 +101,11 @@ namespace POS.EmployeeWorkSpace
 
             // lay ordernotedetails cua ban thu nhat
             var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
-            //var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
-            //List<OrderNoteDetails> ordernotedetailstemp = new List<OrderNoteDetails>();
-            //var chairordernotedetails = ordernotedetailstemp;
-            //foreach (Chair ch in chairoftable)
-            //{
-            //    if (ch != null)
-            //    {
-            //        chairordernotedetails = chairordernotedetails.Concat(ch.ChairOrderDetails).ToList();
-            //    }
-            //}
+            
 
             // chuyen product_id thanh product name
             var query = from orderdetails in tableordernotedetails
-                        join product in _productRepository.GetAllProducts()
+                        join product in _unitofwork.ProductRepository.Get()
                         on orderdetails.ProductId equals product.ProductId
 
                         select new OrderDetails_Product_Joiner
@@ -119,6 +118,8 @@ namespace POS.EmployeeWorkSpace
             lvData.ItemsSource = query;
             loadTotalPrice();
         }
+
+
 
         ToggleButton curChair;
         private void loadTableChairData()
@@ -153,7 +154,7 @@ namespace POS.EmployeeWorkSpace
 
         private void loadCustomerOwner()
         {
-            cboCustomers.ItemsSource = _customerRepository.GetAllCustomers();
+            cboCustomers.ItemsSource = _unitofwork.CustomerRepository.Get();
             cboCustomers.SelectedValuePath = "Cus_id";
             cboCustomers.DisplayMemberPath = "Name";
             cboCustomers.MouseEnter += (sender, args) =>
@@ -195,28 +196,28 @@ namespace POS.EmployeeWorkSpace
         {
             int ii = 0;
             curChair = sender as ToggleButton;
-            if(int.Parse(curChair.Name.Substring(5)) != 1)
-            {
-                if (int.Parse(curChair.Name.Substring(5)) - ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber > 1)
-                {
+            //if(int.Parse(curChair.Name.Substring(5)) != 1)
+            //{
+            //    if (int.Parse(curChair.Name.Substring(5)) - ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber > 1)
+            //    {
                     
-                    for (int i = ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber; i < int.Parse(curChair.Name.Substring(5)); i++)
-                    {
-                        foreach(var ch in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
-                        {
-                            if(ch.ChairNumber == i)
-                            {
-                                if(ch.ChairOrderDetails.Count == 0)
-                                {
-                                    MessageBox.Show("You seem ignore chair number " + i + " of this table!");
-                                    curChair.IsChecked = false;
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            //        for (int i = ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber; i < int.Parse(curChair.Name.Substring(5)); i++)
+            //        {
+            //            foreach(var ch in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
+            //            {
+            //                if(ch.ChairNumber == i)
+            //                {
+            //                    if(ch.ChairOrderDetails.Count == 0)
+            //                    {
+            //                        MessageBox.Show("You seem ignore chair number " + i + " of this table!");
+            //                        curChair.IsChecked = false;
+            //                        return;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
 
             foreach (Chair chair in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
             {
@@ -243,6 +244,11 @@ namespace POS.EmployeeWorkSpace
             RefreshControlAllChair();
         }
 
+
+        /// <summary>
+        /// inner class that use to store the joined data from
+        /// orderdetails entities and product entities
+        /// </summary>
         public class OrderDetails_Product_Joiner : INotifyPropertyChanged
         {
             public Chair ChairOrder { get; set; }
@@ -330,7 +336,7 @@ namespace POS.EmployeeWorkSpace
 
             // chuyen product_id thanh product name
             var query_item_in_ordertails = from orderdetails in chairordernotedetails
-                                           join product in _productRepository.GetAllProducts()
+                                           join product in _unitofwork.ProductRepository.Get()
                                            on orderdetails.ProductId equals product.ProductId
                                            select new
                                            {
@@ -444,13 +450,6 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
-        private void bntPay_Click(object sender, RoutedEventArgs e)
-        {
-            loadTotalPrice();
-            lvData.Items.Refresh();
-            RefreshControl();
-        }
-
         private void txtCoutn_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             TextBox currentTextBox = (TextBox)sender;
@@ -497,6 +496,11 @@ namespace POS.EmployeeWorkSpace
             {
                 inputnote.ShowDialog();
             }
+        }
+
+
+        private void bntPay_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

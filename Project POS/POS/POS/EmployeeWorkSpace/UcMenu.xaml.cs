@@ -7,6 +7,7 @@ using System.Windows.Controls.Primitives;
 using POS.Context;
 using POS.Repository;
 using POS.Entities;
+using POS.Repository.DAL;
 using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
@@ -16,8 +17,7 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class UcMenu : UserControl
     {
-        private IProductRepository _productRepository;
-        public Table currentTable { get; set; }
+        private EmployeewsOfAsowell _unitofwork;
 
         public UcMenu()
         {
@@ -30,8 +30,8 @@ namespace POS.EmployeeWorkSpace
         {
             try
             {
-                _productRepository = ((MainWindow)Window.GetWindow(this))._productRepository;
-                lvCategory.ItemsSource = _productRepository.GetAllProducts();
+                _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
+                lvCategory.ItemsSource = _unitofwork.ProductRepository.Get();
 
                 if (((MainWindow) Window.GetWindow(this)).currentTable == null)
                 {
