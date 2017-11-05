@@ -339,12 +339,12 @@ namespace POS.EmployeeWorkSpace
                                                item_discount = product.Discount
                                            };
 
-            float Total = 0;
+            decimal Total = 0;
             foreach (var item in query_item_in_ordertails)
             {
-                Total = Total + (float) (item.item_quan * ((float)item.item_price * ((100-item.item_discount)/100.0)));
+                Total = (decimal)((float)Total + (float) (item.item_quan * ((float)item.item_price * ((100-item.item_discount)/100.0))));
             }
-            txtTotal.Text = Total.ToString() + " VND";
+            txtTotal.Text = string.Format("{0:0.000}",Total) + " VND";
             ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.TotalPrice = (decimal) Total;
         }
 

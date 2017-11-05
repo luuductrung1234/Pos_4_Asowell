@@ -47,7 +47,8 @@ namespace POS.EmployeeWorkSpace
 
             txtID.Text = pro.ProductId;
             txtName.Text = pro.Name;
-            txtPrice.Text = pro.Price.ToString();
+            //txtPrice.Text = pro.Price.ToString();
+            txtPrice.Text=string.Format("{0:0.000}", pro.Price);
             cbopromotion.SelectedItem = pro.Discount.ToString();
         }
 
