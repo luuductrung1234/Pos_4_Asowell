@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS", "POS\POS.csproj", "{EF6CA9C2-949C-45CE-BA7B-C943E3E9D671}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -19,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Interfaces", "POS.Interfaces\POS.Interfaces.csproj", "{C25A12EF-ED7D-4E22-BF20-183B1A7040D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Repository", "POS.Repository\POS.Repository.csproj", "{81743988-1EBF-42EC-812F-2574A4F0F3A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Test", "POS.Test\POS.Test.csproj", "{74E6E779-C8D4-43A6-B64E-ECB612E30E06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{81743988-1EBF-42EC-812F-2574A4F0F3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81743988-1EBF-42EC-812F-2574A4F0F3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81743988-1EBF-42EC-812F-2574A4F0F3A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E6E779-C8D4-43A6-B64E-ECB612E30E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E6E779-C8D4-43A6-B64E-ECB612E30E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E6E779-C8D4-43A6-B64E-ECB612E30E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E6E779-C8D4-43A6-B64E-ECB612E30E06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

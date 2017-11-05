@@ -1,4 +1,4 @@
-﻿<Page x:Class="POS.EmployeeWorkSpace.SettingFood"
+﻿<Page x:Class="POS.EmployeeWorkSpace.SettingFoodPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -57,7 +57,7 @@
         <StackPanel HorizontalAlignment="Left"
                     Height="535"
                     Margin="635,63,0,0"
-                    DataContext="{Binding Selected SelectedItem,ElementName=lvData}"
+                    DataContext="{Binding  SelectedItem,ElementName=lvData}"
                     VerticalAlignment="Top"
                     Width="483">
             <StackPanel.Resources>
@@ -84,18 +84,33 @@
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Name" />
-                <TextBlock x:Name="txtName" />
+                <TextBlock x:Name="txtName" IsEnabled="False"  Width="100" Foreground="White"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Price" />
-                <TextBlock x:Name="txtPrice" />
+                <TextBlock x:Name="txtPrice" Width="100" IsEnabled="False" Foreground="White"
+                         PreviewTextInput="txtPrice_PreviewTextInput" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Promotion" />
-                <TextBlock x:Name="txtpromotion" />
+                <ComboBox Foreground="White" x:Name="cbopromotion" IsEditable="False" IsEnabled="False">
+                </ComboBox>
+                <TextBlock x:Name="textBlock"
+                           HorizontalAlignment="Stretch"
+                           TextWrapping="Wrap"
+                           Text="%"
+                           VerticalAlignment="Stretch"
+                           Width="19"
+                           Height="24" />
             </StackPanel>
+            <Button x:Name="bntUpdate"
+                    Content="Update"
+                    IsEnabled="False"
+                    Height="44"
+                    Margin="0,0,375.2,0"
+                    Click="bntUpdate_Click" />
         </StackPanel>
         <Image x:Name="image"
                HorizontalAlignment="Left"

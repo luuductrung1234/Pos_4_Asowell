@@ -49,6 +49,7 @@ namespace POS
             string username = txtUsername.Text;
             string pass = txtPass.Password;
 
+            bool isFound = false;
             List<Employee> empList = _employeeRepository.GetAllEmployees().ToList();
             foreach (Employee emp in empList)
             {
@@ -59,15 +60,17 @@ namespace POS
                     EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
                     main.Show();
 
+                    isFound = true;
                     break;
                 }
-                else
-                {
-                    MessageBox.Show("incorrect username or password");
-                    return;
-                }
+
             }
 
+            if(!isFound)
+            {
+                MessageBox.Show("incorrect username or password");
+                return;
+            }
             this.Close();
         }
 

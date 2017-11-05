@@ -27,7 +27,7 @@ namespace POS.EmployeeWorkSpace
         internal Entry en;
         internal Info info;
         internal Login login;
-        internal SettingFood st;
+        internal SettingFoodPage st;
 
         public MainWindow()
         {
@@ -44,7 +44,7 @@ namespace POS.EmployeeWorkSpace
             en = new Entry();
             info = new Info();
             login = new Login();
-            st = new SettingFood(_productRepository);
+            st = new SettingFoodPage(_productRepository);
 
             this.Closing += (sender, args) =>
             {

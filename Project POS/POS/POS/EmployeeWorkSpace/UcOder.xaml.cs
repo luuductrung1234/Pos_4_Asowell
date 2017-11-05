@@ -335,16 +335,17 @@ namespace POS.EmployeeWorkSpace
                                            select new
                                            {
                                                item_quan = orderdetails.Quan,
-                                               item_price = product.Price
+                                               item_price = product.Price,
+                                               item_discount = product.Discount
                                            };
 
-            decimal Total = 0;
+            float Total = 0;
             foreach (var item in query_item_in_ordertails)
             {
-                Total = Total + item.item_quan * item.item_price;
+                Total = Total + (float) (item.item_quan * ((float)item.item_price * ((100-item.item_discount)/100.0)));
             }
             txtTotal.Text = Total.ToString() + " VND";
-
+            ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.TotalPrice = (decimal) Total;
         }
 
         private void bntDelete_Click(object sender, RoutedEventArgs e)
