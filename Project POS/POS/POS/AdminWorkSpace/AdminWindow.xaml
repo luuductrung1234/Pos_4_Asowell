@@ -9,13 +9,14 @@
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="AdminWindow"
         Height="768"
         Width="1366">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -91,11 +92,26 @@
                                    Width="239">ASOWEL POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
+                
 
                 <Grid VerticalAlignment="Center"
                       Grid.Row="1">
-                    <Frame x:Name="myFrame"
-                           NavigationUIVisibility="Hidden" />
+                    <Frame x:Name="myframe"
+                           NavigationUIVisibility="hidden" />
+                    <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                             
+                                             PlacementMode="TopAndAlignCentres"
+                                             ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
+                                             ToolTipService.Placement="Right"
+                                             UnfurlOrientation="Vertical"
+                                             Margin="1281,298,0,-298">
+                        <StackPanel>
+                            <Button 
+                                    ToolTip="Employee Infomation">Employee Info</Button>
+                            <Button ToolTip="Two">Salary</Button>
+                            <Button ToolTip="Product Infomation">Product Info</Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
                 </Grid>
             </DockPanel>
         </materialDesign:DrawerHost>

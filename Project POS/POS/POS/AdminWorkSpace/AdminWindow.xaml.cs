@@ -38,5 +38,10 @@ namespace POS.AdminWorkSpace
         {
 
         }
+
+        private void PopupBox_OnClosed(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
