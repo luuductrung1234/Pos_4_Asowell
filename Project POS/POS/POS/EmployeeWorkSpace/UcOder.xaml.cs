@@ -9,11 +9,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using POS.BusinessModel;
-using POS.Context;
 using POS.Entities;
-using POS.Repository;
 using POS.Repository.DAL;
-using POS.Repository.Interfaces;
 
 namespace POS.EmployeeWorkSpace
 {

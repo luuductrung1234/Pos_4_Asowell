@@ -60,6 +60,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="CustomEntities\Product.cs" />
+    <Compile Include="CustomEntities\ProductType.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>

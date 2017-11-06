@@ -166,6 +166,18 @@
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
+
+                    <!--<ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontWeight="Bold"
+                                               FontSize="14"
+                                               Text="{Binding SelectedStats}" />
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>-->
                 </ListView>
             </Grid>
             <Grid Grid.Row="2">
