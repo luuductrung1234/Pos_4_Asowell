@@ -40,8 +40,11 @@
                              Margin="0 16 0 16"
                              SelectedIndex="0"
                              PreviewMouseLeftButtonUp="DemoItemsListBox_PreviewMouseLeftButtonUp">
-                        <ListBoxItem Content="Food List"
-                                     PreviewMouseLeftButtonUp="ListBoxItem_PreviewMouseLeftButtonUp" />
+                        <ListBoxItem x:Name="lbiFoodList" Content="Food List"
+                                     PreviewMouseLeftButtonUp="lbiFoodList_PreviewMouseLeftButtonUp" />
+                        <ListBoxItem x:Name="lbiSettingTableSize"
+                                     Content="Setting Table Size"
+                                     PreviewMouseLeftButtonUp="lbiTableSize_PreviewMouseLeftButtonUp" />
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
@@ -105,7 +108,7 @@
                                     HorizontalAlignment="Left"
                                     Height="58"
                                     Width="auto">
-                            
+
                             <Button x:Name="bntDash"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Foreground="DeepSkyBlue"
@@ -121,10 +124,10 @@
                                     Width="98"
                                     Click="bntTable_Click"
                                     FontSize="18">
-                               
-                         
-                                    Table
-                                
+
+
+                                Table
+
                             </Button>
                             <Button x:Name="bntEntry"
                                     Style="{StaticResource MaterialDesignFlatButton}"
@@ -133,9 +136,9 @@
                                     Width="100"
                                     Click="bntEntry_Click"
                                     FontSize="18">
-                               
-                                 Entry
-                             
+
+                                Entry
+
                             </Button>
                             <Button x:Name="bntInfo"
                                     Style="{StaticResource MaterialDesignFlatButton}"
@@ -144,8 +147,8 @@
                                     Width="98"
                                     Click="bntDash_Click"
                                     FontSize="18">
-                               
-                            Info
+
+                                Info
                             </Button>
                         </StackPanel>
                     </Border>
