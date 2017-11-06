@@ -691,9 +691,6 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 currentRec.ToolTip = setTooltip(currentRec);
-
-                var tabletest = new SettingTableSize();
-                ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(tabletest);
             }
         }
 

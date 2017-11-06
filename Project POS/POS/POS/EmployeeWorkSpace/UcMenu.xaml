@@ -46,16 +46,19 @@
                                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                  BorderThickness="0"
                                  MinWidth="200"
-                                 VerticalAlignment="Center" />
+                                 VerticalAlignment="Center"
+                                 TextChanged="SearchBox_TextChanged" />
                     </Grid>
                 </Border>
             </StackPanel>
         </materialDesign:ColorZone>
         <dragablz:TabablzControl x:Name="tabControl"
                                  Background="DarkGray"
-                                 Margin="0,10,0,49.6">
+                                 Margin="0,10,0,49.6"
+                                 >
             <!--Beverages-->
-            <TabItem>
+            <TabItem x:Name="ItemBeverages"
+                     GotFocus="TabItem_GotFocus">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\Icon\icons8_Cocktail_32px_2.png"
@@ -102,7 +105,8 @@
                 </Grid>
             </TabItem>
             <!--Dishes-->
-            <TabItem>
+            <TabItem x:Name="ItemDishes"
+                     GotFocus="TabItem_GotFocus">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\Icon\icons8_Restaurant_32px_4.png"
@@ -149,7 +153,7 @@
                 </Grid>
             </TabItem>
             <!--Beer-->
-            <TabItem>
+            <TabItem x:Name="ItemBeer">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\Icon\icons8_Beer_32px.png"
@@ -196,7 +200,7 @@
                 </Grid>
             </TabItem>
             <!--Wine-->
-            <TabItem>
+            <TabItem x:Name="ItemWine">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\Icon\icons8_Wine_Glass_32px.png"
@@ -243,7 +247,7 @@
                 </Grid>
             </TabItem>
             <!--Snack-->
-            <TabItem>
+            <TabItem x:Name="ItemSnack">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\Icon\icons8_Sweet_Potato_32px.png"
@@ -290,7 +294,7 @@
                 </Grid>
             </TabItem>
             <!--Other-->
-            <TabItem>
+            <TabItem x:Name="ItemOther">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\Icon\icons8_Hashtag_32px.png"
@@ -337,7 +341,5 @@
                 </Grid>
             </TabItem>
         </dragablz:TabablzControl>
-
-
     </Grid>
 </UserControl>

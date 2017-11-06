@@ -67,7 +67,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            var item = (sender as ListBox).SelectedItem;
+            var item = lbSelected.SelectedItem;
             if (item != null)
             {
                 OrderNoteDetail o = new OrderNoteDetail();
@@ -128,6 +128,86 @@ namespace POS.EmployeeWorkSpace
         private void Search_OnKeyDown(object sender, KeyEventArgs e)
         {
 
+        }
+
+        TabItem curItem = new TabItem();
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filter = SearchBox.Text.Trim();
+
+            if(filter.Length == 0)
+            {
+                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Drink);
+                lvCategoryDishes.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Food);
+                lvCategoryBeer.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Beer);
+                lvCategoryWine.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Wine);
+                lvCategorySnack.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Snack);
+                lvCategoryOther.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Other);
+                return;
+            }
+
+            if (ItemBeverages.IsSelected == true)
+            {
+                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Drink && p.Name.Contains(filter));
+                lvCategoryBeverages.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
+                curItem = ItemBeverages;
+            }
+
+            if (ItemDishes.IsSelected == true)
+            {
+                lvCategoryDishes.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Food && p.Name.Contains(filter));
+                lvCategoryDishes.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
+                curItem = ItemDishes;
+            }
+
+            if (ItemBeer.IsSelected == true)
+            {
+                lvCategoryBeer.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Beer && p.Name.Contains(filter));
+                lvCategoryBeer.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
+                curItem = ItemBeer;
+            }
+
+            if (ItemWine.IsSelected == true)
+            {
+                lvCategoryWine.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Wine && p.Name.Contains(filter));
+                lvCategoryWine.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
+                curItem = ItemWine;
+            }
+
+            if (ItemSnack.IsSelected == true)
+            {
+                lvCategorySnack.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Snack && p.Name.Contains(filter));
+                lvCategoryWine.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
+                curItem = ItemSnack;
+            }
+
+            if (ItemOther.IsSelected == true)
+            {
+                lvCategoryOther.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Other && p.Name.Contains(filter));
+                lvCategoryOther.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
+                curItem = ItemOther;
+            }
+
+        }
+
+        //private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+            
+        //}
+
+        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TabItem sen = sender as TabItem;
+
+            if (curItem.Header == null)
+            {
+                return;
+            }
+
+            if (!sen.Header.Equals(curItem.Header))
+            {
+                SearchBox.Text = "";
+            }
         }
     }
 }
