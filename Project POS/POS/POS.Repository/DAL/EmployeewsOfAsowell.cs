@@ -111,7 +111,7 @@ namespace POS.Repository.DAL
             }
         }
 
-        public GenericRepository<WorkingHistory> WrkingHistoryRepository
+        public GenericRepository<WorkingHistory> WorkingHistoryRepository
         {
             get
             {

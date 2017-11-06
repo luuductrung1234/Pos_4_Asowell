@@ -210,28 +210,27 @@ go
 
 
 insert into Customer values
-('CUS0000000', N'Guest',				'',		'',		0, 0),
-('CUS0000001', N'Lưu Đức Trung',		'',		'',		20, 0),
-('CUS0000002', N'Phạm Thanh Bình',		'',		'',		20, 0),
-('CUS0000003', N'Nguyễn Khánh Duy',		'',		'',		20, 0),
-('CUS0000004', N'Lý Đông Nghi',			'',		'',		20, 0),
-('CUS0000005', N'Bảo Nguyên',			'',		'',		20, 0),
-('CUS0000006', N'Lương Nhật Duy',		'',		'',		20, 0),
-('CUS0000007', N'Đinh Thanh Hưng',		'',		'',		20, 0),
-('CUS0000008', N'Ngọc Phấn',			'',		'',		20, 0),
-('CUS0000009', N'Hữu Phát',				'',		'',		20, 0),
-('CUS0000010', N'Phan Việt Nhân',		'',		'',		20, 0),
-('CUS0000011', N'Nguyễn Thị Diễm My',	'',		'',		20, 0),
-('CUS0000012', N'Phan Thanh Hằng',		'',		'',		20, 0),
-('CUS0000013', N'Đặng Anh Thư',			'',		'',		20, 0),
-('CUS0000014', N'Hà Nguyễn Nhật Minh',	'',		'',		20, 0),
-('CUS0000015', N'Phan Hữu Tiến',		'',		'',		20, 0),
-('CUS0000016', N'Ngô Thanh Hiếu',		'',		'',		20, 0)
+('CUS0000001', N'Guest',				'',		'',		0, 0),
+('CUS0000002', N'Lưu Đức Trung',		'',		'',		20, 0),
+('CUS0000003', N'Phạm Thanh Bình',		'',		'',		20, 0),
+('CUS0000004', N'Nguyễn Khánh Duy',		'',		'',		20, 0),
+('CUS0000005', N'Lý Đông Nghi',			'',		'',		20, 0),
+('CUS0000006', N'Bảo Nguyên',			'',		'',		20, 0),
+('CUS0000007', N'Lương Nhật Duy',		'',		'',		20, 0),
+('CUS0000008', N'Đinh Thanh Hưng',		'',		'',		20, 0),
+('CUS0000009', N'Ngọc Phấn',			'',		'',		20, 0),
+('CUS0000010', N'Hữu Phát',				'',		'',		20, 0),
+('CUS0000011', N'Phan Việt Nhân',		'',		'',		20, 0),
+('CUS0000012', N'Nguyễn Thị Diễm My',	'',		'',		20, 0),
+('CUS0000013', N'Phan Thanh Hằng',		'',		'',		20, 0),
+('CUS0000014', N'Đặng Anh Thư',			'',		'',		20, 0),
+('CUS0000015', N'Hà Nguyễn Nhật Minh',	'',		'',		20, 0),
+('CUS0000016', N'Phan Hữu Tiến',		'',		'',		20, 0),
+('CUS0000017', N'Ngô Thanh Hiếu',		'',		'',		20, 0)
 go
 
 
 insert into WareHouse values
-('WAH0000000',	0),
 ('WAH0000001',	0),
 ('WAH0000002',	0),
 ('WAH0000003',	0),
@@ -256,16 +255,15 @@ insert into WareHouse values
 ('WAH0000022',	0),
 ('WAH0000023',	0),
 ('WAH0000024',	0),
+('WAH0000025',	0),
+('WAH0000026',	0),
+('WAH0000027',	0),
 ('WAH0000028',	0),
 ('WAH0000029',	0),
 ('WAH0000030',	0),
 ('WAH0000031',	0),
-('WAH0000088',	0),
 ('WAH0000032',	0),
 ('WAH0000033',	0),
-('WAH0000027',	0),
-('WAH0000025',	0),
-('WAH0000026',	0),
 ('WAH0000034',	0),
 ('WAH0000035',	0),
 ('WAH0000036',	0),
@@ -277,11 +275,12 @@ insert into WareHouse values
 ('WAH0000042',	0),
 ('WAH0000043',	0),
 ('WAH0000044',	0),
-('WAH0000045',	0)
+('WAH0000045',	0),
+('WAH0000046',	0),
+('WAH0000047',	0)
 go
 
 insert into Ingredient values
-('IGD0000000',	'WAH0000000',	N'Other purchase',			N'',		3,	N'chi phí',		N'lần',		0,	0),
 ('IGD0000001',	'WAH0000001',	N'pepsi', 					N'',		0,	N'khô',			N'thùng',	130,0),
 ('IGD0000002',	'WAH0000002',	N'aquafina', 				N'',		0,	N'khô',			N'thùng',	90,	0),
 ('IGD0000003',	'WAH0000003',	N'7up', 					N'',		0,	N'khô',			N'thùng',	150,0),
@@ -310,7 +309,6 @@ insert into Ingredient values
 ('IGD0000029',	'WAH0000029',	N'Blue curacao syrup', 		N'',		0,	N'khô',			N'chai',	0,	0),
 ('IGD0000030',	'WAH0000030',	N'Peach syrup', 			N'',		0,	N'khô',			N'chai',	0,	0),
 ('IGD0000031',	'WAH0000031',	N'Ginger honey sauce', 		N'',		0,	N'khô',			N'bình',	0,	0),
-('IGD0000088',	'WAH0000088',	N'Chocalate bar',			N'',		0,	N'khô',			N'kí',		0,	0),
 ('IGD0000032',	'WAH0000032',	N'Ketchup (bar)', 			N'',		0,	N'khô',			N'chai',	0,	0),
 ('IGD0000033',	'WAH0000033',	N'Chilli sauce (bar)',		N'',		0,	N'khô',			N'chai',	0,	0),
 ('IGD0000027',	'WAH0000027',	N'Lemon', 					N'',		2,	N'rau củ',		N'trái',	0,	0),
@@ -327,79 +325,80 @@ insert into Ingredient values
 ('IGD0000042',	'WAH0000042',	N'Aroma', 					N'',		3,	N'vật dụng',	N'bình',	0,	0),
 ('IGD0000043',	'WAH0000043',	N'Trash bag', 				N'',		3,	N'vật dụng',	N'cuộn',	0,	0),
 ('IGD0000044',	'WAH0000044',	N'Print paper', 			N'',		3,	N'vật dụng',	N'cuộn',	0,	0),
-('IGD0000045',	'WAH0000045',	N'Bag T', 					N'',		3,	N'vật dụng',	N'lóc',		0,	0)
+('IGD0000045',	'WAH0000045',	N'Bag T', 					N'',		3,	N'vật dụng',	N'lóc',		0,	0),
+('IGD0000046',	'WAH0000046',	N'Chocalate bar',			N'',		0,	N'khô',			N'kí',		0,	0),
+('IGD0000047',	'WAH0000047',	N'Other purchase',			N'',		3,	N'chi phí',		N'lần',		0,	0)
 go
 
 
 insert into Product
-	([product_id], [name], [info], [price], [type], [deleted])
+	([product_id], [name], [info], [price], [type], [deleted], [Discount])
 values		-- đồ uống
-('P000000030',	N'pepsi',					N'',		25,		0, 0),
-('P000000031',	N'7up',						N'',		25,		0, 0),
-('P000000032',	N'water',					N'',		25,		0, 0),
-('P000000033',	N'black coffee',			N'',		30,		0, 0),
-('P000000034',	N'coffee milk',				N'',		35,		0, 0),
-('P000000035',	N'cream coffee',			N'',		40,		0, 0),
-('P000000036',	N'americano',				N'',		40,		0, 0),
-('P000000037',	N'durian coffee',			N'',		50,		0, 0),
-('P000000038',	N'coffee latte',			N'',		50,		0, 0),
-('P000000039',	N'cappucino',				N'',		50,		0, 0),
-('P000000040',	N'orange coffee',			N'',		50,		0, 0),
-('P000000041',	N'tiramisu coffee',			N'',		50,		0, 0),
-('P000000042',	N'chocolate coffee',		N'',		60,		0, 0),
-('P000000043',	N'caramel cofffee',			N'',		60,		0, 0),
-('P000000044',	N'strawberry tea',			N'',		30,		0, 0),
-('P000000045',	N'lemon tea',				N'',		30,		0, 0),
-('P000000046',	N'apple tea',				N'',		30,		0, 0),
-('P000000047',	N'milk tea',				N'',		40,		0, 0),
-('P000000048',	N'peach tea',				N'',		50,		0, 0),
-('P000000049',	N'matcha latte',			N'',		50,		0, 0),
-('P000000050',	N'ginger honey latte',		N'',		50,		0, 0),
-('P000000051',	N'hot choco',				N'',		60,		0, 0),
-('P000000052',	N'ice choco',				N'',		60,		0, 0),
-('P000000053',	N'orange juice (trái nhỏ)',	N'',		40,		0, 0),
-('P000000054',	N'orange ade',				N'',		40,		0, 0),
-('P000000055',	N'lemonade',				N'',		40,		0, 0),
-('P000000056',	N'orange juice (trái lớn)',	N'',		40,		0, 0),
-('P000000057',	N'orange juice (trái vừa)',	N'',		40,		0, 0)
+('P000000030',	N'pepsi',					N'',		25,		0, 0, 0),
+('P000000031',	N'7up',						N'',		25,		0, 0, 0),
+('P000000032',	N'water',					N'',		25,		0, 0, 0),
+('P000000033',	N'black coffee',			N'',		30,		0, 0, 0),
+('P000000034',	N'coffee milk',				N'',		35,		0, 0, 0),
+('P000000035',	N'cream coffee',			N'',		40,		0, 0, 0),
+('P000000036',	N'americano',				N'',		40,		0, 0, 0),
+('P000000037',	N'durian coffee',			N'',		50,		0, 0, 0),
+('P000000038',	N'coffee latte',			N'',		50,		0, 0, 0),
+('P000000039',	N'cappucino',				N'',		50,		0, 0, 0),
+('P000000040',	N'orange coffee',			N'',		50,		0, 0, 0),
+('P000000041',	N'tiramisu coffee',			N'',		50,		0, 0, 0),
+('P000000042',	N'chocolate coffee',		N'',		60,		0, 0, 0),
+('P000000043',	N'caramel cofffee',			N'',		60,		0, 0, 0),
+('P000000044',	N'strawberry tea',			N'',		30,		0, 0, 0),
+('P000000045',	N'lemon tea',				N'',		30,		0, 0, 0),
+('P000000046',	N'apple tea',				N'',		30,		0, 0, 0),
+('P000000047',	N'milk tea',				N'',		40,		0, 0, 0),
+('P000000048',	N'peach tea',				N'',		50,		0, 0, 0),
+('P000000049',	N'matcha latte',			N'',		50,		0, 0, 0),
+('P000000050',	N'ginger honey latte',		N'',		50,		0, 0, 0),
+('P000000051',	N'hot choco',				N'',		60,		0, 0, 0),
+('P000000052',	N'ice choco',				N'',		60,		0, 0, 0),
+('P000000053',	N'orange juice (trái nhỏ)',	N'',		40,		0, 0, 0),
+('P000000054',	N'orange ade',				N'',		40,		0, 0, 0),
+('P000000055',	N'lemonade',				N'',		40,		0, 0, 0),
+('P000000056',	N'orange juice (trái lớn)',	N'',		40,		0, 0, 0),
+('P000000057',	N'orange juice (trái vừa)',	N'',		40,		0, 0, 0)
 go
 
 insert into Product 
-	([product_id], [name], [info], [price], [type], [deleted])
+	([product_id], [name], [info], [price], [type], [deleted], [Discount])
 values		-- thức ăn
-('P000000001',	N'plain yogurt',			N'',		25,		1, 0),
-('P000000002',	N'choco fondue',			N'',		70,		1, 0),
-('P000000003',	N'choco cloud',				N'',		55,		1, 0),
-('P000000004',	N'custard bread tower',		N'',		70,		1, 0),
-('P000000005',	N'choco muffin',			N'',		25,		1, 0),
-('P000000006',	N'apple muffin',			N'',		25,		1, 0),
-('P000000007',	N'greentea muffin',			N'',		25,		1, 0),
-('P000000008',	N'banana cake',				N'',		25,		1, 0),
-('P000000009',	N'carrot cake',				N'',		25,		1, 0),
-('P000000010',	N'french fries',			N'',		35,		1, 0),
-('P000000011',	N'french toast',			N'',		45,		1, 0),
-('P000000012',	N'tiramisu cake',			N'',		45,		1, 0),
-('P000000013',	N'cheese hotdog',			N'',		35,		1, 0),
-('P000000014',	N'cereal & milk',			N'',		50,		1, 0),
-('P000000015',	N'honey butter bread',		N'',		70,		1, 0),
-('P000000016',	N'pumpkin soup',			N'',		35,		1, 0),
-('P000000017',	N'chilli fries',			N'',		50,		1, 0),
-('P000000018',	N'tortillas nachos',		N'',		50,		1, 0),
-('P000000019',	N'chicken melt',			N'',		50,		1, 0),
-('P000000020',	N'comma club',				N'',		55,		1, 0),
-('P000000021',	N'gourmet berger',			N'',		60,		1, 0),
-('P000000022',	N'spaghetti bolognese',		N'',		55,		1, 0),
-('P000000023',	N'spaghetti carbonara',		N'',		55,		1, 0),
-('P000000024',	N'noodle eggs omelette',	N'',		45,		1, 0),
-('P000000025',	N'chicken burrito',			N'',		60,		1, 0),
-('P000000026',	N'hawaiian pizza',			N'',		60,		1, 0),
-('P000000027',	N'comma pizza',				N'',		60,		1, 0),
-('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0),
-('P000000029',	N'bibimbob',				N'',		60,		1, 0)	
+('P000000001',	N'plain yogurt',			N'',		25,		1, 0, 0),
+('P000000002',	N'choco fondue',			N'',		70,		1, 0, 0),
+('P000000003',	N'choco cloud',				N'',		55,		1, 0, 0),
+('P000000004',	N'custard bread tower',		N'',		70,		1, 0, 0),
+('P000000005',	N'choco muffin',			N'',		25,		1, 0, 0),
+('P000000006',	N'apple muffin',			N'',		25,		1, 0, 0),
+('P000000007',	N'greentea muffin',			N'',		25,		1, 0, 0),
+('P000000008',	N'banana cake',				N'',		25,		1, 0, 0),
+('P000000009',	N'carrot cake',				N'',		25,		1, 0, 0),
+('P000000010',	N'french fries',			N'',		35,		1, 0, 0),
+('P000000011',	N'french toast',			N'',		45,		1, 0, 0),
+('P000000012',	N'tiramisu cake',			N'',		45,		1, 0, 0),
+('P000000013',	N'cheese hotdog',			N'',		35,		1, 0, 0),
+('P000000014',	N'cereal & milk',			N'',		50,		1, 0, 0),
+('P000000015',	N'honey butter bread',		N'',		70,		1, 0, 0),
+('P000000016',	N'pumpkin soup',			N'',		35,		1, 0, 0),
+('P000000017',	N'chilli fries',			N'',		50,		1, 0, 0),
+('P000000018',	N'tortillas nachos',		N'',		50,		1, 0, 0),
+('P000000019',	N'chicken melt',			N'',		50,		1, 0, 0),
+('P000000020',	N'comma club',				N'',		55,		1, 0, 0),
+('P000000021',	N'gourmet berger',			N'',		60,		1, 0, 0),
+('P000000022',	N'spaghetti bolognese',		N'',		55,		1, 0, 0),
+('P000000023',	N'spaghetti carbonara',		N'',		55,		1, 0, 0),
+('P000000024',	N'noodle eggs omelette',	N'',		45,		1, 0, 0),
+('P000000025',	N'chicken burrito',			N'',		60,		1, 0, 0),
+('P000000026',	N'hawaiian pizza',			N'',		60,		1, 0, 0),
+('P000000027',	N'comma pizza',				N'',		60,		1, 0, 0),
+('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0, 0),
+('P000000029',	N'bibimbob',				N'',		60,		1, 0, 0)	
 go
 
 insert into ProductDetails values
-('PD00000000','P000000030',	'IGD0000001',	1,		N'chai'			),
 ('PD00000001','P000000031',	'IGD0000002',	1,		N'chai'			),
 ('PD00000002','P000000032',	'IGD0000003',	1,		N'chai'			),
 ('PD00000003','P000000033',	'IGD0000006',	50,		N'ml'			),
@@ -426,7 +425,7 @@ insert into ProductDetails values
 ('PD00000024','P000000042',	'IGD0000021',	3,		N'lần syrup'	),
 ('PD00000028','P000000042',	'IGD0000007',	1,		N'nl choco'		),
 ('PD00000029','P000000042',	'IGD0000021',	1,		N'nl choco'		),
-('PD00000030','P000000042',	'IGD0000088',	1,		N'nl choco'		),
+('PD00000030','P000000042',	'IGD0000046',	1,		N'nl choco'		),
 ('PD00000031','P000000043',	'IGD0000005',	1,		N'shot'			),
 ('PD00000088','P000000043',	'IGD0000007',	1,		N'Milk(1Cup)'	),
 ('PD00000032','P000000043',	'IGD0000021',	3,		N'lần syrup'	),
@@ -464,11 +463,11 @@ insert into ProductDetails values
 ('PD00000061','P000000051',	'IGD0000021',	1,		N'lần syrup'	),
 ('PD00000062','P000000051',	'IGD0000007',	1,		N'nl choco'		),
 ('PD00000063','P000000051',	'IGD0000021',	1,		N'nl choco'		),
-('PD00000064','P000000051',	'IGD0000088',	1,		N'nl choco'		),
+('PD00000064','P000000051',	'IGD0000046',	1,		N'nl choco'		),
 ('PD00000065','P000000052',	'IGD0000021',	1,		N'lần syrup'	),
 ('PD00000066','P000000052',	'IGD0000007',	1,		N'nl choco'		),
 ('PD00000067','P000000052',	'IGD0000021',	1,		N'nl choco'		),
-('PD00000068','P000000052',	'IGD0000088',	1,		N'nl choco'		),
+('PD00000068','P000000052',	'IGD0000046',	1,		N'nl choco'		),
 ('PD00000069','P000000057',	'IGD0000026',	1,		N'trái vừa'		),
 ('PD00000070','P000000053',	'IGD0000026',	2,		N'trái nhỏ'		),
 ('PD00000071','P000000056',	'IGD0000026',	0.5,	N'trái lớn'		),
@@ -478,11 +477,12 @@ insert into ProductDetails values
 ('PD00000075','P000000055',	'IGD0000010',	100,	N'ml'			),
 ('PD00000076','P000000055',	'IGD0000021',	6,		N'lần syrup'	),
 ('PD00000077','P000000055',	'IGD0000029',	4,		N'lần syrup'	),
-('PD00000078','P000000055',	'IGD0000027',	1,		N'trái'			)
+('PD00000078','P000000055',	'IGD0000027',	1,		N'trái'			),
+('PD00000079','P000000030',	'IGD0000001',	1,		N'chai'			)
 go
  
- 
- 
+
+
 select * from AdminRes
 go
 select * from Employee

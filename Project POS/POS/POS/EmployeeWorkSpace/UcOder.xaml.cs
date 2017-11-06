@@ -494,7 +494,8 @@ namespace POS.EmployeeWorkSpace
                 inputnote.ShowDialog();
             }
         }
-       
+
+
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
         }

@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryTest\GenericRepositoryTest.cs" />
     <Compile Include="RepositoryTest\ProductRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\POS.Entities\POS.Entities.csproj">
+      <Project>{4b925329-f8c2-4546-968b-4d9e010ec56d}</Project>
+      <Name>POS.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\POS.Repository\POS.Repository.csproj">
       <Project>{81743988-1ebf-42ec-812f-2574a4f0f3a3}</Project>
       <Name>POS.Repository</Name>

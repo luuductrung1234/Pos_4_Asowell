@@ -64,7 +64,7 @@ namespace POS.Repository.Generic
 
         public virtual void Insert(TEntity entity)
         {
-            dbSet.Add(AutoGeneteId(entity));
+            dbSet.Add(AutoGeneteId_DBAsowell(entity));
         }
 
         public virtual void Delete(object id)
@@ -88,25 +88,74 @@ namespace POS.Repository.Generic
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-
+        private static int ID_SIZE_DBASOWELL = 10;
         /// <summary>
         /// auto generate id for all entities in Asowell Database
         /// all id type is 10 character and the sign is depend on the type of entity
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private TEntity AutoGeneteId(TEntity entity)
+        private string AutoGeneteId_DBAsowell(TEntity entity)
         {
+            string sign = "";
             if (entity is Employee)
             {
-                // sinh id Employee
+                sign = "EMP";
             }
             else if (entity is AdminRe)
             {
-                // sing id AdminRe
+                sign = "AD";
+            }
+            else if (entity is Customer)
+            {
+                sign = "CUS";
+            }
+            else if (entity is WareHouse)
+            {
+                sign = "WAH";
+            }
+            else if (entity is Ingredient)
+            {
+                sign = "IGD";
+            }
+            else if (entity is Product)
+            {
+                sign = "P";
+            }
+            else if (entity is ProductDetail)
+            {
+                sign = "PD";
+            }
+            else if (entity is OrderNote)
+            {
+                sign = "ORD";
+            }
+            else if (entity is ReceiptNote)
+            {
+                sign = "RN";
+            }
+            else if (entity is SalaryNote)
+            {
+                sign = "SAN";
+            }
+            else if (entity is WorkingHistory)
+            {
+                sign = "WOH";
             }
 
-            return entity;
+            // lấy số thứ tự mới nhất
+            string numberWantToset = (this.Get().Count() + 1).ToString();
+
+            int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+            string result = sign;
+            for (int i = 0; i < blank; i++)
+            {
+                result += "0";
+            }
+            result += numberWantToset;
+
+
+            return result;
         }
     }
 }
