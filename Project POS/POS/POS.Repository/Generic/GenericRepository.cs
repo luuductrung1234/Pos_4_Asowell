@@ -7,6 +7,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using POS.Context;
+using POS.Entities;
 
 namespace POS.Repository.Generic
 {
@@ -63,7 +64,7 @@ namespace POS.Repository.Generic
 
         public virtual void Insert(TEntity entity)
         {
-            dbSet.Add(entity);
+            dbSet.Add(AutoGeneteId(entity));
         }
 
         public virtual void Delete(object id)
@@ -85,6 +86,27 @@ namespace POS.Repository.Generic
         {
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
-        } 
+        }
+
+
+        /// <summary>
+        /// auto generate id for all entities in Asowell Database
+        /// all id type is 10 character and the sign is depend on the type of entity
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        private TEntity AutoGeneteId(TEntity entity)
+        {
+            if (entity is Employee)
+            {
+                // sinh id Employee
+            }
+            else if (entity is AdminRe)
+            {
+                // sing id AdminRe
+            }
+
+            return entity;
+        }
     }
 }

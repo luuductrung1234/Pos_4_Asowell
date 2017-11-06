@@ -11,6 +11,7 @@
 // TargetFrameworkVersion = 4.6
 
 using System;
+using System.Collections.Generic;
 
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
