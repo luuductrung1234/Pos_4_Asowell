@@ -15,16 +15,43 @@ namespace POS.BusinessModel
 
         private static List<Chair> chairTemp = new List<Chair>();
 
-        //check file txt isExist
-        public static bool checkTxtFileExist()
+        //check file tableSize
+        public static bool checkTableSizeFileExist()
         {
-            return File.Exists(startupProjectPath + "\\SerializedData\\tableImagePath.txt");
+            return File.Exists(startupProjectPath + "\\SerializedData\\tableSize.txt");
         }
 
-        //check file bin isExist
-        public static bool checkBinFileExist()
+        //read file tableSize
+        public static string[] readTableSize()
         {
-            return File.Exists(startupProjectPath + "\\SerializedData\\tableRuntimeHistory.bin");
+            using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\tableSize.txt", FileMode.Open))
+            {
+                using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
+                {
+                    string tableSize = rd.ReadLine();
+                    return tableSize.Split('-');
+                }
+            }
+        }
+
+        //write file tableSize
+        public static void writeTableSize(string size)
+        {
+            using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\tableSize.txt", FileMode.Create))
+            {
+                using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                {
+                    sWriter.WriteLine(size);
+                }
+            }
+
+
+        }
+
+        //check file tableImagePath isExist
+        public static bool checkTableImagePathFileExist()
+        {
+            return File.Exists(startupProjectPath + "\\SerializedData\\tableImagePath.txt");
         }
 
         //read file tableImagePath
@@ -50,6 +77,12 @@ namespace POS.BusinessModel
                     sWriter.WriteLine(browseFilePath);
                 }
             }
+        }
+
+        //check file tableRuntimeHistory isExist
+        public static bool checkTableRuntimeHistoryFileExist()
+        {
+            return File.Exists(startupProjectPath + "\\SerializedData\\tableRuntimeHistory.bin");
         }
 
         //write khi add new

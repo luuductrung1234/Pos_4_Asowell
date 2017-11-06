@@ -127,6 +127,9 @@
     <Compile Include="BusinessModel\Chair.cs" />
     <Compile Include="BusinessModel\ReadWriteData.cs" />
     <Compile Include="BusinessModel\Table.cs" />
+    <Compile Include="EmployeeWorkSpace\SettingTableSize.xaml.cs">
+      <DependentUpon>SettingTableSize.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartupWindows.xaml.cs">
       <DependentUpon>StartupWindows.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\SettingFoodPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\SettingTableSize.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,6 +278,8 @@
     <Resource Include="Icon\Pencil Drawing_32px.png" />
     <Resource Include="Icon\Edit_52px.png" />
     <Resource Include="Images\asowell_icon.ico" />
+    <Resource Include="Icon\icons8_Resize_Horizontal_32px_1.png" />
+    <Resource Include="Icon\icons8_Resize_Vertical_32px_3.png" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />
