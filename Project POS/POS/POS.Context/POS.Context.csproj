@@ -67,9 +67,9 @@
     <Compile Include="MigrationConfiguration.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711060241561_AddProductTypeToProduct.cs" />
-    <Compile Include="Migrations\201711060241561_AddProductTypeToProduct.Designer.cs">
-      <DependentUpon>201711060241561_AddProductTypeToProduct.cs</DependentUpon>
+    <Compile Include="Migrations\201711060248447_addproducttype.cs" />
+    <Compile Include="Migrations\201711060248447_addproducttype.Designer.cs">
+      <DependentUpon>201711060248447_addproducttype.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -102,8 +102,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711060241561_AddProductTypeToProduct.resx">
-      <DependentUpon>201711060241561_AddProductTypeToProduct.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711060248447_addproducttype.resx">
+      <DependentUpon>201711060248447_addproducttype.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

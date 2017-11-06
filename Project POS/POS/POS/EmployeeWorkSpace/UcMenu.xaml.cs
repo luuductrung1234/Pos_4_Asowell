@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using POS.Entities;
 using POS.Repository.DAL;
+using POS.Entities.CustomEntities;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -27,13 +28,17 @@ namespace POS.EmployeeWorkSpace
             try
             {
                 _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
-                lvCategory.ItemsSource = _unitofwork.ProductRepository.Get();
+                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Drink);
+                lvCategoryDishes.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Food);
+                lvCategoryBeer.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Beer);
+                lvCategoryWine.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Wine);
+                lvCategorySnack.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Snack);
+                lvCategoryOther.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Other);
 
                 if (((MainWindow) Window.GetWindow(this)).currentTable == null)
                 {
                     return;
                 }
-
                 
                 ((MainWindow) Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
             }
@@ -54,7 +59,9 @@ namespace POS.EmployeeWorkSpace
 
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if(((MainWindow)Window.GetWindow(this)).currentTable == null || ((MainWindow)Window.GetWindow(this)).currentChair == null)
+            ListBox lbSelected = sender as ListBox;
+
+            if (((MainWindow)Window.GetWindow(this)).currentTable == null || ((MainWindow)Window.GetWindow(this)).currentChair == null)
             {
                 MessageBox.Show("Chair must be choice!");
                 return;
@@ -65,7 +72,7 @@ namespace POS.EmployeeWorkSpace
             {
                 OrderNoteDetail o = new OrderNoteDetail();
                 OrderNoteDetail oo = new OrderNoteDetail();
-                Product it = (Product)lvCategory.SelectedItem;
+                Product it = (Product)lbSelected.SelectedItem;
 
                 //tong order table
                 var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
@@ -110,7 +117,7 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 //
-                lvCategory.UnselectAll();
+                lbSelected.UnselectAll();
 
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl();
                 
