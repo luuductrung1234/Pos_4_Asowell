@@ -141,7 +141,156 @@
                 </Grid>
             </TabItem>
             <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5" />
+                <Grid x:Name="ItemGrid2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListBox ItemsSource="{Binding Kinds}"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             x:Name="lv2"
+                             PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemHeight="100"
+                                           ItemWidth="100" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="materialDesign:PackIconKind">
+                                <DockPanel Width="80"
+                                           Height="80"
+                                           Background="Transparent">
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               DockPanel.Dock="Bottom"
+                                               TextTrimming="CharacterEllipsis"
+                                               HorizontalAlignment="Center" />
+                                    <Image Source="{Binding ImageData}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Width="32"
+                                           Height="32" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem2">
+                <Grid x:Name="ItemGrid3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListBox ItemsSource="{Binding Kinds}"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             x:Name="lv3"
+                             PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemHeight="100"
+                                           ItemWidth="100" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="materialDesign:PackIconKind">
+                                <DockPanel Width="80"
+                                           Height="80"
+                                           Background="Transparent">
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               DockPanel.Dock="Bottom"
+                                               TextTrimming="CharacterEllipsis"
+                                               HorizontalAlignment="Center" />
+                                    <Image Source="{Binding ImageData}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Width="32"
+                                           Height="32" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid x:Name="ItemGrid4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListBox ItemsSource="{Binding Kinds}"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             x:Name="lv4"
+                             PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemHeight="100"
+                                           ItemWidth="100" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="materialDesign:PackIconKind">
+                                <DockPanel Width="80"
+                                           Height="80"
+                                           Background="Transparent">
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               DockPanel.Dock="Bottom"
+                                               TextTrimming="CharacterEllipsis"
+                                               HorizontalAlignment="Center" />
+                                    <Image Source="{Binding ImageData}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Width="32"
+                                           Height="32" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid x:Name="ItemGrid5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListBox ItemsSource="{Binding Kinds}"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             x:Name="lv5"
+                             PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemHeight="100"
+                                           ItemWidth="100" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="materialDesign:PackIconKind">
+                                <DockPanel Width="80"
+                                           Height="80"
+                                           Background="Transparent">
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               DockPanel.Dock="Bottom"
+                                               TextTrimming="CharacterEllipsis"
+                                               HorizontalAlignment="Center" />
+                                    <Image Source="{Binding ImageData}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Width="32"
+                                           Height="32" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </TabItem>
         </dragablz:TabablzControl>
 
