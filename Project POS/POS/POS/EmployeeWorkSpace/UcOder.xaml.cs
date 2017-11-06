@@ -114,6 +114,7 @@ namespace POS.EmployeeWorkSpace
             // binding
             lvData.ItemsSource = query;
             loadTotalPrice();
+            ((MainWindow)Window.GetWindow(this)).currentChair = null;
         }
 
 

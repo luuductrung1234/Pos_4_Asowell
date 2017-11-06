@@ -127,7 +127,11 @@ namespace POS.EmployeeWorkSpace
 
         private void Search_OnKeyDown(object sender, KeyEventArgs e)
         {
-
+            if(e.Key == Key.Enter)
+            {
+                string filter = SearchBox.Text.Trim();
+                checkSearch(filter);
+            }
         }
 
         TabItem curItem = new TabItem();
@@ -146,6 +150,13 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
+            checkSearch(filter);
+
+        }
+
+        //check khi Search
+        private void checkSearch(string filter)
+        {
             if (ItemBeverages.IsSelected == true)
             {
                 lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == ProductType.Drink && p.Name.Contains(filter));
@@ -187,27 +198,26 @@ namespace POS.EmployeeWorkSpace
                 lvCategoryOther.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemOther;
             }
-
         }
 
         //private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
-            
+
         //}
 
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
         {
-            TabItem sen = sender as TabItem;
+            //TabItem sen = sender as TabItem;
 
-            if (curItem.Header == null)
-            {
-                return;
-            }
+            //if (curItem == null)
+            //{
+            //    return;
+            //}
 
-            if (!sen.Header.Equals(curItem.Header))
-            {
-                SearchBox.Text = "";
-            }
+            //if (!sen.Name.Equals(curItem.Name))
+            //{
+            //    SearchBox.Text = "";
+            //}
         }
     }
 }

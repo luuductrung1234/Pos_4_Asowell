@@ -26,10 +26,12 @@ namespace POS
     public partial class Login : Window
     {
         private IEmployeeRepository _employeeRepository;
+        internal EmployeewsOfAsowell _unitempofwork;
 
         public Login()
         {
             _employeeRepository = new EmployeeRepository(new AsowellContext());
+            _unitempofwork = new EmployeewsOfAsowell();
             InitializeComponent();
 
             this.WindowState = WindowState.Normal;
@@ -62,6 +64,20 @@ namespace POS
                     main.Show();
 
                     isFound = true;
+
+                    //var empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).ToList();
+                    //if(empSalaryNote == null)
+                    //{
+                    //    SalaryNote empSalary = new SalaryNote { EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
+                    //    _unitempofwork.SalaryNoteRepository.Insert(empSalary);
+                    //    _unitempofwork.Save();
+                    //    WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId, Workday = DateTime.Now, Starthour = DateTime.Now.Hour, Startminute = DateTime.Now.Minute };
+                    //    _unitempofwork.WrkingHistoryRepository.Insert(empWorkHistory);
+                    //    _unitempofwork.Save();
+                    //}
+                    
+                    //App.Current.Properties["EmpSalaryNote"] = empSalaryNote;
+
                     break;
                 }
 
