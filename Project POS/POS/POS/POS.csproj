@@ -264,9 +264,6 @@
     <Resource Include="Icon\icons8_Table_52px.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon\icons8_Restaurant_50px.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icon\icons8_Info_52px.png" />
   </ItemGroup>
   <ItemGroup>
@@ -285,8 +282,6 @@
     <Resource Include="Images\miy.jpg" />
     <Resource Include="Images\softwarepdate.jpg" />
     <Resource Include="Images\Search_50px.png" />
-    <Resource Include="Icon\Restaurant_52px.png" />
-    <Resource Include="Icon\Vector-Iluustartor.png" />
     <Resource Include="Icon\icons8_Unpin_32px.png" />
     <Resource Include="Icon\icons8_Pin_32px_9.png" />
     <Resource Include="Icon\Pencil Drawing_32px.png" />
@@ -294,6 +289,12 @@
     <Resource Include="Images\asowell_icon.ico" />
     <Resource Include="Icon\icons8_Resize_Horizontal_32px_1.png" />
     <Resource Include="Icon\icons8_Resize_Vertical_32px_3.png" />
+    <Resource Include="Icon\icons8_Beer_32px.png" />
+    <Resource Include="Icon\icons8_Cocktail_32px_2.png" />
+    <Resource Include="Icon\icons8_Hashtag_32px.png" />
+    <Resource Include="Icon\icons8_Restaurant_32px_4.png" />
+    <Resource Include="Icon\icons8_Sweet_Potato_32px.png" />
+    <Resource Include="Icon\icons8_Wine_Glass_32px.png" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />
