@@ -22,8 +22,8 @@
         </materialDesign:ColorZone>
         <TextBlock x:Name="txbUserName" HorizontalAlignment="Left" Margin="51,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="User Name" FontSize="15"/>
         <TextBlock x:Name="txbPass" HorizontalAlignment="Left" Margin="51,10.4,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Grid.Row="1" FontSize="15"/>
-        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="23" Margin="191,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
-        <PasswordBox x:Name="txtPass" HorizontalAlignment="Left" Height="23" Margin="191,7.4,0,0" VerticalAlignment="Top" Width="147" Grid.Row="1"/>
+        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="25" Margin="191,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
+        <PasswordBox x:Name="txtPass" HorizontalAlignment="Left" Height="25" Margin="191,7.4,0,0" VerticalAlignment="Top" Width="147" Grid.Row="1"/>
         <Button  x:Name="btnLogin"  HorizontalAlignment="Left" Margin="51,89.4,0,0" VerticalAlignment="Top" Width="75" Grid.Row="1" Click="btnLogin_Click">
             Login
         </Button>
