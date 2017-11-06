@@ -79,23 +79,25 @@
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="ID" />
-                <TextBlock x:Name="txtID" />
+                <TextBlock x:Name="txtID" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Name" />
-                <TextBlock x:Name="txtName" IsEnabled="False"  Width="100" Foreground="White"/>
+                <TextBlock x:Name="txtName" IsEnabled="False"  Width="200" Foreground="White"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Price" />
-                <TextBlock x:Name="txtPrice" Width="100" IsEnabled="False" Foreground="White"
-                         PreviewTextInput="txtPrice_PreviewTextInput" />
+                <TextBlock x:Name="txtPrice" Width="200" IsEnabled="False" Foreground="White"
+                         PreviewTextInput="txtPrice_PreviewTextInput"
+                         />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Promotion" />
-                <ComboBox Foreground="White" x:Name="cbopromotion" IsEditable="False" IsEnabled="False">
+                <ComboBox Foreground="White" x:Name="cbopromotion" IsEditable="False" IsEnabled="False"
+                          Width="60">
                 </ComboBox>
                 <TextBlock x:Name="textBlock"
                            HorizontalAlignment="Stretch"
@@ -103,7 +105,8 @@
                            Text="%"
                            VerticalAlignment="Stretch"
                            Width="19"
-                           Height="24" />
+                           Height="24"
+                           Margin="10,0,0,0"/>
             </StackPanel>
             <Button x:Name="bntUpdate"
                     Content="Update"

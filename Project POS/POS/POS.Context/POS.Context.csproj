@@ -67,6 +67,10 @@
     <Compile Include="MigrationConfiguration.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711060241561_AddProductTypeToProduct.cs" />
+    <Compile Include="Migrations\201711060241561_AddProductTypeToProduct.Designer.cs">
+      <DependentUpon>201711060241561_AddProductTypeToProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,8 +100,11 @@
       <Name>POS.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <EmbeddedResource Include="Migrations\201711060241561_AddProductTypeToProduct.resx">
+      <DependentUpon>201711060241561_AddProductTypeToProduct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

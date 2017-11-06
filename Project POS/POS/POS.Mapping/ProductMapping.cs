@@ -34,7 +34,7 @@ namespace POS.Mapping
             Property(x => x.Name).HasColumnName(@"name").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
             Property(x => x.Info).HasColumnName(@"info").HasColumnType("nvarchar").IsOptional().HasMaxLength(100);
             Property(x => x.Price).HasColumnName(@"price").HasColumnType("money").IsRequired().HasPrecision(19,4);
-            Property(x => x.IsTodrink).HasColumnName(@"is_todrink").HasColumnType("tinyint").IsRequired();
+            Property(x => x.Type).HasColumnName(@"type").HasColumnType("int").IsRequired();
             Property(x => x.Deleted).HasColumnName(@"deleted").HasColumnType("int").IsRequired();
             InitializePartial();
         }
