@@ -32,6 +32,7 @@ namespace POS.EmployeeWorkSpace
         internal Info info;
         internal Login login;
         internal SettingFoodPage st;
+        internal SettingTableSize stts;
 
         public MainWindow()
         {
@@ -49,6 +50,7 @@ namespace POS.EmployeeWorkSpace
             info = new Info();
             login = new Login();
             st = new SettingFoodPage(_unitofwork);
+            stts = new SettingTableSize();
 
             this.Closing += (sender, args) =>
             {
@@ -106,9 +108,18 @@ namespace POS.EmployeeWorkSpace
             MenuToggleButton.IsChecked = false;
         }
 
-        private void ListBoxItem_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void lbiFoodList_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(st);
+            bntTable.IsEnabled = true;
+            bntDash.IsEnabled = true;
+            bntEntry.IsEnabled = true;
+            bntInfo.IsEnabled = true;
+        }
+
+        private void lbiTableSize_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            myFrame.Navigate(stts);
             bntTable.IsEnabled = true;
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = true;
@@ -128,5 +139,6 @@ namespace POS.EmployeeWorkSpace
             login.Show();
             
         }
+
     }
 }

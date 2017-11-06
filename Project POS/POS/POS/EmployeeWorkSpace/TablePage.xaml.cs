@@ -23,7 +23,9 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class Table : Page
     {
+        string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         private EmployeewsOfAsowell _unitofwork;
+        private List<BusinessModel.Table> currentTableList = new List<BusinessModel.Table>();
 
         public Table(EmployeewsOfAsowell unitofwork)
         {
@@ -35,148 +37,8 @@ namespace POS.EmployeeWorkSpace
             Loaded += TablePage_loaded;
         }
 
-        string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        //load table data
-        private void initTableData()
-        {
-            if(!ReadWriteData.checkTxtFileExist())
-            {
-                ReadWriteData.writeTableImagePath(startupProjectPath + "\\Images\\map.png");
-            }
-
-            initBackgroundTable(ReadWriteData.readTableImagePath());
-
-            if (!ReadWriteData.checkBinFileExist())
-            {
-                string dir = startupProjectPath;
-                string serializationFile = System.IO.Path.Combine(dir, "SerializedData\\tableRuntimeHistory.bin");
-
-                using (Stream stream = File.Open(serializationFile, FileMode.Create))
-                {
-                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    bformatter.Serialize(stream, TableTempData.TbList);
-                }
-            }
-
-            readTableData(startupProjectPath + "\\SerializedData\\tableRuntimeHistory.bin");
-        }
-
-
-        private List<BusinessModel.Table> currentTableList = new List<BusinessModel.Table>();
-        //lay thong tin table image, tat ca table hien co
-        private string readTableData(string fileName) //0: tableImagePath; 1: tableRuntimeHistory
-        {
-            try
-            {
-                string dir = "";
-                string serializationFile = System.IO.Path.Combine(dir, fileName);
-
-                using (Stream stream = File.Open(serializationFile, FileMode.Open))
-                {
-                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-                    currentTableList = (List<BusinessModel.Table>)bformatter.Deserialize(stream);
-                    Rectangle rec;
-                    Thickness m;
-
-                    TableTempData.TbList = currentTableList;
-
-                    foreach (BusinessModel.Table t in currentTableList)
-                    {
-                        if (maxTableCurrentNumber < t.TableNumber)
-                        {
-                            maxTableCurrentNumber = t.TableNumber;
-                        }
-                    }
-
-                    foreach (BusinessModel.Table t in currentTableList)
-                    {
-                        buttonTableCurrentNumber++;
-
-                        rec = new Rectangle();
-                        if (t.TableNumber < 10)
-                        {
-                            rec.Name = "table" + "0" + t.TableNumber;
-                        }
-                        else
-                        {
-                            rec.Name = "table" + t.TableNumber;
-                        }
-
-                        rec.HorizontalAlignment = HorizontalAlignment.Left;
-                        rec.VerticalAlignment = VerticalAlignment.Top;
-                        m = rec.Margin;
-                        m.Left = Convert.ToInt32(t.Position.X);
-                        m.Top = Convert.ToInt32(t.Position.Y);
-                        rec.Margin = m;
-                        rec.Width = 30;
-                        rec.Height = 30;
-                        rec.Fill = Brushes.Red;
-                        rec.Opacity = 0.65;
-
-                        //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
-                        //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
-                        //backImg.Stretch = Stretch.Fill;
-                        //rec.Fill = backImg;
-
-                        rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-                        rec.MouseMove += btnTableAdded_MoveDrag;
-                        rec.MouseMove += btnTableAdded_MouseMove;
-                        rec.MouseLeftButtonDown += btnTableAdded_Click;
-                        rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
-
-                        rec.Cursor = Cursors.SizeAll;
-
-                        Panel.SetZIndex(rec, 30);
-                        grTable.Children.Add(rec);
-
-                        imgTable.MouseMove -= crossCursorToAdd;
-                        imgTable.MouseLeftButtonDown -= changeToNormalCursor;
-                        iii = 0;
-
-                        if (t.IsPinned)
-                        {
-                            rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
-                            rec.MouseMove -= btnTableAdded_MoveDrag;
-                            rec.Opacity = 1;
-                            rec.Cursor = Cursors.Arrow;
-                        }
-
-                        if (!t.IsPinned)
-                        {
-                            rec.Cursor = Cursors.SizeAll;
-                            rec.Fill = Brushes.Red;
-                            rec.Opacity = 0.65;
-                        }
-
-                        if (t.TableOrder.CusId != null || t.TableOrderDetails.Count != 0)
-                        {
-                            rec.Fill = Brushes.DarkCyan;
-                            rec.MouseMove += btnTableAdded_MouseMove;
-                            rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
-                        }
-
-                        rec.ToolTip = setTooltip(rec);
-
-                        //return rd.ReadToEnd();
-
-                        t.VisualTable = rec;
-                    }
-                }
-
-                return "";
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
-
-
-
         public void TablePage_loaded(Object sender, EventArgs args)
         {
-            
             foreach (BusinessModel.Table t in currentTableList)
             {
                 buttonTableCurrentNumber++;
@@ -249,8 +111,145 @@ namespace POS.EmployeeWorkSpace
                 //return rd.ReadToEnd();
             }
         }
+        
+        //load table data
+        private void initTableData()
+        {
+            if (!ReadWriteData.checkTableSizeFileExist())
+            {
+                ReadWriteData.writeTableSize("30-30");
+            }
 
+            if (!ReadWriteData.checkTableImagePathFileExist())
+            {
+                ReadWriteData.writeTableImagePath(startupProjectPath + "\\Images\\map.png");
+            }
 
+            initBackgroundTable(ReadWriteData.readTableImagePath());
+
+            if (!ReadWriteData.checkTableRuntimeHistoryFileExist())
+            {
+                string dir = startupProjectPath;
+                string serializationFile = System.IO.Path.Combine(dir, "SerializedData\\tableRuntimeHistory.bin");
+
+                using (Stream stream = File.Open(serializationFile, FileMode.Create))
+                {
+                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                    bformatter.Serialize(stream, TableTempData.TbList);
+                }
+            }
+
+            readTableData(startupProjectPath + "\\SerializedData\\tableRuntimeHistory.bin");
+        }
+        
+        //lay thong tin table image, tat ca table hien co
+        private string readTableData(string fileName) //0: tableImagePath; 1: tableRuntimeHistory
+        {
+            try
+            {
+                string dir = "";
+                string serializationFile = System.IO.Path.Combine(dir, fileName);
+
+                using (Stream stream = File.Open(serializationFile, FileMode.Open))
+                {
+                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                    currentTableList = (List<BusinessModel.Table>)bformatter.Deserialize(stream);
+                    Rectangle rec;
+                    Thickness m;
+
+                    TableTempData.TbList = currentTableList;
+
+                    foreach (BusinessModel.Table t in currentTableList)
+                    {
+                        if (maxTableCurrentNumber < t.TableNumber)
+                        {
+                            maxTableCurrentNumber = t.TableNumber;
+                        }
+                    }
+
+                    foreach (BusinessModel.Table t in currentTableList)
+                    {
+                        buttonTableCurrentNumber++;
+
+                        rec = new Rectangle();
+                        if (t.TableNumber < 10)
+                        {
+                            rec.Name = "table" + "0" + t.TableNumber;
+                        }
+                        else
+                        {
+                            rec.Name = "table" + t.TableNumber;
+                        }
+
+                        rec.HorizontalAlignment = HorizontalAlignment.Left;
+                        rec.VerticalAlignment = VerticalAlignment.Top;
+                        m = rec.Margin;
+                        m.Left = Convert.ToInt32(t.Position.X);
+                        m.Top = Convert.ToInt32(t.Position.Y);
+                        rec.Margin = m;
+                        rec.Width = int.Parse(ReadWriteData.readTableSize()[0]);
+                        rec.Height = int.Parse(ReadWriteData.readTableSize()[1]);
+                        rec.Fill = Brushes.Red;
+                        rec.Opacity = 0.65;
+
+                        //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
+                        //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
+                        //backImg.Stretch = Stretch.Fill;
+                        //rec.Fill = backImg;
+
+                        rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+                        rec.MouseMove += btnTableAdded_MoveDrag;
+                        rec.MouseMove += btnTableAdded_MouseMove;
+                        rec.MouseLeftButtonDown += btnTableAdded_Click;
+                        rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+
+                        rec.Cursor = Cursors.SizeAll;
+
+                        imgTable.MouseMove -= crossCursorToAdd;
+                        imgTable.MouseLeftButtonDown -= changeToNormalCursor;
+                        iii = 0;
+
+                        if (t.IsPinned)
+                        {
+                            rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
+                            rec.MouseMove -= btnTableAdded_MoveDrag;
+                            rec.Opacity = 1;
+                            rec.Cursor = Cursors.Arrow;
+                        }
+
+                        if (!t.IsPinned)
+                        {
+                            rec.Cursor = Cursors.SizeAll;
+                            rec.Fill = Brushes.Red;
+                            rec.Opacity = 0.65;
+                        }
+
+                        if (t.TableOrder.CusId != null || t.TableOrderDetails.Count != 0)
+                        {
+                            rec.Fill = Brushes.DarkCyan;
+                            rec.MouseMove += btnTableAdded_MouseMove;
+                            rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+                        }
+
+                        rec.ToolTip = setTooltip(rec);
+
+                        Panel.SetZIndex(rec, 30);
+                        grTable.Children.Add(rec);
+
+                        //return rd.ReadToEnd();
+
+                        t.VisualTable = rec;
+                    }
+                }
+
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
 
         //browse table image
         private void btnBrowseImage_Click(object sender, RoutedEventArgs e)
@@ -358,8 +357,8 @@ namespace POS.EmployeeWorkSpace
                 m.Left = Convert.ToInt32(currentPosition.X);
                 m.Top = Convert.ToInt32(currentPosition.Y);
                 rec.Margin = m;
-                rec.Width = 30;
-                rec.Height = 30;
+                rec.Width = int.Parse(ReadWriteData.readTableSize()[0]);
+                rec.Height = int.Parse(ReadWriteData.readTableSize()[1]);
                 rec.Fill = Brushes.Red;
                 rec.Opacity = 0.65;
 
@@ -432,8 +431,8 @@ namespace POS.EmployeeWorkSpace
             m.Left = Convert.ToInt32(currentPosition.X);
             m.Top = Convert.ToInt32(currentPosition.Y);
             rec.Margin = m;
-            rec.Width = 30;
-            rec.Height = 30;
+            rec.Width = int.Parse(ReadWriteData.readTableSize()[0]);
+            rec.Height = int.Parse(ReadWriteData.readTableSize()[1]);
             rec.Fill = Brushes.Red;
             rec.Opacity = 0.65;
 
@@ -573,7 +572,7 @@ namespace POS.EmployeeWorkSpace
                                     var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
                                     orderControl.ucOrder.RefreshControl();
                                     ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
-                                    ((MainWindow) Window.GetWindow(this)).bntTable.IsEnabled = true;
+                                    ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
                                     ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
                                     ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
                                     ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
@@ -692,6 +691,9 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 currentRec.ToolTip = setTooltip(currentRec);
+
+                var tabletest = new SettingTableSize();
+                ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(tabletest);
             }
         }
 
