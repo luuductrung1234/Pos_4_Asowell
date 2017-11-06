@@ -53,23 +53,23 @@
     <Compile Include="AsowellContextFactory.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AsowellInterceptorLogging.cs" />
     <Compile Include="AsowellModel.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Configuration\AsowellConfiguration.cs" />
     <Compile Include="FakeAsowellContext.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FakeDbSet.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="MigrationConfiguration.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711060241561_AddProductTypeToProduct.cs" />
-    <Compile Include="Migrations\201711060241561_AddProductTypeToProduct.Designer.cs">
-      <DependentUpon>201711060241561_AddProductTypeToProduct.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -100,11 +100,8 @@
       <Name>POS.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711060241561_AddProductTypeToProduct.resx">
-      <DependentUpon>201711060241561_AddProductTypeToProduct.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

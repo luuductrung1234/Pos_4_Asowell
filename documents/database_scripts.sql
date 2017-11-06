@@ -332,7 +332,7 @@ go
 
 
 insert into Product
-	([product_id], [name], [info], [price], [is_todrink], [deleted])
+	([product_id], [name], [info], [price], [type], [deleted])
 values		-- đồ uống
 ('P000000030',	N'pepsi',					N'',		25,		0, 0),
 ('P000000031',	N'7up',						N'',		25,		0, 0),
@@ -365,7 +365,7 @@ values		-- đồ uống
 go
 
 insert into Product 
-	([product_id], [name], [info], [price], [is_todrink], [deleted])
+	([product_id], [name], [info], [price], [type], [deleted])
 values		-- thức ăn
 ('P000000001',	N'plain yogurt',			N'',		25,		1, 0),
 ('P000000002',	N'choco fondue',			N'',		70,		1, 0),

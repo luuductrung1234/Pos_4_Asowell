@@ -21,6 +21,8 @@ namespace POS.Repository.DAL
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
         private GenericRepository<Employee> _employeeRepository;
+        private GenericRepository<SalaryNote> _salarynoteRepository;
+        private GenericRepository<WorkingHistory> _workinghistoryRepository;
         private GenericRepository<Ingredient> _ingredientRepository;
         private GenericRepository<Product> _productRepository;
         private GenericRepository<OrderNote> _orderRepository;
@@ -94,6 +96,30 @@ namespace POS.Repository.DAL
                     _orderRepository = new GenericRepository<OrderNote>(context);
                 }
                 return _orderRepository;
+            }
+        }
+
+        public GenericRepository<SalaryNote> SalaryNoteRepository
+        {
+            get
+            {
+                if (_salarynoteRepository == null)
+                {
+                    _salarynoteRepository = new GenericRepository<SalaryNote>(context);
+                }
+                return _salarynoteRepository;
+            }
+        }
+
+        public GenericRepository<WorkingHistory> WrkingHistoryRepository
+        {
+            get
+            {
+                if (_workinghistoryRepository == null)
+                {
+                    _workinghistoryRepository = new GenericRepository<WorkingHistory>(context);
+                }
+                return _workinghistoryRepository;
             }
         }
 
