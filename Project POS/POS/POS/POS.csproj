@@ -84,6 +84,8 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -108,6 +110,15 @@
     </ApplicationDefinition>
     <Compile Include="AdminWorkSpace\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWorkSpace\EmployeeListPage.xaml.cs">
+      <DependentUpon>EmployeeListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWorkSpace\SalaryPage.xaml.cs">
+      <DependentUpon>SalaryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWorkSpace\UcButtonNextPage.xaml.cs">
+      <DependentUpon>UcButtonNextPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="EmployeeWorkSpace\DashPage.xaml.cs">
       <DependentUpon>DashPage.xaml</DependentUpon>
@@ -152,6 +163,18 @@
       <DependentUpon>WareHouseWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AdminWorkSpace\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\EmployeeListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\SalaryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\UcButtonNextPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -295,6 +318,7 @@
     <Resource Include="Icon\icons8_Restaurant_32px_4.png" />
     <Resource Include="Icon\icons8_Sweet_Potato_32px.png" />
     <Resource Include="Icon\icons8_Wine_Glass_32px.png" />
+    <Resource Include="Icon\icons8_Employee_50px_2.png" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />

@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS"
+        xmlns:use="clr-namespace:POS.AdminWorkSpace"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
@@ -40,7 +41,7 @@
                     <ListBox x:Name="DemoItemsListBox"
                              Margin="0 16 0 16"
                              SelectedIndex="0">
-                        
+
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
@@ -92,22 +93,25 @@
                                    Width="239">ASOWEL POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
-                
 
-                <Grid VerticalAlignment="Center"
-                      Grid.Row="1">
+
+                <Grid Grid.Row="1"
+                      Margin="0,5.4,0,0.4">
                     <Frame x:Name="myframe"
                            NavigationUIVisibility="hidden" />
                     <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                                             
                                              PlacementMode="TopAndAlignCentres"
                                              ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
                                              ToolTipService.Placement="Right"
                                              UnfurlOrientation="Vertical"
-                                             Margin="1281,298,0,-298">
+                                             Height="50"
+                                             Width="50"
+                                             Panel.ZIndex="100"
+                                             Margin="1268,532,42,77"
+                                             HorizontalAlignment="Stretch">
                         <StackPanel>
-                            <Button 
-                                    ToolTip="Employee Infomation">Employee Info</Button>
+                            <Button  ToolTip="Employee Infomation"
+                                     Click="Button_Click">Employee Info</Button>
                             <Button ToolTip="Two">Salary</Button>
                             <Button ToolTip="Product Infomation">Product Info</Button>
                         </StackPanel>

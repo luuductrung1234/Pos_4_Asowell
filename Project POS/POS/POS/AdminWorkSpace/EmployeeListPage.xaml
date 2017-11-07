@@ -1,0 +1,265 @@
+﻿<Page x:Class="POS.AdminWorkSpace.EmployeeListPage"
+      Background="{DynamicResource MaterialDesignPaper}"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:POS.AdminWorkSpace"
+      mc:Ignorable="d"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="300"
+      d:DesignWidth="300"
+      Title="EmployeeListPage"
+      Height="630"
+      Width="1366">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="557*" />
+            <ColumnDefinition Width="810*" />
+        </Grid.ColumnDefinitions>
+        <materialDesign:ColorZone Margin="2,2,13.8,0"
+                                  Padding="16"
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                  CornerRadius="3"
+                                  Mode="PrimaryDark"
+                                  Height="46">
+            <StackPanel  Orientation="Horizontal">
+                <TextBlock Margin="16,0,0,0"
+                           VerticalAlignment="Center">Employee List</TextBlock>
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <ListView Name="lvDataEmployee"
+                  Width="533"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Left"
+                  Background="#FFED5C5C"
+                  Foreground="White"
+                  FontWeight="Bold"
+                  Margin="10,63,0,0"
+                  SelectionChanged="lvData_SelectionChanged"
+                  Height="607">
+            <ListView.View>
+                <GridView x:Name="gvShowDetails">
+                    <GridViewColumn Header="ID"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding EmpId}" />
+                    <GridViewColumn Header="Name"
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Birth"
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Birth,StringFormat=dd/MM/yyyy}" />
+                    <GridViewColumn Header="UserName"
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Username}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid x:Name="EmployeeInfo"
+              Grid.Column="1">
+
+            <materialDesign:ColorZone Padding="16"
+                                      Mode="PrimaryDark"
+                                      Height="44"
+                                      Margin="0,0,-0.2,0">
+
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,0,0,-11">
+                    <TextBlock Margin="16,-6,0,-14"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="18"
+                               Height="32">Personal Infomation</TextBlock>
+                </StackPanel>
+            </materialDesign:ColorZone>
+            <StackPanel Orientation="Vertical"
+                        Margin="0,49,0,-0.4">
+                <StackPanel Orientation="Horizontal"
+                            Height="29"
+                            Margin="0,0,-0.4,0">
+                    <TextBlock Margin="20,5,19.5,-0.2"
+                               Text="ID:"
+                               FontSize="18"
+                               Foreground="#FFFFEDBC"
+                               Width="49"
+                               FontWeight="Bold" />
+                    <TextBlock x:Name="txtID"
+                               FontSize="17"
+                               Foreground="White"
+                               Width="215"
+                               Margin="30,0,100,0" />
+                </StackPanel>
+
+                <StackPanel  Orientation="Horizontal"
+                             Height="35"
+                             Margin="0,10,0,0">
+                    <TextBlock Margin="20,5,19.5,0"
+                               Text="Name: "
+                               FontSize="18"
+                               Foreground="#FFFFEDBC"
+                               Width="55"
+                               FontWeight="Bold" />
+                    <TextBox x:Name="txtName"
+                             FontSize="17"
+                             Foreground="White"
+                             Width="215"
+                             Margin="30,0,100,0" />
+                    <StackPanel  Orientation="Horizontal"
+                                 Margin="0,0,0,0"
+                                 Height="25">
+                        <TextBlock Margin="0,0,26,0"
+                                   Text="Birth: "
+                                   FontSize="18"
+                                   Foreground="#FFFFEDBC"
+                                   FontWeight="Bold" />
+                        <DatePicker
+                                    x:Name="txtBirth"
+                                    Width="249"
+                                    Margin="0,0,0,-0.2"
+                                    Foreground="White"
+                                    HorizontalAlignment="Left"
+                                    materialDesign:HintAssist.Hint="Pick Date" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel  Orientation="Horizontal"
+                             Height="75"
+                             Margin="0,30,-0.2,0">
+                    <TextBlock Margin="20,36,9,0.2"
+                               Text="Address: "
+                               FontSize="18"
+                               Foreground="#FFFFEDBC"
+                               FontWeight="Bold" />
+                    <TextBox MaxWidth="300"
+                             Foreground="White"
+                             x:Name="txtAddress"
+                             Height="70"
+                             VerticalAlignment="Stretch"
+                             materialDesign:HintAssist.Hint=""
+                             AcceptsReturn="True"
+                             FontSize="17"
+                             SpellCheck.IsEnabled="True"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto"
+                             Width="214"
+                             Margin="20,2,100,3" />
+                    <StackPanel VerticalAlignment="Center">
+                        <StackPanel  Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="0,10,46,0"
+                                                     Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}"
+                                                     Kind="Phone" />
+                            <TextBox x:Name="txtPhone"
+                                     Text="{Binding Phone}"
+                                     Width="244"
+                                     Foreground="White"
+                                     FontSize="17"
+                                     materialDesign:TransitionAssist.DisableTransitions="True" />
+                        </StackPanel>
+
+                        <StackPanel  Orientation="Horizontal"
+                                     Height="35"
+                                     Margin="0,0,-0.2,0">
+                            <materialDesign:PackIcon Margin="0,10,46,0"
+                                                     Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"
+                                                     Kind="MailRu" />
+                            <TextBox x:Name="txtMail"
+                                     Text="{Binding Email}"
+                                     Width="242"
+                                     FontSize="17"
+                                     Foreground="White"
+                                     Margin="0,0,0,0.2" />
+                        </StackPanel>
+                    </StackPanel>
+
+                </StackPanel>
+                <StackPanel  Orientation="Horizontal"
+                             Margin="0,40,0,0"
+                             Height="25">
+                    <TextBlock Margin="20,0,8,0"
+                               Text="Start day: "
+                               Foreground="#FFFFEDBC"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Height="25"
+                               VerticalAlignment="Bottom" />
+                    <TextBlock x:Name="txtStartDay"
+                               FontSize="17"
+                               Foreground="White"
+                               Margin="15,0,100,0"
+                               Width="209" />
+                    <TextBlock Margin="0,0,8,0"
+                               Foreground="#FFFFEDBC"
+                               FontSize="18"
+                               Text="Hour wage: "
+                               FontWeight="Bold" />
+                    <TextBlock x:Name="txtHour_wage"
+                               Foreground="White"
+                               Margin="0,0,0,-0.2"
+                               FontSize="17"
+                               Width="173" />
+                </StackPanel>
+
+            </StackPanel>
+            <materialDesign:ColorZone Padding="16"
+                                      Mode="PrimaryDark"
+                                      Height="44"
+                                      Margin="0,367,-0.4,0">
+
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,0,0,-9">
+                    <TextBlock Margin="16,0,0,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               FontWeight="Bold">Account Infomation</TextBlock>
+                </StackPanel>
+            </materialDesign:ColorZone>
+            <StackPanel>
+                <StackPanel  Orientation="Horizontal"
+                             Margin="0,452,-0.4,203"
+                            >
+                    <TextBlock Margin="0,0,6.9,0"
+                               Text="UserName"
+                               FontSize="17"
+                               Foreground="White" />
+                    <TextBox x:Name="txtAcount"
+                             Margin="0,0,100,-0.2"
+                             Width="214"                           
+                             FontSize="17"
+                             Foreground="White" />
+                    <TextBlock Margin="0,0,6.9,0"
+                               Text="Password"
+                               FontSize="17"
+                               Foreground="White" />
+                    <TextBox x:Name="txtPass"
+                             Margin="0,0,100,-0.2"
+                             Width="214"
+                             FontSize="17"
+                             Foreground="White" />
+                </StackPanel>
+                
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal"
+                     Height="50"   VerticalAlignment="Bottom">
+            <Button x:Name="bntAddnew"
+                        Content="Addnew"
+                        Width="121"
+                        Height="Auto"
+                        Margin="0,0,0,0" />
+                <Button x:Name="bntUpdate"
+                        Content="Update"
+                        Height="Auto"
+                        Margin="100,0,0,0"
+                        Width="121"/>
+                <Button x:Name="bntdel"
+                        Content="Delete"
+                        Height="Auto"
+                        Margin="100,0,0,-0.4"
+                        Width="121" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</Page>

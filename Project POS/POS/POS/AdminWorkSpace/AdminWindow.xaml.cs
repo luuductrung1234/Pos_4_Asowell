@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS.Repository.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,23 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class AdminWindow : Window
     {
+        private EmployeewsOfAsowell _unitofork;
+        EmployeeListPage empListPage;
+
+
         public AdminWindow()
         {
             InitializeComponent();
+
+            _unitofork = new EmployeewsOfAsowell();
+            empListPage = new EmployeeListPage(_unitofork);
+
+            Closing += AdminWindow_Closing;
+        }
+
+        private void AdminWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _unitofork.Dispose();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -36,7 +51,7 @@ namespace POS.AdminWorkSpace
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            myframe.Navigate(empListPage);
         }
 
         private void PopupBox_OnClosed(object sender, RoutedEventArgs e)

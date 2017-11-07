@@ -491,10 +491,8 @@ select * from Customer
 go
 select * from Ingredient
 go
- 
 select * from WareHouse
-go
- 
+go 
 select * from Product
 go
 select *  from ProductDetails
