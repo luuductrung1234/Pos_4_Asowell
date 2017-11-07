@@ -23,8 +23,8 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class EmployeeListPage : Page
     {
-        private EmployeewsOfAsowell _unitofork;
-        public EmployeeListPage(EmployeewsOfAsowell unitofork)
+        private AdminwsOfAsowell _unitofork;
+        public EmployeeListPage(AdminwsOfAsowell unitofork)
         {
             _unitofork = unitofork;
             InitializeComponent();

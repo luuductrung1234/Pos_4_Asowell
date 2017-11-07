@@ -20,7 +20,7 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class AdminWindow : Window
     {
-        private EmployeewsOfAsowell _unitofork;
+        private AdminwsOfAsowell _unitofork;
         EmployeeListPage empListPage;
 
 
@@ -28,7 +28,7 @@ namespace POS.AdminWorkSpace
         {
             InitializeComponent();
 
-            _unitofork = new EmployeewsOfAsowell();
+            _unitofork = new AdminwsOfAsowell();
             empListPage = new EmployeeListPage(_unitofork);
 
             Closing += AdminWindow_Closing;
