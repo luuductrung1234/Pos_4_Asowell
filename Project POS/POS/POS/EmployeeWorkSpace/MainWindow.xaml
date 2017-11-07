@@ -108,7 +108,8 @@
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Left"
                                     Height="58"
-                                    Width="auto">
+                                    Width="1348"
+                                    >
 
                             <Button x:Name="bntDash"
                                     Style="{StaticResource MaterialDesignFlatButton}"
@@ -146,12 +147,21 @@
                                     Height="42"
                                     Foreground="DeepSkyBlue"
                                     Width="98"
+                                    Margin="0,0,800,0"
                                     Click="bntDash_Click"
                                     FontSize="18">
 
                                 Info
                             </Button>
+                            <TextBlock Foreground="White"
+                                       Text=""
+                                       x:Name="txtTimeWk"
+                                       VerticalAlignment="Center"
+                                       Width="149"
+                                       Margin="0,10,0,-0.4" />
                         </StackPanel>
+                            
+                        
                     </Border>
                     <Grid VerticalAlignment="Center"
                           Grid.Row="1">
