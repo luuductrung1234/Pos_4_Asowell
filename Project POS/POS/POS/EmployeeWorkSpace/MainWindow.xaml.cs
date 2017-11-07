@@ -10,6 +10,7 @@ using POS.Repository;
 using POS.Repository.DAL;
 using POS.Repository.Interfaces;
 using System;
+using System.Windows.Threading;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -55,10 +56,24 @@ namespace POS.EmployeeWorkSpace
             st = new SettingFoodPage(_unitofwork);
             stts = new SettingTableSize();
 
+            DispatcherTimer WorkTime = new DispatcherTimer();
+            WorkTime.Tick += WorkTime_Tick;
+            WorkTime.Interval = new TimeSpan(0, 0, 1);
+            WorkTime.Start();
+
             this.Closing += (sender, args) =>
             {
+                WorkTime.Stop();
                 _unitofwork.Dispose();
             };
+        }
+
+        private void WorkTime_Tick(object sender, EventArgs e)
+        {
+            DateTime nowWH = DateTime.Now;
+            DateTime startWH = (App.Current.Properties["EmpWH"] as WorkingHistory).Workday.Value;
+            var timer = nowWH - startWH;
+            txtTimeWk.Text = timer.Hours + ":" + timer.Minutes + ":" + timer.Seconds;
         }
 
         private void bntDash_Click(object sender, RoutedEventArgs e)
