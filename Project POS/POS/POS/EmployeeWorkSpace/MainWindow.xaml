@@ -78,9 +78,10 @@
                             </materialDesign:PopupBox.ToggleContent>
 
                             <StackPanel>
-                                <Button Content="Details"
-                                        Click="Button_Click_1" />
-                                <Button Content="Working Time" />
+                                <Button x:Name="btnEmpDetail" Content="Details"
+                                        Click="btnEmpDetail_Click" />
+                                <Button x:Name="btnWH" Content="Working Time"
+                                        Click="btnWH_Click"/>
                                 <Separator />
                                 <Button x:Name="bntLogout"
                                         Content="Log out"
