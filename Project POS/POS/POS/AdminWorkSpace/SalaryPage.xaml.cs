@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS.Repository.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,14 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class SalaryPage : Page
     {
-        public SalaryPage()
+        AdminwsOfAsowell _unitofwork;
+        public SalaryPage(AdminwsOfAsowell unitofwork)
         {
             InitializeComponent();
+
+            _unitofwork = unitofwork;
+            unitofwork.SalaryNoteRepository.Get(sn => sn.EmpId == "fdfasdf);
+            unitofwork.WorkingHistoryRepository.Get();
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)

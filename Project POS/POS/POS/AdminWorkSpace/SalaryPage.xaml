@@ -13,10 +13,11 @@
       Width="1366"
       Title="SalaryPage">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="557*" />
-            <ColumnDefinition Width="810*" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
         <materialDesign:ColorZone Margin="2,2,13.8,0"
                                   Padding="16"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth3"
@@ -32,7 +33,7 @@
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvSalary"
-                  Width="533"
+                  Width="auto"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
                   Background="#FFED5C5C"
@@ -40,26 +41,42 @@
                   FontWeight="Bold"
                   Margin="10,63,0,0"
                   SelectionChanged="lvData_SelectionChanged"
-                  Height="607">
+                  Height="auto">
             <ListView.View>
                 <GridView x:Name="gvShowDetails">
                     <GridViewColumn Header="Salary_ID"
                                     Width="100"
                                     DisplayMemberBinding="{Binding sn_id}" />
-                    <GridViewColumn Header="Employee Name"
+                        <GridViewColumn Header="Employee_ID"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding emp_id}" />
+                        <GridViewColumn Header="Employee Name"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="date_pay"
+                    <GridViewColumn Header="date pay"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Birth,StringFormat=dd/MM/yyyy}" />
-                    <GridViewColumn Header="UserName"
+                    <GridViewColumn Header="Salary Value"
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Username}"/>
+                    <GridViewColumn Header="Work Hour"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Username}" />
-                </GridView>
+                    <GridViewColumn Header="For Month"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Username}" />
+                      <GridViewColumn Header="For Years"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Username}" />
+                        <GridViewColumn Header="Is Paid"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Username}" />
+                    </GridView>
             </ListView.View>
         </ListView>
+        </Grid>
         <Grid x:Name="EmployeeInfo"
-              Grid.Column="1">
+              Grid.Row="1">
 
             <materialDesign:ColorZone Padding="16"
                                       Mode="PrimaryDark"
@@ -73,10 +90,48 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18"
-                               Height="32"><Run Text="Personal Infomation" /></TextBlock>
+                               Height="32"> Working History</TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
-
+            <ListView Name="lvWokingHistory"
+                      Width="auto"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      Background="#FFED5C5C"
+                      Foreground="White"
+                      FontWeight="Bold"
+                      Margin="10,63,0,0"
+                      SelectionChanged="lvData_SelectionChanged"
+                      Height="auto">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="WH ID"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding wh_id}" />
+                        <GridViewColumn Header="Employee_ID"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding emp_id}" />
+                        <GridViewColumn Header="Result Salary"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Workday"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Birth,StringFormat=dd/MM/yyyy}" />
+                        <GridViewColumn Header="Start hour"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Username}" />
+                        <GridViewColumn Header="Start minute"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Username}" />
+                        <GridViewColumn Header="End Hour"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Username}" />
+                        <GridViewColumn Header="End Minute"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Username}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
         </Grid>
     </Grid>
