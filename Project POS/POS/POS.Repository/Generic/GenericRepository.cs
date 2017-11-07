@@ -65,6 +65,7 @@ namespace POS.Repository.Generic
         public virtual void Insert(TEntity entity)
         {
             dbSet.Add(AutoGeneteId_DBAsowell(entity));
+            //dbSet.Add(entity);
         }
 
         public virtual void Delete(object id)
@@ -95,67 +96,199 @@ namespace POS.Repository.Generic
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private string AutoGeneteId_DBAsowell(TEntity entity)
+        private TEntity AutoGeneteId_DBAsowell(TEntity entity)
         {
             string sign = "";
             if (entity is Employee)
             {
                 sign = "EMP";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                Employee emp = entity as Employee;
+                emp.EmpId = result;
             }
             else if (entity is AdminRe)
             {
                 sign = "AD";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+
+                AdminRe admin = entity as AdminRe;
+                admin.AdId = result;
             }
             else if (entity is Customer)
             {
                 sign = "CUS";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                Customer cus = entity as Customer;
+                cus.CusId = result;
             }
             else if (entity is WareHouse)
             {
                 sign = "WAH";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                WareHouse wh = entity as WareHouse;
+                wh.WarehouseId = result;
             }
             else if (entity is Ingredient)
             {
                 sign = "IGD";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                Ingredient ign = entity as Ingredient;
+                ign.IgdId = result;
             }
             else if (entity is Product)
             {
                 sign = "P";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                Product p = entity as Product;
+                p.ProductId = result;
             }
             else if (entity is ProductDetail)
             {
                 sign = "PD";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                ProductDetail pd = entity as ProductDetail;
+                pd.PdetailId = result;
             }
             else if (entity is OrderNote)
             {
                 sign = "ORD";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                OrderNote ord = entity as OrderNote;
+                ord.OrdernoteId = result;
             }
             else if (entity is ReceiptNote)
             {
                 sign = "RN";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                ReceiptNote rcn = entity as ReceiptNote;
+                rcn.RnId = result;
             }
             else if (entity is SalaryNote)
             {
                 sign = "SAN";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                SalaryNote sln = entity as SalaryNote;
+                sln.SnId = result;
             }
             else if (entity is WorkingHistory)
             {
                 sign = "WOH";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                WorkingHistory wh = entity as WorkingHistory;
+                wh.WhId = result;
             }
 
-            // lấy số thứ tự mới nhất
-            string numberWantToset = (this.Get().Count() + 1).ToString();
-
-            int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
-            string result = sign;
-            for (int i = 0; i < blank; i++)
-            {
-                result += "0";
-            }
-            result += numberWantToset;
-
-
-            return result;
+            return entity;
         }
     }
 }

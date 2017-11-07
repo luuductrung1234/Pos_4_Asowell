@@ -9,6 +9,7 @@ using POS.Entities;
 using POS.Repository;
 using POS.Repository.DAL;
 using POS.Repository.Interfaces;
+using System;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -21,9 +22,10 @@ namespace POS.EmployeeWorkSpace
         /// the object that store all repository you want to get data DBAsowell
         /// in Employee WorkSpace
         /// </summary>
-        internal EmployeewsOfAsowell _unitofwork;                                                                                                                                                                                                                                                                                                                                                   
+        internal EmployeewsOfAsowell _unitofwork;
 
-
+        Employee emp;
+        SalaryNote empSln;
         public BusinessModel.Table currentTable { get; set; }
         public Chair currentChair { get; set; }
         internal Table b;
@@ -38,11 +40,12 @@ namespace POS.EmployeeWorkSpace
         {
             InitializeComponent();
             currentTable = null;
-            Employee emp = App.Current.Properties["EmpLogin"] as Employee;
+            emp = App.Current.Properties["EmpLogin"] as Employee;
+            empSln = App.Current.Properties["EmpSN"] as SalaryNote;
 
-            cUser.Content= emp.Username;
+            cUser.Content = emp.Username;
 
-            
+
             _unitofwork = new EmployeewsOfAsowell();
             b = new Table(_unitofwork);
             d = new Dash();
@@ -67,10 +70,10 @@ namespace POS.EmployeeWorkSpace
             myFrame.Navigate(d);
 
         }
-        
+
         private void bntTable_Click(object sender, RoutedEventArgs e)
         {
-            myFrame.Navigate(b); 
+            myFrame.Navigate(b);
             bntTable.IsEnabled = false;
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = true;
@@ -126,19 +129,31 @@ namespace POS.EmployeeWorkSpace
             bntInfo.IsEnabled = true;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void btnEmpDetail_Click(object sender, RoutedEventArgs e)
         {
             EmployeeDetail emd = new EmployeeDetail(cUser.Content.ToString(), _unitofwork);
             emd.ShowDialog();
         }
 
+        private void btnWH_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeWorkingHistoryDialog empWH = new EmployeeWorkingHistoryDialog(App.Current.Properties["EmpWH"] as WorkingHistory);
+            empWH.ShowDialog();
+        }
+
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
+            WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
+
+            wh.Endhour = DateTime.Now.Hour;
+            wh.Endminute = DateTime.Now.Minute;
+            _unitofwork.WorkingHistoryRepository.Insert(wh);
+            _unitofwork.Save();
 
             this.Close();
             login.Show();
-            
-        }
 
+        }
+        
     }
 }
