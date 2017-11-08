@@ -182,7 +182,6 @@ namespace POS.EmployeeWorkSpace
             login = new Login();
             this.Close();
             login.Show();
-
         }
         
     }

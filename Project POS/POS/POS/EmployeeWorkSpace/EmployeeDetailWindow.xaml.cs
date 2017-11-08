@@ -14,8 +14,7 @@ namespace POS.EmployeeWorkSpace
     public partial class EmployeeDetail : Window
     {
         private EmployeewsOfAsowell _unitofwork;
-
-
+        
         public EmployeeDetail(string UserName, EmployeewsOfAsowell unitofwork)
         {
             _unitofwork = unitofwork;
