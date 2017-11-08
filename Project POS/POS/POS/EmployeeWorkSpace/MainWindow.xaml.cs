@@ -73,7 +73,25 @@ namespace POS.EmployeeWorkSpace
             DateTime nowWH = DateTime.Now;
             DateTime startWH = (App.Current.Properties["EmpWH"] as WorkingHistory).StartTime;
             var timer = nowWH - startWH;
-            txtTimeWk.Text = timer.Hours + ":" + timer.Minutes + ":" + timer.Seconds;
+            string fH = "", fm = "", fs = "";
+            fH = timer.Hours.ToString();
+            fm = timer.Minutes.ToString();
+            fs = timer.Seconds.ToString();
+
+            if(timer.Hours < 10)
+            {
+                fH = "0" + timer.Hours;
+            }
+            if(timer.Minutes < 10)
+            {
+                fm = "0" + timer.Minutes;
+            }
+            if(timer.Seconds < 10)
+            {
+                fs = "0" + timer.Seconds;
+            }
+
+            txtTimeWk.Text = fH + ":" + fm + ":" + fs;
         }
 
         private void bntDash_Click(object sender, RoutedEventArgs e)

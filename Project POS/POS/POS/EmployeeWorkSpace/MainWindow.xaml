@@ -108,8 +108,7 @@
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Left"
                                     Height="58"
-                                    Width="1356"
-                                    Margin="0,-4,-2,-3">
+                                    Width="1356">
 
                             <Button x:Name="bntDash"
                                     Style="{StaticResource MaterialDesignFlatButton}"
@@ -157,9 +156,9 @@
                                        Text="00:00:00"
                                        x:Name="txtTimeWk"
                                        VerticalAlignment="Center"
-                                       Width="150"
                                        FontSize="18"
-                                       TextAlignment="Right"/>
+                                       TextAlignment="Right"
+                                       Width="150"/>
                         </StackPanel>
 
 

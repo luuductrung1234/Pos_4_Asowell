@@ -89,7 +89,6 @@ namespace POS
                             App.Current.Properties["EmpWH"] = empWorkHistory;
                         }
                     }
-
                     
                     //end create
 

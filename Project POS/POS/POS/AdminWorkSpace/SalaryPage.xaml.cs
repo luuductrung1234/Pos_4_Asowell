@@ -26,13 +26,7 @@ namespace POS.AdminWorkSpace
         public SalaryPage(AdminwsOfAsowell unitofwork)
         {
             InitializeComponent();
-            _unitofwork = unitofwork;
-            var EmpList = unitofwork.EmployeeRepository.Get();
-            var SalList = unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories");
-            var WhList = unitofwork.WorkingHistoryRepository.Get();
-
-            lvSalary.ItemsSource = SalList;
-
+            
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
