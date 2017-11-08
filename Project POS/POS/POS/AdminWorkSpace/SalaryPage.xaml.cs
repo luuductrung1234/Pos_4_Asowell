@@ -27,7 +27,7 @@ namespace POS.AdminWorkSpace
             InitializeComponent();
 
             _unitofwork = unitofwork;
-            unitofwork.SalaryNoteRepository.Get(sn => sn.EmpId == "fdfasdf);
+            unitofwork.SalaryNoteRepository.Get(sn => sn.EmpId == "");
             unitofwork.WorkingHistoryRepository.Get();
         }
 
