@@ -42,7 +42,6 @@ namespace POS.EmployeeWorkSpace
             InitializeComponent();
             currentTable = null;
             emp = App.Current.Properties["EmpLogin"] as Employee;
-            empSln = App.Current.Properties["EmpSN"] as SalaryNote;
 
             cUser.Content = emp.Username;
             
@@ -174,6 +173,7 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.WorkingHistoryRepository.Insert(wh);
             _unitofwork.Save();
 
+            empSln = _unitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
             var workH = wh.EndTime - wh.StartTime;
             empSln.WorkHour += workH.Hours + workH.Minutes/60 + workH.Seconds/3600;
             _unitofwork.SalaryNoteRepository.Update(empSln);

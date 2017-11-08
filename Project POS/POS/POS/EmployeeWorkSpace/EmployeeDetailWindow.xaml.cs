@@ -37,6 +37,7 @@ namespace POS.EmployeeWorkSpace
                     em.Startday = item.Startday;
                     em.HourWage = item.HourWage;
                     em.Username = item.Username;
+                    break;
                     
                 }
             }
