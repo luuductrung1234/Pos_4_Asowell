@@ -10,6 +10,7 @@ using POS.Repository;
 using POS.Repository.DAL;
 using POS.Repository.Interfaces;
 using System;
+using System.Windows.Threading;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -55,10 +56,24 @@ namespace POS.EmployeeWorkSpace
             st = new SettingFoodPage(_unitofwork);
             stts = new SettingTableSize();
 
+            DispatcherTimer WorkTime = new DispatcherTimer();
+            WorkTime.Tick += WorkTime_Tick;
+            WorkTime.Interval = new TimeSpan(0, 0, 1);
+            WorkTime.Start();
+
             this.Closing += (sender, args) =>
             {
+                WorkTime.Stop();
                 _unitofwork.Dispose();
             };
+        }
+
+        private void WorkTime_Tick(object sender, EventArgs e)
+        {
+            DateTime nowWH = DateTime.Now;
+            DateTime startWH = (App.Current.Properties["EmpWH"] as WorkingHistory).StartTime;
+            var timer = nowWH - startWH;
+            txtTimeWk.Text = timer.Hours + ":" + timer.Minutes + ":" + timer.Seconds;
         }
 
         private void bntDash_Click(object sender, RoutedEventArgs e)
@@ -135,18 +150,11 @@ namespace POS.EmployeeWorkSpace
             emd.ShowDialog();
         }
 
-        private void btnWH_Click(object sender, RoutedEventArgs e)
-        {
-            EmployeeWorkingHistoryDialog empWH = new EmployeeWorkingHistoryDialog(App.Current.Properties["EmpWH"] as WorkingHistory);
-            empWH.ShowDialog();
-        }
-
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
             WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
 
-            wh.Endhour = DateTime.Now.Hour;
-            wh.Endminute = DateTime.Now.Minute;
+            wh.EndTime = DateTime.Now;
             _unitofwork.WorkingHistoryRepository.Insert(wh);
             _unitofwork.Save();
 

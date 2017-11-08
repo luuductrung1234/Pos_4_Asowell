@@ -9,6 +9,9 @@
 // ReSharper disable RedundantOverridenMember
 // ReSharper disable UseNameofExpression
 // TargetFrameworkVersion = 4.6
+
+using System.ComponentModel.DataAnnotations;
+
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
@@ -19,14 +22,12 @@ namespace POS.Entities
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class WorkingHistory
     {
+       
         public string WhId { get; set; } // wh_id (Primary key) (length: 10)
         public string ResultSalary { get; set; } // result_salary (length: 10)
         public string EmpId { get; set; } // emp_id (length: 10)
-        public System.DateTime? Workday { get; set; } // workday
-        public int Starthour { get; set; } // starthour
-        public int Startminute { get; set; } // startminute
-        public int Endhour { get; set; } // endhour
-        public int Endminute { get; set; } // endminute
+        public System.DateTime StartTime { get; set; } // startTime
+        public System.DateTime EndTime { get; set; } // endTime 
 
         // Foreign keys
 
@@ -42,7 +43,8 @@ namespace POS.Entities
 
         public WorkingHistory()
         {
-            Workday = System.DateTime.Now;
+            StartTime = System.DateTime.Now;
+            EndTime = System.DateTime.Now;
             InitializePartial();
         }
 
