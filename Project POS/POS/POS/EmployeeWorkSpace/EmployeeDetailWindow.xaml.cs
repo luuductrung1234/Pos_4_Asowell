@@ -5,6 +5,8 @@ using POS.Entities;
 using POS.Repository;
 using POS.Repository.DAL;
 using POS.Repository.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -14,34 +16,34 @@ namespace POS.EmployeeWorkSpace
     public partial class EmployeeDetail : Window
     {
         private EmployeewsOfAsowell _unitofwork;
-        
+        Employee em;
+
         public EmployeeDetail(string UserName, EmployeewsOfAsowell unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
             loadData(UserName);
+            initlsWH();
+            em = new Employee();
         }
 
         private void loadData(string UserName)
         {
-            Employee em = new Employee();
             foreach (var item in  _unitofwork.EmployeeRepository.Get())
             {
                 if (item.Username.Equals(UserName))
                 {
-                    em.Name = item.Name;
-                    em.Phone = item.Phone;
-                    em.Email = item.Email;
-                    em.Birth = item.Birth;
-                    em.Addr = item.Addr;
-                    em.Startday = item.Startday;
-                    em.HourWage = item.HourWage;
-                    em.Username = item.Username;
+                    em = item;
                     break;
                     
                 }
             }
             this.EmployeeInfo.DataContext = em;
+        }
+
+        private void initlsWH()
+        {
+            lsWH.ItemsSource = _unitofwork.WorkingHistoryRepository.Get(w => w.EmpId.Equals(em.EmpId) && w.StartTime.Month.Equals(DateTime.Now.Month) && w.StartTime.Year.Equals(DateTime.Now.Year));
         }
     }
 }
