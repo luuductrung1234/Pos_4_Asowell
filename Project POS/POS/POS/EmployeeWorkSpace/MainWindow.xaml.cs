@@ -45,14 +45,12 @@ namespace POS.EmployeeWorkSpace
             empSln = App.Current.Properties["EmpSN"] as SalaryNote;
 
             cUser.Content = emp.Username;
-
-
+            
             _unitofwork = new EmployeewsOfAsowell();
             b = new Table(_unitofwork);
             d = new Dash();
             en = new Entry();
             info = new Info();
-            login = new Login();
             st = new SettingFoodPage(_unitofwork);
             stts = new SettingTableSize();
 
@@ -176,6 +174,12 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.WorkingHistoryRepository.Insert(wh);
             _unitofwork.Save();
 
+            var workH = wh.EndTime - wh.StartTime;
+            empSln.WorkHour += workH.Hours + workH.Minutes/60 + workH.Seconds/3600;
+            _unitofwork.SalaryNoteRepository.Update(empSln);
+            _unitofwork.Save();
+
+            login = new Login();
             this.Close();
             login.Show();
 
