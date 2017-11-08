@@ -113,7 +113,7 @@
                             <Button  ToolTip="Employee Infomation"
                                      Click="Button_Click">Employee Info</Button>
                             <Button Click="Button_Click_2" ToolTip="Salary">Salary</Button>
-                            <Button ToolTip="Product Infomation">Product Info</Button>
+                            <Button Click="Button_Click_3" ToolTip="Product Infomation">Product Info</Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
