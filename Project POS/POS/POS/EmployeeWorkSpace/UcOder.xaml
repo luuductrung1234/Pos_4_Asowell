@@ -193,14 +193,16 @@
                         Margin="160,13,161,0"
                         VerticalAlignment="Top"
                         FontSize="18"
-                        FontWeight="Bold" />
+                        FontWeight="Bold" 
+                        Click="BntPrint_OnClick"/>
                 <Button x:Name="bntDelete"
                         Content="Delete"
                         Margin="311,13,10,0"
                         VerticalAlignment="Top"
                         RenderTransformOrigin="2.162,0.464"
                         FontSize="18"
-                        FontWeight="Bold" />
+                        FontWeight="Bold"
+                        Click="BntDelete_OnClick"/>
 
             </Grid>
         </Grid>

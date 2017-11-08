@@ -19,6 +19,8 @@ namespace POS.BusinessModel
         private OrderNote _TableOrder { get; set; }
         private List<OrderNoteDetail> _TableOrderDetails { get; set; }
 
+        public Boolean IsOrdered { get; set; }
+
         public Rectangle VisualTable
         {
             get { return _visualTable; }

@@ -95,6 +95,7 @@ namespace POS.BusinessModel
                 ChairData = new List<Chair>(),
                 Position = new Point(rec.Margin.Left, rec.Margin.Top),
                 IsPinned = false,
+                IsOrdered = false,
                 TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now },
                 TableOrderDetails = new List<OrderNoteDetail>()
             };
