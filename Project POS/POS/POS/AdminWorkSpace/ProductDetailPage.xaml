@@ -1,4 +1,4 @@
-﻿<Page x:Class="POS.EmployeeWorkSpace.SettingFoodPage"
+﻿<Page x:Class="POS.AdminWorkSpace.ProductDetailPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -21,8 +21,8 @@
             <StackPanel  Orientation="Horizontal">
                 <TextBlock Margin="16,0,0,0"
                            VerticalAlignment="Center"
-                           FontWeight="Bold"
-                           FontSize="16">Food List</TextBlock>
+                           FontSize="16"
+                           FontWeight="Bold">Food List</TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvData"
@@ -81,24 +81,33 @@
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="ID" />
-                <TextBlock x:Name="txtID" Width="200"/>
+                <TextBlock x:Name="txtID"
+                           Width="200" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Name" />
-                <TextBlock x:Name="txtName" IsEnabled="False"  Width="200" Foreground="White"/>
+                <TextBlock x:Name="txtName"
+                           IsEnabled="False"
+                           Width="200"
+                           Foreground="White" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Price" />
-                <TextBlock x:Name="txtPrice" Width="200" IsEnabled="False" Foreground="White"
-                         PreviewTextInput="txtPrice_PreviewTextInput"
-                         />
+                <TextBlock x:Name="txtPrice"
+                           Width="200"
+                           IsEnabled="False"
+                           Foreground="White"
+                           PreviewTextInput="txtPrice_PreviewTextInput" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Promotion" />
-                <ComboBox Foreground="White" x:Name="cbopromotion" IsEditable="False" IsEnabled="False"
+                <ComboBox Foreground="White"
+                          x:Name="cbopromotion"
+                          IsEditable="False"
+                          IsEnabled="False"
                           Width="60">
                 </ComboBox>
                 <TextBlock x:Name="textBlock"
@@ -108,7 +117,7 @@
                            VerticalAlignment="Stretch"
                            Width="19"
                            Height="24"
-                           Margin="10,0,0,0"/>
+                           Margin="10,0,0,0" />
             </StackPanel>
             <Button x:Name="bntUpdate"
                     Content="Update"

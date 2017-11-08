@@ -35,7 +35,8 @@ namespace POS.AdminWorkSpace
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            SalaryNote emp = lvSalary.SelectedItem as SalaryNote;
+            lvWokingHistory.ItemsSource=_unitofwork.WorkingHistoryRepository.Get(c=>c.EmpId.Equals(emp.EmpId));
         }
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)

@@ -186,10 +186,10 @@
                                         Width="150"
                                         DisplayMemberBinding="{Binding ResultSalary}" />
                         <GridViewColumn Header="Start Time"
-                                        Width="150"
+                                        Width="180"
                                         DisplayMemberBinding="{Binding StartTime}"/>
                         <GridViewColumn Header="End Time"
-                                        Width="150"
+                                        Width="180"
                                         DisplayMemberBinding="{Binding EndTime}" />
                     </GridView>
                 </ListView.View>
