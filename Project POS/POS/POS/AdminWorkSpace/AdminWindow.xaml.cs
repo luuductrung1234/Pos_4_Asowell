@@ -22,6 +22,7 @@ namespace POS.AdminWorkSpace
     {
         private AdminwsOfAsowell _unitofork;
         EmployeeListPage empListPage;
+        SalaryPage salarypage;
 
 
         public AdminWindow()
@@ -30,6 +31,7 @@ namespace POS.AdminWorkSpace
 
             _unitofork = new AdminwsOfAsowell();
             empListPage = new EmployeeListPage(_unitofork);
+            salarypage = new SalaryPage(_unitofork);
 
             Closing += AdminWindow_Closing;
         }
@@ -57,6 +59,11 @@ namespace POS.AdminWorkSpace
         private void PopupBox_OnClosed(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            myframe.Navigate(salarypage);
         }
     }
 }
