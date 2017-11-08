@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS.Repository.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace POS.AdminWorkSpace
     public partial class ProductDetailPage : Page
     {
         private EmployeewsOfAsowell _unitofwork;
-        public ProductDetailPage()
+        public ProductDetailPage(EmployeewsOfAsowell unitofwork)
         {
             InitializeComponent();
             _unitofwork = unitofwork;
@@ -31,6 +32,16 @@ namespace POS.AdminWorkSpace
             {
                 cbopromotion.Items.Add(i.ToString());
             }
+        }
+
+        private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void txtPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
         }
     }
 }

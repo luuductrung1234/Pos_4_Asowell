@@ -46,6 +46,7 @@ namespace POS
 
             bool isFound = false;
             List<Employee> empList = _unitempofwork.EmployeeRepository.Get().ToList();
+            List<AdminRe> AdList = _unitempofwork.AdminreRepository.Get().ToList();
             foreach (Employee emp in empList)
             {
                 if (emp.Username.Equals(username) && emp.Pass.Equals(pass))
@@ -99,13 +100,29 @@ namespace POS
                 }
 
             }
-
+            //Get Admin
+            bool isfoundad=false;
             if (!isFound)
             {
-                MessageBox.Show("incorrect username or password");
-                return;
+                foreach (var item in AdList)
+                {
+                    if (item.Username.Equals(username) && item.Pass.Equals(pass))
+                    {
+                        AdminWorkSpace.AdminWindow adminwindow = new AdminWorkSpace.AdminWindow();
+                        adminwindow.Show();
+                        isfoundad = true;
+                        break;
+
+                    }
+
+                }
+                if (!isfoundad)
+                {
+                    MessageBox.Show("incorrect username or password");
+                    return;
+                }
+                this.Close();
             }
-            this.Close();
         }
 
         private void btnDatabase_Click(object sender, RoutedEventArgs e)

@@ -23,6 +23,7 @@ namespace POS.AdminWorkSpace
         private AdminwsOfAsowell _unitofork;
         EmployeeListPage empListPage;
         SalaryPage salarypage;
+        internal Login login;
 
 
         public AdminWindow()
@@ -48,7 +49,9 @@ namespace POS.AdminWorkSpace
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
-
+            login = new Login();
+            this.Close();
+            login.Show();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

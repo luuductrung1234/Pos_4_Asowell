@@ -119,12 +119,7 @@
                            Height="24"
                            Margin="10,0,0,0" />
             </StackPanel>
-            <Button x:Name="bntUpdate"
-                    Content="Update"
-                    IsEnabled="False"
-                    Height="44"
-                    Margin="0,0,375.2,0"
-                    Click="bntUpdate_Click" />
+
         </StackPanel>
         <Image x:Name="image"
                HorizontalAlignment="Left"
