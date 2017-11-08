@@ -73,7 +73,7 @@ namespace POS
                         SalaryNote empSalary = new SalaryNote { EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
                         _unitempofwork.SalaryNoteRepository.Insert(empSalary);
                         _unitempofwork.Save();
-                        WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId, Workday = DateTime.Now, Starthour = DateTime.Now.Hour, Startminute = DateTime.Now.Minute, Endhour = DateTime.Now.Hour, Endminute = DateTime.Now.Minute };
+                        WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
                         App.Current.Properties["EmpWH"] = empWorkHistory;
 
                         foreach (SalaryNote sln in empSalaryNoteList)
@@ -85,7 +85,7 @@ namespace POS
                     {
                         foreach(SalaryNote sln in empSalaryNoteList)
                         {
-                            WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = sln.SnId, EmpId = sln.EmpId, Workday = DateTime.Now, Starthour = DateTime.Now.Hour, Startminute = DateTime.Now.Minute, Endhour = DateTime.Now.Hour, Endminute = DateTime.Now.Minute };
+                            WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = sln.SnId, EmpId = sln.EmpId };
                             App.Current.Properties["EmpWH"] = empWorkHistory;
                         }
                     }

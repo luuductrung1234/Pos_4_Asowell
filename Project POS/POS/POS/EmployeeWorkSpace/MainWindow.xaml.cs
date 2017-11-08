@@ -71,7 +71,7 @@ namespace POS.EmployeeWorkSpace
         private void WorkTime_Tick(object sender, EventArgs e)
         {
             DateTime nowWH = DateTime.Now;
-            DateTime startWH = (App.Current.Properties["EmpWH"] as WorkingHistory).Workday.Value;
+            DateTime startWH = (App.Current.Properties["EmpWH"] as WorkingHistory).StartTime;
             var timer = nowWH - startWH;
             txtTimeWk.Text = timer.Hours + ":" + timer.Minutes + ":" + timer.Seconds;
         }
@@ -150,18 +150,11 @@ namespace POS.EmployeeWorkSpace
             emd.ShowDialog();
         }
 
-        private void btnWH_Click(object sender, RoutedEventArgs e)
-        {
-            EmployeeWorkingHistoryDialog empWH = new EmployeeWorkingHistoryDialog(App.Current.Properties["EmpWH"] as WorkingHistory);
-            empWH.ShowDialog();
-        }
-
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
             WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
 
-            wh.Endhour = DateTime.Now.Hour;
-            wh.Endminute = DateTime.Now.Minute;
+            wh.EndTime = DateTime.Now;
             _unitofwork.WorkingHistoryRepository.Insert(wh);
             _unitofwork.Save();
 

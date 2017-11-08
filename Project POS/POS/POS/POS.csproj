@@ -126,9 +126,6 @@
     <Compile Include="EmployeeWorkSpace\EmployeeDetailWindow.xaml.cs">
       <DependentUpon>EmployeeDetailWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeWorkSpace\EmployeeWorkingHistoryDialog.xaml.cs">
-      <DependentUpon>EmployeeWorkingHistoryDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="EmployeeWorkSpace\EntryPage.xaml.cs">
       <DependentUpon>EntryPage.xaml</DependentUpon>
     </Compile>
@@ -186,10 +183,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\EmployeeDetailWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EmployeeWorkSpace\EmployeeWorkingHistoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
