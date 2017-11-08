@@ -32,19 +32,19 @@ namespace POS.EmployeeWorkSpace
         {
             try
             {
-                _unitofwork = ((MainWindow) Window.GetWindow(this))._unitofwork;
+                _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
                 if (((MainWindow)Window.GetWindow(this)).currentTable == null)
                 {
                     return;
                 }
 
-                
+
                 loadTableChairData();
                 loadCustomerOwner();
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -64,8 +64,8 @@ namespace POS.EmployeeWorkSpace
 
                 // chuyen product_id thanh product name
                 var query = from orderdetails in chairordernotedetails
-                    join product in _unitofwork.ProductRepository.Get()
-                            on orderdetails.ProductId equals product.ProductId
+                            join product in _unitofwork.ProductRepository.Get()
+                                    on orderdetails.ProductId equals product.ProductId
 
                             select new OrderDetails_Product_Joiner
                             {
@@ -74,7 +74,6 @@ namespace POS.EmployeeWorkSpace
                             };
 
                 // binding
-                txtDay.Text = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
                 lvData.ItemsSource = query;
                 loadTotalPrice();
                 ReadWriteData.writeToBinFile();
@@ -99,7 +98,7 @@ namespace POS.EmployeeWorkSpace
 
             // lay ordernotedetails cua ban thu nhat
             var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
-            
+
 
             // chuyen product_id thanh product name
             var query = from orderdetails in tableordernotedetails
@@ -136,7 +135,7 @@ namespace POS.EmployeeWorkSpace
             {
                 if (ch.ChairOrderDetails.Count != 0)
                 {
-                    ((MainWindow) Window.GetWindow(this)).currentTable.IsOrdered = true;
+                    ((MainWindow)Window.GetWindow(this)).currentTable.IsOrdered = true;
                 }
 
                 ToggleButton button = new ToggleButton();
@@ -161,7 +160,7 @@ namespace POS.EmployeeWorkSpace
         private void loadCustomerOwner()
         {
             cboCustomers.ItemsSource = _unitofwork.CustomerRepository.Get();
-            cboCustomers.SelectedValuePath = "Cus_id";
+            cboCustomers.SelectedValuePath = "CusId";
             cboCustomers.DisplayMemberPath = "Name";
             cboCustomers.MouseEnter += (sender, args) =>
             {
@@ -171,30 +170,27 @@ namespace POS.EmployeeWorkSpace
             {
                 cboCustomers.Background.Opacity = 0;
             };
-            cboCustomers.SelectionChanged += cboCustomers_SeSelectionChanged;
-            
-            if(((MainWindow)Window.GetWindow(this)).currentTable != null && ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.CusId != null)
+
+
+            if (((MainWindow) Window.GetWindow(this)).currentTable != null
+                && ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId != null)
             {
-                cboCustomers.SelectedValue = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.CusId;
+                initCus_raiseEvent = true;
+                cboCustomers.SelectedValue = ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId;
             }
+            initCus_raiseEvent = false;
         }
 
+
+        private bool initCus_raiseEvent = false;
         private void cboCustomers_SeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
+            if (!initCus_raiseEvent)
             {
-                foreach (BusinessModel.Table t in TableTempData.TbList)
-                {
-                    if (((MainWindow)Window.GetWindow(this)).currentTable.TableNumber == t.TableNumber)
-                    {
-                        t.TableOrder.CusId = cboCustomers.SelectedValue.ToString();
-                    }
-                }
+                //((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId = (string) ((sender as ComboBox).SelectedItem as Customer).CusId;
+                ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId =
+                    (string) (sender as ComboBox).SelectedValue;
                 ReadWriteData.writeToBinFile();
-            }
-            catch(Exception ex)
-            {
-
             }
         }
 
@@ -206,7 +202,7 @@ namespace POS.EmployeeWorkSpace
             //{
             //    if (int.Parse(curChair.Name.Substring(5)) - ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber > 1)
             //    {
-                    
+
             //        for (int i = ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber; i < int.Parse(curChair.Name.Substring(5)); i++)
             //        {
             //            foreach(var ch in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
@@ -354,10 +350,10 @@ namespace POS.EmployeeWorkSpace
             decimal Total = 0;
             foreach (var item in query_item_in_ordertails)
             {
-                Total = (decimal)((float)Total + (float) (item.item_quan * ((float)item.item_price * ((100-item.item_discount)/100.0))));
+                Total = (decimal)((float)Total + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
             }
-            txtTotal.Text = string.Format("{0:0.000}",Total) + " VND";
-            ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.TotalPrice = (decimal) Total;
+            txtTotal.Text = string.Format("{0:0.000}", Total) + " VND";
+            ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.TotalPrice = (decimal)Total;
         }
 
         private void bntDelete_Click(object sender, RoutedEventArgs e)
@@ -370,7 +366,7 @@ namespace POS.EmployeeWorkSpace
                     i++;
                 }
             }
-            if(i == 0)
+            if (i == 0)
             {
                 MessageBox.Show("Choose exactly which chair you want to decrease food's quantity!");
                 return;
@@ -390,7 +386,7 @@ namespace POS.EmployeeWorkSpace
                     var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber)
                                             && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
                     var chairordernotedetails = foundchair.ChairOrderDetails;
-                    
+
                     while ((dep != null) && !(dep is ListViewItem))
                     {
                         dep = VisualTreeHelper.GetParent(dep);
@@ -406,9 +402,9 @@ namespace POS.EmployeeWorkSpace
                         o.Quan = chairordernotedetails[index].Quan - 1;
                         chairordernotedetails[index] = o;
 
-                        foreach(var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
+                        foreach (var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
                         {
-                            if(od.ProductId.Equals(o.ProductId))
+                            if (od.ProductId.Equals(o.ProductId))
                             {
                                 od.Quan--;
                             }
@@ -427,11 +423,11 @@ namespace POS.EmployeeWorkSpace
                             }
                         }
 
-                        foreach(var chList in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
+                        foreach (var chList in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
                         {
-                            foreach(var chOrder in chList.ChairOrderDetails)
+                            foreach (var chOrder in chList.ChairOrderDetails)
                             {
-                                if(chOrder.ProductId.Equals(o.ProductId))
+                                if (chOrder.ProductId.Equals(o.ProductId))
                                 {
                                     indext++;
                                     foreach (var od in ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails)
@@ -445,18 +441,18 @@ namespace POS.EmployeeWorkSpace
                             }
                         }
 
-                        if(indext == 0)
+                        if (indext == 0)
                         {
                             ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails.Remove(o);
                         }
                     }
 
-                    ((MainWindow) Window.GetWindow(this)).currentTable.IsOrdered = false;
-                    foreach (Chair chair in ((MainWindow) Window.GetWindow(this)).currentTable.ChairData)
+                    ((MainWindow)Window.GetWindow(this)).currentTable.IsOrdered = false;
+                    foreach (Chair chair in ((MainWindow)Window.GetWindow(this)).currentTable.ChairData)
                     {
                         if (chair.ChairOrderDetails.Count > 0)
                         {
-                            ((MainWindow) Window.GetWindow(this)).currentTable.IsOrdered = true;
+                            ((MainWindow)Window.GetWindow(this)).currentTable.IsOrdered = true;
                             break;
                         }
                     }
@@ -526,24 +522,29 @@ namespace POS.EmployeeWorkSpace
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            BusinessModel.Table curTable= ((MainWindow)Window.GetWindow(this)).currentTable;
-            
-            foreach(BusinessModel.Chair chair in curTable.ChairData)
+            BusinessModel.Table curTable = ((MainWindow)Window.GetWindow(this)).currentTable;
+
+            foreach (BusinessModel.Chair chair in curTable.ChairData)
             {
                 chair.ChairOrderDetails = new List<OrderNoteDetail>();
             }
 
-            curTable.TableOrder.CusId = "";
+            curTable.TableOrder.CusId = "CUS0000001";
             curTable.TableOrder.Ordertime = DateTime.Now;
             curTable.TableOrder.TotalPrice = 0;
             curTable.TableOrder.CustomerPay = 0;
             curTable.TableOrder.PayBack = 0;
+            curTable.IsOrdered = false;
             curTable.TableOrderDetails = new List<OrderNoteDetail>();
+
+
+            loadCustomerOwner();
+            RefreshControlAllChair();
         }
     }
 }

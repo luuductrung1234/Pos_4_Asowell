@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using POS.BusinessModel;
 using POS.Entities;
 using POS.Repository.DAL;
 using POS.Entities.CustomEntities;
@@ -101,32 +102,36 @@ namespace POS.EmployeeWorkSpace
 
                 //order tung ghe
                 var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
-                var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
-                var chairordernotedetails = foundchair.ChairOrderDetails;
-                var found = chairordernotedetails.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
+                Chair foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) 
+                                                                && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
+                if (foundchair != null)
+                {
+                    var chairordernotedetails = foundchair.ChairOrderDetails;
+                    var found = chairordernotedetails.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
 
-                int i = chairordernotedetails.IndexOf(found);
+                    int i = chairordernotedetails.IndexOf(found);
                 
-                if (found == null)
-                {
-                    o.ProductId = it.ProductId;
-                    o.Quan = 1;
-                    chairordernotedetails.Add(o);
-                }
-                else
-                {
-                    o.ProductId = it.ProductId;
-                    o.Quan = chairordernotedetails[i].Quan + 1;
-                    o.SelectedStats = chairordernotedetails[i].SelectedStats;
+                    if (found == null)
+                    {
+                        o.ProductId = it.ProductId;
+                        o.Quan = 1;
+                        chairordernotedetails.Add(o);
+                    }
+                    else
+                    {
+                        o.ProductId = it.ProductId;
+                        o.Quan = chairordernotedetails[i].Quan + 1;
+                        o.SelectedStats = chairordernotedetails[i].SelectedStats;
 
-                    chairordernotedetails[i] = o;
+                        chairordernotedetails[i] = o;
+                    }
                 }
 
                 //
                 lbSelected.UnselectAll();
 
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl();
-                
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
 
         }

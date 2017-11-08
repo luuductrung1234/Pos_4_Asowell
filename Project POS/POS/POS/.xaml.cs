@@ -121,8 +121,9 @@ namespace POS
                     MessageBox.Show("incorrect username or password");
                     return;
                 }
-                this.Close();
             }
+
+            this.Close();
         }
 
         private void btnDatabase_Click(object sender, RoutedEventArgs e)

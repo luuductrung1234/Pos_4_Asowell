@@ -44,45 +44,7 @@ namespace POS.EmployeeWorkSpace
                 buttonTableCurrentNumber++;
 
                 Rectangle rec = t.VisualTable;
-                //if (t.TableNumber < 10)
-                //{
-                //    rec.Name = "table" + "0" + t.TableNumber;
-                //}
-                //else
-                //{
-                //    rec.Name = "table" + t.TableNumber;
-                //}
-
-                //rec.HorizontalAlignment = HorizontalAlignment.Left;
-                //rec.VerticalAlignment = VerticalAlignment.Top;
-                //Thickness m = rec.Margin;
-                //m.Left = Convert.ToInt32(t.Position.X);
-                //m.Top = Convert.ToInt32(t.Position.Y);
-                //rec.Margin = m;
-                //rec.Width = 30;
-                //rec.Height = 30;
-                //rec.Fill = Brushes.Red;
-                //rec.Opacity = 0.65;
-
-                ////ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
-                ////ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
-                ////backImg.Stretch = Stretch.Fill;
-                ////rec.Fill = backImg;
-
-                //rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-                //rec.MouseMove += btnTableAdded_MoveDrag;
-                //rec.MouseMove += btnTableAdded_MouseMove;
-                //rec.MouseLeftButtonDown += btnTableAdded_Click;
-                //rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
-
-                //rec.Cursor = Cursors.SizeAll;
-
-                //Panel.SetZIndex(rec, 30);
-                //grTable.Children.Add(rec);
-
-                //imgTable.MouseMove -= crossCursorToAdd;
-                //imgTable.MouseLeftButtonDown -= changeToNormalCursor;
-                //iii = 0;
+                
 
                 if (t.IsPinned)
                 {
@@ -99,16 +61,16 @@ namespace POS.EmployeeWorkSpace
                     rec.Opacity = 0.65;
                 }
 
-                if (t.TableOrder.CusId != null || t.TableOrderDetails.Count != 0)
+                if (t.TableOrderDetails.Count != 0)
                 {
                     rec.Fill = Brushes.DarkCyan;
-                    rec.MouseMove += btnTableAdded_MouseMove;
-                    rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+                }
+                else
+                {
+                    rec.Fill = Brushes.Red;
                 }
 
                 rec.ToolTip = setTooltip(rec);
-
-                //return rd.ReadToEnd();
             }
         }
         
@@ -225,14 +187,18 @@ namespace POS.EmployeeWorkSpace
                             rec.Opacity = 0.65;
                         }
 
-                        if (t.TableOrder.CusId != null || t.TableOrderDetails.Count != 0)
+                        if (t.TableOrder.CusId == "CUS0000001" && t.TableOrderDetails.Count != 0)
                         {
-                            rec.Fill = Brushes.DarkCyan;
-                            rec.MouseMove += btnTableAdded_MouseMove;
-                            rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+                            rec.Fill = Brushes.DarkCyan;   
+                        }
+                        else
+                        {
+                            rec.Fill = Brushes.Red;
                         }
 
                         rec.ToolTip = setTooltip(rec);
+                        rec.MouseMove += btnTableAdded_MouseMove;
+                        rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
                         Panel.SetZIndex(rec, 30);
                         grTable.Children.Add(rec);
@@ -576,6 +542,7 @@ namespace POS.EmployeeWorkSpace
                                     ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
                                     ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
                                     ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
+                                    return;
                                 }
                             }
                         }
@@ -616,6 +583,7 @@ namespace POS.EmployeeWorkSpace
                                 ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
                                 ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
                                 ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
+                                return;
                             }
                         }
                     }

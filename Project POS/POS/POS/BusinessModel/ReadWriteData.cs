@@ -96,7 +96,7 @@ namespace POS.BusinessModel
                 Position = new Point(rec.Margin.Left, rec.Margin.Top),
                 IsPinned = false,
                 IsOrdered = false,
-                TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now },
+                TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, CusId = "CUS0000001", Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now },
                 TableOrderDetails = new List<OrderNoteDetail>()
             };
 
@@ -224,6 +224,7 @@ namespace POS.BusinessModel
                     curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
                     curTable.TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now };
                     curTable.TableOrderDetails = new List<OrderNoteDetail>();
+                    curTable.IsOrdered = false;
 
                     curTable.ChairData = new List<Chair>();
 
