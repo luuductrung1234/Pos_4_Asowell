@@ -159,37 +159,37 @@ go
 -- END EXPOSE
 
 -- auto execute trigger
-create trigger salaryvalue_update
-on WorkingHistory
-for insert
-as
-begin
-	declare @starthour int
-	declare @startminute int
-	declare @endhour int
-	declare @endminute int
-	declare @foremp varchar(10)
-	declare @formonth int
-	declare @foryear int
-	declare @workhour float
-	select @starthour = starthour from inserted
-	select @startminute = startminute from inserted
-	select @endhour = endhour from inserted
-	select @endminute = endminute from inserted
-	select @foremp = emp_id from inserted
-	select @formonth = month(workday) from inserted
-	select @foryear = year(workday) from inserted
-	select @workhour = cast((cast(@endhour as float) - cast(@starthour as float)) + ((cast(@endminute as float) - cast(@startminute as float))/cast(60.0 as float)) as float)
+--create trigger salaryvalue_update
+--on WorkingHistory
+--for insert
+--as
+--begin
+--	declare @starthour int
+--	declare @startminute int
+--	declare @endhour int
+--	declare @endminute int
+--	declare @foremp varchar(10)
+--	declare @formonth int
+--	declare @foryear int
+--	declare @workhour float
+--	select @starthour = starthour from inserted
+--	select @startminute = startminute from inserted
+--	select @endhour = endhour from inserted
+--	select @endminute = endminute from inserted
+--	select @foremp = emp_id from inserted
+--	select @formonth = month(workday) from inserted
+--	select @foryear = year(workday) from inserted
+--	select @workhour = cast((cast(@endhour as float) - cast(@starthour as float)) + ((cast(@endminute as float) - cast(@startminute as float))/cast(60.0 as float)) as float)
 
-	update SalaryNote
-	set work_hour += @workhour
-	where emp_id = @foremp and for_month = @formonth and for_year = @foryear
+--	update SalaryNote
+--	set work_hour += @workhour
+--	where emp_id = @foremp and for_month = @formonth and for_year = @foryear
 
-	update SalaryNote
-	set salary_value = work_hour * (select hour_wage from Employee E where E.emp_id = @foremp)
-	where emp_id = @foremp and for_month = @formonth and for_year = @foryear
-end
-go
+--	update SalaryNote
+--	set salary_value = work_hour * (select hour_wage from Employee E where E.emp_id = @foremp)
+--	where emp_id = @foremp and for_month = @formonth and for_year = @foryear
+--end
+--go
 -- end auto execute trigger
 
 
@@ -497,3 +497,6 @@ select * from Product
 go
 select *  from ProductDetails
 go
+
+select * from SalaryNote
+select * from WorkingHistory

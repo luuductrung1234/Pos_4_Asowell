@@ -33,11 +33,9 @@ namespace POS.Mapping
             Property(x => x.WhId).HasColumnName(@"wh_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.ResultSalary).HasColumnName(@"result_salary").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
             Property(x => x.EmpId).HasColumnName(@"emp_id").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
-            Property(x => x.Workday).HasColumnName(@"workday").HasColumnType("date").IsOptional();
-            Property(x => x.Starthour).HasColumnName(@"starthour").HasColumnType("int").IsRequired();
-            Property(x => x.Startminute).HasColumnName(@"startminute").HasColumnType("int").IsRequired();
-            Property(x => x.Endhour).HasColumnName(@"endhour").HasColumnType("int").IsRequired();
-            Property(x => x.Endminute).HasColumnName(@"endminute").HasColumnType("int").IsRequired();
+            Property(x => x.StartTime).HasColumnName(@"startTime").HasColumnType("date").IsOptional();
+            Property(x => x.EndTime).HasColumnName(@"endTime").HasColumnType("date").IsRequired();
+
 
             // Foreign keys
             HasOptional(a => a.Employee).WithMany(b => b.WorkingHistories).HasForeignKey(c => c.EmpId).WillCascadeOnDelete(false); // fk_employee
