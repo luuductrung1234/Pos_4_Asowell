@@ -161,19 +161,5 @@
                            FontWeight="Bold">Account Infomation</TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
-        <StackPanel  Orientation="Horizontal"
-                     Margin="0,273,-0.2,106"
-                     Height="25">
-            <TextBlock Margin="0,0,6.9,0"
-                       Text="UserName"
-                       FontSize="17"
-                       Foreground="White" />
-            <TextBlock x:Name="txtAcount"
-                       Text="{Binding Username}"
-                       Margin="0,0,100,-0.2"
-                       Width="214"
-                       FontSize="17"
-                       Foreground="White" />
-        </StackPanel>
     </Grid>
 </Window>
