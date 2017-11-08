@@ -70,6 +70,12 @@ namespace POS.EmployeeWorkSpace
             var item = lbSelected.SelectedItem;
             if (item != null)
             {
+                if (!((MainWindow) Window.GetWindow(this)).currentTable.IsOrdered)
+                {
+                    ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.Ordertime = DateTime.Now;
+                    ((MainWindow) Window.GetWindow(this)).currentTable.IsOrdered = true;
+                }
+
                 OrderNoteDetail o = new OrderNoteDetail();
                 OrderNoteDetail oo = new OrderNoteDetail();
                 Product it = (Product)lbSelected.SelectedItem;
