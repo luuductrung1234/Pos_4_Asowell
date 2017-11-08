@@ -46,7 +46,7 @@
                 <GridView x:Name="gvShowDetails">
                     <GridViewColumn Header="Salary_ID"
                                     Width="100"
-                                    DisplayMemberBinding="{Binding sn_id}" />
+                                        DisplayMemberBinding="{Binding SnId}" />
                         <GridViewColumn Header="Employee_ID"
                                         Width="150"
                                         DisplayMemberBinding="{Binding emp_id}" />
@@ -55,22 +55,22 @@
                                     DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="date pay"
                                     Width="150"
-                                    DisplayMemberBinding="{Binding Birth,StringFormat=dd/MM/yyyy}" />
+                                        DisplayMemberBinding="{Binding DatePay,StringFormat=dd/MM/yyyy}" />
                     <GridViewColumn Header="Salary Value"
                                     Width="150"
-                                    DisplayMemberBinding="{Binding Username}"/>
+                                        DisplayMemberBinding="{Binding SalaryValue}"/>
                     <GridViewColumn Header="Work Hour"
                                     Width="150"
-                                    DisplayMemberBinding="{Binding Username}" />
+                                        DisplayMemberBinding="{Binding WorkHour}" />
                     <GridViewColumn Header="For Month"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding Username}" />
+                                        DisplayMemberBinding="{Binding ForMonth}" />
                       <GridViewColumn Header="For Years"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding Username}" />
+                                        DisplayMemberBinding="{Binding ForYear}" />
                         <GridViewColumn Header="Is Paid"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding Username}" />
+                                        DisplayMemberBinding="{Binding IsPaid}" />
                     </GridView>
             </ListView.View>
         </ListView>
@@ -107,28 +107,16 @@
                     <GridView>
                         <GridViewColumn Header="WH ID"
                                         Width="100"
-                                        DisplayMemberBinding="{Binding wh_id}" />
+                                        DisplayMemberBinding="{Binding WhId}" />
                         <GridViewColumn Header="Employee_ID"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding emp_id}" />
+                                        DisplayMemberBinding="{Binding EmpId}" />
                         <GridViewColumn Header="Result Salary"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding Name}" />
+                                        DisplayMemberBinding="{Binding ResultSalary}" />
                         <GridViewColumn Header="Workday"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding Birth,StringFormat=dd/MM/yyyy}" />
-                        <GridViewColumn Header="Start hour"
-                                        Width="150"
-                                        DisplayMemberBinding="{Binding Username}" />
-                        <GridViewColumn Header="Start minute"
-                                        Width="150"
-                                        DisplayMemberBinding="{Binding Username}" />
-                        <GridViewColumn Header="End Hour"
-                                        Width="150"
-                                        DisplayMemberBinding="{Binding Username}" />
-                        <GridViewColumn Header="End Minute"
-                                        Width="150"
-                                        DisplayMemberBinding="{Binding Username}" />
+                                        DisplayMemberBinding="{Binding Workday,StringFormat=dd/MM/yyyy}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

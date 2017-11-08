@@ -25,12 +25,10 @@ namespace POS
     /// </summary>
     public partial class Login : Window
     {
-        private IEmployeeRepository _employeeRepository;
         internal EmployeewsOfAsowell _unitempofwork;
 
         public Login()
         {
-            _employeeRepository = new EmployeeRepository(new AsowellContext());
             _unitempofwork = new EmployeewsOfAsowell();
             InitializeComponent();
 
@@ -38,14 +36,7 @@ namespace POS
 
             this.Closing += Closing_LoginWindos;
         }
-
-        public Login(IEmployeeRepository employeeRepository)
-        {
-            _employeeRepository = employeeRepository;
-            InitializeComponent();
-
-            this.WindowState = WindowState.Normal;
-        }
+        
 
         private static int ID_SIZE_DBASOWELL = 10;
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -54,43 +45,54 @@ namespace POS
             string pass = txtPass.Password;
 
             bool isFound = false;
-            List<Employee> empList = _employeeRepository.GetAllEmployees().ToList();
+            List<Employee> empList = _unitempofwork.EmployeeRepository.Get().ToList();
             foreach (Employee emp in empList)
             {
                 if (emp.Username.Equals(username) && emp.Pass.Equals(pass))
                 {
                     App.Current.Properties["EmpLogin"] = emp;
 
-                    EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
-                    main.Show();
+                    try
+                    {
+                        SalaryNote empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
 
-                    isFound = true;
-
-                    //create new salary note if null, create new workinghistory if not null
-                    var empSalaryNoteList = _unitempofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).ToList();
-                    if (empSalaryNoteList.Count == 0)
+                        App.Current.Properties["EmpSN"] = empSalaryNote;
+                        WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
+                        App.Current.Properties["EmpWH"] = empWorkHistory;
+                    }
+                    catch(Exception ex)
                     {
                         SalaryNote empSalary = new SalaryNote { EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
                         _unitempofwork.SalaryNoteRepository.Insert(empSalary);
                         _unitempofwork.Save();
                         WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
                         App.Current.Properties["EmpWH"] = empWorkHistory;
-
-                        foreach (SalaryNote sln in empSalaryNoteList)
-                        {
-                            App.Current.Properties["EmpSN"] = sln;
-                        }
+                        App.Current.Properties["EmpSN"] = empSalary;
                     }
-                    else
-                    {
-                        foreach(SalaryNote sln in empSalaryNoteList)
-                        {
-                            WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = sln.SnId, EmpId = sln.EmpId };
-                            App.Current.Properties["EmpWH"] = empWorkHistory;
-                        }
-                    }
-
+                    //create new salary note if null, create new workinghistory if not null
                     
+                    //if (empSalaryNote == null)
+                    //{
+                    //    SalaryNote empSalary = new SalaryNote { EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
+                    //    _unitempofwork.SalaryNoteRepository.Insert(empSalary);
+                    //    _unitempofwork.Save();
+                    //    WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
+                    //    App.Current.Properties["EmpWH"] = empWorkHistory;
+                    //    App.Current.Properties["EmpSN"] = empSalary;
+                    //}
+                    //else
+                    //{
+                    //    App.Current.Properties["EmpSN"] = empSalaryNote;
+                    //    WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
+                    //    App.Current.Properties["EmpWH"] = empWorkHistory;
+
+                    //}
+
+                    EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
+                    main.Show();
+
+                    isFound = true;
+
                     //end create
 
                     break;
@@ -98,7 +100,7 @@ namespace POS
 
             }
 
-            if(!isFound)
+            if (!isFound)
             {
                 MessageBox.Show("incorrect username or password");
                 return;
@@ -113,7 +115,7 @@ namespace POS
 
         private void Closing_LoginWindos(object sender, EventArgs args)
         {
-            _employeeRepository.Dispose();
+            _unitempofwork.Dispose();
         }
     }
 }

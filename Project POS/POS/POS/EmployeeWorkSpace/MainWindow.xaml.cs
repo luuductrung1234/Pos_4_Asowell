@@ -45,14 +45,12 @@ namespace POS.EmployeeWorkSpace
             empSln = App.Current.Properties["EmpSN"] as SalaryNote;
 
             cUser.Content = emp.Username;
-
-
+            
             _unitofwork = new EmployeewsOfAsowell();
             b = new Table(_unitofwork);
             d = new Dash();
             en = new Entry();
             info = new Info();
-            login = new Login();
             st = new SettingFoodPage(_unitofwork);
             stts = new SettingTableSize();
 
@@ -73,7 +71,25 @@ namespace POS.EmployeeWorkSpace
             DateTime nowWH = DateTime.Now;
             DateTime startWH = (App.Current.Properties["EmpWH"] as WorkingHistory).StartTime;
             var timer = nowWH - startWH;
-            txtTimeWk.Text = timer.Hours + ":" + timer.Minutes + ":" + timer.Seconds;
+            string fH = "", fm = "", fs = "";
+            fH = timer.Hours.ToString();
+            fm = timer.Minutes.ToString();
+            fs = timer.Seconds.ToString();
+
+            if(timer.Hours < 10)
+            {
+                fH = "0" + timer.Hours;
+            }
+            if(timer.Minutes < 10)
+            {
+                fm = "0" + timer.Minutes;
+            }
+            if(timer.Seconds < 10)
+            {
+                fs = "0" + timer.Seconds;
+            }
+
+            txtTimeWk.Text = fH + ":" + fm + ":" + fs;
         }
 
         private void bntDash_Click(object sender, RoutedEventArgs e)
@@ -158,6 +174,12 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.WorkingHistoryRepository.Insert(wh);
             _unitofwork.Save();
 
+            var workH = wh.EndTime - wh.StartTime;
+            empSln.WorkHour += workH.Hours + workH.Minutes/60 + workH.Seconds/3600;
+            _unitofwork.SalaryNoteRepository.Update(empSln);
+            _unitofwork.Save();
+
+            login = new Login();
             this.Close();
             login.Show();
 

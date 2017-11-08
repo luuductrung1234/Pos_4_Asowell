@@ -33,7 +33,7 @@
             <StackPanel>
                 <Button  ToolTip="Employee Infomation"
                          Click="Button_Click">Employee Info</Button>
-                <Button ToolTip="Two">Salary</Button>
+                <Button ToolTip="Salary">Salary</Button>
                 <Button ToolTip="Product Infomation">Product Info</Button>
             </StackPanel>
         </materialDesign:PopupBox>
