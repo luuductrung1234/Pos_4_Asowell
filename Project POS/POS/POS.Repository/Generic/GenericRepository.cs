@@ -85,7 +85,7 @@ namespace POS.Repository.Generic
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            var state = context.Entry(entityToUpdate);
+            //var state = context.Entry(entityToUpdate);
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
