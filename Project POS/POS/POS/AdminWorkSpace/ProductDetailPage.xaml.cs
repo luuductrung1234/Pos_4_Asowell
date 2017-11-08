@@ -1,4 +1,6 @@
-﻿using POS.Repository.DAL;
+﻿using POS.Entities;
+using POS.Entities.CustomEntities;
+using POS.Repository.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,21 +23,24 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class ProductDetailPage : Page
     {
-        private EmployeewsOfAsowell _unitofwork;
-        public ProductDetailPage(EmployeewsOfAsowell unitofwork)
+        private AdminwsOfAsowell _unitofork;
+        public ProductDetailPage(AdminwsOfAsowell unitofork)
         {
             InitializeComponent();
-            _unitofwork = unitofwork;
+            _unitofork = unitofork;
             InitializeComponent();
-            lvData.ItemsSource = _unitofwork.ProductRepository.Get();
-            for (int i = 0; i <= 100; i++)
-            {
-                cbopromotion.Items.Add(i.ToString());
-            }
+            lvData.ItemsSource = unitofork.ProductRepository.Get();
+            lvDetails.ItemsSource = unitofork.ProductDetailsRepository.Get(includeProperties: "Product");
+          
+
+            
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            Product pro = lvData.SelectedItem as Product;
+            lvDetails.ItemsSource=_unitofork.ProductDetailsRepository.Get(c=>c.ProductId.Equals(pro.ProductId));
 
         }
 
