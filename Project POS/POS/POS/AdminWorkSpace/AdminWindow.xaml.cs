@@ -21,8 +21,10 @@ namespace POS.AdminWorkSpace
     public partial class AdminWindow : Window
     {
         private AdminwsOfAsowell _unitofork;
+        private EmployeewsOfAsowell _unitofwork;
         EmployeeListPage empListPage;
         SalaryPage salarypage;
+        ProductDetailPage productdetals;
         internal Login login;
 
 
@@ -31,8 +33,10 @@ namespace POS.AdminWorkSpace
             InitializeComponent();
 
             _unitofork = new AdminwsOfAsowell();
+            _unitofwork = new EmployeewsOfAsowell();
             empListPage = new EmployeeListPage(_unitofork);
             salarypage = new SalaryPage(_unitofork);
+            productdetals = new ProductDetailPage( _unitofork);
 
             Closing += AdminWindow_Closing;
         }
@@ -67,6 +71,11 @@ namespace POS.AdminWorkSpace
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             myframe.Navigate(salarypage);
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            myframe.Navigate(productdetals);
         }
     }
 }

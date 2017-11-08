@@ -12,7 +12,12 @@
       Width="1366">
 
     <Grid Margin="0,0,-9.4,0.4">
-        <materialDesign:ColorZone Margin="2,2,832.8,0"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+        <materialDesign:ColorZone 
                                   Padding="16"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                   CornerRadius="3"
@@ -26,107 +31,86 @@
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvData"
-                  Width="533"
+
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
                   Background="#FFED5C5C"
                   Foreground="White"
                   FontWeight="Bold"
-                  Margin="10,63,0,0"
+                  Margin="0,50,0,0"
                   SelectionChanged="lvData_SelectionChanged">
             <ListView.View>
                 <GridView x:Name="gvShowDetails">
                     <GridViewColumn Header="ID"
-                                    Width="250"
-                                    DisplayMemberBinding="{Binding Product_id}" />
+                                    Width="100"
+                                        DisplayMemberBinding="{Binding ProductId}" />
                     <GridViewColumn Header="Name"
-                                    Width="200"
+                                    Width="150"
                                     DisplayMemberBinding="{Binding Name}" />
-                </GridView>
+                    <GridViewColumn Header="Info"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Info}" />
+                        <GridViewColumn Header="Price"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Price}" />
+                        <GridViewColumn Header="Type"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Type}" />
+                        <GridViewColumn Header="Discount"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Discount}" />
+
+                    </GridView>
             </ListView.View>
         </ListView>
-        <materialDesign:ColorZone Margin="635,0,9.8,0"
+        </Grid>
+        <Grid Grid.Column="1">
+        <materialDesign:ColorZone 
                                   Padding="16"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                   CornerRadius="3"
                                   Mode="PrimaryDark"
-                                  Height="46">
+                                  Height="46"
+                                      Margin="10,0">
             <StackPanel  Orientation="Horizontal">
                 <TextBlock Margin="16,0,0,0"
-                           VerticalAlignment="Center"><Run Text="Food information" /></TextBlock>
+                           VerticalAlignment="Center"><Run Text="Food Details"
+                                                               FontWeight="Bold"
+                                                               FontSize="16" /></TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
-        <StackPanel HorizontalAlignment="Left"
-                    Height="535"
-                    Margin="635,63,0,0"
-                    DataContext="{Binding  SelectedItem,ElementName=lvData}"
-                    VerticalAlignment="Top"
-                    Width="483">
-            <StackPanel.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontSize"
-                            Value="18" />
-                    <Setter Property="HorizontalAlignment"
-                            Value="Center" />
-                    <Setter Property="VerticalAlignment"
-                            Value="Center" />
-                    <Setter Property="Width"
-                            Value="150" />
-                    <Setter Property="Height"
-                            Value="25" />
-                    <Setter Property="Foreground"
-                            Value="White" />
-                </Style>
-            </StackPanel.Resources>
-            <StackPanel Orientation="Horizontal"
-                        Margin="10">
-                <TextBlock Text="ID" />
-                <TextBlock x:Name="txtID"
-                           Width="200" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        Margin="10">
-                <TextBlock Text="Name" />
-                <TextBlock x:Name="txtName"
-                           IsEnabled="False"
-                           Width="200"
-                           Foreground="White" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        Margin="10">
-                <TextBlock Text="Price" />
-                <TextBlock x:Name="txtPrice"
-                           Width="200"
-                           IsEnabled="False"
-                           Foreground="White"
-                           PreviewTextInput="txtPrice_PreviewTextInput" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        Margin="10">
-                <TextBlock Text="Promotion" />
-                <ComboBox Foreground="White"
-                          x:Name="cbopromotion"
-                          IsEditable="False"
-                          IsEnabled="False"
-                          Width="60">
-                </ComboBox>
-                <TextBlock x:Name="textBlock"
-                           HorizontalAlignment="Stretch"
-                           TextWrapping="Wrap"
-                           Text="%"
-                           VerticalAlignment="Stretch"
-                           Width="19"
-                           Height="24"
-                           Margin="10,0,0,0" />
-            </StackPanel>
+            <ListView Name="lvDetails"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      Background="#FFED5C5C"
+                      Foreground="White"
+                      FontWeight="Bold"
+                      Margin="0,50,0,0">
+                <ListView.View>
+                    <GridView >
+                        <GridViewColumn Header="ID"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding PdetailId}" />
+                        <GridViewColumn Header="Product ID"
+                                        Width="0"
+                                        DisplayMemberBinding="{Binding ProductId}" />
+                        <GridViewColumn Header="Name"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Product.Name}" />
+                        <GridViewColumn Header="IgdId"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding IgdId}" />
+                        <GridViewColumn Header="Quantity"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Quan}" />
+                        <GridViewColumn Header="UnitUse"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding UnitUse}" />
 
-        </StackPanel>
-        <Image x:Name="image"
-               HorizontalAlignment="Left"
-               Height="231"
-               Margin="1162,63,0,0"
-               VerticalAlignment="Top"
-               Width="182" />
 
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>
