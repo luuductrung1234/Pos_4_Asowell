@@ -7,6 +7,7 @@ using POS.Repository.DAL;
 using POS.Repository.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -43,7 +44,30 @@ namespace POS.EmployeeWorkSpace
 
         private void initlsWH()
         {
-            lsWH.ItemsSource = _unitofwork.WorkingHistoryRepository.Get(w => w.EmpId.Equals(em.EmpId) && w.StartTime.Month.Equals(DateTime.Now.Month) && w.StartTime.Year.Equals(DateTime.Now.Year));
+            var whListAll = _unitofwork.WorkingHistoryRepository.Get(w => w.EmpId.Equals(em.EmpId) && w.StartTime.Month.Equals(DateTime.Now.Month) && w.StartTime.Year.Equals(DateTime.Now.Year)).ToList();
+            foreach(var i in whListAll)
+            {
+                ShowWH newWH = new ShowWH();
+                //progress
+                newWH.WorkTime = (i.EndTime - i.StartTime).Hours + ":" + (i.EndTime - i.StartTime).Minutes + ":" + (i.EndTime - i.StartTime).Seconds;
+                newWH.WorkDate = i.StartTime;
+
+                ShowWHData.showWHList.Add(newWH);
+            }
+
+            lsWH.ItemsSource = ShowWHData.showWHList;
         }
+    }
+
+    public class ShowWH
+    {
+        public ProgressBar TimePercent { get; set; }
+        public string WorkTime { get; set; }
+        public DateTime WorkDate { get; set; }
+    }
+
+    public class ShowWHData
+    {
+        public static List<ShowWH> showWHList = new List<ShowWH>();
     }
 }

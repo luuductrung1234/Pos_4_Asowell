@@ -179,7 +179,6 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.SalaryNoteRepository.Update(empSln);
             _unitofwork.Save();
 
-
             TableTempData.TbList.Clear();
             ReadWriteData.writeToBinFile();
 

@@ -133,7 +133,8 @@
                            FontSize="18"
                            Width="215" />
             </StackPanel>
-
+            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                         Value="20" />
         </StackPanel>
         <materialDesign:ColorZone Mode="PrimaryDark"
                                   Height="44"
@@ -154,10 +155,11 @@
                         <GridViewColumn Header="Time Percent"
                                         Width="150"/>
                         <GridViewColumn Header="Work Time"
-                                        Width="150"/>
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding WorkTime}" />
                         <GridViewColumn Header="Date"
                                         Width="200"
-                                        DisplayMemberBinding="{Binding StartTime,StringFormat=yyyy-MM-dd}"/>
+                                        DisplayMemberBinding="{Binding WorkDate,StringFormat=yyyy-MM-dd}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
