@@ -32,7 +32,7 @@ namespace POS.Mapping
 
             Property(x => x.SnId).HasColumnName(@"sn_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.EmpId).HasColumnName(@"emp_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10);
-            Property(x => x.DatePay).HasColumnName(@"date_pay").HasColumnType("date").IsOptional();
+            Property(x => x.DatePay).HasColumnName(@"date_pay").HasColumnType("datetime").IsOptional();
             Property(x => x.SalaryValue).HasColumnName(@"salary_value").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.WorkHour).HasColumnName(@"work_hour").HasColumnType("float").IsRequired();
             Property(x => x.ForMonth).HasColumnName(@"for_month").HasColumnType("int").IsRequired();

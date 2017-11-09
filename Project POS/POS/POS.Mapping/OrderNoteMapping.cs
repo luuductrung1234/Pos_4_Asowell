@@ -34,7 +34,7 @@ namespace POS.Mapping
             Property(x => x.CusId).HasColumnName(@"cus_id").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
             Property(x => x.EmpId).HasColumnName(@"emp_id").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
             Property(x => x.Ordertable).HasColumnName(@"ordertable").HasColumnType("int").IsRequired();
-            Property(x => x.Ordertime).HasColumnName(@"ordertime").HasColumnType("date").IsRequired();
+            Property(x => x.Ordertime).HasColumnName(@"ordertime").HasColumnType("datetime").IsRequired();
             Property(x => x.TotalPrice).HasColumnName(@"total_price").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.CustomerPay).HasColumnName(@"customer_pay").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.PayBack).HasColumnName(@"pay_back").HasColumnType("money").IsRequired().HasPrecision(19,4);

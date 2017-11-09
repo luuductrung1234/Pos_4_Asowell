@@ -144,6 +144,7 @@
     <Compile Include="EmployeeWorkSpace\SettingTableSize.xaml.cs">
       <DependentUpon>SettingTableSize.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helper\PrintHelper.cs" />
     <Compile Include="StartupWindows.xaml.cs">
       <DependentUpon>StartupWindows.xaml</DependentUpon>
     </Compile>
@@ -225,6 +226,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Documents\ReceiptFlowDoc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StartupWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
