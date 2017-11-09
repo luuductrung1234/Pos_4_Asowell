@@ -500,3 +500,11 @@ go
 
 select * from SalaryNote
 select * from WorkingHistory
+
+delete WorkingHistory
+delete SalaryNote
+
+insert into WorkingHistory 
+	([wh_id], [result_salary], [emp_id], [startTime], [endTime])
+values		-- thức ăn
+('WOH0000004', 'SAN0000001',	'EMP0000004', '2017-11-09 08:12:23.550', '2017-11-09 12:11:11.330')

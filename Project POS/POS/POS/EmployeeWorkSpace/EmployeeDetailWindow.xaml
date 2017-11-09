@@ -133,8 +133,12 @@
                            FontSize="18"
                            Width="215" />
             </StackPanel>
-            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
-                         Value="20" />
+            <!--<ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                         Value="20"
+                         IsIndeterminate="True"
+                         Width="45"
+                         Height="45" />-->
+
         </StackPanel>
         <materialDesign:ColorZone Mode="PrimaryDark"
                                   Height="44"
@@ -152,14 +156,25 @@
                       Height="250">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Time Percent"
-                                        Width="150"/>
+                        <GridViewColumn Width="150"
+                                        Header="Time Percent">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                                 Value="{Binding TimePercent}"
+                                                 Maximum="100"
+                                                 Width="45"
+                                                 Height="45"
+                                                 IsIndeterminate="True"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="Work Time"
                                         Width="150"
                                         DisplayMemberBinding="{Binding WorkTime}" />
                         <GridViewColumn Header="Date"
                                         Width="200"
-                                        DisplayMemberBinding="{Binding WorkDate,StringFormat=yyyy-MM-dd}"/>
+                                        DisplayMemberBinding="{Binding WorkDate, StringFormat=yyyy-MM-dd}" />
                     </GridView>
                 </ListView.View>
             </ListView>
