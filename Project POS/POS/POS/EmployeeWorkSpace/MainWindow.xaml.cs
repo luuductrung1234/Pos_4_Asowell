@@ -180,7 +180,6 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.SalaryNoteRepository.Update(empSln);
             _unitofwork.Save();
 
-
             foreach (var table in TableTempData.TbList)
             {
                 foreach (var chair in table.ChairData)
@@ -196,6 +195,7 @@ namespace POS.EmployeeWorkSpace
                 table.IsOrdered = false;
                 table.TableOrderDetails = new List<OrderNoteDetail>();
             }
+
             ReadWriteData.writeToBinFile();
 
             login = new Login();
