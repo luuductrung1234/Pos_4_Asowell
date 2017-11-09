@@ -17,7 +17,87 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-        <materialDesign:ColorZone 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.14*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="0.8*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <materialDesign:ColorZone Mode="Standard"
+                                          Height="40"
+                                          CornerRadius="2"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                          Margin="0,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="8">
+                        <Border Background="White"
+                                MaxHeight="30"
+                                CornerRadius="3"
+                                ToolTip="Enter to search, ignore case"
+                                Margin="0,0,20,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Style="{DynamicResource MaterialDesignToolButton}"
+                                        Command="{Binding SearchCommand}"
+                                        x:Name="SearchButton"
+                                        CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
+                                        Height="24"
+                                        Width="24">
+                                    <materialDesign:PackIcon Kind="Magnify"
+                                                             Opacity=".56" />
+                                </Button>
+                                <TextBox Foreground="Black"
+                                         Grid.Column="1"
+                                         Margin="5 0 0 0"
+                                         KeyDown="SearchBox_KeyDown"
+                                         materialDesign:HintAssist.Hint="Search"
+                                         x:Name="SearchBox"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                         BorderThickness="0"
+                                         MinWidth="200"
+                                         VerticalAlignment="Center"
+                                         TextChanged="SearchBox_TextChanged" />
+
+                            </Grid>
+
+                        </Border>
+                        <Border MaxHeight="30"
+                                CornerRadius="3">
+                            <StackPanel Orientation="Horizontal"
+                                        Width="430"
+                                        Height="auto">
+                                <ComboBox
+                                            x:Name="cboType"
+                                            Foreground="Black"
+                                            Background="White"
+                                            Width="135"
+                                            Margin="0,0,20,0"
+                                          SelectionChanged="cboType_SelectionChanged"></ComboBox>
+                                <Button x:Name="bntAdd"
+                                        Content="Add"
+                                        Height="auto"
+                                        Margin="0,0,20,0"
+                                        FontWeight="Bold" />
+                                <Button x:Name="bntEdit"
+                                        Content="Edit"
+                                        Height="auto"
+                                        Margin="0,0,20,0"
+                                        FontWeight="Bold" />
+                                <Button x:Name="bntDel"
+                                        Content="Delete"
+                                        Height="auto"
+                                        Margin="0,0,50,0"
+                                        FontWeight="Bold" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </Grid>
+            <Grid Grid.Row="1">
+            <materialDesign:ColorZone 
                                   Padding="16"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                   CornerRadius="3"
@@ -27,7 +107,7 @@
                 <TextBlock Margin="16,0,0,0"
                            VerticalAlignment="Center"
                            FontSize="16"
-                           FontWeight="Bold">Food List</TextBlock>
+                           FontWeight="Bold">Product</TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvData"
@@ -63,8 +143,9 @@
                     </GridView>
             </ListView.View>
         </ListView>
-        </Grid>
-        <Grid Grid.Column="1">
+            </Grid>
+        
+        <Grid Grid.Row="2">
         <materialDesign:ColorZone 
                                   Padding="16"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth3"
@@ -74,7 +155,7 @@
                                       Margin="10,0">
             <StackPanel  Orientation="Horizontal">
                 <TextBlock Margin="16,0,0,0"
-                           VerticalAlignment="Center"><Run Text="Food Details"
+                           VerticalAlignment="Center"><Run Text="Details"
                                                                FontWeight="Bold"
                                                                FontSize="16" /></TextBlock>
             </StackPanel>
@@ -106,6 +187,58 @@
                         <GridViewColumn Header="UnitUse"
                                         Width="100"
                                         DisplayMemberBinding="{Binding UnitUse}" />
+
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <materialDesign:ColorZone Padding="16"
+                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                      CornerRadius="3"
+                                      Mode="PrimaryDark"
+                                      Height="46"
+                                      Margin="10,0">
+                <StackPanel  Orientation="Horizontal">
+                    <TextBlock Margin="16,0,0,0"
+                               VerticalAlignment="Center"><Run Text="Ingredient"
+                                                               FontWeight="Bold"
+                                                               FontSize="16" /></TextBlock>
+                </StackPanel>
+            </materialDesign:ColorZone>
+            <ListView Name="lvIngredient"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      Background="#FFED5C5C"
+                      Foreground="White"
+                      FontWeight="Bold"
+                      Margin="0,50,0,0"
+                      Width="auto">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID"
+                                        Width="90"
+                                        DisplayMemberBinding="{Binding IgdId}" />
+                        <GridViewColumn Header="Name"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Info"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Info}" />
+                        <GridViewColumn Header="Usefor"
+                                        Width="90"
+                                        DisplayMemberBinding="{Binding Usefor}" />
+                        <GridViewColumn Header="IgdType"
+                                        Width="90"
+                                        DisplayMemberBinding="{Binding IgdType}" />
+                        <GridViewColumn Header="UnitBuy"
+                                        Width="90"
+                                        DisplayMemberBinding="{Binding UnitBuy}" />
+                        <GridViewColumn Header="StandardPrice"
+                                        Width="130"
+                                        DisplayMemberBinding="{Binding StandardPrice}" />
 
 
                     </GridView>

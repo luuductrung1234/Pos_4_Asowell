@@ -31,9 +31,17 @@ namespace POS.AdminWorkSpace
             InitializeComponent();
             lvData.ItemsSource = unitofork.ProductRepository.Get();
             lvDetails.ItemsSource = unitofork.ProductDetailsRepository.Get(includeProperties: "Product");
-          
-
+            lvIngredient.ItemsSource = unitofork.IngredientRepository.Get();
+            cboType.Items.Add("ALL");
             
+            cboType.Items.Add(ProductType.Drink);
+            cboType.Items.Add(ProductType.Food);
+            cboType.Items.Add(ProductType.Beer);
+            cboType.Items.Add(ProductType.Wine);
+            cboType.Items.Add(ProductType.Snack);
+            cboType.Items.Add(ProductType.Other);
+
+
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -47,6 +55,21 @@ namespace POS.AdminWorkSpace
         private void txtPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
 
+        }
+
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //lvData.ItemsSource = _unitofork.ProductRepository.Get(c=>c.Type.Equals(cboType.SelectedValue.ToString() as enum));
         }
     }
 }
