@@ -39,7 +39,7 @@ namespace POS.EmployeeWorkSpace
 
         public void TablePage_loaded(Object sender, EventArgs args)
         {
-            foreach (BusinessModel.Table t in currentTableList)
+            foreach (BusinessModel.Table t in TableTempData.TbList)
             {
                 buttonTableCurrentNumber++;
 

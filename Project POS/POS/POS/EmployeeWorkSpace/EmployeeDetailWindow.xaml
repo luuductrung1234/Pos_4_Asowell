@@ -133,7 +133,6 @@
                            FontSize="18"
                            Width="215" />
             </StackPanel>
-
         </StackPanel>
         <materialDesign:ColorZone Mode="PrimaryDark"
                                   Height="44"
@@ -155,7 +154,7 @@
                                         Header="Percent Per Day">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                    <ProgressBar Style="{StaticResource MyMaterialDesignCircularProgressBar}"
                                                  Value="{Binding TimePercent}"
                                                  Maximum="100"
                                                  Width="45"

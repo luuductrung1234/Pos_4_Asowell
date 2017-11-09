@@ -24,7 +24,7 @@ namespace POS.EmployeeWorkSpace
             _unitofwork = unitofwork;
             InitializeComponent();
             loadData(UserName);
-            initlsWH();
+            InitlsWh();
             em = new Employee();
         }
 
@@ -42,8 +42,9 @@ namespace POS.EmployeeWorkSpace
             this.EmployeeInfo.DataContext = em;
         }
 
-        private void initlsWH()
+        private void InitlsWh()
         {
+            ShowWHData.showWHList.Clear();
             var whListAll = _unitofwork.WorkingHistoryRepository.Get(w => w.EmpId.Equals(em.EmpId) && w.StartTime.Month.Equals(DateTime.Now.Month) && w.StartTime.Year.Equals(DateTime.Now.Year)).ToList();
             foreach (var i in whListAll)
             {
