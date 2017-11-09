@@ -38,7 +38,7 @@
                   FontWeight="Bold"
                   Margin="10,63,0,0"
                   SelectionChanged="lvData_SelectionChanged"
-                  Height="607">
+                  Height="567">
             <ListView.View>
                 <GridView x:Name="gvShowDetails">
                     <GridViewColumn Header="ID"
@@ -114,8 +114,7 @@
                                    FontSize="18"
                                    Foreground="#FFFFEDBC"
                                    FontWeight="Bold" />
-                        <DatePicker
-                                    x:Name="txtBirth"
+                        <DatePicker x:Name="txtBirth"
                                     Width="249"
                                     Margin="0,0,0,-0.2"
                                     Foreground="White"
@@ -218,15 +217,14 @@
             </materialDesign:ColorZone>
             <StackPanel>
                 <StackPanel  Orientation="Horizontal"
-                             Margin="0,452,-0.4,203"
-                            >
+                             Margin="0,452,-0.4,203">
                     <TextBlock Margin="0,0,6.9,0"
                                Text="UserName"
                                FontSize="17"
                                Foreground="White" />
                     <TextBox x:Name="txtAcount"
                              Margin="0,0,100,-0.2"
-                             Width="214"                           
+                             Width="214"
                              FontSize="17"
                              Foreground="White" />
                     <TextBlock Margin="0,0,6.9,0"
@@ -239,11 +237,13 @@
                              FontSize="17"
                              Foreground="White" />
                 </StackPanel>
-                
+
             </StackPanel>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal"
-                     Height="50"   VerticalAlignment="Bottom">
-            <Button x:Name="bntAddnew"
+            <StackPanel HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Height="50"
+                        VerticalAlignment="Bottom">
+                <Button x:Name="bntAddnew"
                         Content="Addnew"
                         Width="121"
                         Height="Auto"
@@ -252,7 +252,7 @@
                         Content="Update"
                         Height="Auto"
                         Margin="100,0,0,0"
-                        Width="121"/>
+                        Width="121" />
                 <Button x:Name="bntdel"
                         Content="Delete"
                         Height="Auto"
