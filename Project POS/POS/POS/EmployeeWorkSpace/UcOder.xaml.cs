@@ -518,15 +518,26 @@ namespace POS.EmployeeWorkSpace
 
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
+            // printing
 
+            // clean the old table data
+            ClearTheTable();
         }
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
+            // printing
 
+            // clean the old table data
+            ClearTheTable();
         }
 
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            ClearTheTable();
+        }
+
+        private void ClearTheTable()
         {
             BusinessModel.Table curTable = ((MainWindow)Window.GetWindow(this)).currentTable;
 
