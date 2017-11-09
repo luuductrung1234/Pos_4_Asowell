@@ -55,7 +55,7 @@ namespace POS.EmployeeWorkSpace
                 int m = (i.EndTime - i.StartTime).Minutes;
                 int s = (i.EndTime - i.StartTime).Seconds;
                 
-                newWH.TimePercent = (((double)h) + (double)m/60.0 + (double)s/3600.0)/24.0*100;
+                newWH.TimePercent = (int)((((double)h) + (double)m/60.0 + (double)s/3600.0)/24.0*100);
 
                 ShowWHData.showWHList.Add(newWH);
             }
@@ -89,11 +89,11 @@ namespace POS.EmployeeWorkSpace
 
     public class ShowWH
     {
-        private double _timePercent;
+        private int _timePercent;
         private string _workTime;
         public DateTime WorkDate { get; set; }
 
-        public double TimePercent
+        public int TimePercent
         {
             get
             {

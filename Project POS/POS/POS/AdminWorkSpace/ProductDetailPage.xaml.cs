@@ -69,7 +69,8 @@ namespace POS.AdminWorkSpace
 
         private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //lvData.ItemsSource = _unitofork.ProductRepository.Get(c=>c.Type.Equals(cboType.SelectedValue.ToString() as enum));
+            var allProduct = _unitofork.ProductRepository.Get().ToList();
+            lvData.ItemsSource = allProduct.Where(p => p.Type == ((int)(sender as ComboBox).SelectedValue));
         }
     }
 }

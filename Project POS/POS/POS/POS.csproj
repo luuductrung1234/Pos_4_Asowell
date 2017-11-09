@@ -163,6 +163,17 @@
     <Compile Include="WareHouseWorkSpace\WareHouseWindow.xaml.cs">
       <DependentUpon>WareHouseWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WPFMaterialDesign\Converters\MyConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\NotZeroConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\PercentConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\ArcEndPointConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\ArcSizeConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\LargeArcConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\LocalEx.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformCentreConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
+    <Compile Include="WPFMaterialDesign\Transitions\TransitionAssist.cs" />
     <Page Include="AdminWorkSpace\AdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

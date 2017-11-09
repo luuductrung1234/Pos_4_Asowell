@@ -29,7 +29,7 @@ namespace POS.Entities
         public string Name { get; set; } // name (length: 50)
         public string Info { get; set; } // info (length: 100)
         public decimal Price { get; set; } // price
-        public ProductType Type { get; set; } // is_todrink
+        public int Type { get; set; } // is_todrink
         public int Deleted { get; set; } // deleted
         [MaxLength]
         public string ImageLink { get; set; }

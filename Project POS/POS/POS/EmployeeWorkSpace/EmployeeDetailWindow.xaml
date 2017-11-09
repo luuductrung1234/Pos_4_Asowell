@@ -133,11 +133,11 @@
                            FontSize="18"
                            Width="215" />
             </StackPanel>
-            <!--<ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+            <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
                          Value="20"
                          IsIndeterminate="True"
                          Width="45"
-                         Height="45" />-->
+                         Height="45" />
 
         </StackPanel>
         <materialDesign:ColorZone Mode="PrimaryDark"
