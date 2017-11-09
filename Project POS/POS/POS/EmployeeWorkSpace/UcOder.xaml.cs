@@ -41,6 +41,7 @@ namespace POS.EmployeeWorkSpace
 
                 loadTableChairData();
                 loadCustomerOwner();
+                RefreshControlAllChair();
             }
             catch (Exception ex)
             {

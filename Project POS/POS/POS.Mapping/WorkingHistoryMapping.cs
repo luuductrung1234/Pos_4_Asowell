@@ -33,8 +33,8 @@ namespace POS.Mapping
             Property(x => x.WhId).HasColumnName(@"wh_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.ResultSalary).HasColumnName(@"result_salary").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
             Property(x => x.EmpId).HasColumnName(@"emp_id").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
-            Property(x => x.StartTime).HasColumnName(@"startTime").HasColumnType("date").IsOptional();
-            Property(x => x.EndTime).HasColumnName(@"endTime").HasColumnType("date").IsRequired();
+            Property(x => x.StartTime).HasColumnName(@"startTime").HasColumnType("datetime").IsOptional();
+            Property(x => x.EndTime).HasColumnName(@"endTime").HasColumnType("datetime").IsRequired();
 
 
             // Foreign keys

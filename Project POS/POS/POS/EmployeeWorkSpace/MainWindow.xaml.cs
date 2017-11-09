@@ -10,6 +10,7 @@ using POS.Repository;
 using POS.Repository.DAL;
 using POS.Repository.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Windows.Threading;
 
 namespace POS.EmployeeWorkSpace
@@ -179,7 +180,22 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.SalaryNoteRepository.Update(empSln);
             _unitofwork.Save();
 
-            TableTempData.TbList.Clear();
+            foreach (var table in TableTempData.TbList)
+            {
+                foreach (var chair in table.ChairData)
+                {
+                    chair.ChairOrderDetails = new List<OrderNoteDetail>();
+                }
+
+                table.TableOrder.CusId = "CUS0000001";
+                table.TableOrder.Ordertime = DateTime.Now;
+                table.TableOrder.TotalPrice = 0;
+                table.TableOrder.CustomerPay = 0;
+                table.TableOrder.PayBack = 0;
+                table.IsOrdered = false;
+                table.TableOrderDetails = new List<OrderNoteDetail>();
+            }
+
             ReadWriteData.writeToBinFile();
 
             login = new Login();
