@@ -1,4 +1,5 @@
-﻿using POS.Repository.DAL;
+﻿using POS.Entities;
+using POS.Repository.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace POS.AdminWorkSpace
         SalaryPage salarypage;
         ProductDetailPage productdetals;
         internal Login login;
+        AdminRe admin;
 
 
         public AdminWindow()
@@ -34,9 +36,12 @@ namespace POS.AdminWorkSpace
 
             _unitofork = new AdminwsOfAsowell();
             _unitofwork = new EmployeewsOfAsowell();
-            empListPage = new EmployeeListPage(_unitofork);
+            admin = App.Current.Properties["AdLogin"] as AdminRe;
+            empListPage = new EmployeeListPage(_unitofork, admin);
             salarypage = new SalaryPage(_unitofork);
             productdetals = new ProductDetailPage( _unitofork);
+
+            cUser.Content = admin.AdId;
 
             Closing += AdminWindow_Closing;
         }

@@ -24,19 +24,46 @@ namespace POS.AdminWorkSpace
     public partial class EmployeeListPage : Page
     {
         private AdminwsOfAsowell _unitofork;
+        private AdminRe admin;
         private Employee emp;
+        private List<Employee> empwithad;
         internal EmployeeAddOrUpdateDialog empAddUptDialog;
 
-        public EmployeeListPage(AdminwsOfAsowell unitofork)
+        public EmployeeListPage(AdminwsOfAsowell unitofork, AdminRe ad)
         {
             _unitofork = unitofork;
             InitializeComponent();
-            lvDataEmployee.ItemsSource = unitofork.EmployeeRepository.Get();
+            admin = ad;
+
+            this.Loaded += EmployeeListPage_Loaded;
+        }
+
+        private void EmployeeListPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            empwithad = _unitofork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
+            lvDataEmployee.ItemsSource = empwithad;
+
+            txtBirth.DisplayDateEnd = new DateTime((DateTime.Now.Year - 16), 12, 31);
+            txtStart.DisplayDateStart = DateTime.Now;
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             emp = lvDataEmployee.SelectedItem as Employee;
+            if (emp == null)
+            {
+                txtID.Text = "";
+                txtName.Text = "";
+                txtBirth.SelectedDate = new DateTime(1990, 1, 1);
+                txtAddress.Text = "";
+                txtHour_wage.Text = "";
+                txtMail.Text = "";
+                txtPhone.Text = "";
+                txtStart.SelectedDate = DateTime.Now;
+                txtAcount.Text = "";
+                txtPass.Text = "";
+                return;
+            }
             txtID.Text = emp.EmpId;
             txtName.Text = emp.Name;
             txtBirth.SelectedDate = emp.Birth;
@@ -44,29 +71,43 @@ namespace POS.AdminWorkSpace
             txtHour_wage.Text = emp.HourWage.ToString();
             txtMail.Text = emp.Email;
             txtPhone.Text = emp.Phone;
-            txtStartDay.Text = emp.Startday.ToString("yyyy-MM-dd");
+            txtStart.SelectedDate = emp.Startday;
             txtAcount.Text = emp.Username;
             txtPass.Text = emp.Pass;
-
-
         }
 
         private void bntAddnew_Click(object sender, RoutedEventArgs e)
         {
             empAddUptDialog = new EmployeeAddOrUpdateDialog(_unitofork);
             empAddUptDialog.ShowDialog();
+            lvDataEmployee.UnselectAll();
+            lvDataEmployee.Items.Refresh();
         }
 
         private void bntUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if(lvDataEmployee.SelectedItem == null)
+            {
+                MessageBox.Show("Employee must be selected to update! Choose again!");
+                return;
+            }
+
             empAddUptDialog = new EmployeeAddOrUpdateDialog(_unitofork, emp);
             empAddUptDialog.ShowDialog();
+            lvDataEmployee.UnselectAll();
+            lvDataEmployee.Items.Refresh();
         }
 
         private void bntDel_Click(object sender, RoutedEventArgs e)
         {
-            var delEmp = _unitofork.EmployeeRepository.Get(em => em.EmpId.Equals(txtID.Text.Trim())).First();
-            if(delEmp != null)
+            if(lvDataEmployee.SelectedItem == null)
+            {
+                MessageBox.Show("Employee must be selected to delete! Choose again!");
+                return;
+            }
+
+            var delEmp = lvDataEmployee.SelectedItem as Employee;
+            if (delEmp != null)
             {
                 MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delEmp.Name + "(" + delEmp.Username + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if(delMess == MessageBoxResult.Yes)

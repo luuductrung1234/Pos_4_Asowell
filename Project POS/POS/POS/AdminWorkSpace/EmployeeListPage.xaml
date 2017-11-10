@@ -168,17 +168,20 @@
                              Margin="15,20,0,0">
                     <TextBlock Text="Start day: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <TextBlock x:Name="txtStartDay"
-                               FontSize="18"
-                               Foreground="White"
-                               Width="215"
-                               Margin="0,0,100,0" />
+                    <DatePicker x:Name="txtStart"
+                                Width="215"
+                                FontSize="18"
+                                Foreground="White"
+                                Margin="0,0,100,0"
+                                materialDesign:HintAssist.Hint="Pick Date" />
                     <TextBlock Text="Hour wage: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBlock x:Name="txtHour_wage"
                                Foreground="White"
                                FontSize="18"
-                               Width="215" />
+                               Width="215"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
                 </StackPanel>
 
             </StackPanel>
@@ -234,7 +237,8 @@
             <StackPanel HorizontalAlignment="Center"
                         Orientation="Horizontal"
                         Height="50"
-                        VerticalAlignment="Bottom">
+                        VerticalAlignment="Bottom"
+                        Margin="118,0,127,38">
                 <Button x:Name="bntAddnew"
                         Content="Addnew"
                         Width="121"

@@ -87,7 +87,7 @@
                          Width="215" />
                 <StackPanel  Orientation="Horizontal"
                              Margin="90,0,0,0">
-                    <TextBlock Text="Confirm Password:"
+                    <TextBlock x:Name="txbCon" Text="Confirm Password:"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <PasswordBox x:Name="txtCon"
                                  Width="215"
@@ -143,6 +143,7 @@
                                  Foreground="White"
                                  FontSize="18"
                                  Margin="130,0,0,0"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
                                  materialDesign:TransitionAssist.DisableTransitions="True" />
                     </StackPanel>
 
@@ -176,7 +177,13 @@
                 <TextBox x:Name="txtHour_wage"
                          Foreground="White"
                          FontSize="18"
-                         Width="215" />
+                         Width="170"
+                         PreviewTextInput="NumberOnly_PreviewTextInput" />
+                <TextBlock Text="kVND"
+                           FontSize="18"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="White"/>
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
                          Margin="0,30,0,0"

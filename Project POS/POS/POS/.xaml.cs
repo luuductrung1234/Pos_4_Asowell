@@ -110,6 +110,8 @@ namespace POS
                         {
                             if (item.Username.Equals(username) && item.Pass.Equals(pass))
                             {
+                                App.Current.Properties["AdLogin"] = item;
+
                                 Dispatcher.Invoke(() =>
                                 {
                                     AdminWorkSpace.AdminWindow adminwindow = new AdminWorkSpace.AdminWindow();
