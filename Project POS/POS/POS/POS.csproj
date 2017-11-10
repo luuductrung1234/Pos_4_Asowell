@@ -111,6 +111,9 @@
     <Compile Include="AdminWorkSpace\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\EmployeeAddOrUpdateDialog.xaml.cs">
+      <DependentUpon>EmployeeAddOrUpdateDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\EmployeeListPage.xaml.cs">
       <DependentUpon>EmployeeListPage.xaml</DependentUpon>
     </Compile>
@@ -175,6 +178,10 @@
     <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
     <Compile Include="WPFMaterialDesign\Transitions\TransitionAssist.cs" />
     <Page Include="AdminWorkSpace\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\EmployeeAddOrUpdateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

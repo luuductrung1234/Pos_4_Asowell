@@ -37,8 +37,6 @@ namespace POS
             this.Closing += Closing_LoginWindos;
         }
         
-
-        private static int ID_SIZE_DBASOWELL = 10;
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
