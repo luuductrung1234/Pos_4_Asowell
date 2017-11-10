@@ -23,28 +23,38 @@ namespace POS.AdminWorkSpace
     public partial class AdminDetailWindow : Window
     {
         private AdminwsOfAsowell _unitofwork;
-        AdminRe ad;
-        public AdminDetailWindow(string UserName, AdminwsOfAsowell unitofwork)
+        AdminRe admin;
+        private List<Employee> empwithad;
+        public AdminDetailWindow(AdminwsOfAsowell unitofwork, AdminRe ad)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
-            loadData(UserName);
-            ad = new AdminRe();
-            lvDataEmployee.ItemsSource = unitofwork.EmployeeRepository.Get();
+            admin = ad;
+            empwithad = _unitofwork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
+            lvDataEmployee.ItemsSource = empwithad;
+            loadAdData();
         }
 
-        private void loadData(string UserName)
+        private void loadAdData()
         {
-            foreach (var item in _unitofwork.AdminreRepository.Get())
-            {
-                if (item.Username.Equals(UserName))
-                {
-                    ad = item;
-                    break;
+            this.AdminInfo.DataContext = admin;
+        }
 
-                }
-            }
-            this.EmployeeInfo.DataContext = ad;
+        private void bntUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            ////check name
+            //string namee = txtName.Text.Trim();
+            //if (namee.Length == 0 || namee.Length > 50)
+            //{
+            //    MessageBox.Show("Name is not valid!");
+            //    txtName.Focus();
+            //    return;
+            //}
+
+            //admin.Name = namee;
+
+            //_unitofwork.AdminreRepository.Update(admin);
+            //_unitofwork.Save();
         }
     }
 }

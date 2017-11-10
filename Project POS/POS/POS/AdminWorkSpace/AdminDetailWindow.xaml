@@ -13,7 +13,7 @@
         Width="894.667">
 
 
-    <Grid x:Name="EmployeeInfo">
+    <Grid x:Name="AdminInfo">
         <materialDesign:ColorZone Mode="PrimaryDark"
                                   Height="44">
             <StackPanel Orientation="Horizontal"
@@ -44,7 +44,7 @@
                 </Style>
             </StackPanel.Resources>
             <StackPanel  Orientation="Vertical"
-                         Margin="30,20,0,0">
+                         Margin="30,20,30,0">
                 <StackPanel  Orientation="Horizontal"
                              Margin="0,20,0,0">
                     <TextBlock Text="ID: "
@@ -55,7 +55,20 @@
                                Foreground="White"
                                HorizontalAlignment="Left" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel  Orientation="Horizontal"
+                             Margin="0,20,0,0">
+                    <TextBlock Text="UserName: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBox Text="{Binding Username}"
+                             x:Name="txtBirth"
+                             Width="215"
+                             FontSize="18"
+                             Foreground="White"
+                             HorizontalAlignment="Left"
+                             IsEnabled="False"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,20,0,0">
                     <TextBlock Text="Name: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox x:Name="txtName"
@@ -66,19 +79,12 @@
                 </StackPanel>
                 <StackPanel  Orientation="Horizontal"
                              Margin="0,20,0,0">
-                    <TextBlock Text="UserName: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <TextBox Text="{Binding Username}"
-                             x:Name="txtBirth"
-                             Width="215"
-                             FontSize="18"
-                             Foreground="White"
-                             HorizontalAlignment="Left" />
-                </StackPanel>
-                <StackPanel  Orientation="Horizontal"
-                             Margin="0,20,0,0">
                     <Button x:Name="bntUpdate"
-                            FontWeight="Bold">Update</Button>
+                            FontWeight="Bold"
+                            Click="bntUpdate_Click">Update</Button>
+                    <Button x:Name="btnChangePass"
+                            Margin="100,0,0,0"
+                            FontWeight="Bold">Change Password</Button>
                 </StackPanel>
             </StackPanel>
 
@@ -98,27 +104,26 @@
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvDataEmployee"
-                  Width="878"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
                   Background="#FFED5C5C"
                   Foreground="White"
                   FontWeight="Bold"
                   Margin="0,356,0,0"
-                  Height="244">
+                  Width="887">
             <ListView.View>
                 <GridView x:Name="gvShowDetails">
                     <GridViewColumn Header="ID"
-                                    Width="100"
+                                    Width="200"
                                     DisplayMemberBinding="{Binding EmpId}" />
                     <GridViewColumn Header="Name"
-                                    Width="150"
+                                    Width="200"
                                     DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="Birth"
-                                    Width="150"
-                                    DisplayMemberBinding="{Binding Birth,StringFormat=dd/MM/yyyy}" />
+                                    Width="200"
+                                    DisplayMemberBinding="{Binding Birth,StringFormat=yyyy-MM-dd}" />
                     <GridViewColumn Header="UserName"
-                                    Width="150"
+                                    Width="200"
                                     DisplayMemberBinding="{Binding Username}" />
                 </GridView>
             </ListView.View>
