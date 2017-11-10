@@ -120,6 +120,9 @@
     <Compile Include="AdminWorkSpace\SalaryPage.xaml.cs">
       <DependentUpon>SalaryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseConfigWindow.xaml.cs">
+      <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeWorkSpace\DashPage.xaml.cs">
       <DependentUpon>DashPage.xaml</DependentUpon>
     </Compile>
@@ -187,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\SalaryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DatabaseConfigWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

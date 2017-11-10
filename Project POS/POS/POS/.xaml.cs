@@ -1,22 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using POS.Context;
 using POS.Entities;
-using POS.Repository;
 using POS.Repository.DAL;
-using POS.Repository.Interfaces;
 
 namespace POS
 {
@@ -35,10 +23,11 @@ namespace POS
             this.WindowState = WindowState.Normal;
 
             this.Closing += Closing_LoginWindos;
+
+            App.Current.Properties["IsConfigDB"] = "";
         }
 
 
-        private static int ID_SIZE_DBASOWELL = 10;
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
@@ -92,24 +81,7 @@ namespace POS
                                 App.Current.Properties["EmpWH"] = empWorkHistory;
                                 App.Current.Properties["EmpSN"] = empSalary;
                             }
-                            //create new salary note if null, create new workinghistory if not null
 
-                            //if (empSalaryNote == null)
-                            //{
-                            //    SalaryNote empSalary = new SalaryNote { EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
-                            //    _unitempofwork.SalaryNoteRepository.Insert(empSalary);
-                            //    _unitempofwork.Save();
-                            //    WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
-                            //    App.Current.Properties["EmpWH"] = empWorkHistory;
-                            //    App.Current.Properties["EmpSN"] = empSalary;
-                            //}
-                            //else
-                            //{
-                            //    App.Current.Properties["EmpSN"] = empSalaryNote;
-                            //    WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
-                            //    App.Current.Properties["EmpWH"] = empWorkHistory;
-
-                            //}
                             Dispatcher.Invoke(() =>
                             {
                                 EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
@@ -136,7 +108,7 @@ namespace POS
                                     AdminWorkSpace.AdminWindow adminwindow = new AdminWorkSpace.AdminWindow();
                                     adminwindow.Show();
                                 });
-                                
+
                                 isfoundad = true;
                                 break;
 
@@ -153,7 +125,7 @@ namespace POS
                     {
                         this.Close();
                     });
-                    
+
                 });
 
             }
@@ -166,7 +138,16 @@ namespace POS
 
         private void btnDatabase_Click(object sender, RoutedEventArgs e)
         {
+            DatabaseConfigWindow dbConfig = new DatabaseConfigWindow();
+            dbConfig.ShowDialog();
 
+            if ((App.Current.Properties["IsConfigDB"] as string).Equals("true"))
+            {
+                _unitempofwork = new EmployeewsOfAsowell(App.Current.Properties["InitialCatalog"] as string,
+                    App.Current.Properties["Source"] as string,
+                    App.Current.Properties["UserId"] as string,
+                    App.Current.Properties["Password"] as string);
+            }
         }
 
         private void Closing_LoginWindos(object sender, EventArgs args)

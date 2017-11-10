@@ -45,8 +45,19 @@ namespace POS.EmployeeWorkSpace
             emp = App.Current.Properties["EmpLogin"] as Employee;
 
             cUser.Content = emp.Username;
+
+            if ((App.Current.Properties["IsConfigDB"] as string).Equals("true"))
+            {
+                _unitofwork = new EmployeewsOfAsowell(App.Current.Properties["InitialCatalog"] as string,
+                    App.Current.Properties["Source"] as string,
+                    App.Current.Properties["UserId"] as string,
+                    App.Current.Properties["Password"] as string);
+            }
+            else
+            {
+                _unitofwork = new EmployeewsOfAsowell();
+            }
             
-            _unitofwork = new EmployeewsOfAsowell();
             b = new Table(_unitofwork);
             d = new Dash();
             en = new Entry();
