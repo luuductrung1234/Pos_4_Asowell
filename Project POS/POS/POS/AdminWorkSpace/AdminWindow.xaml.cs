@@ -29,19 +29,17 @@ namespace POS.AdminWorkSpace
         internal Login login;
         AdminRe admin;
 
-
         public AdminWindow()
         {
             InitializeComponent();
-
+            admin = App.Current.Properties["AdLogin"] as AdminRe;
+            cUser.Content = admin.Username;
             _unitofork = new AdminwsOfAsowell();
             _unitofwork = new EmployeewsOfAsowell();
             admin = App.Current.Properties["AdLogin"] as AdminRe;
             empListPage = new EmployeeListPage(_unitofork, admin);
             salarypage = new SalaryPage(_unitofork);
             productdetals = new ProductDetailPage( _unitofork);
-
-            cUser.Content = admin.AdId;
 
             Closing += AdminWindow_Closing;
         }
@@ -53,7 +51,8 @@ namespace POS.AdminWorkSpace
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            AdminDetailWindow adw = new AdminDetailWindow(cUser.Content.ToString(), _unitofork);
+            adw.ShowDialog();
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)

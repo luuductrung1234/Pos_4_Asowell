@@ -108,6 +108,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminWorkSpace\AdminDetailWindow.xaml.cs">
+      <DependentUpon>AdminDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,9 @@
     </Compile>
     <Compile Include="AdminWorkSpace\SalaryPage.xaml.cs">
       <DependentUpon>SalaryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeWorkSpace\ChangeThemePage.xaml.cs">
+      <DependentUpon>ChangeThemePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="EmployeeWorkSpace\DashPage.xaml.cs">
       <DependentUpon>DashPage.xaml</DependentUpon>
@@ -138,6 +144,12 @@
     <Compile Include="EmployeeWorkSpace\InputNote.xaml.cs">
       <DependentUpon>InputNote.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WPFMaterialDesign\ButtonsViewModel.cs" />
+    <Compile Include="WPFMaterialDesign\Domain\NotifyPropertyChangedExtension.cs" />
+    <Compile Include="WPFMaterialDesign\PaletteSelectorViewModel.cs" />
+    <Compile Include="WPFMaterialDesign\UcPalette.xaml.cs">
+      <DependentUpon>UcPalette.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeWorkSpace\SettingFoodPage.xaml.cs">
       <DependentUpon>SettingFoodPage.xaml</DependentUpon>
     </Compile>
@@ -146,6 +158,9 @@
     <Compile Include="BusinessModel\Table.cs" />
     <Compile Include="EmployeeWorkSpace\SettingTableSize.xaml.cs">
       <DependentUpon>SettingTableSize.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPFMaterialDesign\UcPaletteSelector.xaml.cs">
+      <DependentUpon>UcPaletteSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\PrintHelper.cs" />
     <Compile Include="StartupWindows.xaml.cs">
@@ -177,6 +192,10 @@
     <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformConverter.cs" />
     <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
     <Compile Include="WPFMaterialDesign\Transitions\TransitionAssist.cs" />
+    <Page Include="AdminWorkSpace\AdminDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminWorkSpace\AdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -194,6 +213,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\SalaryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\ChangeThemePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,11 +240,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WPFMaterialDesign\UcPalette.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EmployeeWorkSpace\SettingFoodPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\SettingTableSize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFMaterialDesign\UcPaletteSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
