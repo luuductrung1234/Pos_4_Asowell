@@ -39,7 +39,7 @@ namespace POS
                 await LoginAsync(username, pass);
 
                 btnLogin.IsEnabled = true;
-                PgbLoginProcess.Visibility = Visibility.Visible;
+                PgbLoginProcess.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
             {
@@ -51,10 +51,8 @@ namespace POS
         {
             try
             {
-                await Task.Run(async () =>
+                await Task.Run(() =>
                 {
-
-
                     bool isFound = false;
                     List<Employee> empList = _unitempofwork.EmployeeRepository.Get().ToList();
                     List<AdminRe> AdList = _unitempofwork.AdminreRepository.Get().ToList();
@@ -103,6 +101,8 @@ namespace POS
                         {
                             if (item.Username.Equals(username) && item.Pass.Equals(pass))
                             {
+                                App.Current.Properties["AdLogin"] = item;
+
                                 Dispatcher.Invoke(() =>
                                 {
                                     AdminWorkSpace.AdminWindow adminwindow = new AdminWorkSpace.AdminWindow();

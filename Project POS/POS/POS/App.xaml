@@ -8,11 +8,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+
                 <!-- primary color -->
                 <ResourceDictionary>
                     <!-- include your primary palette -->
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                        
                         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Orange.xaml" />
                     </ResourceDictionary.MergedDictionaries>
@@ -232,7 +235,7 @@
                     <Style x:Key="MyMaterialDesignCircularProgressBar"
                            TargetType="{x:Type ProgressBar}">
                         <Setter Property="Foreground"
-                                Value="Orange" />
+                                Value="{DynamicResource PrimaryHueMidBrush}" />
                         <Setter Property="Background"
                                 Value="Transparent" />
                         <Setter Property="Width"

@@ -37,6 +37,7 @@ namespace POS.EmployeeWorkSpace
         internal Login login;
         internal SettingFoodPage st;
         internal SettingTableSize stts;
+        internal ChangeThemePage chtm;
 
         public MainWindow()
         {
@@ -213,6 +214,11 @@ namespace POS.EmployeeWorkSpace
             this.Close();
             login.Show();
         }
-        
+
+        private void lbiChangeTheme_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            chtm = new ChangeThemePage();
+            chtm.Show();
+        }
     }
 }

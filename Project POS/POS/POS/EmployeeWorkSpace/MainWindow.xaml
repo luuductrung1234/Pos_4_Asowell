@@ -46,6 +46,9 @@
                         <ListBoxItem x:Name="lbiSettingTableSize"
                                      Content="Setting Table Size"
                                      PreviewMouseLeftButtonUp="lbiTableSize_PreviewMouseLeftButtonUp" />
+                        <ListBoxItem x:Name="lbiChangeTheme"
+                                     Content="Setting Theme"
+                                     PreviewMouseLeftButtonUp="lbiChangeTheme_PreviewMouseLeftButtonUp" />
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>

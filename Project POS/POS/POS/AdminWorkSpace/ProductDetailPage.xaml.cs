@@ -72,5 +72,20 @@ namespace POS.AdminWorkSpace
             var allProduct = _unitofork.ProductRepository.Get().ToList();
             lvData.ItemsSource = allProduct.Where(p => p.Type == ((int)(sender as ComboBox).SelectedValue));
         }
+
+        private void SearchIBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void cboTypeI_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SearchIBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

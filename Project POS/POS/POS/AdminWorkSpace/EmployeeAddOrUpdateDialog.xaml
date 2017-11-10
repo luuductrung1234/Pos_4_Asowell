@@ -1,4 +1,4 @@
-﻿<Window x:Class="POS.EmployeeWorkSpace.EmployeeDetail"
+﻿<Window x:Class="POS.AdminWorkSpace.EmployeeAddOrUpdateDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -8,11 +8,26 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="EmployeeDetail"
-        Height="639.112"
+        Title="Employee Add Or Update"
+        Height="467.769"
         Width="894.667">
-
-
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}"
+               x:Key="TextBlockLabel">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="Foreground"
+                    Value="#FFFFEDBC" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="Width"
+                    Value="120" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid x:Name="EmployeeInfo">
         <materialDesign:ColorZone Mode="PrimaryDark"
                                   Height="44">
@@ -36,7 +51,7 @@
                     <Setter Property="FontWeight"
                             Value="Bold" />
                     <Setter Property="Width"
-                            Value="120" />
+                            Value="160" />
                     <Setter Property="HorizontalAlignment"
                             Value="Center" />
                     <Setter Property="VerticalAlignment"
@@ -44,20 +59,55 @@
                 </Style>
             </StackPanel.Resources>
             <StackPanel  Orientation="Horizontal"
-                         Margin="30,20,0,0">
+                         Margin="15,20,0,0">
+                <TextBlock Text="Username:"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <TextBox x:Name="txtUsername"
+                         FontSize="18"
+                         Foreground="White"
+                         Width="215"
+                         Text=""/>
+                <StackPanel  Orientation="Horizontal"
+                             Margin="90,0,0,0">
+                    <TextBlock Text="Password: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                </StackPanel>
+                <PasswordBox x:Name="txtPass"
+                             Width="215"
+                             FontSize="18"
+                             Foreground="White" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="15,20,0,0">
                 <TextBlock Text="Name: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtName"
                          FontSize="18"
                          Foreground="White"
-                         Text="{Binding Name}"
                          Width="215" />
                 <StackPanel  Orientation="Horizontal"
-                             Margin="100,0,0,0">
+                             Margin="90,0,0,0">
+                    <TextBlock x:Name="txbCon" Text="Confirm Password:"
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <PasswordBox x:Name="txtCon"
+                                 Width="215"
+                                 FontSize="18"
+                                 Foreground="White" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="15,20,0,0">
+                <TextBlock Text="Employee Role:"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <ComboBox x:Name="cboRole"
+                          Width="215"
+                          FontSize="18"
+                          Foreground="White" />
+                <StackPanel  Orientation="Horizontal"
+                             Margin="90,0,0,0">
                     <TextBlock Text="Birth: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <DatePicker SelectedDate="{Binding Birth, StringFormat=dd/MM/yyyy}"
-                                x:Name="txtBirth"
+                    <DatePicker x:Name="txtBirth"
                                 Width="215"
                                 FontSize="18"
                                 Foreground="White"
@@ -65,14 +115,12 @@
                                 materialDesign:HintAssist.Hint="Pick Date" />
                 </StackPanel>
             </StackPanel>
-
             <StackPanel  Orientation="Horizontal"
-                         Margin="30,20,0,0">
+                         Margin="15,20,0,0">
                 <TextBlock Text="Address: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox MaxWidth="300"
                          Foreground="White"
-                         Text="{Binding Addr}"
                          x:Name="txtAddress"
                          Height="70"
                          VerticalAlignment="Center"
@@ -84,18 +132,18 @@
                          VerticalScrollBarVisibility="Auto"
                          Width="215" />
                 <StackPanel VerticalAlignment="Center"
-                            Margin="100,0,0,0">
+                            Margin="90,0,0,0">
                     <StackPanel  Orientation="Horizontal">
-                        <materialDesign:PackIcon Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}"
+                        <materialDesign:PackIcon Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"
                                                  Kind="Phone"
                                                  Width="30"
                                                  Height="30" />
                         <TextBox x:Name="txtPhone"
-                                 Text="{Binding Phone}"
                                  Width="215"
                                  Foreground="White"
                                  FontSize="18"
-                                 Margin="90,0,0,0"
+                                 Margin="130,0,0,0"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"
                                  materialDesign:TransitionAssist.DisableTransitions="True" />
                     </StackPanel>
 
@@ -105,70 +153,59 @@
                                                  Width="30"
                                                  Height="30" />
                         <TextBox x:Name="txtMail"
-                                 Text="{Binding Email}"
                                  Width="215"
                                  FontSize="18"
                                  Foreground="White"
-                                 Margin="90,0,0,0" />
+                                 Margin="130,0,0,0" />
                     </StackPanel>
                 </StackPanel>
 
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
-                         Margin="30,20,0,0">
-                <TextBlock Text="Start day: "
+                         Margin="15,20,0,0">
+                <TextBlock Text="Start Day: "
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                <TextBlock x:Name="txtStartDay"
-                           FontSize="18"
-                           Text="{Binding Startday, StringFormat=dd/MM/yyyy}"
-                           Foreground="White"
-                           Width="215" />
+                <DatePicker x:Name="txtStartDay"
+                            Width="215"
+                            FontSize="18"
+                            Foreground="White"
+                            HorizontalAlignment="Left"
+                            materialDesign:HintAssist.Hint="Pick Date" />
                 <TextBlock Text="Hour wage: "
-                           Margin="100,0,0,0"
+                           Margin="90,0,0,0"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                <TextBlock x:Name="txtHour_wage"
-                           Text="{Binding HourWage}"
-                           Foreground="White"
+                <TextBox x:Name="txtHour_wage"
+                         Foreground="White"
+                         FontSize="18"
+                         Width="170"
+                         PreviewTextInput="NumberOnly_PreviewTextInput" />
+                <TextBlock Text="kVND"
                            FontSize="18"
-                           Width="215" />
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="White"/>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="0,30,0,0"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center">
+                <Button x:Name="btnAddNew"
+                        Content="Save"
+                        Width="121"
+                        Height="Auto"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Margin="0,0,0,0"
+                        Click="btnAddNew_Click" />
+                <Button x:Name="btnCancel"
+                        Content="Cancel"
+                        Width="121"
+                        Height="Auto"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Margin="100,0,0,0"
+                        Click="btnCancel_Click" />
             </StackPanel>
         </StackPanel>
-        <materialDesign:ColorZone Mode="PrimaryDark"
-                                  Height="44"
-                                  Margin="0,307,0,0">
-            <StackPanel Orientation="Horizontal"
-                        Margin="20,0,0,0">
-                <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="18"
-                           FontWeight="Bold">Working History</TextBlock>
-            </StackPanel>
-        </materialDesign:ColorZone>
-        <ListView x:Name="lsWH"
-                  Margin="0,356,0,0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="150"
-                                    Header="Time Percent">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ProgressBar Style="{StaticResource MyMaterialDesignCircularProgressBar}"
-                                             Value="{Binding TimePercent}"
-                                             Maximum="100"
-                                             Width="45"
-                                             Height="45"
-                                             IsIndeterminate="True" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Work Time"
-                                    Width="150"
-                                    DisplayMemberBinding="{Binding WorkTime}" />
-                    <GridViewColumn Header="Date"
-                                    Width="200"
-                                    DisplayMemberBinding="{Binding WorkDate, StringFormat=yyyy-MM-dd}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
     </Grid>
 </Window>

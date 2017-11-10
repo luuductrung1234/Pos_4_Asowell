@@ -77,8 +77,6 @@
                             <StackPanel>
                                 <Button Content="Details"
                                         Click="Button_Click_1" />
-                                <Button Content="Working Time"
-                                        Click="Button_Click" />
                                 <Separator />
                                 <Button x:Name="bntLogout"
                                         Content="Log out"
@@ -102,13 +100,12 @@
                     <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                                              PlacementMode="TopAndAlignCentres"
                                              ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
-                                             ToolTipService.Placement="Right"
-                                             UnfurlOrientation="Vertical"
-                                             Height="50"
-                                             Width="50"
-                                             Panel.ZIndex="100"
-                                             Margin="1268,532,42,77"
-                                             HorizontalAlignment="Stretch">
+                                             ToolTipService.Placement="Right"                                             
+                                             Height="40"
+                                             Width="40"
+                                             Panel.ZIndex="50"
+                                             Margin="0,578,29,31"
+                                             HorizontalAlignment="Right">
                         <StackPanel>
                             <Button  ToolTip="Employee Infomation"
                                      Click="Button_Click">Employee Info</Button>
