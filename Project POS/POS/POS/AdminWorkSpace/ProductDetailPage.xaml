@@ -69,28 +69,12 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="430"
                                         Height="auto">
-                                <ComboBox
-                                            x:Name="cboType"
-                                            Foreground="Black"
-                                            Background="White"
-                                            Width="135"
-                                            Margin="0,0,20,0"
+                                <ComboBox x:Name="cboType"
+                                          Foreground="Black"
+                                          Background="White"
+                                          Width="135"
+                                          Margin="0,0,20,0"
                                           SelectionChanged="cboType_SelectionChanged"></ComboBox>
-                                <Button x:Name="bntAdd"
-                                        Content="Add"
-                                        Height="auto"
-                                        Margin="0,0,20,0"
-                                        FontWeight="Bold" />
-                                <Button x:Name="bntEdit"
-                                        Content="Edit"
-                                        Height="auto"
-                                        Margin="0,0,20,0"
-                                        FontWeight="Bold" />
-                                <Button x:Name="bntDel"
-                                        Content="Delete"
-                                        Height="auto"
-                                        Margin="0,0,50,0"
-                                        FontWeight="Bold" />
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -195,6 +179,84 @@
         </Grid>
         </Grid>
         <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.075*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <materialDesign:ColorZone Mode="Standard"
+                                          Height="40"
+                                          CornerRadius="2"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                          Margin="0,0,0,0">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="8">
+                        <Border Background="White"
+                                MaxHeight="30"
+                                CornerRadius="3"
+                                ToolTip="Enter to search, ignore case"
+                                Margin="0,0,20,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Style="{DynamicResource MaterialDesignToolButton}"
+                                        Command="{Binding SearchCommand}"
+                                        x:Name="SearchIButton"
+                                        CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
+                                        Height="24"
+                                        Width="24">
+                                    <materialDesign:PackIcon Kind="Magnify"
+                                                             Opacity=".56" />
+                                </Button>
+                                <TextBox Foreground="Black"
+                                         Grid.Column="1"
+                                         Margin="5 0 0 0"
+                                         KeyDown="SearchIBox_KeyDown"
+                                         materialDesign:HintAssist.Hint="Search"
+                                         x:Name="SearchIBox"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                         BorderThickness="0"
+                                         MinWidth="200"
+                                         VerticalAlignment="Center"
+                                         TextChanged="SearchIBox_TextChanged" />
+
+                            </Grid>
+
+                        </Border>
+                        <Border MaxHeight="30"
+                                CornerRadius="3">
+                            <StackPanel Orientation="Horizontal"
+                                        Width="430"
+                                        Height="auto">
+                                <ComboBox x:Name="cboTypeI"
+                                          Foreground="Black"
+                                          Background="White"
+                                          Width="135"
+                                          Margin="0,0,20,0"
+                                          SelectionChanged="cboTypeI_SelectionChanged"></ComboBox>
+                                <Button x:Name="bntAdd"
+                                        Content="Add"
+                                        Height="auto"
+                                        Margin="0,0,20,0"
+                                        FontWeight="Bold" />
+                                <Button x:Name="bntEdit"
+                                        Content="Edit"
+                                        Height="auto"
+                                        Margin="0,0,20,0"
+                                        FontWeight="Bold" />
+                                <Button x:Name="bntDel"
+                                        Content="Delete"
+                                        Height="auto"
+                                        Margin="0,0,50,0"
+                                        FontWeight="Bold" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </Grid>
+            <Grid Grid.Row="1">
             <materialDesign:ColorZone Padding="16"
                                       materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                       CornerRadius="3"
@@ -244,6 +306,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
