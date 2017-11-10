@@ -173,11 +173,11 @@ namespace POS.EmployeeWorkSpace
             };
 
 
-            if (((MainWindow) Window.GetWindow(this)).currentTable != null
-                && ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId != null)
+            if (((MainWindow)Window.GetWindow(this)).currentTable != null
+                && ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.CusId != null)
             {
                 initCus_raiseEvent = true;
-                cboCustomers.SelectedValue = ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId;
+                cboCustomers.SelectedValue = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.CusId;
             }
             initCus_raiseEvent = false;
         }
@@ -189,8 +189,8 @@ namespace POS.EmployeeWorkSpace
             if (!initCus_raiseEvent)
             {
                 //((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId = (string) ((sender as ComboBox).SelectedItem as Customer).CusId;
-                ((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId =
-                    (string) (sender as ComboBox).SelectedValue;
+                ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.CusId =
+                    (string)(sender as ComboBox).SelectedValue;
                 ReadWriteData.writeToBinFile();
             }
         }
@@ -465,19 +465,6 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
-        private void txtCoutn_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            TextBox currentTextBox = (TextBox)sender;
-            if (currentTextBox.IsReadOnly)
-            {
-                currentTextBox.IsReadOnly = false;
-            }
-
-            else
-                currentTextBox.IsReadOnly = true;
-
-        }
-
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
             var ordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
@@ -518,15 +505,32 @@ namespace POS.EmployeeWorkSpace
 
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
+            // printing
 
+            // add data to database
+            ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.CustomerPay =
+                ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.TotalPrice;
+            ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.PayBack = 0;
+            ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.OrderNoteDetails =
+                    ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
+            _unitofwork.OrderRepository.Insert(((MainWindow)Window.GetWindow(this)).currentTable.TableOrder);
+            _unitofwork.Save();
+
+            // clean the old table data
+            ClearTheTable();
         }
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
-
+            // printing (with business process in restaurant)
         }
 
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            ClearTheTable();
+        }
+
+        private void ClearTheTable()
         {
             BusinessModel.Table curTable = ((MainWindow)Window.GetWindow(this)).currentTable;
 
@@ -535,17 +539,23 @@ namespace POS.EmployeeWorkSpace
                 chair.ChairOrderDetails = new List<OrderNoteDetail>();
             }
 
-            curTable.TableOrder.CusId = "CUS0000001";
-            curTable.TableOrder.Ordertime = DateTime.Now;
-            curTable.TableOrder.TotalPrice = 0;
-            curTable.TableOrder.CustomerPay = 0;
-            curTable.TableOrder.PayBack = 0;
+            curTable.TableOrder = new OrderNote()
+            {
+                EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
+                CusId = "CUS0000001",
+                Ordertable = curTable.TableNumber,
+                Ordertime = DateTime.Now,
+                TotalPrice = 0,
+                CustomerPay = 0,
+                PayBack = 0
+            };
             curTable.IsOrdered = false;
             curTable.TableOrderDetails = new List<OrderNoteDetail>();
 
 
             loadCustomerOwner();
             RefreshControlAllChair();
+            ReadWriteData.writeToBinFile();
         }
     }
 }

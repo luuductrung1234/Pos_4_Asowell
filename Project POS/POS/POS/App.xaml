@@ -229,7 +229,7 @@
                     <converters:MyConverter x:Key="MyConverter" />
                     <converters:PercentConverter x:Key="PercentCenverter" />
 
-                    <Style x:Key="MaterialDesignCircularProgressBar"
+                    <Style x:Key="MyMaterialDesignCircularProgressBar"
                            TargetType="{x:Type ProgressBar}">
                         <Setter Property="Foreground"
                                 Value="Orange" />

@@ -36,8 +36,8 @@ namespace POS.AdminWorkSpace
         {
             _emp = emp;
             _unitofork = unitofork;
-            initUptData();
             InitializeComponent();
+            initUptData();
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.NoResize;
         }

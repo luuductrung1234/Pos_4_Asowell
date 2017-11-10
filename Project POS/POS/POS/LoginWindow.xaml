@@ -1,4 +1,4 @@
-﻿    <Window x:Class="POS.Login"
+﻿<Window x:Class="POS.Login"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -8,31 +8,93 @@
         xmlns:local="clr-namespace:POS"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Login" Height="400" Width="400"
-         WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="Login"
+        Height="400"
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="201*"/>
-            <RowDefinition Height="169*"/>
+            <RowDefinition Height="201*" />
+            <RowDefinition Height="169*" />
         </Grid.RowDefinitions>
-        <materialDesign:ColorZone Mode="PrimaryMid" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="53" Margin="88,51,0,0" VerticalAlignment="Top" Width="223">
+        <materialDesign:ColorZone Mode="PrimaryMid"
+                                  BorderBrush="Black"
+                                  BorderThickness="1"
+                                  HorizontalAlignment="Left"
+                                  Height="53"
+                                  Margin="88,51,0,0"
+                                  VerticalAlignment="Top"
+                                  Width="223">
 
-            <TextBlock Text="Login Form" FontSize="35" TextAlignment="Center"/>
+            <TextBlock Text="Login Form"
+                       FontSize="35"
+                       TextAlignment="Center" />
         </materialDesign:ColorZone>
-        <TextBlock x:Name="txbUserName" HorizontalAlignment="Left" Margin="51,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="User Name" FontSize="15"/>
-        <TextBlock x:Name="txbPass" HorizontalAlignment="Left" Margin="51,10.4,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Grid.Row="1" FontSize="15"/>
-        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="25" Margin="191,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
-        <PasswordBox x:Name="txtPass" HorizontalAlignment="Left" Height="25" Margin="191,7.4,0,0" VerticalAlignment="Top" Width="147" Grid.Row="1"/>
-        <Button  x:Name="btnLogin"  HorizontalAlignment="Left" Margin="51,89.4,0,0" VerticalAlignment="Top" Width="75" Grid.Row="1" Click="btnLogin_Click">
+        <TextBlock x:Name="txbUserName"
+                   HorizontalAlignment="Left"
+                   Margin="51,160,0,0"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Top"
+                   Text="User Name"
+                   FontSize="15" />
+        <TextBlock x:Name="txbPass"
+                   HorizontalAlignment="Left"
+                   Margin="51,10.4,0,0"
+                   TextWrapping="Wrap"
+                   Text="Password"
+                   VerticalAlignment="Top"
+                   Grid.Row="1"
+                   FontSize="15" />
+        <TextBox x:Name="txtUsername"
+                 HorizontalAlignment="Left"
+                 Height="25"
+                 Margin="191,153,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="147" />
+        <PasswordBox x:Name="txtPass"
+                     HorizontalAlignment="Left"
+                     Height="25"
+                     Margin="191,7.4,0,0"
+                     VerticalAlignment="Top"
+                     Width="147"
+                     Grid.Row="1" />
+        <Button  x:Name="btnLogin"
+                 HorizontalAlignment="Left"
+                 Margin="51,89.4,0,0"
+                 VerticalAlignment="Top"
+                 Width="75"
+                 Grid.Row="1"
+                 Click="btnLogin_Click">
             Login
         </Button>
-        <Button Style="{DynamicResource MaterialDesignFloatingActionButton}" Foreground="Yellow" x:Name="btnDatabase" HorizontalAlignment="Left" Margin="191,89.4,0,0" VerticalAlignment="Top" Width="38" Grid.Row="1" Height="32" Click="btnDatabase_Click">
-            <materialDesign:PackIcon Kind="Database"  Foreground="Black"/>
+        <Button Style="{DynamicResource MaterialDesignFloatingActionButton}"
+                Foreground="Yellow"
+                x:Name="btnDatabase"
+                HorizontalAlignment="Left"
+                Margin="191,89.4,0,0"
+                VerticalAlignment="Top"
+                Width="38"
+                Grid.Row="1"
+                Height="32"
+                Click="btnDatabase_Click">
+            <materialDesign:PackIcon Kind="Database"
+                                     Foreground="Black" />
             <Button.ToolTip>
                 Database Configuration
             </Button.ToolTip>
         </Button>
-
+        <ProgressBar x:Name="PgbLoginProcess"
+                     Style="{StaticResource MaterialDesignCircularProgressBar}"
+                     Value="0"
+                     Maximum="100"
+                     Width="Auto"
+                     Height="Auto"
+                     IsIndeterminate="True"
+                     Margin="293,89,69,48"
+                     Grid.Row="1" 
+                     Visibility="Hidden"/>
     </Grid>
 </Window>

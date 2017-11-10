@@ -127,17 +127,11 @@
                            Margin="100,0,0,0"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBlock x:Name="txtHour_wage"
-                           Text="{Binding Hour_wage}"
+                           Text="{Binding HourWage}"
                            Foreground="White"
                            FontSize="18"
                            Width="215" />
             </StackPanel>
-            <!--<ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
-                         Value="20"
-                         IsIndeterminate="True"
-                         Width="45"
-                         Height="45" />-->
-
         </StackPanel>
         <materialDesign:ColorZone Mode="PrimaryDark"
                                   Height="44"
@@ -158,7 +152,7 @@
                                     Header="Time Percent">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                <ProgressBar Style="{StaticResource MyMaterialDesignCircularProgressBar}"
                                              Value="{Binding TimePercent}"
                                              Maximum="100"
                                              Width="45"

@@ -33,28 +33,27 @@ Nền tảng trên Android, vẫn đang được lên kế hoạch
     -[] : áp dụng bất đồng bộ (asynchronous hay còn gọi là lập trình đa tiến đoạn) để giúp chương trình thực thi đa tác vụ hiệu quả hơn (cái này cần thảo luận)
 
   - **Database and WebService**:
-    - [] : Kết nối vào thao tác truy xuất xử lý dữ liệu (local/cloud azure) bằng ADO.NET Entity Framework
+    - [x] : Kết nối vào thao tác truy xuất xử lý dữ liệu (local/cloud azure) bằng ADO.NET Entity Framework
     - Thiết kế cho phép dữ liệu được thao tác bởi nhiều chương trình chạy đồng thời cùng một lúc một cách an toàn, kiểm tra và ngăn chận các tình huống bất đồng bộ (concurrency error)
     - [] : webservice cung cấp dịch vụ về dữ liệu (Data service)
 
 
   - **LoginWindow**:
-    - [] : đăng nhập cho nhân viên và quản lý
+    - [x] : đăng nhập cho nhân viên và quản lý
     - [] : chức năng thay đổi cấu hình đăng nhập database, sau khi chỉnh sửa và đăng nhập thành công, chương trình tự động lưu dữ liệu của database đó (lần sau không cần điều chỉnh nữa). Thông tin database sẽ được lưu vào databaseinfo.txt
     - [] : mã hoá mật khẩu người dùng
 
   - **EmployeeWorkspaceWindow**:
-    - [] : Nhân viên đăng nhập, tự động lấy thời gian bắt đầu đăng nhập. Khi nhân viên đăng xuất, tự động lấy thời gian đăng xuất, chấm công và phát sinh WorkingHistory trong ngày (store procedure trong database se tự động cập nhật vào bảng lương của tháng hiện tại của nhân viên)
-    - [] : của sổ hiển thị sơ đồ chỗ ngồi (dựa trên map của nhà hàng, cho phép tùy chỉnh). Khi nhân viên chọn bàn thì tiến hành navigate và cập nhật current table
-    - [] : các khung xuất menu, thêm fiter món ăn theo bản chữ cái, thiết kế nút tìm món ăn (thêm ảnh cho món ăn nếu cần). Ngoài ra còn có khung xuất các nguyên liệu (để phục vụ chắc năng nhập hóa đơn mua nguyên liệu)
-    - [] : khung nhập vào thao tác order, tác động trực tiếp vào currenttable
-    - [] : khung nhập hóa đơn mua nguyên liệu vào kho (gần giống với khung nhập order)
-    - [] : xây dựng khung Setting cho các tuỳ chỉnh một số thuộc tính trong EmployeeWorkspaceWindow, các tuỳ chỉnh lưu vào settinginfo.txt
-    - [] : xây dựng khung thông tin nhân viên, cho phép nhân viên chỉnh sủa tài khoản, thông tin cá nhân (nhớ yêu cầu nhập lại mật khẩu thì mới cho phép lưu thay đổi)
+    - [x] : Nhân viên đăng nhập, tự động lấy thời gian bắt đầu đăng nhập. Khi nhân viên đăng xuất, tự động lấy thời gian đăng xuất, chấm công và phát sinh WorkingHistory trong ngày (store procedure trong database se tự động cập nhật vào bảng lương của tháng hiện tại của nhân viên)
+    - [x] : của sổ hiển thị sơ đồ chỗ ngồi (dựa trên map của nhà hàng, cho phép tùy chỉnh). Khi nhân viên chọn bàn thì tiến hành navigate và cập nhật current table
+    - [x] : các khung xuất menu, thêm fiter món ăn theo bản chữ cái, thiết kế nút tìm món ăn (thêm ảnh cho món ăn nếu cần). Ngoài ra còn có khung xuất các nguyên liệu (để phục vụ chắc năng nhập hóa đơn mua nguyên liệu)
+    - [x] : khung nhập vào thao tác order, tác động trực tiếp vào currenttable
+    - [x] : xây dựng khung Setting cho các tuỳ chỉnh một số thuộc tính trong EmployeeWorkspaceWindow, các tuỳ chỉnh lưu vào settinginfo.txt
+    - [x] : xây dựng khung thông tin nhân viên, cho phép nhân viên chỉnh sủa tài khoản, thông tin cá nhân (nhớ yêu cầu nhập lại mật khẩu thì mới cho phép lưu thay đổi)
     
     Phần sau này là thao tác in và thanh toán bill
     
-    - [] : Cho phép thanh toán và lưu dữ liệu đã order vào database
+    - [x] : Cho phép thanh toán và lưu dữ liệu đã order vào database
     - [] : Tiến hành thiết kế form của bill
     - [] : In bill thông qua printer. Tính năng tuỳ chỉnh hiển thị văn bản in trước khi in
     - [] : In thêm note của từng món ăn trong bill (kitchen print)
@@ -69,6 +68,7 @@ Nền tảng trên Android, vẫn đang được lên kế hoạch
 
   - **WareHouseWindow**:
     + [] : đăng nhập/đăng xuất
+    - [] : khung nhập hóa đơn mua nguyên liệu vào kho (gần giống với khung nhập order)
     + [] : xây dựng cửa sổ theo dõi, thống kê lượng nguyên liệu sử dụng và lương nguyên liệu đưa vào kho
     + [] : thống kê các món ăn theo số lần được gọi
     + [] : chức năng kiểm tra và thông báo khi lượng nguyên liệu gần hết (cần thông tin các món ăn, nguyên liệu, công thức, và hệ thống quy đổi đơn vị dùng, đơn vị mua và đơn vị lưu trữ nguyên liệu)

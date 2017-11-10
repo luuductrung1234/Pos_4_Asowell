@@ -501,6 +501,9 @@ go
 select * from SalaryNote
 select * from WorkingHistory
 
+select * from OrderNote
+select * from OrderNoteDetails
+
 delete WorkingHistory
 delete SalaryNote
 

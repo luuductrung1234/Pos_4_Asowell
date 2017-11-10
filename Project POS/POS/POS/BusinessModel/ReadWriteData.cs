@@ -96,7 +96,11 @@ namespace POS.BusinessModel
                 Position = new Point(rec.Margin.Left, rec.Margin.Top),
                 IsPinned = false,
                 IsOrdered = false,
-                TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, CusId = "CUS0000001", Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now },
+                TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, CusId = "CUS0000001", Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now,
+                    TotalPrice = 0,
+                    CustomerPay = 0,
+                    PayBack = 0
+                },
                 TableOrderDetails = new List<OrderNoteDetail>()
             };
 
