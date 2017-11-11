@@ -126,6 +126,10 @@
     <Compile Include="AdminWorkSpace\SalaryPage.xaml.cs">
       <DependentUpon>SalaryPage.xaml</DependentUpon>
     </Compile>
+
+    <Compile Include="DatabaseConfigWindow.xaml.cs">
+      <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeWorkSpace\ChangeThemePage.xaml.cs">
       <DependentUpon>ChangeThemePage.xaml</DependentUpon>
     </Compile>
@@ -216,10 +220,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+
+    <Page Include="DatabaseConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      </Page>
+      
     <Page Include="EmployeeWorkSpace\ChangeThemePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+
     <Page Include="EmployeeWorkSpace\DashPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

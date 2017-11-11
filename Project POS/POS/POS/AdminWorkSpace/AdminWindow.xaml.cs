@@ -51,7 +51,7 @@ namespace POS.AdminWorkSpace
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            AdminDetailWindow adw = new AdminDetailWindow(cUser.Content.ToString(), _unitofork);
+            AdminDetailWindow adw = new AdminDetailWindow(_unitofork, admin);
             adw.ShowDialog();
         }
 

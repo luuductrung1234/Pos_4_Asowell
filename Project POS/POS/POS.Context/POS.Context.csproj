@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,6 +61,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Configuration\AsowellConfiguration.cs" />
+    <Compile Include="Extensions\ConnectWithExtension.cs" />
     <Compile Include="FakeAsowellContext.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
