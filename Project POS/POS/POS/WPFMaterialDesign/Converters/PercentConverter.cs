@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace MaterialDesignThemes.Wpf.Converters
 {
-    class PercentConverter : IValueConverter
+    public class PercentConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

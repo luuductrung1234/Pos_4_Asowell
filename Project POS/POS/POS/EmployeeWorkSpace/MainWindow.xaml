@@ -62,7 +62,8 @@
                         <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
                                       IsChecked="False"
                                       x:Name="MenuToggleButton"
-                                      RenderTransformOrigin="0.5,0.503" />
+                                      RenderTransformOrigin="0.5,0.503" 
+                                      ToolTip="Extended Menu"/>
                         <materialDesign:PopupBox DockPanel.Dock="Right"
                                                  PlacementMode="BottomAndAlignRightEdges"
                                                  StaysOpen="False">
@@ -73,7 +74,7 @@
                                                      Background="White"
                                                      IsEnabled="False">
                                     <materialDesign:Chip.IconBackground>
-                                        <SolidColorBrush Color="SkyBlue" />
+                                        <SolidColorBrush Color="CornflowerBlue" />
                                     </materialDesign:Chip.IconBackground>
                                     <materialDesign:Chip.Icon>
                                         <materialDesign:PackIcon Kind="Account" />
@@ -107,8 +108,7 @@
                     <Border BorderBrush="Red"
                             BorderThickness="2"
                             Grid.Row="0">
-                        <StackPanel VerticalAlignment="Center"
-                                    Orientation="Horizontal"
+                        <DockPanel VerticalAlignment="Center"
                                     HorizontalAlignment="Left"
                                     Height="58"
                                     Width="1356">
@@ -120,14 +120,16 @@
                                     Height="42"
                                     Width="98"
                                     Click="bntDash_Click"
-                                    FontSize="18" />
+                                    FontSize="18" 
+                                    ToolTip="Application Dash Board"/>
                             <Button x:Name="bntTable"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     Foreground="DeepSkyBlue"
                                     Height="42"
                                     Width="98"
                                     Click="bntTable_Click"
-                                    FontSize="18">
+                                    FontSize="18"
+                                    ToolTip="Table Page">
 
 
                                 Table
@@ -139,7 +141,8 @@
                                     Foreground="DeepSkyBlue"
                                     Width="100"
                                     Click="bntEntry_Click"
-                                    FontSize="18">
+                                    FontSize="18"
+                                    ToolTip="Entry Page (for ordering)">
 
                                 Entry
 
@@ -150,25 +153,52 @@
                                     Foreground="DeepSkyBlue"
                                     Width="98"
                                     Click="bntDash_Click"
-                                    FontSize="18">
+                                    FontSize="18"
+                                    ToolTip="Info Page">
 
                                 Info
                             </Button>
-                            <ProgressBar Style="{StaticResource MyNonPercentMaterialDesignCircularProgressBar}"
-                                         Value="5"
-                                         Maximum="10"
-                                         Width="45"
-                                         Height="45"
-                                         IsIndeterminate="True" />
+
+
                             <TextBlock Foreground="White"
                                        Text="00:00:00"
                                        x:Name="txtTimeWk"
-                                       VerticalAlignment="Center"
                                        FontSize="18"
                                        TextAlignment="Right"
                                        Width="150"
-                                       Margin="0,17" />
-                        </StackPanel>
+                                       Height="30"
+                                       DockPanel.Dock="Right"
+                                       Margin="0,14,30,14" 
+                                       ToolTip="Working Time Counter"/>
+                            <ProgressBar x:Name="pgbReservedTable"
+                                         Style="{StaticResource MyNonPercentMaterialDesignCircularProgressBar}"
+                                         Value="5"
+                                         Maximum="10"
+                                         Width="40"
+                                         Height="40"
+                                         IsIndeterminate="True"
+                                         DockPanel.Dock="Right"
+                                         Margin="0,0,5,0"
+                                         ToolTip="Reserved table"/>
+                            <ProgressBar x:Name="pgbReservedChair"
+                                         Style="{StaticResource MyNonPercentMaterialDesignCircularProgressBar}"
+                                         Value="5"
+                                         Maximum="10"
+                                         Width="40"
+                                         Height="40"
+                                         IsIndeterminate="True"
+                                         DockPanel.Dock="Right"
+                                         Margin="0,0,20,0"
+                                         ToolTip="Reserved chair"/>
+                            
+                            <TextBlock Foreground="White"
+                                       FontSize="18"
+                                       TextAlignment="Right"
+                                       Width="150"
+                                       Height="30"
+                                       DockPanel.Dock="Right"
+                                       Visibility="Hidden"/>
+                        </DockPanel>
 
 
                     </Border>
