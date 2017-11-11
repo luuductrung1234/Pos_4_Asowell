@@ -149,19 +149,25 @@
                                     Height="42"
                                     Foreground="DeepSkyBlue"
                                     Width="98"
-                                    Margin="0,0,800,0"
                                     Click="bntDash_Click"
                                     FontSize="18">
 
                                 Info
                             </Button>
+                            <ProgressBar Style="{StaticResource MyNonPercentMaterialDesignCircularProgressBar}"
+                                         Value="5"
+                                         Maximum="10"
+                                         Width="45"
+                                         Height="45"
+                                         IsIndeterminate="True" />
                             <TextBlock Foreground="White"
                                        Text="00:00:00"
                                        x:Name="txtTimeWk"
                                        VerticalAlignment="Center"
                                        FontSize="18"
                                        TextAlignment="Right"
-                                       Width="150"/>
+                                       Width="150"
+                                       Margin="0,17" />
                         </StackPanel>
 
 
