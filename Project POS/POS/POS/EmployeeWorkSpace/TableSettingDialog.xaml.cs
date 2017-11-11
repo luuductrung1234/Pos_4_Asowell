@@ -57,7 +57,7 @@ namespace POS.EmployeeWorkSpace
                         MessageBox.Show("Can not change Chair Amount now! This table have " + chList.Count + " chair(s) on order!");
                         return;
                     }
-
+                    
                     ReadWriteData.writeOnUpdateChair(t, chList, int.Parse(txtChairAmount.Text.Trim()));
                 }
             }

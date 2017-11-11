@@ -39,12 +39,13 @@ namespace POS.EmployeeWorkSpace
 
         public void TablePage_loaded(Object sender, EventArgs args)
         {
+            ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
+
             foreach (BusinessModel.Table t in TableTempData.TbList)
             {
                 buttonTableCurrentNumber++;
 
                 Rectangle rec = t.VisualTable;
-                
 
                 if (t.IsPinned)
                 {
@@ -345,6 +346,8 @@ namespace POS.EmployeeWorkSpace
                 ReadWriteData.writeOnAddNew(rec);
 
                 rec.ToolTip = setTooltip(rec);
+
+                ((MainWindow)Window.GetWindow(this)).proTable.Maximum += 1;
             }
         }
 
@@ -422,7 +425,7 @@ namespace POS.EmployeeWorkSpace
 
             rec.ToolTip = setTooltip(rec);
 
-
+            ((MainWindow)Window.GetWindow(this)).proTable.Maximum += 1;
         }
 
         //method tao popup menu cho table
@@ -677,6 +680,7 @@ namespace POS.EmployeeWorkSpace
             }
 
             currentRec.ToolTip = setTooltip(currentRec);
+            ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
         }
 
         //su kien khi lua chon remove tu popup menu cua table
@@ -702,6 +706,8 @@ namespace POS.EmployeeWorkSpace
             ReadWriteData.writeOnRemove(currentRec);
             grTable.Children.Remove(currentRec);
             buttonTableCurrentNumber--;
+
+            ((MainWindow)Window.GetWindow(this)).proTable.Maximum -= 1;
         }
 
         //su kien demo payed

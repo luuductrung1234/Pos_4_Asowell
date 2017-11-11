@@ -74,7 +74,7 @@ namespace POS.EmployeeWorkSpace
                 if (!((MainWindow) Window.GetWindow(this)).currentTable.IsOrdered)
                 {
                     ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.Ordertime = DateTime.Now;
-                    ((MainWindow) Window.GetWindow(this)).currentTable.IsOrdered = true;
+                    ((MainWindow)Window.GetWindow(this)).currentTable.IsOrdered = true;
                 }
 
                 OrderNoteDetail o = new OrderNoteDetail();
@@ -130,6 +130,7 @@ namespace POS.EmployeeWorkSpace
                 //
                 lbSelected.UnselectAll();
 
+                ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl();
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
@@ -230,5 +231,6 @@ namespace POS.EmployeeWorkSpace
             //    SearchBox.Text = "";
             //}
         }
+
     }
 }

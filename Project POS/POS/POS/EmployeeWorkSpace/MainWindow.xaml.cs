@@ -12,6 +12,7 @@ using POS.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
+using System.Windows.Controls;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -28,6 +29,8 @@ namespace POS.EmployeeWorkSpace
 
         Employee emp;
         SalaryNote empSln;
+        public ProgressBar proTable;
+        public ProgressBar proChair;
         public BusinessModel.Table currentTable { get; set; }
         public Chair currentChair { get; set; }
         internal Table b;
@@ -44,6 +47,8 @@ namespace POS.EmployeeWorkSpace
             InitializeComponent();
             currentTable = null;
             emp = App.Current.Properties["EmpLogin"] as Employee;
+            proTable = pgbReservedTable as ProgressBar;
+            proChair = pgbReservedChair as ProgressBar;
 
             cUser.Content = emp.Username;
 
@@ -71,11 +76,58 @@ namespace POS.EmployeeWorkSpace
             WorkTime.Interval = new TimeSpan(0, 0, 1);
             WorkTime.Start();
 
+            initProgressTableChair();
+
             this.Closing += (sender, args) =>
             {
                 WorkTime.Stop();
                 _unitofwork.Dispose();
             };
+        }
+
+        public void initProgressTableChair()
+        {
+            proTable.Maximum = 0;
+            proTable.Value = 0;
+            proChair.Maximum = 0;
+            proChair.Value = 0;
+
+            foreach (BusinessModel.Table t in TableTempData.TbList)
+            {
+                if(t.ChairAmount != 0)
+                {
+                    foreach (Chair ch in t.ChairData)
+                    {
+                        if (ch.ChairOrderDetails.Count != 0)
+                        {
+                            proChair.Value += 1;
+                            proChair.Maximum += 1;
+                        }
+                        else
+                        {
+                            proChair.Maximum += 1;
+                        }
+                    }
+                }
+
+                if (t.IsOrdered == true)
+                {
+                    proTable.Value += 1;
+                    proTable.Maximum += 1;
+                }
+                else
+                {
+                    proTable.Maximum += 1;
+                }
+
+                setToolTip(proChair, proTable);
+            }
+        }
+
+        private void setToolTip(ProgressBar proChair, ProgressBar proTable)
+        {
+            proTable.ToolTip = "Reserved table(" + proTable.Value + "/" + proTable.Maximum + ")";
+            proChair.ToolTip = "Reserved chair(" + proChair.Value + "/" + proChair.Maximum + ")";
         }
 
         private void WorkTime_Tick(object sender, EventArgs e)

@@ -85,7 +85,6 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
-
         /// <summary>
         /// show all orderdetails of all chairs in the table.
         /// but not allow to modify these orderdetails
@@ -99,7 +98,6 @@ namespace POS.EmployeeWorkSpace
 
             // lay ordernotedetails cua ban thu nhat
             var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
-
 
             // chuyen product_id thanh product name
             var query = from orderdetails in tableordernotedetails
@@ -117,8 +115,6 @@ namespace POS.EmployeeWorkSpace
             loadTotalPrice();
             //((MainWindow)Window.GetWindow(this)).currentChair = null;
         }
-
-
 
         ToggleButton curChair;
         private void loadTableChairData()
@@ -155,7 +151,6 @@ namespace POS.EmployeeWorkSpace
                 wp.Children.Add(button);
             }
 
-
         }
 
         private void loadCustomerOwner()
@@ -181,8 +176,7 @@ namespace POS.EmployeeWorkSpace
             }
             initCus_raiseEvent = false;
         }
-
-
+        
         private bool initCus_raiseEvent = false;
         private void cboCustomers_SeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -458,7 +452,7 @@ namespace POS.EmployeeWorkSpace
                         }
                     }
 
-
+                    ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
                     RefreshControl();
                     break;
                 }
@@ -491,8 +485,6 @@ namespace POS.EmployeeWorkSpace
                     o.Note = inputnote.Note;
                     ordernotedetails[index] = o;
                 }
-
-
             }
             else
             {
@@ -551,11 +543,12 @@ namespace POS.EmployeeWorkSpace
             };
             curTable.IsOrdered = false;
             curTable.TableOrderDetails = new List<OrderNoteDetail>();
-
-
+            
+            ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
             loadCustomerOwner();
             RefreshControlAllChair();
             ReadWriteData.writeToBinFile();
         }
+
     }
 }
