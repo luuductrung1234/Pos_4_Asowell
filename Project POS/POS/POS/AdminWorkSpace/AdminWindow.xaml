@@ -103,35 +103,27 @@
                                              ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
                                              ToolTipService.Placement="Right"
                                              Height="40"
+                                             Background="Violet"
                                              Width="40"
                                              Panel.ZIndex="50"
                                              Margin="0,578,29,31"
                                              HorizontalAlignment="Right">
                         <StackPanel>
-                            <Button  ToolTip="Employee Infomation"
+                            <Button Background="DarkGreen" ToolTip="Employee Infomation"
                                      Click="EmployeeInfo_onClick">
-                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-                                      Stretch="Uniform"
-                                      Width="15"
-                                      Height="15"
-                                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                                <materialDesign:PackIcon Kind="AccountCardDetails" />
 
                             </Button>
                             <Button Click="SalaryInfo_onClick"
                                     ToolTip="Salary">
-                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-                                      Stretch="Uniform"
-                                      Width="15"
-                                      Height="15"
-                                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                                <materialDesign:PackIcon Kind="Coin" />
                             </Button>
-                            <Button Click="ProductInfo_onclick"
+                            <Button Background="SkyBlue" Click="ProductInfo_onclick"
                                     ToolTip="Product Infomation">
-                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-                                      Stretch="Uniform"
-                                      Width="15"
-                                      Height="15"
-                                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                <materialDesign:PackIcon Kind="Food" />
+                            </Button>
+                            <Button Background="Red" x:Name="bntCustomer" Click="bntCustomer_Click" ToolTip="Customer Infomation">
+                                <materialDesign:PackIcon Kind="AccountStar" />
                             </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>

@@ -27,6 +27,7 @@ namespace POS.AdminWorkSpace
         ProductDetailPage productdetals;
         internal Login login;
         AdminRe curAdmin;
+        CustomerPage ctmP;
 
         public AdminWindow()
         {
@@ -41,7 +42,7 @@ namespace POS.AdminWorkSpace
             empListPage = new EmployeeListPage(_unitowork, curAdmin);
             salarypage = new SalaryPage(_unitowork);
             productdetals = new ProductDetailPage( _unitowork);
-
+            ctmP=new CustomerPage(_unitowork);
             Closing += AdminWindow_Closing;
         }
 
@@ -81,6 +82,12 @@ namespace POS.AdminWorkSpace
         {
             AdminDetailWindow adw = new AdminDetailWindow(_unitowork, curAdmin);
             adw.Show();
+        }
+
+        private void bntCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            
+            myframe.Navigate(ctmP);
         }
     }
 }
