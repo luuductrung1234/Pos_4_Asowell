@@ -75,8 +75,9 @@
                             </materialDesign:PopupBox.ToggleContent>
 
                             <StackPanel>
-                                <Button Content="Details"
-                                        Click="Button_Click_1" />
+                                <Button x:Name="btnDetails"
+                                        Content="Details"
+                                        Click="BtnDetails_OnClick" />
                                 <Separator />
                                 <Button x:Name="bntLogout"
                                         Content="Log out"
@@ -108,7 +109,7 @@
                                              HorizontalAlignment="Right">
                         <StackPanel>
                             <Button  ToolTip="Employee Infomation"
-                                     Click="Button_Click">
+                                     Click="EmployeeInfo_onClick">
                                 <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
                                       Stretch="Uniform"
                                       Width="15"
@@ -116,7 +117,7 @@
                                       Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
 
                             </Button>
-                            <Button Click="Button_Click_2"
+                            <Button Click="SalaryInfo_onClick"
                                     ToolTip="Salary">
                                 <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
                                       Stretch="Uniform"
@@ -124,7 +125,7 @@
                                       Height="15"
                                       Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
                             </Button>
-                            <Button Click="Button_Click_3"
+                            <Button Click="ProductInfo_onclick"
                                     ToolTip="Product Infomation">
                                 <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
                                       Stretch="Uniform"

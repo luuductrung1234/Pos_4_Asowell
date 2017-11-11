@@ -21,38 +21,33 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class AdminWindow : Window
     {
-        private AdminwsOfAsowell _unitofork;
-        private EmployeewsOfAsowell _unitofwork;
+        private AdminwsOfAsowell _unitowork;
         EmployeeListPage empListPage;
         SalaryPage salarypage;
         ProductDetailPage productdetals;
         internal Login login;
-        AdminRe admin;
+        AdminRe curAdmin;
 
         public AdminWindow()
         {
             InitializeComponent();
-            admin = App.Current.Properties["AdLogin"] as AdminRe;
-            cUser.Content = admin.Username;
-            _unitofork = new AdminwsOfAsowell();
-            _unitofwork = new EmployeewsOfAsowell();
-            admin = App.Current.Properties["AdLogin"] as AdminRe;
-            empListPage = new EmployeeListPage(_unitofork, admin);
-            salarypage = new SalaryPage(_unitofork);
-            productdetals = new ProductDetailPage( _unitofork);
+            _unitowork = new AdminwsOfAsowell();
+
+            AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
+            curAdmin = _unitowork.AdminreRepository
+                .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
+            cUser.Content = curAdmin.Username;
+            
+            empListPage = new EmployeeListPage(_unitowork, curAdmin);
+            salarypage = new SalaryPage(_unitowork);
+            productdetals = new ProductDetailPage( _unitowork);
 
             Closing += AdminWindow_Closing;
         }
 
         private void AdminWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _unitofork.Dispose();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            AdminDetailWindow adw = new AdminDetailWindow(_unitofork, admin);
-            adw.ShowDialog();
+            _unitowork.Dispose();
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
@@ -62,7 +57,7 @@ namespace POS.AdminWorkSpace
             login.Show();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void EmployeeInfo_onClick(object sender, RoutedEventArgs e)
         {
             myframe.Navigate(empListPage);
         }
@@ -72,14 +67,20 @@ namespace POS.AdminWorkSpace
 
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void SalaryInfo_onClick(object sender, RoutedEventArgs e)
         {
             myframe.Navigate(salarypage);
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void ProductInfo_onclick(object sender, RoutedEventArgs e)
         {
             myframe.Navigate(productdetals);
+        }
+
+        private void BtnDetails_OnClick(object sender, RoutedEventArgs e)
+        {
+            AdminDetailWindow adw = new AdminDetailWindow(_unitowork, curAdmin);
+            adw.Show();
         }
     }
 }

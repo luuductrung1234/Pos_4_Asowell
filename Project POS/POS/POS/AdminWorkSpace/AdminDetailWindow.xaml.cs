@@ -53,7 +53,7 @@ namespace POS.AdminWorkSpace
             }
 
             admin.Name = namee;
-
+            //admin.Employees.Clear();
             _unitofwork.AdminreRepository.Update(admin);
             _unitofwork.Save();
         }
