@@ -100,7 +100,7 @@
                     <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                                              PlacementMode="TopAndAlignCentres"
                                              ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
-                                             ToolTipService.Placement="Right"                                             
+                                             ToolTipService.Placement="Right"
                                              Height="40"
                                              Width="40"
                                              Panel.ZIndex="50"
@@ -108,9 +108,30 @@
                                              HorizontalAlignment="Right">
                         <StackPanel>
                             <Button  ToolTip="Employee Infomation"
-                                     Click="Button_Click">Employee Info</Button>
-                            <Button Click="Button_Click_2" ToolTip="Salary">Salary</Button>
-                            <Button Click="Button_Click_3" ToolTip="Product Infomation">Product Info</Button>
+                                     Click="Button_Click">
+                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+                                      Stretch="Uniform"
+                                      Width="15"
+                                      Height="15"
+                                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+
+                            </Button>
+                            <Button Click="Button_Click_2"
+                                    ToolTip="Salary">
+                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+                                      Stretch="Uniform"
+                                      Width="15"
+                                      Height="15"
+                                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                            </Button>
+                            <Button Click="Button_Click_3"
+                                    ToolTip="Product Infomation">
+                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+                                      Stretch="Uniform"
+                                      Width="15"
+                                      Height="15"
+                                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                            </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>

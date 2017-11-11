@@ -49,7 +49,8 @@
                              Margin="0,20,0,0">
                     <TextBlock Text="ID: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <TextBlock Text="{Binding AdId}"
+                    <TextBlock x:Name="txtID"
+                               Text="{Binding AdId}"
                                Width="215"
                                FontSize="18"
                                Foreground="White"
@@ -60,12 +61,12 @@
                     <TextBlock Text="UserName: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <TextBox Text="{Binding Username}"
-                             x:Name="txtBirth"
+                             x:Name="txtUsername"
                              Width="215"
                              FontSize="18"
                              Foreground="White"
                              HorizontalAlignment="Left"
-                             IsEnabled="False"/>
+                             IsEnabled="False" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Margin="0,20,0,0">

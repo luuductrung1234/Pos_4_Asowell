@@ -23,7 +23,7 @@ namespace POS.AdminWorkSpace
     public partial class AdminDetailWindow : Window
     {
         private AdminwsOfAsowell _unitofwork;
-        AdminRe admin;
+        private AdminRe admin;
         private List<Employee> empwithad;
         public AdminDetailWindow(AdminwsOfAsowell unitofwork, AdminRe ad)
         {
@@ -38,23 +38,24 @@ namespace POS.AdminWorkSpace
         private void loadAdData()
         {
             this.AdminInfo.DataContext = admin;
+            //txtName.IsEnabled = false;
         }
 
         private void bntUpdate_Click(object sender, RoutedEventArgs e)
         {
-            ////check name
-            //string namee = txtName.Text.Trim();
-            //if (namee.Length == 0 || namee.Length > 50)
-            //{
-            //    MessageBox.Show("Name is not valid!");
-            //    txtName.Focus();
-            //    return;
-            //}
+            //check name
+            string namee = txtName.Text.Trim();
+            if (namee.Length == 0 || namee.Length > 50)
+            {
+                MessageBox.Show("Name is not valid!");
+                txtName.Focus();
+                return;
+            }
 
-            //admin.Name = namee;
+            admin.Name = namee;
 
-            //_unitofwork.AdminreRepository.Update(admin);
-            //_unitofwork.Save();
+            _unitofwork.AdminreRepository.Update(admin);
+            _unitofwork.Save();
         }
     }
 }
