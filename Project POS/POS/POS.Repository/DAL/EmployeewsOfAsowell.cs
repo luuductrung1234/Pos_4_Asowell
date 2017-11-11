@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using POS.Context;
 using POS.Entities;
 using POS.Repository.Generic;
@@ -26,6 +22,17 @@ namespace POS.Repository.DAL
         private GenericRepository<Ingredient> _ingredientRepository;
         private GenericRepository<Product> _productRepository;
         private GenericRepository<OrderNote> _orderRepository;
+
+        public EmployeewsOfAsowell()
+        {
+            context = new AsowellContext();
+        }
+
+        public EmployeewsOfAsowell(string initalCatalog, string dataSource, string userId, string password)
+        {
+            context = new AsowellContext();
+            context.ChangeDatabase(initalCatalog, dataSource, userId, password);
+        }
 
         public GenericRepository<AdminRe> AdminreRepository
         {
