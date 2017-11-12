@@ -34,7 +34,7 @@ namespace POS.AdminWorkSpace
         private void lvOrderNote_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             OrderNote odn = lvOrderNote.SelectedItem as OrderNote;
-            lvOrderNote.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(c => c.OrdernoteId.Equals(odn.OrdernoteId));
+            lvOrderNoteDetails.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(c => c.OrdernoteId.Equals(odn.OrdernoteId));
         }
 
         private void cboPrduct_SelectionChanged(object sender, SelectionChangedEventArgs e)

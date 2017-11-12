@@ -11,7 +11,7 @@
       Background="{DynamicResource MaterialDesignPaper}"
       Height="630"
       Width="1366"
-      Title="SalaryPage">
+      Title="OrderPage">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.15*" />

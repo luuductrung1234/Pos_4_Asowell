@@ -169,7 +169,6 @@
                       Foreground="White"
                       FontWeight="Bold"
                       Margin="10,63,0,0"
-                      SelectionChanged="lvData_SelectionChanged"
                       Height="auto">
                 <ListView.View>
                     <GridView>
