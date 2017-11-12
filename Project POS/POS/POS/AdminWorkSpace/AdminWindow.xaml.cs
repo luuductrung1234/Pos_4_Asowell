@@ -23,6 +23,7 @@ namespace POS.AdminWorkSpace
     {
         private AdminwsOfAsowell _unitowork;
         EmployeeListPage empListPage;
+        OrderNotePage ordernotepage;
         SalaryPage salarypage;
         ProductDetailPage productdetals;
         internal Login login;
@@ -43,6 +44,7 @@ namespace POS.AdminWorkSpace
             salarypage = new SalaryPage(_unitowork);
             productdetals = new ProductDetailPage( _unitowork);
             ctmP=new CustomerPage(_unitowork);
+            ordernotepage = new OrderNotePage(_unitowork);
             Closing += AdminWindow_Closing;
         }
 
@@ -88,6 +90,11 @@ namespace POS.AdminWorkSpace
         {
             
             myframe.Navigate(ctmP);
+        }
+
+        private void bntOrder_Click(object sender, RoutedEventArgs e)
+        {
+            myframe.Navigate(ordernotepage);
         }
     }
 }

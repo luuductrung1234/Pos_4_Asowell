@@ -125,6 +125,13 @@
                             <Button Background="Red" x:Name="bntCustomer" Click="bntCustomer_Click" ToolTip="Customer Infomation">
                                 <materialDesign:PackIcon Kind="AccountStar" />
                             </Button>
+                            <Button Background="RosyBrown"
+                                    x:Name="bntOrder"
+                                    Click="bntOrder_Click"
+                                    ToolTip="Order Infomation">
+                                <materialDesign:PackIcon Kind="BookmarkCheck" />
+                            </Button>
+
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>
