@@ -29,6 +29,7 @@ namespace POS.AdminWorkSpace
         internal Login login;
         AdminRe curAdmin;
         CustomerPage ctmP;
+        ReceiptNotePage receiptnotepage;
 
         public AdminWindow()
         {
@@ -45,6 +46,7 @@ namespace POS.AdminWorkSpace
             productdetals = new ProductDetailPage( _unitowork);
             ctmP=new CustomerPage(_unitowork);
             ordernotepage = new OrderNotePage(_unitowork);
+            receiptnotepage = new ReceiptNotePage(_unitowork);
             Closing += AdminWindow_Closing;
         }
 
@@ -95,6 +97,11 @@ namespace POS.AdminWorkSpace
         private void bntOrder_Click(object sender, RoutedEventArgs e)
         {
             myframe.Navigate(ordernotepage);
+        }
+
+        private void bntReceipt_Click(object sender, RoutedEventArgs e)
+        {
+            myframe.Navigate(receiptnotepage);
         }
     }
 }

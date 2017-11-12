@@ -41,5 +41,15 @@ namespace POS.AdminWorkSpace
         {
 
         }
+
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

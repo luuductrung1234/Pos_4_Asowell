@@ -131,6 +131,12 @@
                                     ToolTip="Order Infomation">
                                 <materialDesign:PackIcon Kind="BookmarkCheck" />
                             </Button>
+                            <Button Background="RosyBrown"
+                                    x:Name="bntReceipt"
+                                    Click="bntReceipt_Click"
+                                    ToolTip="Receipt Infomation">
+                                <materialDesign:PackIcon Kind="History" />
+                            </Button>
 
                         </StackPanel>
                     </materialDesign:PopupBox>
