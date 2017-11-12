@@ -181,7 +181,7 @@
                                FontSize="18"
                                Width="215"
                                HorizontalAlignment="Center"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center" />
                 </StackPanel>
 
             </StackPanel>
@@ -227,10 +227,10 @@
                              HorizontalAlignment="Center" />
                     <TextBlock Text="Password"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                    <TextBox x:Name="txtPass"
-                             Width="215"
-                             FontSize="18"
-                             Foreground="White" />
+                    <PasswordBox x:Name="txtPass"
+                                 Width="215"
+                                 FontSize="18"
+                                 Foreground="White" />
                 </StackPanel>
 
             </StackPanel>
@@ -246,7 +246,7 @@
                         FontSize="18"
                         FontWeight="Bold"
                         Margin="0,0,0,0"
-                        Click="bntAddnew_Click"/>
+                        Click="bntAddnew_Click" />
                 <Button x:Name="bntUpdate"
                         Content="Update"
                         Height="Auto"
@@ -254,7 +254,7 @@
                         Width="121"
                         FontSize="18"
                         FontWeight="Bold"
-                        Click="bntUpdate_Click"/>
+                        Click="bntUpdate_Click" />
                 <Button x:Name="bntDel"
                         Content="Delete"
                         Height="Auto"
@@ -262,7 +262,7 @@
                         Width="121"
                         FontSize="18"
                         FontWeight="Bold"
-                        Click="bntDel_Click"/>
+                        Click="bntDel_Click" />
             </StackPanel>
         </Grid>
     </Grid>

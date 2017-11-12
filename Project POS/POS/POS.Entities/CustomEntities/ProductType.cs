@@ -8,6 +8,7 @@ namespace POS.Entities.CustomEntities
 {
     public enum ProductType
     {
+        All = -1,
         Drink,
         Food,
         Beer,

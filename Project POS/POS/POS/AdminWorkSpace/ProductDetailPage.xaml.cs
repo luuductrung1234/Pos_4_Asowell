@@ -32,7 +32,7 @@ namespace POS.AdminWorkSpace
             lvData.ItemsSource = unitofork.ProductRepository.Get();
             lvDetails.ItemsSource = unitofork.ProductDetailsRepository.Get(includeProperties: "Product");
             lvIngredient.ItemsSource = unitofork.IngredientRepository.Get();
-            cboType.Items.Add("ALL");
+            cboType.Items.Add(ProductType.All);
             
             cboType.Items.Add(ProductType.Drink);
             cboType.Items.Add(ProductType.Food);
@@ -70,7 +70,16 @@ namespace POS.AdminWorkSpace
         private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var allProduct = _unitofork.ProductRepository.Get().ToList();
-            lvData.ItemsSource = allProduct.Where(p => p.Type == ((int)(sender as ComboBox).SelectedValue));
+            int selectedVal = ((int) (sender as ComboBox).SelectedValue);
+            if (selectedVal == -1)
+            {
+                lvData.ItemsSource = allProduct;
+            }
+            else
+            {
+                lvData.ItemsSource = allProduct.Where(p => p.Type == selectedVal);
+            }
+            
         }
 
         private void SearchIBox_TextChanged(object sender, TextChangedEventArgs e)
