@@ -31,7 +31,7 @@
                             CornerRadius="3"
                             ToolTip="Enter to search, ignore case"
                             Margin="0,0,20,0">
-                        <Grid >
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -56,19 +56,29 @@
                                      MinWidth="200"
                                      VerticalAlignment="Center"
                                      TextChanged="SearchBox_TextChanged" />
-                            
+
                         </Grid>
-                        
+
                     </Border>
                     <Border MaxHeight="30"
                             CornerRadius="3">
-                        <StackPanel Orientation="Horizontal" Width="auto" Height="auto">
-                            <DatePicker Foreground="Black"
-                                        Background="White"
+                        <StackPanel Orientation="Horizontal"
+                                    Width="auto"
+                                    Height="auto">
+                            <!--<DatePicker x:Name="txtDate"
                                         Width="135"
-                                        Margin="0,0,20,0"></DatePicker>
+                                        Margin="0,0,20,0"></DatePicker>-->
+                            <ComboBox x:Name="cboMonth"
+                                      Width="50"
+                                      Margin="0,0,20,0" />
+                            <ComboBox x:Name="cboYear"
+                                      Width="100"
+                                      Margin="0,0,50,0"
+                                      VerticalAlignment="Bottom" />
                             <Button x:Name="bntAdd"
-                                    Content="Add" Height="auto" Margin="0,0,20,0"
+                                    Content="Add"
+                                    Height="auto"
+                                    Margin="0,0,20,0"
                                     FontWeight="Bold" />
                             <Button x:Name="bntEdit"
                                     Content="Edit"
@@ -86,49 +96,49 @@
             </materialDesign:ColorZone>
         </Grid>
         <Grid Grid.Row="1">
-        <materialDesign:ColorZone Margin="2,2,0.4,0"
+            <materialDesign:ColorZone Margin="2,2,0.4,0"
                                       Padding="16"
-                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                  CornerRadius="3"
-                                  Mode="PrimaryDark"
-                                  Height="46">
-            <StackPanel  Orientation="Horizontal">
-                <TextBlock Margin="16,0,0,-15.6"
-                           VerticalAlignment="Center"
-                           FontWeight="Bold"
-                           FontSize="18"
-                           Height="30">Salary Note</TextBlock>
-            </StackPanel>
-        </materialDesign:ColorZone>
-        <ListView Name="lvSalary"
-                  Width="auto"
-                  VerticalAlignment="Top"
-                  HorizontalAlignment="Left"
-                  Background="#FFED5C5C"
-                  Foreground="White"
-                  FontWeight="Bold"
-                  Margin="10,63,0,0"
-                  SelectionChanged="lvData_SelectionChanged"
-                  Height="auto">
-            <ListView.View>
-                <GridView x:Name="gvShowDetails">
-                    <GridViewColumn Header="Salary_ID"
-                                    Width="100"
+                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                      CornerRadius="3"
+                                      Mode="PrimaryDark"
+                                      Height="46">
+                <StackPanel  Orientation="Horizontal">
+                    <TextBlock Margin="16,0,0,-15.6"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="18"
+                               Height="30">Salary Note</TextBlock>
+                </StackPanel>
+            </materialDesign:ColorZone>
+            <ListView Name="lvSalary"
+                      Width="auto"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      Background="#FFED5C5C"
+                      Foreground="White"
+                      FontWeight="Bold"
+                      Margin="10,63,0,0"
+                      SelectionChanged="lvData_SelectionChanged"
+                      Height="auto">
+                <ListView.View>
+                    <GridView x:Name="gvShowDetails">
+                        <GridViewColumn Header="Salary_ID"
+                                        Width="100"
                                         DisplayMemberBinding="{Binding SnId}" />
                         <GridViewColumn Header="Employee_ID"
                                         Width="150"
                                         DisplayMemberBinding="{Binding EmpId}" />
                         <GridViewColumn Header="Employee Name"
-                                    Width="150"
-                                    DisplayMemberBinding="{Binding Employee.Name}" />
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding Employee.Name}" />
                         <GridViewColumn Header="date pay"
-                                    Width="150"
+                                        Width="150"
                                         DisplayMemberBinding="{Binding DatePay}" />
                         <GridViewColumn Header="Salary Value"
-                                    Width="150"
-                                        DisplayMemberBinding="{Binding SalaryValue}"/>
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding SalaryValue}" />
                         <GridViewColumn Header="Work Hour"
-                                    Width="150"
+                                        Width="150"
                                         DisplayMemberBinding="{Binding WorkHour}" />
                         <GridViewColumn Header="For Month"
                                         Width="150"
@@ -137,11 +147,11 @@
                                         Width="150"
                                         DisplayMemberBinding="{Binding ForYear}" />
                         <GridViewColumn Header="Is Paid"
-                                        Width="150"
+                                        Width="0"
                                         DisplayMemberBinding="{Binding IsPaid}" />
                     </GridView>
-            </ListView.View>
-        </ListView>
+                </ListView.View>
+            </ListView>
         </Grid>
         <Grid x:Name="EmployeeInfo"
               Grid.Row="2">
@@ -187,7 +197,7 @@
                                         DisplayMemberBinding="{Binding ResultSalary}" />
                         <GridViewColumn Header="Start Time"
                                         Width="180"
-                                        DisplayMemberBinding="{Binding StartTime}"/>
+                                        DisplayMemberBinding="{Binding StartTime}" />
                         <GridViewColumn Header="End Time"
                                         Width="180"
                                         DisplayMemberBinding="{Binding EndTime}" />
