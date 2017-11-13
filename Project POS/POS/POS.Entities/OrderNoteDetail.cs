@@ -23,14 +23,18 @@ namespace POS.Entities
     // OrderNoteDetails
     [Serializable]
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class OrderNoteDetail : INotifyPropertyChanged
+    public partial class OrderNoteDetail :  INotifyPropertyChanged
     {
-        private string _ordernoteId;
-        private string _productId;
-        private string _stats;
-        private int _quan;
-        private string _note;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private ObservableCollection<string> _statusItems = new ObservableCollection<string> { "Stater", "Main Cost", "Dessert", "Drink" };
+        private string _ordernoteId { get; set; } // ordernote_id (Primary key) (length: 10)
+        private string _productId { get; set; } // product_id (Primary key) (length: 10)
+        private string _stats { get; set; } // SelectedStats
+        private int _quan { get; set; } // quan
+        private string _note { get; set; } // note (length: 500)
+        
 
         public string OrdernoteId
         {
@@ -104,19 +108,17 @@ namespace POS.Entities
             }
         }
 
-
-
         // Foreign keys
 
         /// <summary>
-        /// Parent OrderNote pointed by [OrderNoteDetails].([OrdernoteId]) (fk_OrderNote)
+        /// Parent OrderNote pointed by [OrderNoteDetails].([OrdernoteId]) (FK_dbo.OrderNoteDetails_dbo.OrderNote_ordernote_id)
         /// </summary>
-        public virtual OrderNote OrderNote { get; set; } // fk_OrderNote
+        public virtual OrderNote OrderNote { get; set; } // FK_dbo.OrderNoteDetails_dbo.OrderNote_ordernote_id
 
         /// <summary>
-        /// Parent Product pointed by [OrderNoteDetails].([ProductId]) (fk_foodinmenu)
+        /// Parent Product pointed by [OrderNoteDetails].([ProductId]) (FK_dbo.OrderNoteDetails_dbo.Product_product_id)
         /// </summary>
-        public virtual Product Product { get; set; } // fk_foodinmenu
+        public virtual Product Product { get; set; } // FK_dbo.OrderNoteDetails_dbo.Product_product_id
 
         public OrderNoteDetail()
         {
@@ -125,7 +127,6 @@ namespace POS.Entities
 
         partial void InitializePartial();
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

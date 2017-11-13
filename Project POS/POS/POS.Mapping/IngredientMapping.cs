@@ -41,7 +41,7 @@ namespace POS.Mapping
             Property(x => x.Deleted).HasColumnName(@"deleted").HasColumnType("int").IsRequired();
 
             // Foreign keys
-            HasRequired(a => a.WareHouse).WithMany(b => b.Ingredients).HasForeignKey(c => c.WarehouseId).WillCascadeOnDelete(false); // fk_warehouseid
+            HasRequired(a => a.WareHouse).WithMany(b => b.Ingredients).HasForeignKey(c => c.WarehouseId).WillCascadeOnDelete(false); // FK_dbo.Ingredient_dbo.WareHouse_warehouse_id
             InitializePartial();
         }
         partial void InitializePartial();

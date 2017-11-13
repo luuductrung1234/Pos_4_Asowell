@@ -25,16 +25,20 @@ namespace POS.Context
     {
         public System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; }
         public System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; }
+        public System.Data.Entity.DbSet<Chair> Chairs { get; set; }
         public System.Data.Entity.DbSet<Customer> Customers { get; set; }
         public System.Data.Entity.DbSet<Employee> Employees { get; set; }
         public System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; }
+        public System.Data.Entity.DbSet<OrderDetailsTemp> OrderDetailsTemps { get; set; }
         public System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; }
         public System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; }
+        public System.Data.Entity.DbSet<OrderTemp> OrderTemps { get; set; }
         public System.Data.Entity.DbSet<Product> Products { get; set; }
         public System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; }
         public System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; }
         public System.Data.Entity.DbSet<ReceiptNoteDetail> ReceiptNoteDetails { get; set; }
         public System.Data.Entity.DbSet<SalaryNote> SalaryNotes { get; set; }
+        public System.Data.Entity.DbSet<Table> Tables { get; set; }
         public System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; }
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; }
 
@@ -42,16 +46,20 @@ namespace POS.Context
         {
             AdminRes = new FakeDbSet<AdminRe>("AdId");
             ApplicationLogs = new FakeDbSet<ApplicationLog>("Id");
+            Chairs = new FakeDbSet<Chair>("ChairId");
             Customers = new FakeDbSet<Customer>("CusId");
             Employees = new FakeDbSet<Employee>("EmpId");
             Ingredients = new FakeDbSet<Ingredient>("IgdId");
+            OrderDetailsTemps = new FakeDbSet<OrderDetailsTemp>("OrdertempId", "ProductId");
             OrderNotes = new FakeDbSet<OrderNote>("OrdernoteId");
             OrderNoteDetails = new FakeDbSet<OrderNoteDetail>("OrdernoteId", "ProductId");
+            OrderTemps = new FakeDbSet<OrderTemp>("OrdertempId");
             Products = new FakeDbSet<Product>("ProductId");
             ProductDetails = new FakeDbSet<ProductDetail>("PdetailId");
             ReceiptNotes = new FakeDbSet<ReceiptNote>("RnId");
             ReceiptNoteDetails = new FakeDbSet<ReceiptNoteDetail>("RnId", "IgdId");
             SalaryNotes = new FakeDbSet<SalaryNote>("SnId");
+            Tables = new FakeDbSet<Table>("TableId");
             WareHouses = new FakeDbSet<WareHouse>("WarehouseId");
             WorkingHistories = new FakeDbSet<WorkingHistory>("WhId");
 
@@ -117,95 +125,6 @@ namespace POS.Context
         public override string ToString()
         {
             throw new System.NotImplementedException();
-        }
-
-
-        // Stored Procedures
-        public int AddAppLog(string comment)
-        {
-
-            return 0;
-        }
-
-        public int AddAppLog2(string comment)
-        {
-
-            return 0;
-        }
-
-        public int AddAppLog3(string comment, out int? outid)
-        {
-            outid = default(int);
-
-            return 0;
-        }
-
-        public int AddAppLog4(string comment)
-        {
-
-            return 0;
-        }
-
-        public int AddAppLog5(string comment, string extraData)
-        {
-
-            return 0;
-        }
-
-        public int DeleteAppLog(string appName)
-        {
-
-            return 0;
-        }
-
-        public System.Collections.Generic.List<GetEmployeeDetailsReturnModel> GetEmployeeDetails(string empId)
-        {
-            int procResult;
-            return GetEmployeeDetails(empId, out procResult);
-        }
-
-        public System.Collections.Generic.List<GetEmployeeDetailsReturnModel> GetEmployeeDetails(string empId, out int procResult)
-        {
-
-            procResult = 0;
-            return new System.Collections.Generic.List<GetEmployeeDetailsReturnModel>();
-        }
-
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<GetEmployeeDetailsReturnModel>> GetEmployeeDetailsAsync(string empId)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(GetEmployeeDetails(empId, out procResult));
-        }
-
-        public int UpdateEmployeeName(string id, string name, string oldname)
-        {
-
-            return 0;
-        }
-
-        public int UpdateLogMass(string xmlchanges)
-        {
-
-            return 0;
-        }
-
-        public UpdateLogMass2ReturnModel UpdateLogMass2(string xmlchanges)
-        {
-            int procResult;
-            return UpdateLogMass2(xmlchanges, out procResult);
-        }
-
-        public UpdateLogMass2ReturnModel UpdateLogMass2(string xmlchanges, out int procResult)
-        {
-
-            procResult = 0;
-            return new UpdateLogMass2ReturnModel();
-        }
-
-        public System.Threading.Tasks.Task<UpdateLogMass2ReturnModel> UpdateLogMass2Async(string xmlchanges)
-        {
-            int procResult;
-            return System.Threading.Tasks.Task.FromResult(UpdateLogMass2(xmlchanges, out procResult));
         }
 
     }

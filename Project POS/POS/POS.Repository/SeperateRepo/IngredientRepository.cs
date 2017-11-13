@@ -4,42 +4,43 @@ using System.Data.Entity;
 using System.Linq;
 using POS.Context;
 using POS.Entities;
+using POS.Repository.Interfaces;
 
-namespace POS.Repository.DAL
+namespace POS.Repository.SeperateRepo
 {
-    public class ProductRepository : Interfaces.IProductRepository
+    public class IngredientRepository : IIngredientRepository
     {
         private AsowellContext context;
 
-        public ProductRepository(AsowellContext context)
+        public IngredientRepository(AsowellContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<Ingredient> GetAllIngredients()
         {
-            return context.Products.ToList();
+            return context.Ingredients.ToList();
         }
 
-        public Product GetProductById(string productId)
+        public Ingredient GetIngredientById(string ingredientId)
         {
-            return context.Products.Find(productId);
+            return context.Ingredients.Find(ingredientId);
         }
 
-        public void InsertProduct(Product product)
+        public void InsertIngredient(Ingredient ingredient)
         {
-            context.Products.Add(product);
+            context.Ingredients.Add(ingredient);
         }
 
-        public void DeleteProduct(string productId)
+        public void DeleteIngredient(string ingredientId)
         {
-            Product product = context.Products.Find(productId);
-            context.Products.Remove(product);
+            Ingredient ingredient = context.Ingredients.Find(ingredientId);
+            context.Ingredients.Remove(ingredient);
         }
 
-        public void UpdateProduct(Product product)
+        public void UpdateIngredient(Ingredient ingredient)
         {
-            context.Entry(product).State = EntityState.Modified;
+            context.Entry(ingredient).State = EntityState.Modified;
         }
 
         public void Save()

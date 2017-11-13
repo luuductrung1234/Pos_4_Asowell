@@ -45,7 +45,7 @@ namespace POS.Mapping
             Property(x => x.Deleted).HasColumnName(@"deleted").HasColumnType("int").IsRequired();
 
             // Foreign keys
-            HasRequired(a => a.AdminRe).WithMany(b => b.Employees).HasForeignKey(c => c.Manager).WillCascadeOnDelete(false); // fk_manager
+            HasRequired(a => a.AdminRe).WithMany(b => b.Employees).HasForeignKey(c => c.Manager).WillCascadeOnDelete(false); // FK_dbo.Employee_dbo.AdminRes_manager
             InitializePartial();
         }
         partial void InitializePartial();

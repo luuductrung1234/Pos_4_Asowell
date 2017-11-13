@@ -31,16 +31,16 @@ namespace POS.Entities
         // Reverse navigation
 
         /// <summary>
-        /// Child WorkingHistories where [WorkingHistory].[result_salary] point to this entity (fk_salarynote)
+        /// Child WorkingHistories where [WorkingHistory].[result_salary] point to this entity (FK_dbo.WorkingHistory_dbo.SalaryNote_result_salary)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory.fk_salarynote
+        public virtual System.Collections.Generic.ICollection<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory.FK_dbo.WorkingHistory_dbo.SalaryNote_result_salary
 
         // Foreign keys
 
         /// <summary>
-        /// Parent Employee pointed by [SalaryNote].([EmpId]) (fk_employeeid)
+        /// Parent Employee pointed by [SalaryNote].([EmpId]) (FK_dbo.SalaryNote_dbo.Employee_emp_id)
         /// </summary>
-        public virtual Employee Employee { get; set; } // fk_employeeid
+        public virtual Employee Employee { get; set; } // FK_dbo.SalaryNote_dbo.Employee_emp_id
 
         public SalaryNote()
         {

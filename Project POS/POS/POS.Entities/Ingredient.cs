@@ -32,20 +32,20 @@ namespace POS.Entities
         // Reverse navigation
 
         /// <summary>
-        /// Child ProductDetails where [ProductDetails].[igd_id] point to this entity (fk_ingredientid)
+        /// Child ProductDetails where [ProductDetails].[igd_id] point to this entity (FK_dbo.ProductDetails_dbo.Ingredient_igd_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<ProductDetail> ProductDetails { get; set; } // ProductDetails.fk_ingredientid
+        public virtual System.Collections.Generic.ICollection<ProductDetail> ProductDetails { get; set; } // ProductDetails.FK_dbo.ProductDetails_dbo.Ingredient_igd_id
         /// <summary>
-        /// Child ReceiptNoteDetails where [ReceiptNoteDetails].[igd_id] point to this entity (fk_ingredient)
+        /// Child ReceiptNoteDetails where [ReceiptNoteDetails].[igd_id] point to this entity (FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails.fk_ingredient
+        public virtual System.Collections.Generic.ICollection<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails.FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id
 
         // Foreign keys
 
         /// <summary>
-        /// Parent WareHouse pointed by [Ingredient].([WarehouseId]) (fk_warehouseid)
+        /// Parent WareHouse pointed by [Ingredient].([WarehouseId]) (FK_dbo.Ingredient_dbo.WareHouse_warehouse_id)
         /// </summary>
-        public virtual WareHouse WareHouse { get; set; } // fk_warehouseid
+        public virtual WareHouse WareHouse { get; set; } // FK_dbo.Ingredient_dbo.WareHouse_warehouse_id
 
         public Ingredient()
         {

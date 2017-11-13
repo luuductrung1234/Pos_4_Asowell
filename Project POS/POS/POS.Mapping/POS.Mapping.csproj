@@ -58,6 +58,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ChairMapping.cs">
+      <DependentUpon>AsowellModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CustomerMapping.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
@@ -67,10 +70,16 @@
     <Compile Include="IngredientMapping.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderDetailsTempMapping.cs">
+      <DependentUpon>AsowellModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrderNoteDetailMapping.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderNoteMapping.cs">
+      <DependentUpon>AsowellModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderTempMapping.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductDetailMapping.cs">
@@ -87,6 +96,9 @@
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SalaryNoteMapping.cs">
+      <DependentUpon>AsowellModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TableMapping.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WareHouseMapping.cs">

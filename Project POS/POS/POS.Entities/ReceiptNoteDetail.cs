@@ -28,14 +28,14 @@ namespace POS.Entities
         // Foreign keys
 
         /// <summary>
-        /// Parent Ingredient pointed by [ReceiptNoteDetails].([IgdId]) (fk_ingredient)
+        /// Parent Ingredient pointed by [ReceiptNoteDetails].([IgdId]) (FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id)
         /// </summary>
-        public virtual Ingredient Ingredient { get; set; } // fk_ingredient
+        public virtual Ingredient Ingredient { get; set; } // FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id
 
         /// <summary>
-        /// Parent ReceiptNote pointed by [ReceiptNoteDetails].([RnId]) (fk_receivenoteid)
+        /// Parent ReceiptNote pointed by [ReceiptNoteDetails].([RnId]) (FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id)
         /// </summary>
-        public virtual ReceiptNote ReceiptNote { get; set; } // fk_receivenoteid
+        public virtual ReceiptNote ReceiptNote { get; set; } // FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id
 
         public ReceiptNoteDetail()
         {

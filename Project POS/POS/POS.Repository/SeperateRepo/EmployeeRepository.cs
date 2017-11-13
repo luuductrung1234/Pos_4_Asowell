@@ -6,41 +6,41 @@ using POS.Context;
 using POS.Entities;
 using POS.Repository.Interfaces;
 
-namespace POS.Repository.DAL
+namespace POS.Repository.SeperateRepo
 {
-    public class IngredientRepository : IIngredientRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         private AsowellContext context;
 
-        public IngredientRepository(AsowellContext context)
+        public EmployeeRepository(AsowellContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<Ingredient> GetAllIngredients()
+        public IEnumerable<Employee> GetAllEmployees()
         {
-            return context.Ingredients.ToList();
+            return context.Employees.ToList();
         }
 
-        public Ingredient GetIngredientById(string ingredientId)
+        public Employee GetEmployeeById(string employeeId)
         {
-            return context.Ingredients.Find(ingredientId);
+            return context.Employees.Find(employeeId);
         }
 
-        public void InsertIngredient(Ingredient ingredient)
+        public void InsertEmployee(Employee employee)
         {
-            context.Ingredients.Add(ingredient);
+            context.Employees.Add(employee);
         }
 
-        public void DeleteIngredient(string ingredientId)
+        public void DeleteEmployee(string employeeId)
         {
-            Ingredient ingredient = context.Ingredients.Find(ingredientId);
-            context.Ingredients.Remove(ingredient);
+            Employee employee = context.Employees.Find(employeeId);
+            context.Employees.Remove(employee);
         }
 
-        public void UpdateIngredient(Ingredient ingredient)
+        public void UpdateEmployee(Employee employee)
         {
-            context.Entry(ingredient).State = EntityState.Modified;
+            context.Entry(employee).State = EntityState.Modified;
         }
 
         public void Save()

@@ -40,7 +40,7 @@ namespace POS.Mapping
             Property(x => x.IsPaid).HasColumnName(@"is_paid").HasColumnType("tinyint").IsRequired();
 
             // Foreign keys
-            HasRequired(a => a.Employee).WithMany(b => b.SalaryNotes).HasForeignKey(c => c.EmpId).WillCascadeOnDelete(false); // fk_employeeid
+            HasRequired(a => a.Employee).WithMany(b => b.SalaryNotes).HasForeignKey(c => c.EmpId).WillCascadeOnDelete(false); // FK_dbo.SalaryNote_dbo.Employee_emp_id
             InitializePartial();
         }
         partial void InitializePartial();

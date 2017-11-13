@@ -60,6 +60,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Chair.cs">
+      <DependentUpon>AsowellModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CustomEntities\Product.cs" />
     <Compile Include="CustomEntities\ProductType.cs" />
     <Compile Include="Customer.cs">
@@ -68,16 +71,19 @@
     <Compile Include="Employee.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetEmployeeDetailsReturnModel.cs">
+    <Compile Include="Ingredient.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Ingredient.cs">
+    <Compile Include="OrderDetailsTemp.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderNote.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderNoteDetail.cs">
+      <DependentUpon>AsowellModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderTemp.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
@@ -96,7 +102,7 @@
     <Compile Include="SalaryNote.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UpdateLogMass2ReturnModel.cs">
+    <Compile Include="Table.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WareHouse.cs">

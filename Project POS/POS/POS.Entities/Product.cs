@@ -11,8 +11,6 @@
 // TargetFrameworkVersion = 4.6
 
 using System;
-using System.ComponentModel.DataAnnotations;
-using POS.Entities.CustomEntities;
 
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
@@ -29,25 +27,29 @@ namespace POS.Entities
         public string Name { get; set; } // name (length: 50)
         public string Info { get; set; } // info (length: 100)
         public decimal Price { get; set; } // price
-        public int Type { get; set; } // is_todrink
+        public int Type { get; set; } // type
         public int Deleted { get; set; } // deleted
-        [MaxLength]
-        public string ImageLink { get; set; }
-        public int Discount { get; set; }
+        public string ImageLink { get; set; } // ImageLink
+        public int Discount { get; set; } // Discount
 
         // Reverse navigation
 
         /// <summary>
-        /// Child OrderNoteDetails where [OrderNoteDetails].[product_id] point to this entity (fk_foodinmenu)
+        /// Child OrderDetailsTemps where [OrderDetailsTemp].[product_id] point to this entity (fk_product_id_orderdetailtemp)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails.fk_foodinmenu
+        public virtual System.Collections.Generic.ICollection<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp.fk_product_id_orderdetailtemp
         /// <summary>
-        /// Child ProductDetails where [ProductDetails].[product_id] point to this entity (fk_productid)
+        /// Child OrderNoteDetails where [OrderNoteDetails].[product_id] point to this entity (FK_dbo.OrderNoteDetails_dbo.Product_product_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<ProductDetail> ProductDetails { get; set; } // ProductDetails.fk_productid
+        public virtual System.Collections.Generic.ICollection<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails.FK_dbo.OrderNoteDetails_dbo.Product_product_id
+        /// <summary>
+        /// Child ProductDetails where [ProductDetails].[product_id] point to this entity (FK_dbo.ProductDetails_dbo.Product_product_id)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<ProductDetail> ProductDetails { get; set; } // ProductDetails.FK_dbo.ProductDetails_dbo.Product_product_id
 
         public Product()
         {
+            OrderDetailsTemps = new System.Collections.Generic.List<OrderDetailsTemp>();
             OrderNoteDetails = new System.Collections.Generic.List<OrderNoteDetail>();
             ProductDetails = new System.Collections.Generic.List<ProductDetail>();
             InitializePartial();

@@ -23,6 +23,11 @@ namespace POS.Repository.DAL
         private GenericRepository<Product> _productRepository;
         private GenericRepository<OrderNote> _orderRepository;
 
+        // business repo
+        private GenericRepository<OrderTemp> _orderTempRepository;
+        private GenericRepository<Chair> _chairRepository;
+        private GenericRepository<Table> _tableRepository;
+
         public EmployeewsOfAsowell()
         {
             context = new AsowellContext();
@@ -32,6 +37,43 @@ namespace POS.Repository.DAL
         {
             context = new AsowellContext();
             context.ChangeDatabase(initalCatalog, dataSource, userId, password);
+        }
+
+       
+        public GenericRepository<Table> TableRepository
+        {
+            get
+            {
+                if (_tableRepository == null)
+                {
+                    _tableRepository = new GenericRepository<Table>(context);
+                }
+                return _tableRepository;
+            }
+        }
+
+        public GenericRepository<Chair> ChairRepository
+        {
+            get
+            {
+                if (_chairRepository == null)
+                {
+                    _chairRepository = new GenericRepository<Chair>(context);
+                }
+                return _chairRepository;
+            }
+        }
+
+        public GenericRepository<OrderTemp> OrderTempRepository
+        {
+            get
+            {
+                if (_orderTempRepository == null)
+                {
+                    _orderTempRepository = new GenericRepository<OrderTemp>(context);
+                }
+                return _orderTempRepository;
+            }
         }
 
         public GenericRepository<AdminRe> AdminreRepository

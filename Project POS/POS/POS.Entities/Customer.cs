@@ -33,13 +33,16 @@ namespace POS.Entities
         // Reverse navigation
 
         /// <summary>
-        /// Child OrderNotes where [OrderNote].[cus_id] point to this entity (fk_customerowner)
+        /// Child OrderNotes where [OrderNote].[cus_id] point to this entity (FK_dbo.OrderNote_dbo.Customer_cus_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<OrderNote> OrderNotes { get; set; } // OrderNote.fk_customerowner
+        public virtual System.Collections.Generic.ICollection<OrderNote> OrderNotes { get; set; } // OrderNote.FK_dbo.OrderNote_dbo.Customer_cus_id
+
+        public virtual System.Collections.Generic.ICollection<OrderTemp> OrderTemps { get; set; }
 
         public Customer()
         {
             OrderNotes = new System.Collections.Generic.List<OrderNote>();
+            OrderTemps = new System.Collections.Generic.List<OrderTemp>();
             InitializePartial();
         }
 

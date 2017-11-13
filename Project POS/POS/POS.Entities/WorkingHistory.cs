@@ -9,9 +9,6 @@
 // ReSharper disable RedundantOverridenMember
 // ReSharper disable UseNameofExpression
 // TargetFrameworkVersion = 4.6
-
-using System.ComponentModel.DataAnnotations;
-
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
@@ -22,24 +19,23 @@ namespace POS.Entities
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class WorkingHistory
     {
-       
         public string WhId { get; set; } // wh_id (Primary key) (length: 10)
         public string ResultSalary { get; set; } // result_salary (length: 10)
         public string EmpId { get; set; } // emp_id (length: 10)
         public System.DateTime StartTime { get; set; } // startTime
-        public System.DateTime EndTime { get; set; } // endTime 
+        public System.DateTime EndTime { get; set; } // endTime
 
         // Foreign keys
 
         /// <summary>
-        /// Parent Employee pointed by [WorkingHistory].([EmpId]) (fk_employee)
+        /// Parent Employee pointed by [WorkingHistory].([EmpId]) (FK_dbo.WorkingHistory_dbo.Employee_emp_id)
         /// </summary>
-        public virtual Employee Employee { get; set; } // fk_employee
+        public virtual Employee Employee { get; set; } // FK_dbo.WorkingHistory_dbo.Employee_emp_id
 
         /// <summary>
-        /// Parent SalaryNote pointed by [WorkingHistory].([ResultSalary]) (fk_salarynote)
+        /// Parent SalaryNote pointed by [WorkingHistory].([ResultSalary]) (FK_dbo.WorkingHistory_dbo.SalaryNote_result_salary)
         /// </summary>
-        public virtual SalaryNote SalaryNote { get; set; } // fk_salarynote
+        public virtual SalaryNote SalaryNote { get; set; } // FK_dbo.WorkingHistory_dbo.SalaryNote_result_salary
 
         public WorkingHistory()
         {

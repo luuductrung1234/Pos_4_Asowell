@@ -37,8 +37,8 @@ namespace POS.Mapping
             Property(x => x.Note).HasColumnName(@"note").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(500);
 
             // Foreign keys
-            HasRequired(a => a.Ingredient).WithMany(b => b.ReceiptNoteDetails).HasForeignKey(c => c.IgdId).WillCascadeOnDelete(false); // fk_ingredient
-            HasRequired(a => a.ReceiptNote).WithMany(b => b.ReceiptNoteDetails).HasForeignKey(c => c.RnId).WillCascadeOnDelete(false); // fk_receivenoteid
+            HasRequired(a => a.Ingredient).WithMany(b => b.ReceiptNoteDetails).HasForeignKey(c => c.IgdId).WillCascadeOnDelete(false); // FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id
+            HasRequired(a => a.ReceiptNote).WithMany(b => b.ReceiptNoteDetails).HasForeignKey(c => c.RnId).WillCascadeOnDelete(false); // FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id
             InitializePartial();
         }
         partial void InitializePartial();

@@ -11,10 +11,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using POS.BusinessModel;
-using POS.Context;
-using POS.Repository;
 using POS.Repository.DAL;
-using POS.Repository.Interfaces;
+
 
 namespace POS.EmployeeWorkSpace
 {
