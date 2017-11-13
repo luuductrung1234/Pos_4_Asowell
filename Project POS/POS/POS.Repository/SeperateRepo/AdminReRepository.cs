@@ -6,7 +6,7 @@ using POS.Context;
 using POS.Entities;
 using POS.Repository.Interfaces;
 
-namespace POS.Repository.DAL
+namespace POS.Repository.SeperateRepo
 {
     public class AdminReRepository : IAdminRepository
     {

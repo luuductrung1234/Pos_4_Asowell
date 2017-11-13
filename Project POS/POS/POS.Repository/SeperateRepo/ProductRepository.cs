@@ -5,41 +5,41 @@ using System.Linq;
 using POS.Context;
 using POS.Entities;
 
-namespace POS.Repository.DAL
+namespace POS.Repository.SeperateRepo
 {
-    public class CustomerRepository : Interfaces.ICustomerRepository
+    public class ProductRepository : Interfaces.IProductRepository
     {
         private AsowellContext context;
 
-        public CustomerRepository(AsowellContext context)
+        public ProductRepository(AsowellContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<Customer> GetAllCustomers()
+        public IEnumerable<Product> GetAllProducts()
         {
-            return context.Customers.ToList();
+            return context.Products.ToList();
         }
 
-        public Customer GetCustomerById(string customerId)
+        public Product GetProductById(string productId)
         {
-            return context.Customers.Find(customerId);
+            return context.Products.Find(productId);
         }
 
-        public void InsertCustomer(Customer customer)
+        public void InsertProduct(Product product)
         {
-            context.Customers.Add(customer);
+            context.Products.Add(product);
         }
 
-        public void DeleteCustomer(string customerId)
+        public void DeleteProduct(string productId)
         {
-            Customer customer = context.Customers.Find(customerId);
-            context.Customers.Remove(customer);
+            Product product = context.Products.Find(productId);
+            context.Products.Remove(product);
         }
 
-        public void UpdateCustomer(Customer customer)
+        public void UpdateProduct(Product product)
         {
-            context.Entry(customer).State = EntityState.Modified;
+            context.Entry(product).State = EntityState.Modified;
         }
 
         public void Save()
