@@ -57,5 +57,11 @@ namespace POS.AdminWorkSpace
             _unitofwork.AdminreRepository.Update(admin);
             _unitofwork.Save();
         }
+
+        private void btnChangePass_Click(object sender, RoutedEventArgs e)
+        {
+            AdminChangePass adPass = new AdminChangePass(_unitofwork, admin);
+            adPass.ShowDialog();
+        }
     }
 }

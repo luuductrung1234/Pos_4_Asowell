@@ -85,7 +85,8 @@
                             Click="bntUpdate_Click">Update</Button>
                     <Button x:Name="btnChangePass"
                             Margin="100,0,0,0"
-                            FontWeight="Bold">Change Password</Button>
+                            FontWeight="Bold"
+                            Click="btnChangePass_Click">Change Password</Button>
                 </StackPanel>
             </StackPanel>
 

@@ -36,7 +36,6 @@ namespace POS.EmployeeWorkSpace
                 {
                     em = item;
                     break;
-                    
                 }
             }
             this.EmployeeInfo.DataContext = em;
@@ -85,6 +84,12 @@ namespace POS.EmployeeWorkSpace
             }
             st = fH + ":" + fm + ":" + fs;
             return st;
+        }
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeChangePass empPass = new EmployeeChangePass(_unitofwork, em);
+            empPass.ShowDialog();
         }
     }
 

@@ -114,6 +114,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminWorkSpace\AdminChangePass.xaml.cs">
+      <DependentUpon>AdminChangePass.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\AdminDetailWindow.xaml.cs">
       <DependentUpon>AdminDetailWindow.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,9 @@
     </Compile>
     <Compile Include="EmployeeWorkSpace\DashPage.xaml.cs">
       <DependentUpon>DashPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeWorkSpace\EmployeeChangePass.xaml.cs">
+      <DependentUpon>EmployeeChangePass.xaml</DependentUpon>
     </Compile>
     <Compile Include="EmployeeWorkSpace\EmployeeDetailWindow.xaml.cs">
       <DependentUpon>EmployeeDetailWindow.xaml</DependentUpon>
@@ -211,6 +217,10 @@
     <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformConverter.cs" />
     <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
     <Compile Include="WPFMaterialDesign\Transitions\TransitionAssist.cs" />
+    <Page Include="AdminWorkSpace\AdminChangePass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminWorkSpace\AdminDetailWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -256,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\DashPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\EmployeeChangePass.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

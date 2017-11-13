@@ -11,6 +11,23 @@
         Title="EmployeeDetail"
         Height="639.112"
         Width="894.667">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}"
+               x:Key="TextBlockLabel">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="Foreground"
+                    Value="#FFFFEDBC" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="Width"
+                    Value="120" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+        </Style>
+    </Window.Resources>
 
 
     <Grid x:Name="EmployeeInfo">
@@ -131,6 +148,15 @@
                            Foreground="White"
                            FontSize="18"
                            Width="215" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="30,20,0,0">
+                <Button x:Name="btn"
+                        Content="Change Password"
+                        Height="Auto"
+                        Margin="450,0,0,0"
+                        Click="btn_Click" />
+
             </StackPanel>
         </StackPanel>
         <materialDesign:ColorZone Mode="PrimaryDark"
