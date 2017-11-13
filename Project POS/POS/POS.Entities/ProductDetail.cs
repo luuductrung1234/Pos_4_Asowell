@@ -32,14 +32,14 @@ namespace POS.Entities
         // Foreign keys
 
         /// <summary>
-        /// Parent Ingredient pointed by [ProductDetails].([IgdId]) (fk_ingredientid)
+        /// Parent Ingredient pointed by [ProductDetails].([IgdId]) (FK_dbo.ProductDetails_dbo.Ingredient_igd_id)
         /// </summary>
-        public virtual Ingredient Ingredient { get; set; } // fk_ingredientid
+        public virtual Ingredient Ingredient { get; set; } // FK_dbo.ProductDetails_dbo.Ingredient_igd_id
 
         /// <summary>
-        /// Parent Product pointed by [ProductDetails].([ProductId]) (fk_productid)
+        /// Parent Product pointed by [ProductDetails].([ProductId]) (FK_dbo.ProductDetails_dbo.Product_product_id)
         /// </summary>
-        public virtual Product Product { get; set; } // fk_productid
+        public virtual Product Product { get; set; } // FK_dbo.ProductDetails_dbo.Product_product_id
 
         public ProductDetail()
         {

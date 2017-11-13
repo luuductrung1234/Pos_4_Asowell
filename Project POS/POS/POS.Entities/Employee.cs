@@ -11,7 +11,6 @@
 // TargetFrameworkVersion = 4.6
 
 using System;
-using System.Collections.Generic;
 
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
@@ -20,8 +19,8 @@ namespace POS.Entities
 {
 
     // Employee
-    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     [Serializable]
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Employee
     {
         public string EmpId { get; set; } // emp_id (Primary key) (length: 10)
@@ -41,32 +40,36 @@ namespace POS.Entities
         // Reverse navigation
 
         /// <summary>
-        /// Child OrderNotes where [OrderNote].[emp_id] point to this entity (fk_employeerespond)
+        /// Child OrderNotes where [OrderNote].[emp_id] point to this entity (FK_dbo.OrderNote_dbo.Employee_emp_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<OrderNote> OrderNotes { get; set; } // OrderNote.fk_employeerespond
+        public virtual System.Collections.Generic.ICollection<OrderNote> OrderNotes { get; set; } // OrderNote.FK_dbo.OrderNote_dbo.Employee_emp_id
+
+        public virtual System.Collections.Generic.ICollection<OrderTemp> OrderTemps { get; set; }
+
         /// <summary>
-        /// Child ReceiptNotes where [ReceiptNote].[emp_id] point to this entity (fk_employee_buy)
+        /// Child ReceiptNotes where [ReceiptNote].[emp_id] point to this entity (FK_dbo.ReceiptNote_dbo.Employee_emp_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote.fk_employee_buy
+        public virtual System.Collections.Generic.ICollection<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote.FK_dbo.ReceiptNote_dbo.Employee_emp_id
         /// <summary>
-        /// Child SalaryNotes where [SalaryNote].[emp_id] point to this entity (fk_employeeid)
+        /// Child SalaryNotes where [SalaryNote].[emp_id] point to this entity (FK_dbo.SalaryNote_dbo.Employee_emp_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<SalaryNote> SalaryNotes { get; set; } // SalaryNote.fk_employeeid
+        public virtual System.Collections.Generic.ICollection<SalaryNote> SalaryNotes { get; set; } // SalaryNote.FK_dbo.SalaryNote_dbo.Employee_emp_id
         /// <summary>
-        /// Child WorkingHistories where [WorkingHistory].[emp_id] point to this entity (fk_employee)
+        /// Child WorkingHistories where [WorkingHistory].[emp_id] point to this entity (FK_dbo.WorkingHistory_dbo.Employee_emp_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory.fk_employee
+        public virtual System.Collections.Generic.ICollection<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory.FK_dbo.WorkingHistory_dbo.Employee_emp_id
 
         // Foreign keys
 
         /// <summary>
-        /// Parent AdminRe pointed by [Employee].([Manager]) (fk_manager)
+        /// Parent AdminRe pointed by [Employee].([Manager]) (FK_dbo.Employee_dbo.AdminRes_manager)
         /// </summary>
-        public virtual AdminRe AdminRe { get; set; } // fk_manager
+        public virtual AdminRe AdminRe { get; set; } // FK_dbo.Employee_dbo.AdminRes_manager
 
         public Employee()
         {
             OrderNotes = new System.Collections.Generic.List<OrderNote>();
+            OrderTemps = new System.Collections.Generic.List<OrderTemp>();
             ReceiptNotes = new System.Collections.Generic.List<ReceiptNote>();
             SalaryNotes = new System.Collections.Generic.List<SalaryNote>();
             WorkingHistories = new System.Collections.Generic.List<WorkingHistory>();

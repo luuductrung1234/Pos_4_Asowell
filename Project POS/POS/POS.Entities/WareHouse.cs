@@ -25,9 +25,9 @@ namespace POS.Entities
         // Reverse navigation
 
         /// <summary>
-        /// Child Ingredients where [Ingredient].[warehouse_id] point to this entity (fk_warehouseid)
+        /// Child Ingredients where [Ingredient].[warehouse_id] point to this entity (FK_dbo.Ingredient_dbo.WareHouse_warehouse_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<Ingredient> Ingredients { get; set; } // Ingredient.fk_warehouseid
+        public virtual System.Collections.Generic.ICollection<Ingredient> Ingredients { get; set; } // Ingredient.FK_dbo.Ingredient_dbo.WareHouse_warehouse_id
 
         public WareHouse()
         {

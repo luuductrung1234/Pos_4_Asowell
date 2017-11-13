@@ -37,8 +37,8 @@ namespace POS.Mapping
             Property(x => x.UnitUse).HasColumnName(@"unit_use").HasColumnType("nvarchar").IsRequired().HasMaxLength(100);
 
             // Foreign keys
-            HasRequired(a => a.Ingredient).WithMany(b => b.ProductDetails).HasForeignKey(c => c.IgdId).WillCascadeOnDelete(false); // fk_ingredientid
-            HasRequired(a => a.Product).WithMany(b => b.ProductDetails).HasForeignKey(c => c.ProductId).WillCascadeOnDelete(false); // fk_productid
+            HasRequired(a => a.Ingredient).WithMany(b => b.ProductDetails).HasForeignKey(c => c.IgdId).WillCascadeOnDelete(false); // FK_dbo.ProductDetails_dbo.Ingredient_igd_id
+            HasRequired(a => a.Product).WithMany(b => b.ProductDetails).HasForeignKey(c => c.ProductId).WillCascadeOnDelete(false); // FK_dbo.ProductDetails_dbo.Product_product_id
             InitializePartial();
         }
         partial void InitializePartial();

@@ -9,51 +9,56 @@
 // ReSharper disable RedundantOverridenMember
 // ReSharper disable UseNameofExpression
 // TargetFrameworkVersion = 4.6
-
-using System;
-
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
 namespace POS.Entities
 {
 
-    // OrderNote
-    [Serializable]
+    // OrderTemp
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class OrderNote
+    public partial class OrderTemp
     {
-        public string OrdernoteId { get; set; } // ordernote_id (Primary key) (length: 10)
+        public string OrdertempId { get; set; } // ordertemp_id (Primary key) (length: 10)
         public string CusId { get; set; } // cus_id (length: 10)
         public string EmpId { get; set; } // emp_id (length: 10)
-        public int Ordertable { get; set; } // ordertable
+        public string TableOwned { get; set; } // table_owned (length: 10)
         public System.DateTime Ordertime { get; set; } // ordertime
         public decimal TotalPrice { get; set; } // total_price
         public decimal CustomerPay { get; set; } // customer_pay
         public decimal PayBack { get; set; } // pay_back
 
-        // Reverse navigations
+        // Reverse navigation
 
         /// <summary>
-        /// Child OrderNoteDetails where [OrderNoteDetails].[ordernote_id] point to this entity (FK_dbo.OrderNoteDetails_dbo.OrderNote_ordernote_id)
+        /// Child OrderDetailsTemps where [OrderDetailsTemp].[ordertemp_id] point to this entity (fk_ordertemp_id_orderdetailtemp)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails.FK_dbo.OrderNoteDetails_dbo.OrderNote_ordernote_id
+        public virtual System.Collections.Generic.ICollection<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp.fk_ordertemp_id_orderdetailtemp
+
+
+
 
         // Foreign keys
 
-        /// <summary>
-        /// Parent Customer pointed by [OrderNote].([CusId]) (FK_dbo.OrderNote_dbo.Customer_cus_id)
-        /// </summary>
-        public virtual Customer Customer { get; set; } // FK_dbo.OrderNote_dbo.Customer_cus_id
 
         /// <summary>
-        /// Parent Employee pointed by [OrderNote].([EmpId]) (FK_dbo.OrderNote_dbo.Employee_emp_id)
+        /// Parent Customer pointed by [OrderNote].([CusId]) (fk_customerowner)
         /// </summary>
-        public virtual Employee Employee { get; set; } // FK_dbo.OrderNote_dbo.Employee_emp_id
+        public virtual Customer Customer { get; set; } // fk_customerowner
 
-        public OrderNote()
+        /// <summary>
+        /// Parent Employee pointed by [OrderNote].([EmpId]) (fk_employeerespond)
+        /// </summary>
+        public virtual Employee Employee { get; set; } // fk_employeerespond
+
+        /// <summary>
+        /// Parent Table pointed by [OrderTemp].([TableOwned]) (fk_table_owned_order)
+        /// </summary>
+        public virtual Table Table { get; set; } // fk_table_owned_order
+
+        public OrderTemp()
         {
-            OrderNoteDetails = new System.Collections.Generic.List<OrderNoteDetail>();
+            OrderDetailsTemps = new System.Collections.Generic.List<OrderDetailsTemp>();
             InitializePartial();
         }
 

@@ -102,7 +102,7 @@ namespace POS.EmployeeWorkSpace
 
                 //order tung ghe
                 var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
-                Chair foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) 
+                BusinessModel.Chair foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) 
                                                                 && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
                 if (foundchair != null)
                 {

@@ -11,6 +11,7 @@ using System.Windows.Media;
 using POS.BusinessModel;
 using POS.Entities;
 using POS.Repository.DAL;
+using Chair = POS.BusinessModel.Chair;
 
 namespace POS.EmployeeWorkSpace
 {

@@ -36,7 +36,7 @@ namespace POS.Mapping
             Property(x => x.TotalAmount).HasColumnName(@"total_amount").HasColumnType("money").IsRequired().HasPrecision(19,4);
 
             // Foreign keys
-            HasOptional(a => a.Employee).WithMany(b => b.ReceiptNotes).HasForeignKey(c => c.EmpId).WillCascadeOnDelete(false); // fk_employee_buy
+            HasOptional(a => a.Employee).WithMany(b => b.ReceiptNotes).HasForeignKey(c => c.EmpId).WillCascadeOnDelete(false); // FK_dbo.ReceiptNote_dbo.Employee_emp_id
             InitializePartial();
         }
         partial void InitializePartial();

@@ -27,9 +27,9 @@ namespace POS.Entities
         // Reverse navigation
 
         /// <summary>
-        /// Child Employees where [Employee].[manager] point to this entity (fk_manager)
+        /// Child Employees where [Employee].[manager] point to this entity (FK_dbo.Employee_dbo.AdminRes_manager)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<Employee> Employees { get; set; } // Employee.fk_manager
+        public virtual System.Collections.Generic.ICollection<Employee> Employees { get; set; } // Employee.FK_dbo.Employee_dbo.AdminRes_manager
 
         public AdminRe()
         {

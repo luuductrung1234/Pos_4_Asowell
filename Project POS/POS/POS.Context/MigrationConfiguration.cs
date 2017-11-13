@@ -27,8 +27,8 @@ namespace POS.Context
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(AsowellContext context)
-        {
+        //protected override void Seed(AsowellContext context)
+        //{
 
             // This method will be called after migrating to the latest version.
 
@@ -42,7 +42,7 @@ namespace POS.Context
             //     new Person { FullName = "Rowan Miller" }
             //   );
             //
-        }
+        //}
     }
 
 }

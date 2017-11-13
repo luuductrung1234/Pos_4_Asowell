@@ -33,13 +33,12 @@ namespace POS.Mapping
             Property(x => x.WhId).HasColumnName(@"wh_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.ResultSalary).HasColumnName(@"result_salary").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
             Property(x => x.EmpId).HasColumnName(@"emp_id").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
-            Property(x => x.StartTime).HasColumnName(@"startTime").HasColumnType("datetime").IsOptional();
+            Property(x => x.StartTime).HasColumnName(@"startTime").HasColumnType("datetime").IsRequired();
             Property(x => x.EndTime).HasColumnName(@"endTime").HasColumnType("datetime").IsRequired();
 
-
             // Foreign keys
-            HasOptional(a => a.Employee).WithMany(b => b.WorkingHistories).HasForeignKey(c => c.EmpId).WillCascadeOnDelete(false); // fk_employee
-            HasOptional(a => a.SalaryNote).WithMany(b => b.WorkingHistories).HasForeignKey(c => c.ResultSalary).WillCascadeOnDelete(false); // fk_salarynote
+            HasOptional(a => a.Employee).WithMany(b => b.WorkingHistories).HasForeignKey(c => c.EmpId).WillCascadeOnDelete(false); // FK_dbo.WorkingHistory_dbo.Employee_emp_id
+            HasOptional(a => a.SalaryNote).WithMany(b => b.WorkingHistories).HasForeignKey(c => c.ResultSalary).WillCascadeOnDelete(false); // FK_dbo.WorkingHistory_dbo.SalaryNote_result_salary
             InitializePartial();
         }
         partial void InitializePartial();

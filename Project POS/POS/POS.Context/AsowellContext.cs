@@ -25,16 +25,20 @@ namespace POS.Context
     {
         public System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes
         public System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; } // ApplicationLog
+        public System.Data.Entity.DbSet<Chair> Chairs { get; set; } // Chair
         public System.Data.Entity.DbSet<Customer> Customers { get; set; } // Customer
         public System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employee
         public System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; } // Ingredient
+        public System.Data.Entity.DbSet<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp
         public System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; } // OrderNote
         public System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails
+        public System.Data.Entity.DbSet<OrderTemp> OrderTemps { get; set; } // OrderTemp
         public System.Data.Entity.DbSet<Product> Products { get; set; } // Product
         public System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; } // ProductDetails
         public System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote
         public System.Data.Entity.DbSet<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails
         public System.Data.Entity.DbSet<SalaryNote> SalaryNotes { get; set; } // SalaryNote
+        public System.Data.Entity.DbSet<Table> Tables { get; set; } // Table
         public System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; } // WareHouse
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory
 
@@ -93,16 +97,20 @@ namespace POS.Context
 
             modelBuilder.Configurations.Add(new AdminReMapping());
             modelBuilder.Configurations.Add(new ApplicationLogMapping());
+            modelBuilder.Configurations.Add(new ChairMapping());
             modelBuilder.Configurations.Add(new CustomerMapping());
             modelBuilder.Configurations.Add(new EmployeeMapping());
             modelBuilder.Configurations.Add(new IngredientMapping());
+            modelBuilder.Configurations.Add(new OrderDetailsTempMapping());
             modelBuilder.Configurations.Add(new OrderNoteMapping());
             modelBuilder.Configurations.Add(new OrderNoteDetailMapping());
+            modelBuilder.Configurations.Add(new OrderTempMapping());
             modelBuilder.Configurations.Add(new ProductMapping());
             modelBuilder.Configurations.Add(new ProductDetailMapping());
             modelBuilder.Configurations.Add(new ReceiptNoteMapping());
             modelBuilder.Configurations.Add(new ReceiptNoteDetailMapping());
             modelBuilder.Configurations.Add(new SalaryNoteMapping());
+            modelBuilder.Configurations.Add(new TableMapping());
             modelBuilder.Configurations.Add(new WareHouseMapping());
             modelBuilder.Configurations.Add(new WorkingHistoryMapping());
 
@@ -113,16 +121,20 @@ namespace POS.Context
         {
             modelBuilder.Configurations.Add(new AdminReMapping(schema));
             modelBuilder.Configurations.Add(new ApplicationLogMapping(schema));
+            modelBuilder.Configurations.Add(new ChairMapping(schema));
             modelBuilder.Configurations.Add(new CustomerMapping(schema));
             modelBuilder.Configurations.Add(new EmployeeMapping(schema));
             modelBuilder.Configurations.Add(new IngredientMapping(schema));
+            modelBuilder.Configurations.Add(new OrderDetailsTempMapping(schema));
             modelBuilder.Configurations.Add(new OrderNoteMapping(schema));
             modelBuilder.Configurations.Add(new OrderNoteDetailMapping(schema));
+            modelBuilder.Configurations.Add(new OrderTempMapping(schema));
             modelBuilder.Configurations.Add(new ProductMapping(schema));
             modelBuilder.Configurations.Add(new ProductDetailMapping(schema));
             modelBuilder.Configurations.Add(new ReceiptNoteMapping(schema));
             modelBuilder.Configurations.Add(new ReceiptNoteDetailMapping(schema));
             modelBuilder.Configurations.Add(new SalaryNoteMapping(schema));
+            modelBuilder.Configurations.Add(new TableMapping(schema));
             modelBuilder.Configurations.Add(new WareHouseMapping(schema));
             modelBuilder.Configurations.Add(new WorkingHistoryMapping(schema));
             return modelBuilder;
@@ -130,223 +142,6 @@ namespace POS.Context
 
         partial void InitializePartial();
         partial void OnModelCreatingPartial(System.Data.Entity.DbModelBuilder modelBuilder);
-
-        // Stored Procedures
-        public int AddAppLog(string comment)
-        {
-            var commentParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@comment", SqlDbType = System.Data.SqlDbType.NText, Direction = System.Data.ParameterDirection.Input, Value = comment, Size = 1073741823 };
-            if (commentParam.Value == null)
-                commentParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[AddAppLog] @comment", commentParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public int AddAppLog2(string comment)
-        {
-            var commentParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@comment", SqlDbType = System.Data.SqlDbType.NText, Direction = System.Data.ParameterDirection.Input, Value = comment, Size = 1073741823 };
-            if (commentParam.Value == null)
-                commentParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[AddAppLog2] @comment", commentParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public int AddAppLog3(string comment, out int? outid)
-        {
-            var commentParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@comment", SqlDbType = System.Data.SqlDbType.NText, Direction = System.Data.ParameterDirection.Input, Value = comment, Size = 1073741823 };
-            if (commentParam.Value == null)
-                commentParam.Value = System.DBNull.Value;
-
-            var outidParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@outid", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output, Precision = 10, Scale = 0 };
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[AddAppLog3] @comment, @outid OUTPUT", commentParam, outidParam, procResultParam);
-            if (IsSqlParameterNull(outidParam))
-                outid = null;
-            else
-                outid = (int) outidParam.Value;
-
-            return (int) procResultParam.Value;
-        }
-
-        public int AddAppLog4(string comment)
-        {
-            var commentParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@comment", SqlDbType = System.Data.SqlDbType.NText, Direction = System.Data.ParameterDirection.Input, Value = comment, Size = 1073741823 };
-            if (commentParam.Value == null)
-                commentParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[AddAppLog4] @comment", commentParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public int AddAppLog5(string comment, string extraData)
-        {
-            var commentParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@comment", SqlDbType = System.Data.SqlDbType.NText, Direction = System.Data.ParameterDirection.Input, Value = comment, Size = 1073741823 };
-            if (commentParam.Value == null)
-                commentParam.Value = System.DBNull.Value;
-
-            var extraDataParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@extra_data", SqlDbType = System.Data.SqlDbType.Xml, Direction = System.Data.ParameterDirection.Input, Value = extraData, Size = -1 };
-            if (extraDataParam.Value == null)
-                extraDataParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[AddAppLog5] @comment, @extra_data", commentParam, extraDataParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public int DeleteAppLog(string appName)
-        {
-            var appNameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@appName", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = appName, Size = 100 };
-            if (appNameParam.Value == null)
-                appNameParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[DeleteAppLog] @appName", appNameParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public System.Collections.Generic.List<GetEmployeeDetailsReturnModel> GetEmployeeDetails(string empId)
-        {
-            int procResult;
-            return GetEmployeeDetails(empId, out procResult);
-        }
-
-        public System.Collections.Generic.List<GetEmployeeDetailsReturnModel> GetEmployeeDetails(string empId, out int procResult)
-        {
-            var empIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@emp_id", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = empId, Size = 10 };
-            if (empIdParam.Value == null)
-                empIdParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-            var procResultData = Database.SqlQuery<GetEmployeeDetailsReturnModel>("EXEC @procResult = [dbo].[GetEmployeeDetails] @emp_id", empIdParam, procResultParam).ToList();
-
-            procResult = (int) procResultParam.Value;
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<GetEmployeeDetailsReturnModel>> GetEmployeeDetailsAsync(string empId)
-        {
-            var empIdParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@emp_id", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = empId, Size = 10 };
-            if (empIdParam.Value == null)
-                empIdParam.Value = System.DBNull.Value;
-
-            var procResultData = await Database.SqlQuery<GetEmployeeDetailsReturnModel>("EXEC [dbo].[GetEmployeeDetails] @emp_id", empIdParam).ToListAsync();
-
-            return procResultData;
-        }
-
-        public int UpdateEmployeeName(string id, string name, string oldname)
-        {
-            var idParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@id", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = id, Size = 10 };
-            if (idParam.Value == null)
-                idParam.Value = System.DBNull.Value;
-
-            var nameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@name", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = name, Size = 50 };
-            if (nameParam.Value == null)
-                nameParam.Value = System.DBNull.Value;
-
-            var oldnameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@oldname", SqlDbType = System.Data.SqlDbType.VarChar, Direction = System.Data.ParameterDirection.Input, Value = oldname, Size = 50 };
-            if (oldnameParam.Value == null)
-                oldnameParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[UpdateEmployeeName] @id, @name, @oldname", idParam, nameParam, oldnameParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public int UpdateLogMass(string xmlchanges)
-        {
-            var xmlchangesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@xmlchanges", SqlDbType = System.Data.SqlDbType.Xml, Direction = System.Data.ParameterDirection.Input, Value = xmlchanges, Size = -1 };
-            if (xmlchangesParam.Value == null)
-                xmlchangesParam.Value = System.DBNull.Value;
-
-            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
-
-            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[UpdateLogMass] @xmlchanges", xmlchangesParam, procResultParam);
-
-            return (int) procResultParam.Value;
-        }
-
-        public UpdateLogMass2ReturnModel UpdateLogMass2(string xmlchanges)
-        {
-            var xmlchangesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@xmlchanges", SqlDbType = System.Data.SqlDbType.Xml, Direction = System.Data.ParameterDirection.Input, Value = xmlchanges, Size = -1 };
-            if (xmlchangesParam.Value == null)
-                xmlchangesParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new UpdateLogMass2ReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[UpdateLogMass2]";
-            cmd.Parameters.Add(xmlchangesParam);
-
-            try
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Open(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-                var reader = cmd.ExecuteReader();
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<UpdateLogMass2ReturnModel.ResultSetModel1>(reader).ToList();
-                reader.NextResult();
-
-                procResultData.ResultSet2 = objectContext.Translate<UpdateLogMass2ReturnModel.ResultSetModel2>(reader).ToList();
-                reader.Close();
-
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
-        public async System.Threading.Tasks.Task<UpdateLogMass2ReturnModel> UpdateLogMass2Async(string xmlchanges)
-        {
-            var xmlchangesParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@xmlchanges", SqlDbType = System.Data.SqlDbType.Xml, Direction = System.Data.ParameterDirection.Input, Value = xmlchanges, Size = -1 };
-            if (xmlchangesParam.Value == null)
-                xmlchangesParam.Value = System.DBNull.Value;
-
-
-            var procResultData = new UpdateLogMass2ReturnModel();
-            var cmd = Database.Connection.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "[dbo].[UpdateLogMass2]";
-            cmd.Parameters.Add(xmlchangesParam);
-
-            try
-            {
-                await System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.OpenAsync(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext(), new System.Threading.CancellationToken()).ConfigureAwait(false);
-                var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
-                var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter) this).ObjectContext;
-
-                procResultData.ResultSet1 = objectContext.Translate<UpdateLogMass2ReturnModel.ResultSetModel1>(reader).ToList();
-                await reader.NextResultAsync().ConfigureAwait(false);
-
-                procResultData.ResultSet2 = objectContext.Translate<UpdateLogMass2ReturnModel.ResultSetModel2>(reader).ToList();
-            }
-            finally
-            {
-                System.Data.Entity.Infrastructure.Interception.DbInterception.Dispatch.Connection.Close(Database.Connection, new System.Data.Entity.Infrastructure.Interception.DbInterceptionContext());
-            }
-            return procResultData;
-        }
-
     }
 }
 // </auto-generated>

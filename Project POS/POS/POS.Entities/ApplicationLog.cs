@@ -28,7 +28,6 @@ namespace POS.Entities
 
         public ApplicationLog()
         {
-            DateAdded = System.DateTime.UtcNow;
             InitializePartial();
         }
 

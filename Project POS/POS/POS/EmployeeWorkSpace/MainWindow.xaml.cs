@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Windows.Controls;
+using Chair = POS.BusinessModel.Chair;
 
 namespace POS.EmployeeWorkSpace
 {

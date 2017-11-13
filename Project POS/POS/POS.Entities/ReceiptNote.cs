@@ -27,16 +27,16 @@ namespace POS.Entities
         // Reverse navigation
 
         /// <summary>
-        /// Child ReceiptNoteDetails where [ReceiptNoteDetails].[rn_id] point to this entity (fk_receivenoteid)
+        /// Child ReceiptNoteDetails where [ReceiptNoteDetails].[rn_id] point to this entity (FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails.fk_receivenoteid
+        public virtual System.Collections.Generic.ICollection<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails.FK_dbo.ReceiptNoteDetails_dbo.ReceiptNote_rn_id
 
         // Foreign keys
 
         /// <summary>
-        /// Parent Employee pointed by [ReceiptNote].([EmpId]) (fk_employee_buy)
+        /// Parent Employee pointed by [ReceiptNote].([EmpId]) (FK_dbo.ReceiptNote_dbo.Employee_emp_id)
         /// </summary>
-        public virtual Employee Employee { get; set; } // fk_employee_buy
+        public virtual Employee Employee { get; set; } // FK_dbo.ReceiptNote_dbo.Employee_emp_id
 
         public ReceiptNote()
         {
