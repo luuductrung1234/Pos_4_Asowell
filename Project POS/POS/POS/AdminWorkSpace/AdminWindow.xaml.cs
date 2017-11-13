@@ -23,11 +23,13 @@ namespace POS.AdminWorkSpace
     {
         private AdminwsOfAsowell _unitowork;
         EmployeeListPage empListPage;
+        OrderNotePage ordernotepage;
         SalaryPage salarypage;
         ProductDetailPage productdetals;
         internal Login login;
         AdminRe curAdmin;
         CustomerPage ctmP;
+        ReceiptNotePage receiptnotepage;
 
         public AdminWindow()
         {
@@ -43,6 +45,8 @@ namespace POS.AdminWorkSpace
             salarypage = new SalaryPage(_unitowork);
             productdetals = new ProductDetailPage( _unitowork);
             ctmP=new CustomerPage(_unitowork);
+            ordernotepage = new OrderNotePage(_unitowork);
+            receiptnotepage = new ReceiptNotePage(_unitowork);
             Closing += AdminWindow_Closing;
         }
 
@@ -88,6 +92,16 @@ namespace POS.AdminWorkSpace
         {
             
             myframe.Navigate(ctmP);
+        }
+
+        private void bntOrder_Click(object sender, RoutedEventArgs e)
+        {
+            myframe.Navigate(ordernotepage);
+        }
+
+        private void bntReceipt_Click(object sender, RoutedEventArgs e)
+        {
+            myframe.Navigate(receiptnotepage);
         }
     }
 }

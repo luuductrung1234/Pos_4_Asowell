@@ -61,7 +61,7 @@ namespace POS.AdminWorkSpace
                 txtPhone.Text = "";
                 txtStart.SelectedDate = DateTime.Now;
                 txtAcount.Text = "";
-                txtPass.Text = "";
+                txtPass.Password = "";
                 return;
             }
             txtID.Text = emp.EmpId;
@@ -73,7 +73,7 @@ namespace POS.AdminWorkSpace
             txtPhone.Text = emp.Phone;
             txtStart.SelectedDate = emp.Startday;
             txtAcount.Text = emp.Username;
-            txtPass.Text = emp.Pass;
+            txtPass.Password = emp.Pass;
         }
 
         private void bntAddnew_Click(object sender, RoutedEventArgs e)

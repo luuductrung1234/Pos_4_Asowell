@@ -34,11 +34,11 @@ namespace POS.AdminWorkSpace
 
         private void initPageData()
         {
-            lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Deleted.Equals(0));
+            lvProduct.ItemsSource = _unitofwork.ProductRepository.Get();
             lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product");
-            lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.Deleted.Equals(0));
+            lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get();
 
-            cboType.Items.Add("ALL");
+            cboType.Items.Add(ProductType.All);
             cboType.Items.Add(ProductType.Drink);
             cboType.Items.Add(ProductType.Food);
             cboType.Items.Add(ProductType.Beer);
@@ -114,30 +114,42 @@ namespace POS.AdminWorkSpace
 
         private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var allProduct = _unitofwork.ProductRepository.Get(p => p.Deleted.Equals(0)).ToList();
+            //var allProduct = _unitofwork.ProductRepository.Get(p => p.Deleted.Equals(0)).ToList();
             
-            if(SearchBox.Text.Trim().Equals(""))
+            //if(SearchBox.Text.Trim().Equals(""))
+            //{
+            //    try
+            //    {
+            //        lvProduct.ItemsSource = allProduct.Where(p => p.Type == ((int)(sender as ComboBox).SelectedValue));
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        lvProduct.ItemsSource = allProduct;
+            //    }
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        lvProduct.ItemsSource = allProduct.Where(p => p.Type == ((int)(sender as ComboBox).SelectedValue) && p.Name.Contains(SearchBox.Text.Trim()));
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        lvProduct.ItemsSource = allProduct.Where(p => p.Name.Contains(SearchBox.Text.Trim()));
+            //    }
+            //}
+
+            var allProduct = _unitofwork.ProductRepository.Get().ToList();
+            int selectedVal = ((int) (sender as ComboBox).SelectedValue);
+            if (selectedVal == -1)
             {
-                try
-                {
-                    lvProduct.ItemsSource = allProduct.Where(p => p.Type == ((int)(sender as ComboBox).SelectedValue));
-                }
-                catch (Exception ex)
-                {
-                    lvProduct.ItemsSource = allProduct;
-                }
+                lvProduct.ItemsSource = allProduct;
             }
             else
             {
-                try
-                {
-                    lvProduct.ItemsSource = allProduct.Where(p => p.Type == ((int)(sender as ComboBox).SelectedValue) && p.Name.Contains(SearchBox.Text.Trim()));
-                }
-                catch (Exception ex)
-                {
-                    lvProduct.ItemsSource = allProduct.Where(p => p.Name.Contains(SearchBox.Text.Trim()));
-                }
+                lvProduct.ItemsSource = allProduct.Where(p => p.Type == selectedVal);
             }
+
         }
 
         private void SearchIBox_GotFocus(object sender, RoutedEventArgs e)

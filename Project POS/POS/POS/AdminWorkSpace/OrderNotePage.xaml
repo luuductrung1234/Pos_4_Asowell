@@ -1,4 +1,4 @@
-﻿<Page x:Class="POS.AdminWorkSpace.SalaryPage"
+﻿<Page x:Class="POS.AdminWorkSpace.OrderNotePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,7 +11,7 @@
       Background="{DynamicResource MaterialDesignPaper}"
       Height="630"
       Width="1366"
-      Title="SalaryPage">
+      Title="OrderPage">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.15*" />
@@ -65,31 +65,11 @@
                         <StackPanel Orientation="Horizontal"
                                     Width="auto"
                                     Height="auto">
-                            <!--<DatePicker x:Name="txtDate"
-                                        Width="135"
-                                        Margin="0,0,20,0"></DatePicker>-->
-                            <ComboBox x:Name="cboMonth"
-                                      Width="50"
-                                      Margin="0,0,20,0" />
-                            <ComboBox x:Name="cboYear"
-                                      Width="100"
-                                      Margin="0,0,50,0"
-                                      VerticalAlignment="Bottom" />
-                            <Button x:Name="bntAdd"
-                                    Content="Add"
-                                    Height="auto"
-                                    Margin="0,0,20,0"
-                                    FontWeight="Bold" />
-                            <Button x:Name="bntEdit"
-                                    Content="Edit"
-                                    Height="auto"
-                                    Margin="0,0,20,0"
-                                    FontWeight="Bold" />
-                            <Button x:Name="bntDel"
-                                    Content="Delete"
-                                    Height="auto"
-                                    Margin="0,0,50,0"
-                                    FontWeight="Bold" />
+                            <ComboBox Foreground="Black"
+                                      Background="White"
+                                      x:Name="cboProduct"
+                                      Width="135"
+                                      Margin="0,0,20,0"></ComboBox>
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -107,10 +87,10 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18"
-                               Height="30">Salary Note</TextBlock>
+                               Height="30">Order Note</TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
-            <ListView Name="lvSalary"
+            <ListView Name="lvOrderNote"
                       Width="auto"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
@@ -118,37 +98,32 @@
                       Foreground="White"
                       FontWeight="Bold"
                       Margin="10,63,0,0"
-                      SelectionChanged="lvData_SelectionChanged"
+                      SelectionChanged="lvOrderNote_SelectionChanged"
                       Height="auto">
                 <ListView.View>
                     <GridView x:Name="gvShowDetails">
-                        <GridViewColumn Header="Salary_ID"
+                        <GridViewColumn Header="ID"
                                         Width="100"
-                                        DisplayMemberBinding="{Binding SnId}" />
-                        <GridViewColumn Header="Employee_ID"
-                                        Width="150"
-                                        DisplayMemberBinding="{Binding EmpId}" />
-                        <GridViewColumn Header="Employee Name"
+                                        DisplayMemberBinding="{Binding OrdernoteId}" />
+                        <GridViewColumn Header="Employee"
                                         Width="150"
                                         DisplayMemberBinding="{Binding Employee.Name}" />
-                        <GridViewColumn Header="date pay"
+                        <GridViewColumn Header="Customer"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding DatePay}" />
-                        <GridViewColumn Header="Salary Value"
+                                        DisplayMemberBinding="{Binding Customer.Name}" />
+                        <GridViewColumn Header="Order time"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding SalaryValue}" />
-                        <GridViewColumn Header="Work Hour"
+                                        DisplayMemberBinding="{Binding Ordertime}" />
+                        <GridViewColumn Header="Total Price"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding WorkHour}" />
-                        <GridViewColumn Header="For Month"
+                                        DisplayMemberBinding="{Binding TotalPrice}" />
+                        <GridViewColumn Header="Customer Pay"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding ForMonth}" />
-                        <GridViewColumn Header="For Years"
+                                        DisplayMemberBinding="{Binding CustomerPay}" />
+                        <GridViewColumn Header="PayBack"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding ForYear}" />
-                        <GridViewColumn Header="Is Paid"
-                                        Width="0"
-                                        DisplayMemberBinding="{Binding IsPaid}" />
+                                        DisplayMemberBinding="{Binding PayBack}" />
+                        
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -168,10 +143,10 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"
                                FontSize="18"
-                               Height="32"> Working History</TextBlock>
+                               Height="32"> Order Note Details</TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
-            <ListView Name="lvWokingHistory"
+            <ListView Name="lvOrderNoteDetails"
                       Width="auto"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
@@ -182,24 +157,21 @@
                       Height="auto">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="WH ID"
+                        <GridViewColumn Header="ID"
                                         Width="100"
-                                        DisplayMemberBinding="{Binding WhId}" />
-                        <GridViewColumn Header="Employee_ID"
+                                        DisplayMemberBinding="{Binding OrdernoteId}" />
+                        <GridViewColumn Header="Product"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding EmpId}" />
-                        <GridViewColumn Header="Employee Name"
+                                        DisplayMemberBinding="{Binding Product.Name}" />
+                        <GridViewColumn Header="Selected Stats"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding Employee.Name}" />
-                        <GridViewColumn Header="Result Salary"
+                                        DisplayMemberBinding="{Binding SelectedStats}" />
+                        <GridViewColumn Header="Quantity"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding ResultSalary}" />
-                        <GridViewColumn Header="Start Time"
+                                        DisplayMemberBinding="{Binding Quan}" />
+                        <GridViewColumn Header="Note"
                                         Width="180"
-                                        DisplayMemberBinding="{Binding StartTime}" />
-                        <GridViewColumn Header="End Time"
-                                        Width="180"
-                                        DisplayMemberBinding="{Binding EndTime}" />
+                                        DisplayMemberBinding="{Binding Note}" />
                     </GridView>
                 </ListView.View>
             </ListView>
