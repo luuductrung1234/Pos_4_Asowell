@@ -25,19 +25,12 @@ namespace POS.EmployeeWorkSpace
             InitializeComponent();
             loadData(UserName);
             InitlsWh();
-            em = new Employee();
         }
 
         private void loadData(string UserName)
         {
-            foreach (var item in  _unitofwork.EmployeeRepository.Get())
-            {
-                if (item.Username.Equals(UserName))
-                {
-                    em = item;
-                    break;
-                }
-            }
+            em = _unitofwork.EmployeeRepository.Get(e => e.Username.Equals(UserName)).First();
+
             this.EmployeeInfo.DataContext = em;
         }
 
