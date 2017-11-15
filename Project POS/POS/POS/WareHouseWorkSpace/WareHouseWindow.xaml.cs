@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using POS.Repository.DAL;
 
 namespace POS.WareHouseWorkSpace
 {
@@ -20,11 +21,14 @@ namespace POS.WareHouseWorkSpace
     
     public partial class WareHouseWindow : Window
     {
+        AdminwsOfAsowell _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
         public WareHouseWindow()
         {
             InitializeComponent();
-            _lvChartReceiptPage = new LiveChartReceiptPage();
+            _unitofwork = new AdminwsOfAsowell();
+
+            _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

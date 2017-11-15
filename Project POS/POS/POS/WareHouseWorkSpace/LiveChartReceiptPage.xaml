@@ -20,7 +20,10 @@
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center" Foreground="White">day of month</TextBlock>
-            <RadioButton x:Name="rdoChangelvc" Margin="8 0 16 0" Click="BntChangelvc_OnClick" />
+            <RadioButton x:Name="rdoDoM" Margin="8 0 16 0" Click="RdoDoM_OnClick" />
+            <RadioButton x:Name="rdoMoY"
+                         Margin="8 0 16 0"
+                         Click="RdoMoY_OnClick" />
             <TextBlock VerticalAlignment="Center"
                        Foreground="White">month of years</TextBlock>
         </StackPanel>
