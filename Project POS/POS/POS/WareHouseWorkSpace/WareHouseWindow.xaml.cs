@@ -17,11 +17,14 @@ namespace POS.WareHouseWorkSpace
     /// <summary>
     /// Interaction logic for WareHouseWindow.xaml
     /// </summary>
+    
     public partial class WareHouseWindow : Window
     {
+        private LiveChartReceiptPage _lvChartReceiptPage;
         public WareHouseWindow()
         {
             InitializeComponent();
+            _lvChartReceiptPage = new LiveChartReceiptPage();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -37,6 +40,16 @@ namespace POS.WareHouseWorkSpace
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void InputReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void ViewReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            myFrame.Navigate(_lvChartReceiptPage);
         }
     }
 }
