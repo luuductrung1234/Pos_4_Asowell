@@ -62,6 +62,8 @@ namespace POS.EmployeeWorkSpace
             _emp.Pass = newPass;
             _unitofwork.EmployeeRepository.Update(_emp);
             _unitofwork.Save();
+            MessageBox.Show("Your password was changed!");
+            this.Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
