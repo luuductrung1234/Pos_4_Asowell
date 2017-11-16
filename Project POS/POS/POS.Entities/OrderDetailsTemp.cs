@@ -31,8 +31,8 @@ namespace POS.Entities
         private string _productId; // product_id (Primary key) (length: 10)
         private int _chairId;
         private string _stats;      // SelectedStats
-        private int _quan;          // quan
         private string _note;       // note (length: 500)
+        private int _quan;          // quan
 
         public ObservableCollection<string> StatusItems
         {

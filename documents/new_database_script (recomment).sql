@@ -68,10 +68,10 @@ CREATE TABLE [dbo].[OrderDetailsTemp] (
     [ordertemp_id] [int] NOT NULL,
     [product_id] [varchar](10) NOT NULL,
     [chair_id] [int],
-    [SelectedStats] [nvarchar](max),
+    [SelectedStats] [nvarchar](50),
+	[note] [varchar](500),
     [quan] [int] NOT NULL,
-    [note] [varchar](500),
-    CONSTRAINT [PK_dbo.OrderDetailsTemp] PRIMARY KEY ([ordertemp_id], [product_id])
+    CONSTRAINT [PK_dbo.OrderDetailsTemp] PRIMARY KEY ([ordertemp_id], [product_id], [chair_id], [SelectedStats], [note])
 )
 CREATE INDEX [IX_ordertemp_id] ON [dbo].[OrderDetailsTemp]([ordertemp_id])
 CREATE INDEX [IX_product_id] ON [dbo].[OrderDetailsTemp]([product_id])
@@ -108,9 +108,7 @@ CREATE TABLE [dbo].[Product] (
 CREATE TABLE [dbo].[OrderNoteDetails] (
     [ordernote_id] [varchar](10) NOT NULL,
     [product_id] [varchar](10) NOT NULL,
-    [SelectedStats] [nvarchar](max),
     [quan] [int] NOT NULL,
-    [note] [varchar](500),
     CONSTRAINT [PK_dbo.OrderNoteDetails] PRIMARY KEY ([ordernote_id], [product_id])
 )
 CREATE INDEX [IX_ordernote_id] ON [dbo].[OrderNoteDetails]([ordernote_id])
@@ -845,6 +843,63 @@ values
 ('RN00000024', 'IGD0000019', 10, 22, ''),
 ('RN00000025', 'IGD0000002', 2, 100, ''),
 ('RN00000025', 'IGD0000033', 3, 20, '')
+
+
+--insert into [Table]
+--	([table_id], [table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
+--values
+--(1, 1, 6, 200, 200, 0, 1, 1),
+--(2, 2, 4, 100, 100, 0, 1, 1)
+
+--insert into [Chair]
+--	([chair_id], [chair_number], [table_owned])
+--values
+--(1, 1, 1),
+--(2, 2, 1),
+--(3, 3, 1),
+--(4, 4, 1),
+--(5, 5, 1),
+--(6, 6, 1),
+--(7, 1, 2),
+--(8, 2, 2),
+--(9, 3, 2),
+--(10, 4, 2)
+
+--insert into [OrderTemp]
+--	([ordertemp_id], [cus_id], [emp_id], [table_owned], [ordertime], [total_price], [customer_pay], [pay_back])
+--values
+--(1, 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', , , ),
+--(2, 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', , , )
+
+
+--insert into [OrderDetailsTemp]
+--	([ordertemp_id], [product_id], [chair_id], [SelectedStats], [note], [quan])
+--values
+--('1', 'P000000030', 1, 'Starter', '', 1),
+--('1', 'P000000030', 1, 'Starter', '', 2),
+--('1', 'P000000030', 2, 'Starter', '', 1),
+--('1', 'P000000001', 2, 'Starter', '', 1),
+--('1', 'P000000002', 2, 'Starter', '', 3),
+--('1', 'P000000003', 2, 'Starter', '', 2),
+--('1', 'P000000003', 3, 'Starter', '', 2),
+--('1', 'P000000003', 3, 'Starter', '', 2),
+--('1', 'P000000020', 3, 'Starter', '', 1),
+--('1', 'P000000001', 4, 'Starter', '', 1),
+--('1', 'P000000021', 5, 'Starter', '', 1),
+--('1', 'P000000020', 5, 'Starter', '', 1),
+--('1', 'P000000001', 5, 'Starter', '', 1),
+
+--('2', 'P000000001', 1, 'Starter', '', 1),
+--('2', 'P000000001', 1, 'Starter', '', 1),
+--('2', 'P000000001', 1, 'Starter', '', 1),
+--('2', 'P000000001', 2, 'Starter', '', 1),
+--('2', 'P000000001', 2, 'Starter', '', 1),
+--('2', 'P000000001', 2, 'Starter', '', 1),
+--('2', 'P000000001', 3, 'Starter', '', 1),
+--('2', 'P000000001', 4, 'Starter', '', 1),
+--('2', 'P000000001', 4, 'Starter', '', 1),
+--('2', 'P000000001', 4, 'Starter', '', 1),
+--('2', 'P000000001', 4, 'Starter', '', 1)
 
 
 
