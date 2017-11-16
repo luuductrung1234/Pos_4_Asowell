@@ -64,7 +64,7 @@ namespace POS.Helper.PrintHelper
         
         private void Generate_HeadText(BlockUIContainer blkHeadText)
         {
-
+            
         }
 
         public void Generate_TableText(BlockUIContainer blkTableText, string[] gridMeta, List<OrderDetailsForPrint> listData)

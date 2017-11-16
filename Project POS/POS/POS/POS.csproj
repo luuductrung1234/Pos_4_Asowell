@@ -192,6 +192,9 @@
     <Compile Include="Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderForPrint.cs" />
     <Compile Include="Helper\PrintHelper\ReceiptPrintHelper.cs" />
+    <Compile Include="WareHouseWorkSpace\IngredientPage.xaml.cs">
+      <DependentUpon>IngredientPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WareHouseWorkSpace\LiveChartReceiptPage.xaml.cs">
       <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
     </Compile>
@@ -312,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\InputNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WareHouseWorkSpace\IngredientPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,27 +13,14 @@
       Title="LiveChartReceiptPage">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0"
-                    Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Center" Foreground="White">day of month</TextBlock>
-            <RadioButton x:Name="rdoDoM" Margin="8 0 16 0" Click="RdoDoM_OnClick" />
-            <RadioButton x:Name="rdoMoY"
-                         Margin="8 0 16 0"
-                         Click="RdoMoY_OnClick" />
-            <TextBlock VerticalAlignment="Center"
-                       Foreground="White">month of years</TextBlock>
-        </StackPanel>
+
         <lvc:CartesianChart x:Name="LvcReceiptChart"
                             LegendLocation="Left"
-                            Series="{Binding SeriesCollection}"
-                            Grid.Row="1"
-                            >
+                            Foreground="White"
+                            Series="{Binding SeriesCollection}">
+
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Usage"                         
+                <lvc:Axis Title="Usage"
                           LabelFormatter="{Binding Formatter,StringFormat=0:000}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX>
