@@ -44,7 +44,7 @@ namespace POS.Entities
             }
         }
 
-        [Key]
+        
         public int OrdertempId
         {
             get { return _ordertempId; }
