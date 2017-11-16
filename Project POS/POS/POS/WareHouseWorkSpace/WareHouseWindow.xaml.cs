@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LiveCharts;
 using POS.Repository.DAL;
 
 namespace POS.WareHouseWorkSpace
@@ -23,6 +24,7 @@ namespace POS.WareHouseWorkSpace
     {
         AdminwsOfAsowell _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
+        
         public WareHouseWindow()
         {
             InitializeComponent();

@@ -101,11 +101,13 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -190,6 +192,9 @@
     <Compile Include="Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderForPrint.cs" />
     <Compile Include="Helper\PrintHelper\ReceiptPrintHelper.cs" />
+    <Compile Include="WareHouseWorkSpace\IngredientPage.xaml.cs">
+      <DependentUpon>IngredientPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WareHouseWorkSpace\LiveChartReceiptPage.xaml.cs">
       <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
     </Compile>
@@ -310,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\InputNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WareHouseWorkSpace\IngredientPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
