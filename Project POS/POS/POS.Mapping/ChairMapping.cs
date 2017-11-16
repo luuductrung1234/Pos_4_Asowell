@@ -30,9 +30,9 @@ namespace POS.Mapping
             ToTable("Chair", schema);
             HasKey(x => x.ChairId);
 
-            Property(x => x.ChairId).HasColumnName(@"chair_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.ChairId).HasColumnName(@"chair_id").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.ChairNumber).HasColumnName(@"chair_number").HasColumnType("int").IsRequired();
-            Property(x => x.TableOwned).HasColumnName(@"table_owned").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
+            Property(x => x.TableOwned).HasColumnName(@"table_owned").HasColumnType("int").IsOptional();
 
             // Foreign keys
             HasOptional(a => a.Table).WithMany(b => b.Chairs).HasForeignKey(c => c.TableOwned).WillCascadeOnDelete(false); // fk_table_owned

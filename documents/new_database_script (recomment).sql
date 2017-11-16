@@ -51,23 +51,23 @@ CREATE TABLE [dbo].[Customer] (
     CONSTRAINT [PK_dbo.Customer] PRIMARY KEY ([cus_id])
 )
 CREATE TABLE [dbo].[OrderTemp] (
-    [ordertemp_id] [varchar](10) NOT NULL,
+    [ordertemp_id] int Identity not null,
     [cus_id] [varchar](10),
     [emp_id] [varchar](10),
-    [table_owned] [varchar](10),
+    [table_owned] int,
     [ordertime] [datetime] NOT NULL,
     [total_price] [money] NOT NULL,
     [customer_pay] [money] NOT NULL,
     [pay_back] [money] NOT NULL,
-    CONSTRAINT [PK_dbo.OrderTemp] PRIMARY KEY ([ordertemp_id])
+    CONSTRAINT [PK_dbo.OrderTemp] PRIMARY KEY ([ordertemp_id]),
 )
 CREATE INDEX [IX_cus_id] ON [dbo].[OrderTemp]([cus_id])
 CREATE INDEX [IX_emp_id] ON [dbo].[OrderTemp]([emp_id])
 CREATE INDEX [IX_table_owned] ON [dbo].[OrderTemp]([table_owned])
 CREATE TABLE [dbo].[OrderDetailsTemp] (
-    [ordertemp_id] [varchar](10) NOT NULL,
+    [ordertemp_id] int NOT NULL,
     [product_id] [varchar](10) NOT NULL,
-    [chair_id] [varchar](10),
+    [chair_id] int,
     [SelectedStats] [nvarchar](max),
     [quan] [int] NOT NULL,
     [note] [varchar](500),
@@ -77,14 +77,14 @@ CREATE INDEX [IX_ordertemp_id] ON [dbo].[OrderDetailsTemp]([ordertemp_id])
 CREATE INDEX [IX_product_id] ON [dbo].[OrderDetailsTemp]([product_id])
 CREATE INDEX [IX_chair_id] ON [dbo].[OrderDetailsTemp]([chair_id])
 CREATE TABLE [dbo].[Chair] (
-    [chair_id] [varchar](10) NOT NULL,
+    [chair_id] int Identity NOT NULL,
     [chair_number] [int] NOT NULL,
-    [table_owned] [varchar](10),
+    [table_owned] int,
     CONSTRAINT [PK_dbo.Chair] PRIMARY KEY ([chair_id])
 )
 CREATE INDEX [IX_table_owned] ON [dbo].[Chair]([table_owned])
 CREATE TABLE [dbo].[Table] (
-    [table_id] [varchar](10) NOT NULL,
+    [table_id] int Identity NOT NULL,
     [table_number] [int] NOT NULL,
     [chair_amount] [int] NOT NULL,
     [pos_X] [int] NOT NULL,
@@ -602,4 +602,18 @@ select * from WorkingHistory
 select * from OrderNote
 select * from OrderNoteDetails
 
+select * from [Table]
+select * from [Chair]
+select * from [OrderTemp]
+select * from [OrderDetailsTemp]
 
+delete [OrderDetailsTemp]
+delete [Chair]
+delete [OrderTemp]
+delete [Table]
+
+
+drop table [OrderDetailsTemp]
+drop table [Chair]
+drop table [OrderTemp]
+drop table [Table]

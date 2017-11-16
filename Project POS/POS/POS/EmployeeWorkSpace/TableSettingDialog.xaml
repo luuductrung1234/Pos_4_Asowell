@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="Table Setting"
         Height="200"
-        Width="400">
+        Width="300">
     <Grid>
         <Grid.Resources>
             <Style TargetType="TextBlock">
@@ -31,8 +31,7 @@
                     Grid.Row="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Height="45"
-                    Width="372">
+                    Height="45">
             <TextBlock x:Name="txbChairAmount"
                        TextWrapping="Wrap"
                        Text="Chair Amount"
@@ -41,7 +40,7 @@
             <TextBox x:Name="txtChairAmount"
                      TextWrapping="Wrap"
                      Text=""
-                     Width="250"
+                     Width="150"
                      Height="30"
                      FontSize="18"
                      Foreground="White"
@@ -69,8 +68,7 @@
         <StackPanel Orientation="Horizontal"
                     Grid.Row="1"
                     Height="45"
-                    Width="170"
-                    Margin="111,15,111,15">
+                    Width="170">
             <Button x:Name="btnOK"
                     Content="OK"
                     Height="Auto"

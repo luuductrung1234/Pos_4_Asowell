@@ -12,19 +12,92 @@
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 namespace POS.Entities
 {
 
     // OrderDetailsTemp
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class OrderDetailsTemp
+    public partial class OrderDetailsTemp : INotifyPropertyChanged
     {
-        public string OrdertempId { get; set; } // ordertemp_id (Primary key) (length: 10)
-        public string ProductId { get; set; } // product_id (Primary key) (length: 10)
-        public string ChairId { get; set; } // chair_id (length: 10)
-        public string SelectedStats { get; set; } // SelectedStats
-        public int Quan { get; set; } // quan
-        public string Note { get; set; } // note (length: 500)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private ObservableCollection<string> _statusItems = new ObservableCollection<string> { "Stater", "Main Cost", "Dessert", "Drink" };
+        
+        private int _ordertempId;// ordernote_id (Primary key) (length: 10)
+        private string _productId; // product_id (Primary key) (length: 10)
+        private int _chairId;
+        private string _stats;      // SelectedStats
+        private int _quan;          // quan
+        private string _note;       // note (length: 500)
+
+        public ObservableCollection<string> StatusItems
+        {
+            get { return _statusItems; }
+            set
+            {
+                _statusItems = value;
+                OnPropertyChanged("StatusItems");
+            }
+        }
+
+        [Key]
+        public int OrdertempId
+        {
+            get { return _ordertempId; }
+            set
+            {
+                _ordertempId = value;
+                OnPropertyChanged("OrdertempId");
+            }
+        } // ordertemp_id (Primary key) (length: 10)
+        public string ProductId
+        {
+            get { return _productId; }
+            set
+            {
+                _productId = value;
+                OnPropertyChanged("ProductId");
+            }
+        } // product_id (Primary key) (length: 10)
+        public int ChairId
+        {
+            get { return _chairId; }
+            set
+            {
+                _chairId = value;
+            }
+        } // chair_id (length: 10)
+        public string SelectedStats
+        {
+            get { return _stats; }
+            set
+            {
+                _stats = value;
+                OnPropertyChanged("SelectedStats");
+            }
+        } // SelectedStats
+        public int Quan
+        {
+            get { return _quan; }
+            set
+            {
+                _quan = value;
+                OnPropertyChanged("Quan");
+            }
+        } // quan
+        public string Note
+        {
+            get { return _note; }
+            set
+            {
+                _note = value;
+                OnPropertyChanged("Note");
+            }
+        } // note (length: 500)
 
         // Foreign keys
 
@@ -49,6 +122,12 @@ namespace POS.Entities
         }
 
         partial void InitializePartial();
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
 }

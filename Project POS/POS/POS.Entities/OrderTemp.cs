@@ -12,6 +12,8 @@
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
+using System.ComponentModel.DataAnnotations;
+
 namespace POS.Entities
 {
 
@@ -19,10 +21,11 @@ namespace POS.Entities
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class OrderTemp
     {
-        public string OrdertempId { get; set; } // ordertemp_id (Primary key) (length: 10)
+        [Key]
+        public int OrdertempId { get; set; } // ordertemp_id (Primary key) (length: 10)
         public string CusId { get; set; } // cus_id (length: 10)
         public string EmpId { get; set; } // emp_id (length: 10)
-        public string TableOwned { get; set; } // table_owned (length: 10)
+        public int TableOwned { get; set; } // table_owned (length: 10)
         public System.DateTime Ordertime { get; set; } // ordertime
         public decimal TotalPrice { get; set; } // total_price
         public decimal CustomerPay { get; set; } // customer_pay

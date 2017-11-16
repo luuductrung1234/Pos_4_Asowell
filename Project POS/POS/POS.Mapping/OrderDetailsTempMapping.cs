@@ -30,9 +30,9 @@ namespace POS.Mapping
             ToTable("OrderDetailsTemp", schema);
             HasKey(x => new { x.OrdertempId, x.ProductId });
 
-            Property(x => x.OrdertempId).HasColumnName(@"ordertemp_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.OrdertempId).HasColumnName(@"ordertemp_id").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.ProductId).HasColumnName(@"product_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.ChairId).HasColumnName(@"chair_id").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
+            Property(x => x.ChairId).HasColumnName(@"chair_id").HasColumnType("int").IsOptional();
             Property(x => x.SelectedStats).HasColumnName(@"SelectedStats").HasColumnType("nvarchar(max)").IsOptional();
             Property(x => x.Quan).HasColumnName(@"quan").HasColumnType("int").IsRequired();
             Property(x => x.Note).HasColumnName(@"note").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(500);

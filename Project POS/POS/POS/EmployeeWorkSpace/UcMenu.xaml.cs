@@ -16,6 +16,10 @@ namespace POS.EmployeeWorkSpace
     public partial class UcMenu : UserControl
     {
         private EmployeewsOfAsowell _unitofwork;
+        private Entities.Table orderingTable;
+        private Entities.Chair orderingChair;
+        private OrderTemp orderTempCurrentTable;
+        private OrderDetailsTemp orderDetailsTempTable;
 
         public UcMenu()
         {
@@ -36,16 +40,19 @@ namespace POS.EmployeeWorkSpace
                 lvCategorySnack.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Snack);
                 lvCategoryOther.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other);
 
-                if (((MainWindow) Window.GetWindow(this)).currentTable == null)
+                orderingTable = ((MainWindow)Window.GetWindow(this)).currentTable;
+                orderingChair = ((MainWindow)Window.GetWindow(this)).currentChair;
+
+                if (orderingTable == null)
                 {
                     return;
                 }
-                
-                ((MainWindow) Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
+
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -60,70 +67,81 @@ namespace POS.EmployeeWorkSpace
 
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            orderingTable = ((MainWindow)Window.GetWindow(this)).currentTable;
+            orderingChair = ((MainWindow)Window.GetWindow(this)).currentChair;
             ListBox lbSelected = sender as ListBox;
 
-            if (((MainWindow)Window.GetWindow(this)).currentTable == null || ((MainWindow)Window.GetWindow(this)).currentChair == null)
+            if (orderingTable == null || orderingChair == null)
             {
                 MessageBox.Show("Chair must be choice!");
+                return;
+            }
+
+            orderTempCurrentTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(orderingTable.TableId)).First();
+            if(orderTempCurrentTable == null)
+            {
                 return;
             }
 
             var item = lbSelected.SelectedItem;
             if (item != null)
             {
-                if (!((MainWindow) Window.GetWindow(this)).currentTable.IsOrdered)
+                if (orderingTable.IsOrdered == 0)
                 {
-                    ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.Ordertime = DateTime.Now;
-                    ((MainWindow)Window.GetWindow(this)).currentTable.IsOrdered = true;
+                    orderTempCurrentTable.Ordertime = DateTime.Now;
+                    orderingTable.IsOrdered = 1;
+                    _unitofwork.TableRepository.Update(orderingTable);
+                    _unitofwork.Save();
                 }
 
-                OrderNoteDetail o = new OrderNoteDetail();
-                OrderNoteDetail oo = new OrderNoteDetail();
+                OrderDetailsTemp o = new OrderDetailsTemp();
                 Product it = (Product)lbSelected.SelectedItem;
 
-                //tong order table
-                var tableordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
-                var foundtable = tableordernotedetails.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
-                int ii = tableordernotedetails.IndexOf(foundtable);
-                if (foundtable == null)
-                {
-                    oo.ProductId = it.ProductId;
-                    oo.Quan = 1;
-                    tableordernotedetails.Add(oo);
-                }
-                else
-                {
-                    oo.ProductId = it.ProductId;
-                    oo.Quan = tableordernotedetails[ii].Quan + 1;
-                    oo.SelectedStats = tableordernotedetails[ii].SelectedStats;
-                    
-                    tableordernotedetails[ii] = oo;
-                }
+                ////tong order table
+                //var tableordernotedetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempCurrentTable.OrdertempId)).ToList();
+                //var foundtable = tableordernotedetails.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
+                //int ii = tableordernotedetails.IndexOf(foundtable);
+                //if (foundtable == null)
+                //{
+                //    oo.ProductId = it.ProductId;
+                //    oo.Quan = 1;
+                //    tableordernotedetails.Add(oo);
+                //}
+                //else
+                //{
+                //    oo.ProductId = it.ProductId;
+                //    oo.Quan = tableordernotedetails[ii].Quan + 1;
+                //    oo.SelectedStats = tableordernotedetails[ii].SelectedStats;
+
+                //    tableordernotedetails[ii] = oo;
+                //}
 
                 //order tung ghe
-                var chairoftable = ((MainWindow)Window.GetWindow(this)).currentTable.ChairData;
-                BusinessModel.Chair foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber) 
-                                                                && x.TableOfChair.Equals(((MainWindow)Window.GetWindow(this)).currentChair.TableOfChair));
-                if (foundchair != null)
-                {
-                    var chairordernotedetails = foundchair.ChairOrderDetails;
-                    var found = chairordernotedetails.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
+                var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(orderingTable.TableId));
 
-                    int i = chairordernotedetails.IndexOf(found);
-                
-                    if (found == null)
+                if (orderingChair != null)
+                {
+                    var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(orderingChair.ChairId)).ToList();
+                    var foundinchairorderdetailstemp = chairorderdetailstemp.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
+
+                    int i = chairorderdetailstemp.IndexOf(foundinchairorderdetailstemp);
+
+                    if (foundinchairorderdetailstemp == null)
                     {
+                        o.ChairId = orderingChair.ChairId;
+                        o.OrdertempId = orderTempCurrentTable.OrdertempId;
                         o.ProductId = it.ProductId;
                         o.Quan = 1;
-                        chairordernotedetails.Add(o);
+                        _unitofwork.OrderDetailsTempRepository.Insert(o);
+                        _unitofwork.Save();
                     }
                     else
                     {
-                        o.ProductId = it.ProductId;
-                        o.Quan = chairordernotedetails[i].Quan + 1;
-                        o.SelectedStats = chairordernotedetails[i].SelectedStats;
+                        foundinchairorderdetailstemp.ProductId = it.ProductId;
+                        foundinchairorderdetailstemp.Quan++;
 
-                        chairordernotedetails[i] = o;
+                        _unitofwork.OrderDetailsTempRepository.Update(foundinchairorderdetailstemp);
+                        _unitofwork.Save();
                     }
                 }
 
@@ -131,15 +149,15 @@ namespace POS.EmployeeWorkSpace
                 lbSelected.UnselectAll();
 
                 ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
-                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl();
-                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrder.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(orderingTable);
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = orderTempCurrentTable.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
 
         }
 
         private void Search_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 string filter = SearchBox.Text.Trim();
                 checkSearch(filter);
@@ -151,7 +169,7 @@ namespace POS.EmployeeWorkSpace
         {
             string filter = SearchBox.Text.Trim();
 
-            if(filter.Length == 0)
+            if (filter.Length == 0)
             {
                 lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Drink);
                 lvCategoryDishes.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Food);

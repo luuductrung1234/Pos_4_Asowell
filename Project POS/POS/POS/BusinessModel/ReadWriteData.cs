@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Shapes;
 using POS.Entities;
+using POS.Repository.DAL;
+using System.Linq;
 
 namespace POS.BusinessModel
 {
@@ -79,186 +81,189 @@ namespace POS.BusinessModel
             }
         }
 
-        //check file tableRuntimeHistory isExist
-        public static bool checkTableRuntimeHistoryFileExist()
-        {
-            return File.Exists(startupProjectPath + "\\SerializedData\\tableRuntimeHistory.bin");
-        }
+        ////check file tableRuntimeHistory isExist
+        //public static bool checkTableRuntimeHistoryFileExist()
+        //{
+        //    return File.Exists(startupProjectPath + "\\SerializedData\\tableRuntimeHistory.bin");
+        //}
 
         //write khi add new
-        public static void writeOnAddNew(Rectangle rec)
+        public static Entities.Table writeOnAddNew(EmployeewsOfAsowell _unitofwork, Rectangle rec, Entities.Employee emp)
         {
-            Table newTable = new Table()
+            Entities.Table newTable = new Entities.Table()
             {
-                VisualTable = rec,
+                TableId = 0,
                 TableNumber = int.Parse(rec.Name.Substring(5)),
-                ChairData = new List<Chair>(),
-                Position = new Point(rec.Margin.Left, rec.Margin.Top),
-                IsPinned = false,
-                IsOrdered = false,
-                TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, CusId = "CUS0000001", Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now,
-                    TotalPrice = 0,
-                    CustomerPay = 0,
-                    PayBack = 0
-                },
-                TableOrderDetails = new List<OrderNoteDetail>()
+                ChairAmount = 0,
+                PosX = Convert.ToInt32(rec.Margin.Left),
+                PosY = Convert.ToInt32(rec.Margin.Top),
+                IsPinned = 0,
+                IsOrdered = 0,
+                IsLocked = 0,
+                TableRec = rec
             };
 
-            for (int i = 0; i < newTable.ChairAmount; i++)
+            _unitofwork.TableRepository.Insert(newTable);
+            _unitofwork.Save();
+
+            Entities.OrderTemp newOrderTemp = new Entities.OrderTemp()
             {
-                Chair newChair = new Chair();
-                newChair.ChairNumber = i + 1;
-                newChair.TableOfChair = newTable.TableNumber;
-                newChair.ChairOrderDetails = new List<OrderNoteDetail>();
-                newTable.ChairData.Add(newChair);
-            }
+                CusId = "CUS0000001",
+                EmpId = emp.EmpId,
+                TableOwned = _unitofwork.TableRepository.Get(x => x.TableNumber.Equals(newTable.TableNumber)).First().TableId,
+                Ordertime = DateTime.Now,
+                TotalPrice = 0,
+                CustomerPay = 0,
+                PayBack = 0
+            };
 
-            TableTempData.TbList.Add(newTable);
+            _unitofwork.OrderTempRepository.Insert(newOrderTemp);
+            _unitofwork.Save();
 
-            writeToBinFile();
+            return _unitofwork.TableRepository.Get(x => x.TableNumber.Equals(newTable.TableNumber)).First();
         }
 
-        //write khi update
-        public static void writeOnUpdateChair(Table table, List<Chair> chList, int chairAmount)
-        {
-            foreach (Table curTable in TableTempData.TbList)
-            {
-                if (curTable.TableNumber == table.TableNumber)
-                {
-                    curTable.TableNumber = table.TableNumber;
-                    curTable.Position = table.Position;
-                    curTable.ChairAmount = chairAmount;
+        ////write khi update
+        //public static void writeOnUpdateChair(Table table, List<Chair> chList, int chairAmount)
+        //{
+        //    foreach (Table curTable in TableTempData.TbList)
+        //    {
+        //        if (curTable.TableNumber == table.TableNumber)
+        //        {
+        //            curTable.TableNumber = table.TableNumber;
+        //            curTable.Position = table.Position;
+        //            curTable.ChairAmount = chairAmount;
 
-                    curTable.ChairData = chList;
+        //            curTable.ChairData = chList;
 
-                    for (int i = chList.Count; i < chairAmount; i++)
-                    {
-                        Chair newChair = new Chair();
-                        newChair.ChairNumber = i + 1;
-                        newChair.TableOfChair = curTable.TableNumber;
-                        newChair.ChairOrderDetails = new List<OrderNoteDetail>();
-                        curTable.ChairData.Add(newChair);
-                    }
-                }
-            }
+        //            for (int i = chList.Count; i < chairAmount; i++)
+        //            {
+        //                Chair newChair = new Chair();
+        //                newChair.ChairNumber = i + 1;
+        //                newChair.TableOfChair = curTable.TableNumber;
+        //                newChair.ChairOrderDetails = new List<OrderNoteDetail>();
+        //                curTable.ChairData.Add(newChair);
+        //            }
+        //        }
+        //    }
 
-            writeToBinFile();
-        }
+        //    writeToBinFile();
+        //}
 
-        //write khi co order
-        public static void writeOnOrder(Rectangle rec)
-        {
+        ////write khi co order
+        //public static void writeOnOrder(Rectangle rec)
+        //{
 
-        }
+        //}
 
-        //write khi drag
-        public static void writeOnDrag(Rectangle rec)
-        {
-            foreach (Table curTable in TableTempData.TbList)
-            {
-                if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                {
-                    curTable.TableNumber = int.Parse(rec.Name.Substring(5));
-                    curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                }
-            }
+        ////write khi drag
+        //public static void writeOnDrag(Rectangle rec)
+        //{
+        //    foreach (Table curTable in TableTempData.TbList)
+        //    {
+        //        if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
+        //        {
+        //            curTable.TableNumber = int.Parse(rec.Name.Substring(5));
+        //            curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
+        //        }
+        //    }
 
-            writeToBinFile();
-        }
+        //    writeToBinFile();
+        //}
 
-        //write khi pin
-        public static void writeOnPin(Rectangle rec)
-        {
-            foreach (Table curTable in TableTempData.TbList)
-            {
-                if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                {
-                    curTable.TableNumber = int.Parse(rec.Name.Substring(5));
-                    curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                    curTable.IsPinned = true;
-                }
-            }
+        ////write khi pin
+        //public static void writeOnPin(Rectangle rec)
+        //{
+        //    foreach (Table curTable in TableTempData.TbList)
+        //    {
+        //        if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
+        //        {
+        //            curTable.TableNumber = int.Parse(rec.Name.Substring(5));
+        //            curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
+        //            curTable.IsPinned = true;
+        //        }
+        //    }
 
-            writeToBinFile();
-        }
+        //    writeToBinFile();
+        //}
 
-        //write khi move(unpin)
-        public static void writeOnMove(Rectangle rec)
-        {
-            foreach (Table curTable in TableTempData.TbList)
-            {
-                if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                {
-                    curTable.TableNumber = int.Parse(rec.Name.Substring(5));
-                    curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                    curTable.IsPinned = false;
-                }
-            }
+        ////write khi move(unpin)
+        //public static void writeOnMove(Rectangle rec)
+        //{
+        //    foreach (Table curTable in TableTempData.TbList)
+        //    {
+        //        if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
+        //        {
+        //            curTable.TableNumber = int.Parse(rec.Name.Substring(5));
+        //            curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
+        //            curTable.IsPinned = false;
+        //        }
+        //    }
 
-            writeToBinFile();
-        }
+        //    writeToBinFile();
+        //}
 
-        //write khi remove
-        public static void writeOnRemove(Rectangle rec)
-        {
-            Table delTable = new Table();
+        ////write khi remove
+        //public static void writeOnRemove(Rectangle rec)
+        //{
+        //    Table delTable = new Table();
 
-            foreach (Table curTable in TableTempData.TbList)
-            {
-                if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                {
-                    delTable = curTable;
-                    break;
-                }
-            }
+        //    foreach (Table curTable in TableTempData.TbList)
+        //    {
+        //        if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
+        //        {
+        //            delTable = curTable;
+        //            break;
+        //        }
+        //    }
 
-            TableTempData.TbList.Remove(delTable);
+        //    TableTempData.TbList.Remove(delTable);
 
-            writeToBinFile();
-        }
+        //    writeToBinFile();
+        //}
 
-        //write khi pay
-        public static void writeOnPay(Rectangle rec)
-        {
-            foreach (Table curTable in TableTempData.TbList)
-            {
-                if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
-                {
-                    curTable.TableNumber = int.Parse(rec.Name.Substring(5));
-                    curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
-                    curTable.TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now };
-                    curTable.TableOrderDetails = new List<OrderNoteDetail>();
-                    curTable.IsOrdered = false;
+        ////write khi pay
+        //public static void writeOnPay(Rectangle rec)
+        //{
+        //    foreach (Table curTable in TableTempData.TbList)
+        //    {
+        //        if (curTable.TableNumber == int.Parse(rec.Name.Substring(5)))
+        //        {
+        //            curTable.TableNumber = int.Parse(rec.Name.Substring(5));
+        //            curTable.Position = new Point(rec.Margin.Left, rec.Margin.Top);
+        //            curTable.TableOrder = new OrderNote() { EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId, Ordertable = int.Parse(rec.Name.Substring(5)), Ordertime = DateTime.Now };
+        //            curTable.TableOrderDetails = new List<OrderNoteDetail>();
+        //            curTable.IsOrdered = false;
 
-                    curTable.ChairData = new List<Chair>();
+        //            curTable.ChairData = new List<Chair>();
 
-                    for (int i = 0; i < curTable.ChairAmount; i++)
-                    {
-                        Chair newChair = new Chair();
-                        newChair.ChairNumber = i + 1;
-                        newChair.TableOfChair = curTable.TableNumber;
-                        newChair.ChairOrderDetails = new List<OrderNoteDetail>();
-                        curTable.ChairData.Add(newChair);
-                    }
-                    break;
-                }
-            }
+        //            for (int i = 0; i < curTable.ChairAmount; i++)
+        //            {
+        //                Chair newChair = new Chair();
+        //                newChair.ChairNumber = i + 1;
+        //                newChair.TableOfChair = curTable.TableNumber;
+        //                newChair.ChairOrderDetails = new List<OrderNoteDetail>();
+        //                curTable.ChairData.Add(newChair);
+        //            }
+        //            break;
+        //        }
+        //    }
 
-            writeToBinFile();
-        }
+        //    writeToBinFile();
+        //}
 
-        //write to file tableRuntimeHistory.bin;
-        public static void writeToBinFile()
-        {
-            string dir = startupProjectPath;
-            string serializationFile = System.IO.Path.Combine(dir, "SerializedData\\tableRuntimeHistory.bin");
+        ////write to file tableRuntimeHistory.bin;
+        //public static void writeToBinFile()
+        //{
+        //    string dir = startupProjectPath;
+        //    string serializationFile = System.IO.Path.Combine(dir, "SerializedData\\tableRuntimeHistory.bin");
 
-            using (Stream stream = File.Open(serializationFile, FileMode.Create))
-            {
-                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                bformatter.Serialize(stream, TableTempData.TbList);
-            }
-        }
+        //    using (Stream stream = File.Open(serializationFile, FileMode.Create))
+        //    {
+        //        var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        //        bformatter.Serialize(stream, TableTempData.TbList);
+        //    }
+        //}
 
     }
 }

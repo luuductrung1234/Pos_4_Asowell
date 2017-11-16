@@ -12,6 +12,9 @@
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
+using System.ComponentModel.DataAnnotations;
+using System.Windows.Shapes;
+
 namespace POS.Entities
 {
 
@@ -19,7 +22,8 @@ namespace POS.Entities
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Table
     {
-        public string TableId { get; set; } // table_id (Primary key) (length: 10)
+        [Key]
+        public int TableId { get; set; } // table_id (Primary key) (length: 10)
         public int TableNumber { get; set; } // table_number
         public int ChairAmount { get; set; } // chair_amount
         public int PosX { get; set; } // pos_X
@@ -27,6 +31,7 @@ namespace POS.Entities
         public int IsPinned { get; set; } // is_Pinned
         public int IsOrdered { get; set; } // is_Ordered
         public int IsLocked { get; set; } // is_Locked
+        public Rectangle TableRec { get; set; }
 
         // Reverse navigation
 

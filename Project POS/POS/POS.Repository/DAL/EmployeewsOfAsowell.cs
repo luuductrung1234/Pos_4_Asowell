@@ -24,6 +24,7 @@ namespace POS.Repository.DAL
         private GenericRepository<OrderNote> _orderRepository;
 
         // business repo
+        private GenericRepository<OrderDetailsTemp> _orderDetailsTempRepository;
         private GenericRepository<OrderTemp> _orderTempRepository;
         private GenericRepository<Chair> _chairRepository;
         private GenericRepository<Table> _tableRepository;
@@ -73,6 +74,18 @@ namespace POS.Repository.DAL
                     _orderTempRepository = new GenericRepository<OrderTemp>(context);
                 }
                 return _orderTempRepository;
+            }
+        }
+
+        public GenericRepository<OrderDetailsTemp> OrderDetailsTempRepository
+        {
+            get
+            {
+                if (_orderDetailsTempRepository == null)
+                {
+                    _orderDetailsTempRepository = new GenericRepository<OrderDetailsTemp>(context);
+                }
+                return _orderDetailsTempRepository;
             }
         }
 

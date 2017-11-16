@@ -32,8 +32,8 @@ namespace POS.EmployeeWorkSpace
         SalaryNote empSln;
         public ProgressBar proTable;
         public ProgressBar proChair;
-        public BusinessModel.Table currentTable { get; set; }
-        public Chair currentChair { get; set; }
+        public Entities.Table currentTable { get; set; }
+        public Entities.Chair currentChair { get; set; }
         internal Table b;
         internal Dash d;
         internal Entry en;
@@ -79,6 +79,15 @@ namespace POS.EmployeeWorkSpace
 
             initProgressTableChair();
 
+            this.Loaded += (sender, args) =>
+            {
+                bntTable.IsEnabled = true;
+                bntDash.IsEnabled = false;
+                bntEntry.IsEnabled = true;
+                bntInfo.IsEnabled = true;
+                myFrame.Navigate(d);
+            };
+
             this.Closing += (sender, args) =>
             {
                 WorkTime.Stop();
@@ -93,25 +102,30 @@ namespace POS.EmployeeWorkSpace
             proChair.Maximum = 0;
             proChair.Value = 0;
 
-            foreach (BusinessModel.Table t in TableTempData.TbList)
+            foreach (Entities.Table t in _unitofwork.TableRepository.Get().ToList())
             {
                 if(t.ChairAmount != 0)
                 {
-                    foreach (Chair ch in t.ChairData)
+                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(t.TableId)).ToList();
+                    if(chairoftable.Count != 0)
                     {
-                        if (ch.ChairOrderDetails.Count != 0)
+                        foreach(var ch in chairoftable)
                         {
-                            proChair.Value += 1;
-                            proChair.Maximum += 1;
-                        }
-                        else
-                        {
-                            proChair.Maximum += 1;
+                            var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(ch.ChairId)).ToList();
+                            if(chairorderdetailstemp.Count != 0)
+                            {
+                                proChair.Value += 1;
+                                proChair.Maximum += 1;
+                            }
+                            else
+                            {
+                                proChair.Maximum += 1;
+                            }
                         }
                     }
                 }
 
-                if (t.IsOrdered == true)
+                if (t.IsOrdered == 1)
                 {
                     proTable.Value += 1;
                     proTable.Maximum += 1;
@@ -245,23 +259,25 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.SalaryNoteRepository.Update(empSln);
             _unitofwork.Save();
 
-            foreach (var table in TableTempData.TbList)
+            foreach (var table in _unitofwork.TableRepository.Get())
             {
-                foreach (var chair in table.ChairData)
+                var orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(table.TableId)).First();
+                orderTemp.CusId = "CUS0000001";
+                orderTemp.Ordertime = DateTime.Now;
+                orderTemp.TotalPrice = 0;
+                orderTemp.CustomerPay = 0;
+                orderTemp.PayBack = 0;
+                table.IsOrdered = 0;
+                var orderDetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTemp.OrdertempId));
+                if(orderDetails.Count() != 0)
                 {
-                    chair.ChairOrderDetails = new List<OrderNoteDetail>();
+                    foreach(var od in orderDetails)
+                    {
+                        _unitofwork.OrderDetailsTempRepository.Delete(od);
+                        _unitofwork.Save();
+                    }
                 }
-
-                table.TableOrder.CusId = "CUS0000001";
-                table.TableOrder.Ordertime = DateTime.Now;
-                table.TableOrder.TotalPrice = 0;
-                table.TableOrder.CustomerPay = 0;
-                table.TableOrder.PayBack = 0;
-                table.IsOrdered = false;
-                table.TableOrderDetails = new List<OrderNoteDetail>();
             }
-
-            ReadWriteData.writeToBinFile();
 
             login = new Login();
             this.Close();

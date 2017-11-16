@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Collections.Generic;
 using POS.BusinessModel;
+using POS.Repository.DAL;
+using System.Linq;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -10,12 +12,14 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class TableSettingDialog : Window
     {
-        BusinessModel.Table curTable = new BusinessModel.Table();
+        EmployeewsOfAsowell _uniofwork;
+        Entities.Table curTable = new Entities.Table();
 
-        public TableSettingDialog(BusinessModel.Table table)
+        public TableSettingDialog(EmployeewsOfAsowell unitofwork, Entities.Table table)
         {
             InitializeComponent();
 
+            _uniofwork = unitofwork;
             curTable = table;
 
             this.Loaded += TableSettingDialog_Loaded;
@@ -25,41 +29,90 @@ namespace POS.EmployeeWorkSpace
 
         private void TableSettingDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Left = Convert.ToInt32(curTable.Position.X);
-            this.Top = Convert.ToInt32(curTable.Position.Y);
+            this.Left = Convert.ToInt32(curTable.PosX);
+            this.Top = Convert.ToInt32(curTable.PosY);
         }
 
         private void txtChairAmount_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            if(!string.IsNullOrEmpty(e.Text))
+            if (!string.IsNullOrEmpty(e.Text))
             {
                 e.Handled = !Char.IsNumber(e.Text[0]);
             }
         }
 
-        List<Chair> chList = new List<Chair>();
+
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            foreach(BusinessModel.Table t in TableTempData.TbList)
+            int amountChange = int.Parse(txtChairAmount.Text.Trim());
+            if(amountChange == 0)
             {
-                if(t.TableNumber == curTable.TableNumber)
-                {
-                    foreach(Chair ch in t.ChairData)
-                    {
-                        if(ch.ChairOrderDetails.Count != 0)
-                        {
-                            chList.Add(ch);
-                        }
-                    }
+                MessageBox.Show("Chair Amount must be greater than 0!");
+                return;
+            }
 
-                    if(chList.Count > int.Parse(txtChairAmount.Text.Trim()))
-                    {
-                        MessageBox.Show("Can not change Chair Amount now! This table have " + chList.Count + " chair(s) on order!");
-                        return;
-                    }
-                    
-                    ReadWriteData.writeOnUpdateChair(t, chList, int.Parse(txtChairAmount.Text.Trim()));
+            if(curTable.ChairAmount == 0)
+            {
+                curTable.ChairAmount = amountChange;
+
+                for (int i = 0; i < amountChange; i++)
+                {
+                    Entities.Chair newChair = new Entities.Chair();
+                    newChair.ChairNumber = i + 1;
+                    newChair.TableOwned = curTable.TableId;
+
+                    _uniofwork.ChairRepository.Insert(newChair);
+                    _uniofwork.Save();
                 }
+
+                this.Close();
+
+                return;
+            }
+
+            var chairOfTable = _uniofwork.ChairRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).ToList();
+
+            int orderdChairCount = 0;
+            foreach (var chair in chairOfTable)
+            {
+                var orderDetailsOfChair = _uniofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(chair.ChairId));
+                if (orderDetailsOfChair != null && orderDetailsOfChair.Count() > 0)
+                {
+                    orderdChairCount++;
+                }
+            }
+
+            if (orderdChairCount > amountChange)
+            {
+                MessageBox.Show("Can not change Chair Amount now! This table have " + orderdChairCount + " chair(s) on order!");
+                return;
+            }
+
+            if (chairOfTable.Count() < amountChange)
+            {
+                // increase
+                for (int i = chairOfTable.Count(); i < amountChange; i++)
+                {
+                    Entities.Chair newChair = new Entities.Chair();
+                    newChair.ChairNumber = i + 1;
+                    newChair.TableOwned = curTable.TableId;
+
+                    _uniofwork.ChairRepository.Insert(newChair);
+                    _uniofwork.Save();
+                }
+
+                curTable.ChairAmount = amountChange;
+            }
+            else
+            {
+                // decrease
+                for (int i = amountChange; i < chairOfTable.Count(); i++)
+                {
+                    _uniofwork.ChairRepository.Delete(chairOfTable.ElementAt(i));
+                    _uniofwork.Save();
+                }
+
+                curTable.ChairAmount = amountChange;
             }
 
             this.Close();

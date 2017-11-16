@@ -288,6 +288,7 @@ namespace POS.Repository.Generic
                 WorkingHistory wh = entity as WorkingHistory;
                 wh.WhId = result;
             }
+            
 
             return entity;
         }

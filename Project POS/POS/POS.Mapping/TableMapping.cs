@@ -30,7 +30,7 @@ namespace POS.Mapping
             ToTable("Table", schema);
             HasKey(x => x.TableId);
 
-            Property(x => x.TableId).HasColumnName(@"table_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.TableId).HasColumnName(@"table_id").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.TableNumber).HasColumnName(@"table_number").HasColumnType("int").IsRequired();
             Property(x => x.ChairAmount).HasColumnName(@"chair_amount").HasColumnType("int").IsRequired();
             Property(x => x.PosX).HasColumnName(@"pos_X").HasColumnType("int").IsRequired();
@@ -38,6 +38,7 @@ namespace POS.Mapping
             Property(x => x.IsPinned).HasColumnName(@"is_Pinned").HasColumnType("int").IsRequired();
             Property(x => x.IsOrdered).HasColumnName(@"is_Ordered").HasColumnType("int").IsRequired();
             Property(x => x.IsLocked).HasColumnName(@"is_Locked").HasColumnType("int").IsRequired();
+            Ignore(x => x.TableRec);
             InitializePartial();
         }
         partial void InitializePartial();
