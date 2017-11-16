@@ -39,6 +39,10 @@
                     <ListBox x:Name="DemoItemsListBox"
                              Margin="0 16 0 16"
                              SelectedIndex="0">
+                        <ListBoxItem x:Name="InputReceipt" Content="Input Receipt" PreviewMouseLeftButtonUp="InputReceipt_PreviewMouseLeftButtonUp" Foreground="White" />
+                        <ListBoxItem x:Name="ViewReceipt"
+                                     Content="View Receipt"
+                                     PreviewMouseLeftButtonUp="ViewReceipt_PreviewMouseLeftButtonUp" Foreground="White" />
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
@@ -58,7 +62,7 @@
                                                  StaysOpen="False">
 
                             <materialDesign:PopupBox.ToggleContent>
-                                <materialDesign:Chip x:Name="cUser"
+                                <materialDesign:Chip x:Name="CUserChip"
                                                      Margin="0,0,6,4"
                                                      Background="White"
                                                      IsEnabled="False">

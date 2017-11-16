@@ -49,12 +49,21 @@
   <ItemGroup>
     <Compile Include="DAL\AdminwsOfAsowell.cs" />
     <Compile Include="DAL\EmployeewsOfAsowell.cs" />
+    
     <Compile Include="Generic\GenericRepository.cs" />
+    
+    <Compile Include="Seperate Repo\AdminReRepository.cs" />
+    <Compile Include="Seperate Repo\CustomerRepository.cs" />
+    <Compile Include="Seperate Repo\EmployeeRepository.cs" />
+    <Compile Include="Seperate Repo\IngredientRepository.cs" />
+    <Compile Include="Seperate Repo\ProductRepository.cs" />
+    
     <Compile Include="Interfaces\IAdminRepository.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="Interfaces\IEmployeeRepository.cs" />
     <Compile Include="Interfaces\IIngredientRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

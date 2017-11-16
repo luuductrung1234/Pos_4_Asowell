@@ -28,7 +28,7 @@ namespace POS.Entities
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<string> _statusItems = new ObservableCollection<string> { "Stater", "Main Cost", "Dessert", "Drink" };
+        private ObservableCollection<string> _statusItems = new ObservableCollection<string> { "Starter", "Main Cost", "Dessert", "Drink" };
         private string _ordernoteId { get; set; } // ordernote_id (Primary key) (length: 10)
         private string _productId { get; set; } // product_id (Primary key) (length: 10)
         private string _stats { get; set; } // SelectedStats
