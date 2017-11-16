@@ -34,21 +34,7 @@ namespace POS.Helper.PrintHelper.Model
             }
         }
 
-        public List<OrderDetailsForPrint> OrderDetails
-        {
-            get
-            {
-                return new List<OrderDetailsForPrint>()
-                {
-                    new OrderDetailsForPrint(){SelectedStats ="Stater",Quan=2,ProductName="Pepsi",ProductPrice=25,Amt=50},
-                    new OrderDetailsForPrint(){SelectedStats ="Stater",Quan=1,ProductName="Coca Cola",ProductPrice=25,Amt=25},
-                    new OrderDetailsForPrint(){SelectedStats ="Stater",Quan=1,ProductName="French Fries",ProductPrice=35,Amt=35},
-                    new OrderDetailsForPrint(){SelectedStats ="Stater",Quan=2,ProductName="Honey Butter Bread",ProductPrice=70,Amt=170},
-                    new OrderDetailsForPrint(){SelectedStats ="Stater",Quan=3,ProductName="Comma Pizza",ProductPrice=50,Amt=150},
-                    new OrderDetailsForPrint(){SelectedStats ="Stater",Quan=1,ProductName="Soda",ProductPrice=25,Amt=25},
-                };
-            }
-        }
+        public List<OrderDetailsForPrint> OrderDetails { get; set; }
 
 
 

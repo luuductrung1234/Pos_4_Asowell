@@ -7,7 +7,7 @@ using System.Windows.Documents;
 
 namespace POS.Helper.PrintHelper
 {
-    interface IPrintHelper
+    public interface IPrintHelper
     {
         FlowDocument CreateDocument();
     }

@@ -11,6 +11,8 @@ namespace POS.Helper.PrintHelper
     {
         private static string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
+        public OrderForPrint Order { get; set; }
+
         public FlowDocument CreateDocument()
         {
             return CreateKitchenDocument();
@@ -33,18 +35,6 @@ namespace POS.Helper.PrintHelper
             Section sec = new Section();
 
 
-            // Template Data for print
-            OrderForPrint order = new OrderForPrint()
-            {
-                No = "ORD0000001",
-                Table = 1,
-                Date = DateTime.Now,
-                Casher = "Luong Nhat Duy",
-                Customer = "Luu Duc Trung",
-                CustomerPay = 500
-            };
-
-
             // Head Text
             BlockUIContainer blkHeadText = new BlockUIContainer();
             Generate_HeadText(blkHeadText);
@@ -55,7 +45,7 @@ namespace POS.Helper.PrintHelper
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
-            Generate_TableText(blkTableText, order.getMetaBarTable(), order.OrderDetails);
+            Generate_TableText(blkTableText, Order.getMetaBarTable(), Order.OrderDetails);
 
 
 

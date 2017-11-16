@@ -1,0 +1,21 @@
+﻿<Window x:Class="POS.WPFTest.TestPrintWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS.WPFTest"
+        mc:Ignorable="d"
+        Title="TestPrintWindow"
+        Height="300"
+        Width="300">
+
+
+    <Window.Content>
+        <Button x:Name="BtnPrint"
+                Width="100"
+                Content="Print"
+                Click="PrintSimpleTextButton_Click"
+                Margin="96,73,96,158" />
+
+    </Window.Content>
+</Window>

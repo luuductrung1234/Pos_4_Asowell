@@ -13,7 +13,18 @@ namespace POS.Helper.PrintHelper
     public class ReceiptPrintHelper : IPrintHelper
     {
         private static string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        
+
+        public Owner Owner { get; set; }
+
+        public OrderForPrint Order { get; set; }
+
+        public ReceiptPrintHelper() { }
+
+        public ReceiptPrintHelper(Owner owner)
+        {
+            this.Owner = owner;
+        }
+
         public FlowDocument CreateDocument()
         {
             return CreateReceiptDocument();
@@ -41,39 +52,31 @@ namespace POS.Helper.PrintHelper
             Section sec = new Section();
 
 
-            // Template Data for print
-            OrderForPrint order = new OrderForPrint()
-            {
-                No = "ORD0000001",
-                Table = 1,
-                Date = DateTime.Now,
-                Casher = "Luong Nhat Duy",
-                Customer = "Luu Duc Trung",
-                CustomerPay = 500
-            };
-
-
             // Head Text
             BlockUIContainer blkHeadText = new BlockUIContainer();
-            Generate_HeadText(blkHeadText);
+            if (Owner != null)
+            {
+                Generate_HeadText(blkHeadText, Owner);
+            }
+            
 
             // Info Text
             BlockUIContainer blkInfoText = new BlockUIContainer();
-            Generate_InfoText(blkInfoText, order.getMetaReceiptInfo());
+            Generate_InfoText(blkInfoText, Order.getMetaReceiptInfo());
 
             // Table Text
             BlockUIContainer blkTableText = new BlockUIContainer()
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
-            Generate_TableText(blkTableText, order.getMetaReceiptTable(), order.OrderDetails);
+            Generate_TableText(blkTableText, Order.getMetaReceiptTable(), Order.OrderDetails);
 
             // Summary Text
             BlockUIContainer blkSummaryText = new BlockUIContainer()
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
-            Generate_SummaryText(blkSummaryText, order, "vnd");
+            Generate_SummaryText(blkSummaryText, Order, "vnd");
 
 
             //// Add Paragraph to Section
@@ -331,7 +334,7 @@ namespace POS.Helper.PrintHelper
         /// Create the Head section of Receipt
         /// </summary>
         /// <param name="blkHeadText"></param>
-        private void Generate_HeadText(BlockUIContainer blkHeadText)
+        private void Generate_HeadText(BlockUIContainer blkHeadText, Owner owner)
         {
 
             StackPanel stpHeadText = new StackPanel()
@@ -343,43 +346,50 @@ namespace POS.Helper.PrintHelper
             Image imgOwner = new Image();
             BitmapImage bimg = new BitmapImage();
             bimg.BeginInit();
-            bimg.UriSource = new Uri(startupProjectPath + "\\image\\logo.png", UriKind.Absolute);
+            bimg.UriSource = new Uri(startupProjectPath + "\\Images\\" + owner.ImgName, UriKind.Absolute);
             bimg.EndInit();
             imgOwner.Source = bimg;
             imgOwner.HorizontalAlignment = HorizontalAlignment.Center;
             imgOwner.Margin = new Thickness(85, 0, 0, 0);
             stpLogo.Children.Add(imgOwner);
 
-            //TextBlock txtOwnerName = new TextBlock()
-            //{
-            //    Text = "Asowell Restaurant",
-            //    FontSize = 12,
-            //    FontFamily = new FontFamily("Century Gothic"),
-            //    FontWeight = FontWeights.UltraBold
-            //};
-            TextBlock txtAddress1 = new TextBlock()
+
+
+            string address = "";
+            // modify the long address
+            if (owner.Address.Length > 54)
             {
-                Text = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, Dist 1, HCM City",
-                FontFamily = new FontFamily("Century Gothic"),
-                FontSize = 10
-            };
-            TextBlock txtAddress2 = new TextBlock()
+                string address1st = owner.Address.Substring(0, 53);
+                string address2nd = owner.Address.Substring(53);
+                address = address1st + "\n\t" + address2nd;
+            }
+            else
             {
-                Text = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, Dist 1, HCM City",
+                address = owner.Address;
+            }
+
+
+
+            TextBlock txtAddress = new TextBlock()
+            {
+                Text = "ADDRESS:  " + address,
                 FontFamily = new FontFamily("Century Gothic"),
-                FontSize = 10
+                FontSize = 10,
+                FontWeight = FontWeights.UltraBold,
+
             };
             TextBlock txtPhone = new TextBlock()
             {
-                Text = "Phone: 0927333668",
+                Text = "PHONE:  " + owner.Phone,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 10,
-                Margin = new Thickness(0, 0, 0, 5)
+                Margin = new Thickness(0, 0, 0, 5),
+                FontWeight = FontWeights.UltraBold,
             };
             StackPanel stpPageName = new StackPanel();
             TextBlock txtPageName = new TextBlock()
             {
-                Text = "RECEIPT",
+                Text = owner.PageName,
                 FontSize = 13,
                 FontFamily = new FontFamily("Century Gothic"),
                 FontWeight = FontWeights.UltraBold,
@@ -391,12 +401,19 @@ namespace POS.Helper.PrintHelper
 
             stpHeadText.Children.Add(stpLogo);
             //stpHeadText.Children.Add(txtOwnerName);
-            stpHeadText.Children.Add(txtAddress1);
-            stpHeadText.Children.Add(txtAddress2);
+            stpHeadText.Children.Add(txtAddress);
             stpHeadText.Children.Add(txtPhone);
             stpHeadText.Children.Add(stpPageName);
 
             blkHeadText.Child = stpHeadText;
-        }
+        } 
+    }
+
+    public class Owner
+    {
+        public string ImgName { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public string PageName { get; set; }
     }
 }
