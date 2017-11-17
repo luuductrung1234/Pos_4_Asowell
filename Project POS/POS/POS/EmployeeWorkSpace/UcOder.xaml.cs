@@ -83,6 +83,11 @@ namespace POS.EmployeeWorkSpace
                                 Product = product
                             };
 
+                foreach (var q in query)
+                {
+
+                }
+
                 // binding
                 lvData.ItemsSource = query;
                 loadTotalPrice();
@@ -377,7 +382,7 @@ namespace POS.EmployeeWorkSpace
             }
 
             DependencyObject dep = (DependencyObject)e.OriginalSource;
-            OrderNoteDetail o = new OrderNoteDetail();
+            OrderDetailsTemp o = new OrderDetailsTemp();
             int index;
 
             foreach (ToggleButton btn in wp.Children)
@@ -388,7 +393,7 @@ namespace POS.EmployeeWorkSpace
                     var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
                     var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
                                             && x.TableOwned.Equals(currentChair.TableOwned));
-                    var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(foundchair.ChairId)).ToList();
+                    var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId == foundchair.ChairId).ToList();
 
                     while ((dep != null) && !(dep is ListViewItem))
                     {
@@ -401,12 +406,15 @@ namespace POS.EmployeeWorkSpace
                     index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
                     if (chairordernotedetails[index].Quan > 1)
                     {
-                        o.ProductId = chairordernotedetails[index].ProductId;
-                        o.Quan--;
+                        chairordernotedetails[index].Quan--;
+                        _unitofwork.OrderDetailsTempRepository.Update(chairordernotedetails[index]);
+                        _unitofwork.Save();
                     }
                     else
                     {
                         var chairtemp = chairordernotedetails[index];
+
+                        orderdetailstempcurrenttablelist.Remove(chairordernotedetails[index]);
 
                         chairordernotedetails.RemoveAt(index);
                         _unitofwork.OrderDetailsTempRepository.Delete(chairtemp);
@@ -417,9 +425,15 @@ namespace POS.EmployeeWorkSpace
                     foreach (Entities.Chair chair in chairoftable)
                     {
                         var chairorderdetailstemp = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
-                        currentTable.IsOrdered = 1;
+                        if (chairorderdetailstemp.Count != 0)
+                        {
+                            currentTable.IsOrdered = 1;
+                        }
                         break;
                     }
+
+                    _unitofwork.TableRepository.Update(currentTable);
+                    _unitofwork.Save();
 
                     ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
                     RefreshControl(_unitofwork, currentTable);
@@ -430,6 +444,7 @@ namespace POS.EmployeeWorkSpace
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
+            orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
             var ordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
             DependencyObject dep = (DependencyObject)e.OriginalSource;
 
@@ -442,15 +457,73 @@ namespace POS.EmployeeWorkSpace
                 return;
 
             int index = lvData.ItemContainerGenerator.IndexFromContainer(dep);
-            OrderDetailsTemp o = new OrderDetailsTemp();
+
+            OrderDetailsTemp tempdata = new OrderDetailsTemp();
+            tempdata.ChairId = ordernotedetails[index].ChairId;
+            tempdata.OrdertempId = ordernotedetails[index].OrdertempId;
+            tempdata.ProductId = ordernotedetails[index].ProductId;
+            tempdata.SelectedStats = ordernotedetails[index].SelectedStats;
+            tempdata.StatusItems = ordernotedetails[index].StatusItems;
+            tempdata.Quan = ordernotedetails[index].Quan;
+            tempdata.Note = "";
+
+            int countnotedif = 0;
+
             InputNote inputnote = new InputNote(ordernotedetails[index].Note);
-            if (ordernotedetails[index].Note == null || ordernotedetails[index].Note.Equals(inputnote.Note))
+            if (ordernotedetails[index].Note.Equals("") || ordernotedetails[index].Note.Equals(inputnote.Note))
             {
                 if (inputnote.ShowDialog() == true)
                 {
-                    ordernotedetails[index].Note = inputnote.Note;
-                    _unitofwork.OrderDetailsTempRepository.Update(ordernotedetails[index]);
-                    _unitofwork.Save();
+                    tempdata.Note = inputnote.Note;
+
+                    if (ordernotedetails[index].Quan == 1)
+                    {
+                        foreach(var cho in ordernotedetails)
+                        {
+                            if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
+                            {
+                                cho.Quan++;
+                                _unitofwork.OrderDetailsTempRepository.Update(cho);
+                                _unitofwork.Save();
+                                return;
+                            }
+                        }
+
+                        _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
+                        _unitofwork.Save();
+                        _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
+                        _unitofwork.Save();
+                        return;
+                    }
+
+                    if (ordernotedetails[index].Quan > 1)
+                    {
+                        foreach (var cho in ordernotedetails)
+                        {
+                            if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
+                            {
+                                tempdata.Quan--;
+                                cho.Quan++;
+                                _unitofwork.OrderDetailsTempRepository.Update(cho);
+                                _unitofwork.Save();
+                                _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
+                                _unitofwork.Save();
+                                _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
+                                _unitofwork.Save();
+                                break;
+                            }
+
+                            if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && !cho.Note.Equals(tempdata.Note))
+                            {
+                                ordernotedetails[index].Quan--;
+                                _unitofwork.OrderDetailsTempRepository.Update(ordernotedetails[index]);
+                                _unitofwork.Save();
+                                tempdata.Quan = 1;
+                                _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
+                                _unitofwork.Save();
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -488,15 +561,19 @@ namespace POS.EmployeeWorkSpace
 
         private void ClearTheTable()
         {
-            Entities.Table curTable = ((MainWindow)Window.GetWindow(this)).currentTable;
+            Entities.Table curTable = currentTable;
             var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).ToList();
             foreach (Entities.Chair chair in chairoftable)
             {
-                var ordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
-                foreach (var ch in ordernotedetails)
+                var ordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
+                if (ordernotedetails.Count != 0)
                 {
-                    _unitofwork.OrderDetailsTempRepository.Delete(ch);
-                    _unitofwork.Save();
+                    foreach (var ch in ordernotedetails)
+                    {
+                        orderdetailstempcurrenttablelist.Remove(ch);
+                        _unitofwork.OrderDetailsTempRepository.Delete(ch);
+                        _unitofwork.Save();
+                    }
                 }
             }
 
