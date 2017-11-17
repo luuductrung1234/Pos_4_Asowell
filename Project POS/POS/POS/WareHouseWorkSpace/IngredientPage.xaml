@@ -68,7 +68,7 @@
                                     Orientation="Horizontal">
                             <TextBlock Foreground="White">Info:</TextBlock>
                             <TextBlock Foreground="White"
-                                       Text="{Binding Info}"></TextBlock>
+                                           Text="{Binding WareHouse.Contain}"></TextBlock>
                         </StackPanel>
                             <ProgressBar x:Name="prgcontent"
                                          Width="150"

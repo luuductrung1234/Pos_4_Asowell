@@ -26,7 +26,7 @@ namespace POS.WareHouseWorkSpace
         {
             _unitofwork = unitofwork;
             InitializeComponent();
-            lvItem.ItemsSource = unitofwork.IngredientRepository.Get(includeProperties: "WareHouse");
+            lvItem.ItemsSource = _unitofwork.IngredientRepository.Get(includeProperties: "WareHouse");
         }
     }
 }
