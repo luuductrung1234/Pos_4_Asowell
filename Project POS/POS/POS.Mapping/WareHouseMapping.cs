@@ -32,6 +32,8 @@ namespace POS.Mapping
 
             Property(x => x.WarehouseId).HasColumnName(@"warehouse_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.Contain).HasColumnName(@"contain").HasColumnType("float").IsOptional();
+            Property(x => x.StandardContain).HasColumnName(@"std_contain").HasColumnType("float").IsRequired();
+
             InitializePartial();
         }
         partial void InitializePartial();

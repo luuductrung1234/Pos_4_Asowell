@@ -21,6 +21,7 @@ namespace POS.Entities
     {
         public string WarehouseId { get; set; } // warehouse_id (Primary key) (length: 10)
         public double? Contain { get; set; } // contain
+        public double StandardContain { get; set; }
 
         // Reverse navigation
 

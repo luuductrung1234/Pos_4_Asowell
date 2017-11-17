@@ -2,22 +2,24 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      Background="{DynamicResource MaterialDesignPaper}"
       xmlns:local="clr-namespace:POS.WareHouseWorkSpace"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
+      Height="630"
+      Width="1366"
       Title="IngredientPage">
 
     <Grid>
-        <ListBox ItemsSource="{Binding Kinds}"
-                 Grid.Row="1"
+        <ListBox 
                  Margin="0 8 0 0"
                  x:Name="lvItem">
             <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapPanel ItemHeight="100"
-                           ItemWidth="100" />
+                <WrapPanel ItemHeight="auto"
+                           ItemWidth="auto" />
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
@@ -26,24 +28,56 @@
                                      Margin="4,4,0,0">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="140" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                            <Image Width="196"
-                               Height="140"
-                               Stretch="UniformToFill" />
-                            <StackPanel Grid.Row="0"
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="2*" />
+                            </Grid.RowDefinitions>
+                            <Image Width="70"
+                               Height="90"
+                               Source="C:\Users\Nam_Nguyen\Documents\Pos_4_Asowell\Project POS\POS\POS\Images\h1.jpg"
+                               Stretch="Fill" />
+                            <StackPanel Grid.Row="1"
                                         Orientation="Horizontal">
                                 <TextBlock Foreground="White">Name:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding Name}"></TextBlock>
                             </StackPanel>
+                        <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal">
+                                <TextBlock Foreground="White">IgdType:</TextBlock>
+                            <TextBlock Foreground="White"
+                                           Text="{Binding IgdType}"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3"
+                                    Orientation="Horizontal">
+                                <TextBlock Foreground="White">UnitBuy:</TextBlock>
+                            <TextBlock Foreground="White"
+                                           Text="{Binding UnitBuy}"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="4"
+                                    Orientation="Horizontal">
+                                <TextBlock Foreground="White">StandardPrice:</TextBlock>
+                            <TextBlock Foreground="White"
+                                           Text="{Binding StandardPrice}"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="5"
+                                    Orientation="Horizontal">
+                            <TextBlock Foreground="White">Info:</TextBlock>
+                            <TextBlock Foreground="White"
+                                           Text="{Binding WareHouse.Contain}"></TextBlock>
+                        </StackPanel>
+                            <ProgressBar x:Name="prgcontent"
+                                         Width="150"
+                                         Height="10"
+                                         Foreground="Red"
+                                         Value="{Binding WareHouse.Contain}"
+                                         Grid.Row="6"></ProgressBar>
 
-                    </Grid>
+                        </Grid>
                     </materialDesign:Card>
             </DataTemplate>
         </ListBox.ItemTemplate>

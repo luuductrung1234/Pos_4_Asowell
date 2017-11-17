@@ -157,6 +157,7 @@ CREATE INDEX [IX_emp_id] ON [dbo].[ReceiptNote]([emp_id])
 CREATE TABLE [dbo].[WareHouse] (
     [warehouse_id] [varchar](10) NOT NULL,
     [contain] [float],
+	[std_contain] [float] NOT NULL,
     CONSTRAINT [PK_dbo.WareHouse] PRIMARY KEY ([warehouse_id])
 )
 CREATE TABLE [dbo].[SalaryNote] (
@@ -300,104 +301,106 @@ insert into Customer values
 go
 
 
-insert into WareHouse values
-('WAH0000001',	0),
-('WAH0000002',	0),
-('WAH0000003',	0),
-('WAH0000004',	0),
-('WAH0000005',	0),
-('WAH0000006',	0),
-('WAH0000007',	0),
-('WAH0000008',	0),
-('WAH0000009',	0),
-('WAH0000010',	0),
-('WAH0000011',	0),
-('WAH0000012',	0),
-('WAH0000013',	0),
-('WAH0000014',	0),
-('WAH0000015',	0),
-('WAH0000016',	0),
-('WAH0000017',	0),
-('WAH0000018',	0),
-('WAH0000019',	0),
-('WAH0000020',	0),
-('WAH0000021',	0),
-('WAH0000022',	0),
-('WAH0000023',	0),
-('WAH0000024',	0),
-('WAH0000025',	0),
-('WAH0000026',	0),
-('WAH0000027',	0),
-('WAH0000028',	0),
-('WAH0000029',	0),
-('WAH0000030',	0),
-('WAH0000031',	0),
-('WAH0000032',	0),
-('WAH0000033',	0),
-('WAH0000034',	0),
-('WAH0000035',	0),
-('WAH0000036',	0),
-('WAH0000037',	0),
-('WAH0000038',	0),
-('WAH0000039',	0),
-('WAH0000040',	0),
-('WAH0000041',	0),
-('WAH0000042',	0),
-('WAH0000043',	0),
-('WAH0000044',	0),
-('WAH0000045',	0),
-('WAH0000046',	0),
-('WAH0000047',	0)
+insert into WareHouse 
+	([warehouse_id], [contain], [std_contain])
+values
+('WAH0000001',	2000, 5000),		--N'ml',	   
+('WAH0000002',	6000, 5000),		--N'ml',	   
+('WAH0000003',	5000, 5000),		--N'ml',	   
+('WAH0000004',	10000, 5000),		--N'ml',	   
+('WAH0000005',	20000, 10000),		--N'g',		
+('WAH0000006',	8000, 10000),		--N'g',	   
+('WAH0000007',	5000, 5000),		--N'ml',		
+('WAH0000008',	5000, 5000),		--N'ml',		
+('WAH0000009',	2000, 5000),		--N'ml',		
+('WAH0000010',	3000, 5000),		--N'ml',
+('WAH0000011',	4000, 6000),		--N'ml',		
+('WAH0000012',	9000, 6000),		--N'ml',		
+('WAH0000013',	1000, 2000),		--N'g',		
+('WAH0000014',	2000, 2000),		--N'g',		
+('WAH0000015',	4000, 3000),		--N'g',		
+('WAH0000016',	4000, 2000),		--N'g',		
+('WAH0000017',	4000, 2000),		--N'g',		
+('WAH0000018',	3500, 2000),		--N'g',		
+('WAH0000019',	2600, 2000),		--N'g',		
+('WAH0000020',	6000, 3000),		--N'g',	   
+('WAH0000021',	7000, 5000),		--N'g',		
+('WAH0000022',	5000, 3000),		--N'g',		
+('WAH0000023',	5000, 5000),		--N'g',		
+('WAH0000024',	10000, 5000),		--N'g',		
+('WAH0000028',	2000, 2000),		--N'g',		
+('WAH0000029',	5000, 5000),		--N'ml',	   
+('WAH0000030',	1000, 5000),		--N'ml',	   
+('WAH0000031',	1000, 6000),		--N'g',	   
+('WAH0000032',	2000, 2000),		--N'g',	   
+('WAH0000033',	3000, 2000),		--N'g',	   
+('WAH0000027',	4000, 5000),		--N'g',	   
+('WAH0000025',	5000, 4000),		--N'g',	   
+('WAH0000026',	1000, 10000),		--N'g',	   
+('WAH0000034',	2000, 2000),		--N'g',	   
+('WAH0000035',	10, 10),			--N'pack',	
+('WAH0000036',	5, 10),				--N'pack',	
+('WAH0000037',	5, 10),				--N'pack',	
+('WAH0000038',	4, 10),				--N'pack',	
+('WAH0000039',	6, 10),				--N'pack',	
+('WAH0000040',	5, 5),				--N'pack',	
+('WAH0000041',	20, 20),			--N'pack',	
+('WAH0000042',	200, 1000),			--N'ml',	   
+('WAH0000043',	9, 10),				--N'pack',	
+('WAH0000044',	4, 5),				--N'pack',	
+('WAH0000045',	4, 10),				--N'pack',	
+('WAH0000046',	6000, 5000),		--N'g',		
+('WAH0000047',	0, 0)				--N'time',   
 go
 
 insert into Ingredient values
-('IGD0000001',	'WAH0000001',	N'pepsi', 					N'',		0,	N'khô',			N'thùng',	130,0),
-('IGD0000002',	'WAH0000002',	N'aquafina', 				N'',		0,	N'khô',			N'thùng',	90,	0),
-('IGD0000003',	'WAH0000003',	N'7up', 					N'',		0,	N'khô',			N'thùng',	150,0),
-('IGD0000004',	'WAH0000004',	N'water bottle (big)', 		N'',		0,	N'khô',			N'bình',	90,	0),
-('IGD0000005',	'WAH0000005',	N'Coffee Bean', 			N'',		0,	N'khô',			N'kí',		0,	0),
-('IGD0000006',	'WAH0000006',	N'Trung Nguyen coffee S', 	N'',		0,	N'khô',			N'bịch',	45,	0),
-('IGD0000007',	'WAH0000007',	N'Dalat milk', 				N'',		0,	N'sữa',			N'hộp',		0,	0),
-('IGD0000008',	'WAH0000008',	N'Dutch Lady milk', 		N'',		0,	N'sữa',			N'hộp',		0,	0),
-('IGD0000009',	'WAH0000009',	N'Condense milk', 			N'',		0,	N'sữa',			N'hộp',		0,	0),
-('IGD0000010',	'WAH0000010',	N'Soda', 					N'',		0,	N'khô',			N'thùng',	0,	0),
-('IGD0000011',	'WAH0000011',	N'Whipping cream', 			N'',		0,	N'sữa',			N'hộp',		0,	0),
-('IGD0000012',	'WAH0000012',	N'Cream cheese', 			N'',		0,	N'sữa',			N'hộp',		0,	0),
-('IGD0000013',	'WAH0000013',	N'Milk Tea Powder', 		N'',		0,	N'khô',			N'hộp',		0,	0),
-('IGD0000014',	'WAH0000014',	N'Matcha Tea Powder', 		N'',		0,	N'khô',			N'hộp',		0,	0),
-('IGD0000015',	'WAH0000015',	N'Durian coffee Powder', 	N'',		0,	N'khô',			N'hộp',		0,	0),
-('IGD0000016',	'WAH0000016',	N'Peach Tea Bag(cozy)', 	N'',		0,	N'khô',			N'hộp',		0,	0),
-('IGD0000017',	'WAH0000017',	N'Strawberry Tea Bag(cozy)',N'',		0,	N'khô',			N'hộp',		0,	0),
-('IGD0000018',	'WAH0000018',	N'Apple Tea bag(cozy)', 	N'',		0,	N'khô',			N'hộp',		0,	0),
-('IGD0000019',	'WAH0000019',	N'Lemon Tea bag(cozy)', 	N'',		0,	N'khô',			N'hộp',		0,	0),
-('IGD0000020',	'WAH0000020',	N'Cacao Powder', 			N'',		0,	N'khô',			N'bịch',	0,	0),
-('IGD0000021',	'WAH0000021',	N'sugar (bar)', 			N'',		0,	N'khô',			N'kí',		0,	0),
-('IGD0000022',	'WAH0000022',	N'Icing sugar', 			N'',		0,	N'khô',			N'kí',		0,	0),
-('IGD0000023',	'WAH0000023',	N'Peach Can', 				N'',		0,	N'khô',			N'lon',		0,	0),
-('IGD0000024',	'WAH0000024',	N'Mandarin orange Can', 	N'',		0,	N'khô',			N'lon',		0,	0),
-('IGD0000028',	'WAH0000028',	N'Mint leaf', 				N'',		0,	N'rau củ',		N'kí',		0,	0),
-('IGD0000029',	'WAH0000029',	N'Blue curacao syrup', 		N'',		0,	N'khô',			N'chai',	0,	0),
-('IGD0000030',	'WAH0000030',	N'Peach syrup', 			N'',		0,	N'khô',			N'chai',	0,	0),
-('IGD0000031',	'WAH0000031',	N'Ginger honey sauce', 		N'',		0,	N'khô',			N'bình',	0,	0),
-('IGD0000032',	'WAH0000032',	N'Ketchup (bar)', 			N'',		0,	N'khô',			N'chai',	0,	0),
-('IGD0000033',	'WAH0000033',	N'Chilli sauce (bar)',		N'',		0,	N'khô',			N'chai',	0,	0),
-('IGD0000027',	'WAH0000027',	N'Lemon', 					N'',		2,	N'rau củ',		N'trái',	0,	0),
-('IGD0000025',	'WAH0000025',	N'Yellow orange', 			N'',		2,	N'rau củ',		N'trái',	0,	0),
-('IGD0000026',	'WAH0000026',	N'Green orange', 			N'',		2,	N'rau củ',		N'trái',	0,	0),
-('IGD0000034',	'WAH0000034',	N'ice', 					N'',		3,	N'khô',			N'bịch',	0,	0),
-('IGD0000035',	'WAH0000035',	N'Plastic cup', 			N'',		3,	N'vật dụng',	N'lóc',		0,	0),
-('IGD0000036',	'WAH0000036',	N'Plastic cover', 			N'',		3,	N'vật dụng',	N'lóc',		0,	0),
-('IGD0000037',	'WAH0000037',	N'Paper cup', 				N'',		3,	N'vật dụng',	N'lóc',		0,	0),
-('IGD0000038',	'WAH0000038',	N'Black cover', 			N'',		3,	N'vật dụng',	N'lóc',		0,	0),
-('IGD0000039',	'WAH0000039',	N'Straw', 					N'',		3,	N'vật dụng',	N'lóc',		0,	0),
-('IGD0000040',	'WAH0000040',	N'Toilet paper', 			N'',		3,	N'vật dụng',	N'cuộn',	0,	0),
-('IGD0000041',	'WAH0000041',	N'Napkin', 					N'',		3,	N'vật dụng',	N'lóc',		0,	0),
-('IGD0000042',	'WAH0000042',	N'Aroma', 					N'',		3,	N'vật dụng',	N'bình',	0,	0),
-('IGD0000043',	'WAH0000043',	N'Trash bag', 				N'',		3,	N'vật dụng',	N'cuộn',	0,	0),
-('IGD0000044',	'WAH0000044',	N'Print paper', 			N'',		3,	N'vật dụng',	N'cuộn',	0,	0),
-('IGD0000045',	'WAH0000045',	N'Bag T', 					N'',		3,	N'vật dụng',	N'lóc',		0,	0),
-('IGD0000046',	'WAH0000046',	N'Chocalate bar',			N'',		0,	N'khô',			N'kí',		0,	0),
-('IGD0000047',	'WAH0000047',	N'Other purchase',			N'',		3,	N'chi phí',		N'lần',		0,	0)
+('IGD0000001',	'WAH0000001',	N'pepsi', 					N'',		0,	N'dry',			N'ml',	    130,0),
+('IGD0000002',	'WAH0000002',	N'aquafina', 				N'',		0,	N'dry',			N'ml',	    90,	0),
+('IGD0000003',	'WAH0000003',	N'7up', 					N'',		0,	N'dry',			N'ml',	    150,0),
+('IGD0000004',	'WAH0000004',	N'water bottle (big)', 		N'',		0,	N'dry',			N'ml',	    90,	0),
+('IGD0000005',	'WAH0000005',	N'Coffee Bean', 			N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000006',	'WAH0000006',	N'Trung Nguyen coffee S', 	N'',		0,	N'dry',			N'g',	    45,	0),
+('IGD0000007',	'WAH0000007',	N'Dalat milk', 				N'',		0,	N'dairy',		N'ml',		0,	0),
+('IGD0000008',	'WAH0000008',	N'Dutch Lady milk', 		N'',		0,	N'dairy',		N'ml',		0,	0),
+('IGD0000009',	'WAH0000009',	N'Condense milk', 			N'',		0,	N'dairy',		N'ml',		0,	0),
+('IGD0000010',	'WAH0000010',	N'Soda', 					N'',		0,	N'dairy',		N'ml',	0,	0),
+('IGD0000011',	'WAH0000011',	N'Whipping cream', 			N'',		0,	N'dairy',		N'ml',		0,	0),
+('IGD0000012',	'WAH0000012',	N'Cream cheese', 			N'',		0,	N'dairy',		N'ml',		0,	0),
+('IGD0000013',	'WAH0000013',	N'Milk Tea Powder', 		N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000014',	'WAH0000014',	N'Matcha Tea Powder', 		N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000015',	'WAH0000015',	N'Durian coffee Powder', 	N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000016',	'WAH0000016',	N'Peach Tea Bag(cozy)', 	N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000017',	'WAH0000017',	N'Strawberry Tea Bag(cozy)',N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000018',	'WAH0000018',	N'Apple Tea bag(cozy)', 	N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000019',	'WAH0000019',	N'Lemon Tea bag(cozy)', 	N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000020',	'WAH0000020',	N'Cacao Powder', 			N'',		0,	N'dry',			N'g',	    0,	0),
+('IGD0000021',	'WAH0000021',	N'sugar (bar)', 			N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000022',	'WAH0000022',	N'Icing sugar', 			N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000023',	'WAH0000023',	N'Peach Can', 				N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000024',	'WAH0000024',	N'Mandarin orange Can', 	N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000028',	'WAH0000028',	N'Mint leaf', 				N'',		0,	N'vegetable',	N'g',		0,	0),
+('IGD0000029',	'WAH0000029',	N'Blue curacao syrup', 		N'',		0,	N'dry',			N'ml',	    0,	0),
+('IGD0000030',	'WAH0000030',	N'Peach syrup', 			N'',		0,	N'dry',			N'ml',	    0,	0),
+('IGD0000031',	'WAH0000031',	N'Ginger honey sauce', 		N'',		0,	N'dry',			N'g',	    0,	0),
+('IGD0000032',	'WAH0000032',	N'Ketchup (bar)', 			N'',		0,	N'dry',			N'g',	    0,	0),
+('IGD0000033',	'WAH0000033',	N'Chilli sauce (bar)',		N'',		0,	N'dry',			N'g',	    0,	0),
+('IGD0000027',	'WAH0000027',	N'Lemon', 					N'',		2,	N'vegetable',	N'g',	    0,	0),
+('IGD0000025',	'WAH0000025',	N'Yellow orange', 			N'',		2,	N'vegetable',	N'g',	    0,	0),
+('IGD0000026',	'WAH0000026',	N'Green orange', 			N'',		2,	N'vegetable',	N'g',	    0,	0),
+('IGD0000034',	'WAH0000034',	N'ice', 					N'',		3,	N'dry',			N'g',	    0,	0),
+('IGD0000035',	'WAH0000035',	N'Plastic cup', 			N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000036',	'WAH0000036',	N'Plastic cover', 			N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000037',	'WAH0000037',	N'Paper cup', 				N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000038',	'WAH0000038',	N'Black cover', 			N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000039',	'WAH0000039',	N'Straw', 					N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000040',	'WAH0000040',	N'Toilet paper', 			N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000041',	'WAH0000041',	N'Napkin', 					N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000042',	'WAH0000042',	N'Aroma', 					N'',		3,	N'utilities',	N'ml',	    0,	0),
+('IGD0000043',	'WAH0000043',	N'Trash bag', 				N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000044',	'WAH0000044',	N'Print paper', 			N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000045',	'WAH0000045',	N'Bag T', 					N'',		3,	N'utilities',	N'pack',	0,	0),
+('IGD0000046',	'WAH0000046',	N'Chocalate bar',			N'',		0,	N'dry',			N'g',		0,	0),
+('IGD0000047',	'WAH0000047',	N'Other purchase',			N'',		3,	N'fee',		    N'time',    0,	0)
 go
 
 
@@ -846,61 +849,62 @@ values
 ('RN00000025', 'IGD0000033', 3, 20, '')
 
 
---insert into [Table]
---	([table_id], [table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
---values
---(1, 1, 6, 200, 200, 0, 1, 1),
---(2, 2, 4, 100, 100, 0, 1, 1)
+insert into [Table]
+	([table_id], [table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
+values
+(1, 1, 6, 200, 200, 0, 1, 1),
+(2, 2, 4, 100, 100, 0, 1, 1)
 
---insert into [Chair]
---	([chair_id], [chair_number], [table_owned])
---values
---(1, 1, 1),
---(2, 2, 1),
---(3, 3, 1),
---(4, 4, 1),
---(5, 5, 1),
---(6, 6, 1),
---(7, 1, 2),
---(8, 2, 2),
---(9, 3, 2),
---(10, 4, 2)
+insert into [Chair]
+	([chair_id], [chair_number], [table_owned])
+values
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 1),
+(6, 6, 1),
+(7, 1, 2),
+(8, 2, 2),
+(9, 3, 2),
+(10, 4, 2)
 
---insert into [OrderTemp]
---	([ordertemp_id], [cus_id], [emp_id], [table_owned], [ordertime], [total_price], [customer_pay], [pay_back])
---values
---(1, 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', , , ),
---(2, 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', , , )
+insert into [OrderTemp]
+	([ordertemp_id], [cus_id], [emp_id], [table_owned], [ordertime], [total_price], [customer_pay], [pay_back])
+values
+(1, 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', 885, 1000, 15),
+(2, 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', 550, 600, 50)
 
 
---insert into [OrderDetailsTemp]
---	([ordertemp_id], [product_id], [chair_id], [SelectedStats], [note], [quan])
---values
---('1', 'P000000030', 1, 'Starter', '', 1),
---('1', 'P000000030', 1, 'Starter', '', 2),
---('1', 'P000000030', 2, 'Starter', '', 1),
---('1', 'P000000001', 2, 'Starter', '', 1),
---('1', 'P000000002', 2, 'Starter', '', 3),
---('1', 'P000000003', 2, 'Starter', '', 2),
---('1', 'P000000003', 3, 'Starter', '', 2),
---('1', 'P000000003', 3, 'Starter', '', 2),
---('1', 'P000000020', 3, 'Starter', '', 1),
---('1', 'P000000001', 4, 'Starter', '', 1),
---('1', 'P000000021', 5, 'Starter', '', 1),
---('1', 'P000000020', 5, 'Starter', '', 1),
---('1', 'P000000001', 5, 'Starter', '', 1),
+insert into [OrderDetailsTemp]
+	([ordertemp_id], [product_id], [chair_id], [SelectedStats], [note], [quan])
+values
+('1', 'P000000030', 1, 'Drink',     ''              , 1),
+('1', 'P000000030', 1, 'Drink',     'more ice'      , 2),
+('1', 'P000000030', 2, 'Drink',     ''              , 1),
+('1', 'P000000001', 2, 'Dessert',   ''              , 1),
+('1', 'P000000002', 2, 'Dessert',   ''              , 3),
+('1', 'P000000003', 2, 'MainCost',  ''              , 2),
+('1', 'P000000003', 3, 'Dessert',   'no hanigue'    , 2),
+('1', 'P000000003', 3, 'Starter',   ''              , 2),
+('1', 'P000000020', 3, 'MainCost',  ''              , 1),
+('1', 'P000000001', 4, 'Dessert',   ''              , 1),
+('1', 'P000000021', 5, 'MainCost',  ''              , 1),
+('1', 'P000000020', 5, 'MainCost',  ''              , 1),
+('1', 'P000000001', 5, 'Dessert',   ''              , 1),
 
---('2', 'P000000001', 1, 'Starter', '', 1),
---('2', 'P000000001', 1, 'Starter', '', 1),
---('2', 'P000000001', 1, 'Starter', '', 1),
---('2', 'P000000001', 2, 'Starter', '', 1),
---('2', 'P000000001', 2, 'Starter', '', 1),
---('2', 'P000000001', 2, 'Starter', '', 1),
---('2', 'P000000001', 3, 'Starter', '', 1),
---('2', 'P000000001', 4, 'Starter', '', 1),
---('2', 'P000000001', 4, 'Starter', '', 1),
---('2', 'P000000001', 4, 'Starter', '', 1),
---('2', 'P000000001', 4, 'Starter', '', 1)
+('2', 'P000000001', 1, 'Dessert',   ''              , 1),
+('2', 'P000000001', 1, 'Starter',   ''              , 1),
+('2', 'P000000045', 1, 'Drink',     'less sugar'    , 1),
+('2', 'P000000044', 2, 'Drink',     ''              , 1),
+('2', 'P000000019', 2, 'MainCost',  ''              , 1),
+('2', 'P000000019', 2, 'MainCost',  'more salad'    , 1),
+('2', 'P000000022', 3, 'MainCost',  ''              , 2),
+('2', 'P000000029', 4, 'MainCost',  ''              , 1),
+('2', 'P000000040', 4, 'Drink',     ''              , 1),
+('2', 'P000000005', 4, 'Dessert',   ''              , 2),
+('2', 'P000000004', 4, 'Dessert',   ''              , 1)
+
 
 
 
