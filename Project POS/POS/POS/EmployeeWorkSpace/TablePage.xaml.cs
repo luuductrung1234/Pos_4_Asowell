@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using POS.BusinessModel;
 using POS.Repository.DAL;
 using System.Linq;
+using System.Windows.Media.Effects;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -68,6 +69,19 @@ namespace POS.EmployeeWorkSpace
 
                 rec.ToolTip = setTooltip(rec);
             }
+
+            DropShadowBitmapEffect dropShadowEffect = new DropShadowBitmapEffect();
+            Color shadowColor = new Color();
+            shadowColor.ScA = 1;
+            shadowColor.ScB = 0;
+            shadowColor.ScG = 0;
+            shadowColor.ScR = 255;
+            dropShadowEffect.Color = shadowColor;
+            dropShadowEffect.Direction = 270;
+            dropShadowEffect.ShadowDepth = 5;
+            dropShadowEffect.Softness = 0.60;
+            dropShadowEffect.Opacity = 0.75;
+            recTest.SetValue(BitmapEffectProperty, dropShadowEffect);
         }
 
         //load table data
@@ -310,6 +324,8 @@ namespace POS.EmployeeWorkSpace
                 ((MainWindow)Window.GetWindow(this)).proTable.Maximum += 1;
 
                 currentTableList.Add(ReadWriteData.writeOnAddNew(_unitofwork, rec, App.Current.Properties["EmpLogin"] as Entities.Employee));
+
+                ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
 
                 rec.ToolTip = setTooltip(rec);
             }
