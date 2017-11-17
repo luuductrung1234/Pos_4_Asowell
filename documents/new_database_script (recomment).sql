@@ -849,31 +849,37 @@ values
 ('RN00000025', 'IGD0000033', 3, 20, '')
 
 
+--SET IDENTITY_INSERT [Table] ON
+--SET IDENTITY_INSERT [Chair] ON
+--SET IDENTITY_INSERT [OrderTemp] ON
+--SET IDENTITY_INSERT [OrderDetailsTemp] ON
+
 insert into [Table]
-	([table_id], [table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
+	([table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
 values
-(1, 1, 6, 200, 200, 0, 1, 1),
-(2, 2, 4, 100, 100, 0, 1, 1)
+(1, 6, 200, 200, 0, 1, 1),
+(2, 4, 100, 100, 0, 1, 1)
+
 
 insert into [Chair]
-	([chair_id], [chair_number], [table_owned])
+	([chair_number], [table_owned])
 values
-(1, 1, 1),
-(2, 2, 1),
-(3, 3, 1),
-(4, 4, 1),
-(5, 5, 1),
-(6, 6, 1),
-(7, 1, 2),
-(8, 2, 2),
-(9, 3, 2),
-(10, 4, 2)
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(1, 2),
+(2, 2),
+(3, 2),
+( 4, 2)
 
 insert into [OrderTemp]
-	([ordertemp_id], [cus_id], [emp_id], [table_owned], [ordertime], [total_price], [customer_pay], [pay_back])
+	( [cus_id], [emp_id], [table_owned], [ordertime], [total_price], [customer_pay], [pay_back])
 values
-(1, 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', 885, 1000, 15),
-(2, 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', 550, 600, 50)
+( 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', 885, 1000, 15),
+( 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', 550, 600, 50)
 
 
 insert into [OrderDetailsTemp]

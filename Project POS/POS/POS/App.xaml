@@ -60,7 +60,13 @@
                                     xmlns:transitions="clr-namespace:MaterialDesignThemes.Wpf.Transitions"
                                     xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters">
 
-                    <Style x:Key="MaterialDesignLinearProgressBar"
+                    <converters:NotZeroConverter x:Key="NotZeroConverter" />
+                    <converters:MyConverter x:Key="MyConverter" />
+                    <converters:PercentConverter x:Key="PercentCenverter" />
+                    <converters:NonPercentConverter x:Key="NonPercentConverter" />
+                    <converters:IngredientMaxProgressBarConverter x:Key="IngredientMaxProgressBarConverter" />
+                    
+                    <Style x:Key="MyMaterialDesignLinearProgressBar"
                            TargetType="{x:Type ProgressBar}">
                         <Setter Property="Foreground"
                                 Value="{DynamicResource PrimaryHueDarkBrush}" />
@@ -163,7 +169,6 @@
                                             <Rectangle x:Name="Indicator"
                                                        Fill="{TemplateBinding Foreground}" />
                                             <Rectangle x:Name="Animation"
-                                                       Fill="{TemplateBinding Foreground}"
                                                        RenderTransformOrigin="0.5,0.5">
                                                 <Rectangle.RenderTransform>
                                                     <TransformGroup>
@@ -173,6 +178,14 @@
                                                         <TranslateTransform />
                                                     </TransformGroup>
                                                 </Rectangle.RenderTransform>
+                                                <Rectangle.Fill>
+                                                    <MultiBinding Converter="{StaticResource IngredientMaxProgressBarConverter}">
+                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                                 Path="Value" />
+                                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                                 Path="Maximum" />
+                                                    </MultiBinding>
+                                                </Rectangle.Fill>
                                             </Rectangle>
                                         </Grid>
                                     </Grid>
@@ -228,10 +241,7 @@
                     <circularProgressBar:LargeArcConverter x:Key="LargeArcConverter" />
                     <circularProgressBar:RotateTransformConverter x:Key="RotateTransformConverter" />
                     <circularProgressBar:RotateTransformCentreConverter x:Key="RotateTransformCentreConverter" />
-                    <converters:NotZeroConverter x:Key="NotZeroConverter" />
-                    <converters:MyConverter x:Key="MyConverter" />
-                    <converters:PercentConverter x:Key="PercentCenverter" />
-                    <converters:NonPercentConverter x:Key="NonPercentConverter" />
+                    
 
                     <Style x:Key="MyMaterialDesignCircularProgressBar"
                            TargetType="{x:Type ProgressBar}">
