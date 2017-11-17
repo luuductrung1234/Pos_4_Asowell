@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using POS.Repository.DAL;
 
 namespace POS.WareHouseWorkSpace
 {
@@ -20,9 +21,12 @@ namespace POS.WareHouseWorkSpace
     /// </summary>
     public partial class IngredientPage : Page
     {
-        public IngredientPage()
+        AdminwsOfAsowell _unitofwork;
+        public IngredientPage(AdminwsOfAsowell unitofwork)
         {
+            _unitofwork = unitofwork;
             InitializeComponent();
+            lvItem.ItemsSource = unitofwork.IngredientRepository.Get();
         }
     }
 }

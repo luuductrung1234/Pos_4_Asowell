@@ -43,6 +43,10 @@
                         <ListBoxItem x:Name="ViewReceipt"
                                      Content="View Receipt"
                                      PreviewMouseLeftButtonUp="ViewReceipt_PreviewMouseLeftButtonUp" Foreground="White" />
+                        <ListBoxItem x:Name="ViewIngredient"
+                                     Content="View Ingredient"
+                                     PreviewMouseLeftButtonUp="ViewIngredient_OnPreviewMouseLeftButtonUp"
+                                     Foreground="White" />
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>

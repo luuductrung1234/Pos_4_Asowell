@@ -24,12 +24,13 @@ namespace POS.WareHouseWorkSpace
     {
         AdminwsOfAsowell _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
+        private IngredientPage _innIngredientPage;
         
         public WareHouseWindow()
         {
             InitializeComponent();
             _unitofwork = new AdminwsOfAsowell();
-
+            _innIngredientPage=new IngredientPage(_unitofwork);
             _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
         }
 
@@ -56,6 +57,11 @@ namespace POS.WareHouseWorkSpace
         private void ViewReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(_lvChartReceiptPage);
+        }
+
+        private void ViewIngredient_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            myFrame.Navigate(_innIngredientPage);
         }
     }
 }
