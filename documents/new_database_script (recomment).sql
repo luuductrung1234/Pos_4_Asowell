@@ -846,61 +846,62 @@ values
 ('RN00000025', 'IGD0000033', 3, 20, '')
 
 
---insert into [Table]
---	([table_id], [table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
---values
---(1, 1, 6, 200, 200, 0, 1, 1),
---(2, 2, 4, 100, 100, 0, 1, 1)
+insert into [Table]
+	([table_id], [table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
+values
+(1, 1, 6, 200, 200, 0, 1, 1),
+(2, 2, 4, 100, 100, 0, 1, 1)
 
---insert into [Chair]
---	([chair_id], [chair_number], [table_owned])
---values
---(1, 1, 1),
---(2, 2, 1),
---(3, 3, 1),
---(4, 4, 1),
---(5, 5, 1),
---(6, 6, 1),
---(7, 1, 2),
---(8, 2, 2),
---(9, 3, 2),
---(10, 4, 2)
+insert into [Chair]
+	([chair_id], [chair_number], [table_owned])
+values
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 1),
+(6, 6, 1),
+(7, 1, 2),
+(8, 2, 2),
+(9, 3, 2),
+(10, 4, 2)
 
---insert into [OrderTemp]
---	([ordertemp_id], [cus_id], [emp_id], [table_owned], [ordertime], [total_price], [customer_pay], [pay_back])
---values
---(1, 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', , , ),
---(2, 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', , , )
+insert into [OrderTemp]
+	([ordertemp_id], [cus_id], [emp_id], [table_owned], [ordertime], [total_price], [customer_pay], [pay_back])
+values
+(1, 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', 885, 1000, 15),
+(2, 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', 550, 600, 50)
 
 
---insert into [OrderDetailsTemp]
---	([ordertemp_id], [product_id], [chair_id], [SelectedStats], [note], [quan])
---values
---('1', 'P000000030', 1, 'Starter', '', 1),
---('1', 'P000000030', 1, 'Starter', '', 2),
---('1', 'P000000030', 2, 'Starter', '', 1),
---('1', 'P000000001', 2, 'Starter', '', 1),
---('1', 'P000000002', 2, 'Starter', '', 3),
---('1', 'P000000003', 2, 'Starter', '', 2),
---('1', 'P000000003', 3, 'Starter', '', 2),
---('1', 'P000000003', 3, 'Starter', '', 2),
---('1', 'P000000020', 3, 'Starter', '', 1),
---('1', 'P000000001', 4, 'Starter', '', 1),
---('1', 'P000000021', 5, 'Starter', '', 1),
---('1', 'P000000020', 5, 'Starter', '', 1),
---('1', 'P000000001', 5, 'Starter', '', 1),
+insert into [OrderDetailsTemp]
+	([ordertemp_id], [product_id], [chair_id], [SelectedStats], [note], [quan])
+values
+('1', 'P000000030', 1, 'Drink',     ''              , 1),
+('1', 'P000000030', 1, 'Drink',     'more ice'      , 2),
+('1', 'P000000030', 2, 'Drink',     ''              , 1),
+('1', 'P000000001', 2, 'Dessert',   ''              , 1),
+('1', 'P000000002', 2, 'Dessert',   ''              , 3),
+('1', 'P000000003', 2, 'MainCost',  ''              , 2),
+('1', 'P000000003', 3, 'Dessert',   'no hanigue'    , 2),
+('1', 'P000000003', 3, 'Starter',   ''              , 2),
+('1', 'P000000020', 3, 'MainCost',  ''              , 1),
+('1', 'P000000001', 4, 'Dessert',   ''              , 1),
+('1', 'P000000021', 5, 'MainCost',  ''              , 1),
+('1', 'P000000020', 5, 'MainCost',  ''              , 1),
+('1', 'P000000001', 5, 'Dessert',   ''              , 1),
 
---('2', 'P000000001', 1, 'Starter', '', 1),
---('2', 'P000000001', 1, 'Starter', '', 1),
---('2', 'P000000001', 1, 'Starter', '', 1),
---('2', 'P000000001', 2, 'Starter', '', 1),
---('2', 'P000000001', 2, 'Starter', '', 1),
---('2', 'P000000001', 2, 'Starter', '', 1),
---('2', 'P000000001', 3, 'Starter', '', 1),
---('2', 'P000000001', 4, 'Starter', '', 1),
---('2', 'P000000001', 4, 'Starter', '', 1),
---('2', 'P000000001', 4, 'Starter', '', 1),
---('2', 'P000000001', 4, 'Starter', '', 1)
+('2', 'P000000001', 1, 'Dessert',   ''              , 1),
+('2', 'P000000001', 1, 'Starter',   ''              , 1),
+('2', 'P000000045', 1, 'Drink',     'less sugar'    , 1),
+('2', 'P000000044', 2, 'Drink',     ''              , 1),
+('2', 'P000000019', 2, 'MainCost',  ''              , 1),
+('2', 'P000000019', 2, 'MainCost',  'more salad'    , 1),
+('2', 'P000000022', 3, 'MainCost',  ''              , 2),
+('2', 'P000000029', 4, 'MainCost',  ''              , 1),
+('2', 'P000000040', 4, 'Drink',     ''              , 1),
+('2', 'P000000005', 4, 'Dessert',   ''              , 2),
+('2', 'P000000004', 4, 'Dessert',   ''              , 1)
+
 
 
 
