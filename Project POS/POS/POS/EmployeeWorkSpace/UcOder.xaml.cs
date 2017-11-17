@@ -58,10 +58,11 @@ namespace POS.EmployeeWorkSpace
         /// show all orderdetails in the current checked chair.
         /// allow to modify these orderdetails
         /// </summary>
-        public void RefreshControl(Entities.Table curTable)
+        public void RefreshControl(EmployeewsOfAsowell unitofwork, Entities.Table curTable)
         {
+            _unitofwork = unitofwork;
             currentTable = curTable;
-            ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
+            ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned == currentTable.TableId).First();
             orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
 
             try
@@ -241,7 +242,7 @@ namespace POS.EmployeeWorkSpace
                 }
             }
 
-            RefreshControl(currentTable);
+            RefreshControl(_unitofwork, currentTable);
         }
 
         private void buttonChair_Unchecked(object sender, RoutedEventArgs e)
@@ -421,7 +422,7 @@ namespace POS.EmployeeWorkSpace
                     }
 
                     ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
-                    RefreshControl(currentTable);
+                    RefreshControl(_unitofwork, currentTable);
                     break;
                 }
             }
