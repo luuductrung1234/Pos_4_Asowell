@@ -97,25 +97,6 @@ namespace POS.EmployeeWorkSpace
                 OrderDetailsTemp o = new OrderDetailsTemp();
                 Product it = (Product)lbSelected.SelectedItem;
 
-                ////tong order table
-                //var tableordernotedetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempCurrentTable.OrdertempId)).ToList();
-                //var foundtable = tableordernotedetails.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
-                //int ii = tableordernotedetails.IndexOf(foundtable);
-                //if (foundtable == null)
-                //{
-                //    oo.ProductId = it.ProductId;
-                //    oo.Quan = 1;
-                //    tableordernotedetails.Add(oo);
-                //}
-                //else
-                //{
-                //    oo.ProductId = it.ProductId;
-                //    oo.Quan = tableordernotedetails[ii].Quan + 1;
-                //    oo.SelectedStats = tableordernotedetails[ii].SelectedStats;
-
-                //    tableordernotedetails[ii] = oo;
-                //}
-
                 //order tung ghe
                 var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(orderingTable.TableId));
 
@@ -131,14 +112,24 @@ namespace POS.EmployeeWorkSpace
                         o.ChairId = orderingChair.ChairId;
                         o.OrdertempId = orderTempCurrentTable.OrdertempId;
                         o.ProductId = it.ProductId;
+                        o.SelectedStats = it.StandardStats;
+                        o.Note = "";
                         o.Quan = 1;
                         _unitofwork.OrderDetailsTempRepository.Insert(o);
                         _unitofwork.Save();
                     }
                     else
                     {
-                        foundinchairorderdetailstemp.ProductId = it.ProductId;
-                        foundinchairorderdetailstemp.Quan++;
+                        if(!foundinchairorderdetailstemp.SelectedStats.Equals(it.StandardStats) || !foundinchairorderdetailstemp.Note.Equals(""))
+                        {
+
+                        }
+
+                        if(foundinchairorderdetailstemp.SelectedStats.Equals(it.StandardStats) && foundinchairorderdetailstemp.Note.Equals(""))
+                        {
+                            foundinchairorderdetailstemp.ProductId = it.ProductId;
+                            foundinchairorderdetailstemp.Quan++;
+                        }
 
                         _unitofwork.OrderDetailsTempRepository.Update(foundinchairorderdetailstemp);
                         _unitofwork.Save();

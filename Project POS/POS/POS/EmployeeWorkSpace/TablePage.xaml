@@ -70,6 +70,12 @@
                    DragLeave="imgTable_DragLeave"
                    Drop="imgTable_Drop"
                    MouseRightButtonDown="imgTable_MouseRightContextMenu" />
+            <Rectangle x:Name="recTest"
+                       Width="50"
+                       Height="50"
+                       Fill="Red"
+                       Margin="1245,205,71,405">
+            </Rectangle>
 
         </Grid>
 
