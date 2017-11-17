@@ -149,7 +149,7 @@ namespace POS.EmployeeWorkSpace
                 lbSelected.UnselectAll();
 
                 ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
-                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(orderingTable);
+                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork, orderingTable);
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = orderTempCurrentTable.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
 

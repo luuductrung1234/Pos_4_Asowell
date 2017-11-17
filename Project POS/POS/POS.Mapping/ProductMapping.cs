@@ -38,6 +38,7 @@ namespace POS.Mapping
             Property(x => x.Deleted).HasColumnName(@"deleted").HasColumnType("int").IsRequired();
             Property(x => x.ImageLink).HasColumnName(@"ImageLink").HasColumnType("nvarchar(max)").IsOptional();
             Property(x => x.Discount).HasColumnName(@"Discount").HasColumnType("int").IsRequired();
+            Property(x => x.StandardStats).HasColumnName(@"std_stats").HasColumnType("nvarchar").HasMaxLength(50).IsRequired();
             InitializePartial();
         }
         partial void InitializePartial();

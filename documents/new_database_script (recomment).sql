@@ -102,6 +102,7 @@ CREATE TABLE [dbo].[Product] (
     [deleted] [int] NOT NULL,
     [ImageLink] [nvarchar](max),
     [Discount] [int] NOT NULL,
+	[std_stats] [nvarchar](50) NOT NULL,
     CONSTRAINT [PK_dbo.Product] PRIMARY KEY ([product_id])
 )
 CREATE TABLE [dbo].[OrderNoteDetails] (
@@ -401,70 +402,70 @@ go
 
 
 insert into Product
-	([product_id], [name], [info], [price], [type], [deleted], [Discount])
+	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])
 values		-- đồ uống
-('P000000030',	N'pepsi',					N'',		25,		0, 0, 0),
-('P000000031',	N'7up',						N'',		25,		0, 0, 0),
-('P000000032',	N'water',					N'',		25,		0, 0, 0),
-('P000000033',	N'black coffee',			N'',		30,		0, 0, 0),
-('P000000034',	N'coffee milk',				N'',		35,		0, 0, 0),
-('P000000035',	N'cream coffee',			N'',		40,		0, 0, 0),
-('P000000036',	N'americano',				N'',		40,		0, 0, 0),
-('P000000037',	N'durian coffee',			N'',		50,		0, 0, 0),
-('P000000038',	N'coffee latte',			N'',		50,		0, 0, 0),
-('P000000039',	N'cappucino',				N'',		50,		0, 0, 0),
-('P000000040',	N'orange coffee',			N'',		50,		0, 0, 0),
-('P000000041',	N'tiramisu coffee',			N'',		50,		0, 0, 0),
-('P000000042',	N'chocolate coffee',		N'',		60,		0, 0, 0),
-('P000000043',	N'caramel cofffee',			N'',		60,		0, 0, 0),
-('P000000044',	N'strawberry tea',			N'',		30,		0, 0, 0),
-('P000000045',	N'lemon tea',				N'',		30,		0, 0, 0),
-('P000000046',	N'apple tea',				N'',		30,		0, 0, 0),
-('P000000047',	N'milk tea',				N'',		40,		0, 0, 0),
-('P000000048',	N'peach tea',				N'',		50,		0, 0, 0),
-('P000000049',	N'matcha latte',			N'',		50,		0, 0, 0),
-('P000000050',	N'ginger honey latte',		N'',		50,		0, 0, 0),
-('P000000051',	N'hot choco',				N'',		60,		0, 0, 0),
-('P000000052',	N'ice choco',				N'',		60,		0, 0, 0),
-('P000000053',	N'orange juice (trái nhỏ)',	N'',		40,		0, 0, 0),
-('P000000054',	N'orange ade',				N'',		40,		0, 0, 0),
-('P000000055',	N'lemonade',				N'',		40,		0, 0, 0),
-('P000000056',	N'orange juice (trái lớn)',	N'',		40,		0, 0, 0),
-('P000000057',	N'orange juice (trái vừa)',	N'',		40,		0, 0, 0)
+('P000000030',	N'pepsi',					N'',		25,		0, 0, 0, 'drink'),
+('P000000031',	N'7up',						N'',		25,		0, 0, 0, 'drink'),
+('P000000032',	N'water',					N'',		25,		0, 0, 0, 'drink'),
+('P000000033',	N'black coffee',			N'',		30,		0, 0, 0, 'drink'),
+('P000000034',	N'coffee milk',				N'',		35,		0, 0, 0, 'drink'),
+('P000000035',	N'cream coffee',			N'',		40,		0, 0, 0, 'drink'),
+('P000000036',	N'americano',				N'',		40,		0, 0, 0, 'drink'),
+('P000000037',	N'durian coffee',			N'',		50,		0, 0, 0, 'drink'),
+('P000000038',	N'coffee latte',			N'',		50,		0, 0, 0, 'drink'),
+('P000000039',	N'cappucino',				N'',		50,		0, 0, 0, 'drink'),
+('P000000040',	N'orange coffee',			N'',		50,		0, 0, 0, 'drink'),
+('P000000041',	N'tiramisu coffee',			N'',		50,		0, 0, 0, 'drink'),
+('P000000042',	N'chocolate coffee',		N'',		60,		0, 0, 0, 'drink'),
+('P000000043',	N'caramel cofffee',			N'',		60,		0, 0, 0, 'drink'),
+('P000000044',	N'strawberry tea',			N'',		30,		0, 0, 0, 'drink'),
+('P000000045',	N'lemon tea',				N'',		30,		0, 0, 0, 'drink'),
+('P000000046',	N'apple tea',				N'',		30,		0, 0, 0, 'drink'),
+('P000000047',	N'milk tea',				N'',		40,		0, 0, 0, 'drink'),
+('P000000048',	N'peach tea',				N'',		50,		0, 0, 0, 'drink'),
+('P000000049',	N'matcha latte',			N'',		50,		0, 0, 0, 'drink'),
+('P000000050',	N'ginger honey latte',		N'',		50,		0, 0, 0, 'drink'),
+('P000000051',	N'hot choco',				N'',		60,		0, 0, 0, 'drink'),
+('P000000052',	N'ice choco',				N'',		60,		0, 0, 0, 'drink'),
+('P000000053',	N'orange juice (trái nhỏ)',	N'',		40,		0, 0, 0, 'drink'),
+('P000000054',	N'orange ade',				N'',		40,		0, 0, 0, 'drink'),
+('P000000055',	N'lemonade',				N'',		40,		0, 0, 0, 'drink'),
+('P000000056',	N'orange juice (trái lớn)',	N'',		40,		0, 0, 0, 'drink'),
+('P000000057',	N'orange juice (trái vừa)',	N'',		40,		0, 0, 0, 'drink')
 go
 
 insert into Product 
-	([product_id], [name], [info], [price], [type], [deleted], [Discount])
+	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])
 values		-- thức ăn
-('P000000001',	N'plain yogurt',			N'',		25,		1, 0, 0),
-('P000000002',	N'choco fondue',			N'',		70,		1, 0, 0),
-('P000000003',	N'choco cloud',				N'',		55,		1, 0, 0),
-('P000000004',	N'custard bread tower',		N'',		70,		1, 0, 0),
-('P000000005',	N'choco muffin',			N'',		25,		1, 0, 0),
-('P000000006',	N'apple muffin',			N'',		25,		1, 0, 0),
-('P000000007',	N'greentea muffin',			N'',		25,		1, 0, 0),
-('P000000008',	N'banana cake',				N'',		25,		1, 0, 0),
-('P000000009',	N'carrot cake',				N'',		25,		1, 0, 0),
-('P000000010',	N'french fries',			N'',		35,		1, 0, 0),
-('P000000011',	N'french toast',			N'',		45,		1, 0, 0),
-('P000000012',	N'tiramisu cake',			N'',		45,		1, 0, 0),
-('P000000013',	N'cheese hotdog',			N'',		35,		1, 0, 0),
-('P000000014',	N'cereal & milk',			N'',		50,		1, 0, 0),
-('P000000015',	N'honey butter bread',		N'',		70,		1, 0, 0),
-('P000000016',	N'pumpkin soup',			N'',		35,		1, 0, 0),
-('P000000017',	N'chilli fries',			N'',		50,		1, 0, 0),
-('P000000018',	N'tortillas nachos',		N'',		50,		1, 0, 0),
-('P000000019',	N'chicken melt',			N'',		50,		1, 0, 0),
-('P000000020',	N'comma club',				N'',		55,		1, 0, 0),
-('P000000021',	N'gourmet berger',			N'',		60,		1, 0, 0),
-('P000000022',	N'spaghetti bolognese',		N'',		55,		1, 0, 0),
-('P000000023',	N'spaghetti carbonara',		N'',		55,		1, 0, 0),
-('P000000024',	N'noodle eggs omelette',	N'',		45,		1, 0, 0),
-('P000000025',	N'chicken burrito',			N'',		60,		1, 0, 0),
-('P000000026',	N'hawaiian pizza',			N'',		60,		1, 0, 0),
-('P000000027',	N'comma pizza',				N'',		60,		1, 0, 0),
-('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0, 0),
-('P000000029',	N'bibimbob',				N'',		60,		1, 0, 0)	
+('P000000001',	N'plain yogurt',			N'',		25,		1, 0, 0, 'Dessert'),
+('P000000002',	N'choco fondue',			N'',		70,		1, 0, 0, 'Dessert'),
+('P000000003',	N'choco cloud',				N'',		55,		1, 0, 0, 'Dessert'),
+('P000000004',	N'custard bread tower',		N'',		70,		1, 0, 0, 'Dessert'),
+('P000000005',	N'choco muffin',			N'',		25,		1, 0, 0, 'Dessert'),
+('P000000006',	N'apple muffin',			N'',		25,		1, 0, 0, 'Dessert'),
+('P000000007',	N'greentea muffin',			N'',		25,		1, 0, 0, 'Dessert'),
+('P000000008',	N'banana cake',				N'',		25,		1, 0, 0, 'Dessert'),
+('P000000009',	N'carrot cake',				N'',		25,		1, 0, 0, 'Dessert'),
+('P000000010',	N'french fries',			N'',		35,		1, 0, 0, 'Starter'),
+('P000000011',	N'french toast',			N'',		45,		1, 0, 0, 'MainCost'),
+('P000000012',	N'tiramisu cake',			N'',		45,		1, 0, 0, 'Dessert'),
+('P000000013',	N'cheese hotdog',			N'',		35,		1, 0, 0, 'Starter'),
+('P000000014',	N'cereal & milk',			N'',		50,		1, 0, 0, 'MainCost'),
+('P000000015',	N'honey butter bread',		N'',		70,		1, 0, 0, 'MainCost'),
+('P000000016',	N'pumpkin soup',			N'',		35,		1, 0, 0, 'Starter'),
+('P000000017',	N'chilli fries',			N'',		50,		1, 0, 0, 'Starter'),
+('P000000018',	N'tortillas nachos',		N'',		50,		1, 0, 0, 'MainCost'),
+('P000000019',	N'chicken melt',			N'',		50,		1, 0, 0, 'MainCost'),
+('P000000020',	N'comma club',				N'',		55,		1, 0, 0, 'MainCost'),
+('P000000021',	N'gourmet berger',			N'',		60,		1, 0, 0, 'MainCost'),
+('P000000022',	N'spaghetti bolognese',		N'',		55,		1, 0, 0, 'MainCost'),
+('P000000023',	N'spaghetti carbonara',		N'',		55,		1, 0, 0, 'MainCost'),
+('P000000024',	N'noodle eggs omelette',	N'',		45,		1, 0, 0, 'MainCost'),
+('P000000025',	N'chicken burrito',			N'',		60,		1, 0, 0, 'MainCost'),
+('P000000026',	N'hawaiian pizza',			N'',		60,		1, 0, 0, 'MainCost'),
+('P000000027',	N'comma pizza',				N'',		60,		1, 0, 0, 'MainCost'),
+('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0, 0, 'MainCost'),
+('P000000029',	N'bibimbob',				N'',		60,		1, 0, 0, 'MainCost')	
 go
 
 insert into ProductDetails values
@@ -943,4 +944,7 @@ select * from [OrderDetailsTemp]
 --drop table [Chair]
 --drop table [OrderTemp]
 --drop table [Table]
+
+delete [ProductDetails]
+delete [Product]
 
