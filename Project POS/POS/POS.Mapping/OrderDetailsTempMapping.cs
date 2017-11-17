@@ -28,17 +28,18 @@ namespace POS.Mapping
         public OrderDetailsTempMapping(string schema)
         {
             ToTable("OrderDetailsTemp", schema);
-            HasKey(x => new { x.OrdertempId, x.ProductId });
+            HasKey(x => new { x.OrdertempId, x.ProductId, x.ChairId, x.SelectedStats, x.Note });
 
             Property(x => x.OrdertempId).HasColumnName(@"ordertemp_id").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.ProductId).HasColumnName(@"product_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.ChairId).HasColumnName(@"chair_id").HasColumnType("int").IsOptional();
-            Property(x => x.SelectedStats).HasColumnName(@"SelectedStats").HasColumnType("nvarchar(max)").IsOptional();
+            Property(x => x.ChairId).HasColumnName(@"chair_id").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.SelectedStats).HasColumnName(@"SelectedStats").HasColumnType("nvarchar").HasMaxLength(50).IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Note).HasColumnName(@"note").HasColumnType("varchar").IsUnicode(false).HasMaxLength(500).IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.Quan).HasColumnName(@"quan").HasColumnType("int").IsRequired();
-            Property(x => x.Note).HasColumnName(@"note").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(500);
+            
 
             // Foreign keys
-            HasOptional(a => a.Chair).WithMany(b => b.OrderDetailsTemps).HasForeignKey(c => c.ChairId).WillCascadeOnDelete(false); // fk_chair_id_orderdetailtemp
+            HasRequired(a => a.Chair).WithMany(b => b.OrderDetailsTemps).HasForeignKey(c => c.ChairId).WillCascadeOnDelete(false); // fk_chair_id_orderdetailtemp
             HasRequired(a => a.OrderTemp).WithMany(b => b.OrderDetailsTemps).HasForeignKey(c => c.OrdertempId).WillCascadeOnDelete(false); // fk_ordertemp_id_orderdetailtemp
             HasRequired(a => a.Product).WithMany(b => b.OrderDetailsTemps).HasForeignKey(c => c.ProductId).WillCascadeOnDelete(false); // fk_product_id_orderdetailtemp
             InitializePartial();

@@ -28,12 +28,10 @@ namespace POS.Entities
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<string> _statusItems = new ObservableCollection<string> { "Starter", "Main Cost", "Dessert", "Drink" };
+        
         private string _ordernoteId { get; set; } // ordernote_id (Primary key) (length: 10)
         private string _productId { get; set; } // product_id (Primary key) (length: 10)
-        private string _stats { get; set; } // SelectedStats
         private int _quan { get; set; } // quan
-        private string _note { get; set; } // note (length: 500)
         
 
         public string OrdernoteId
@@ -60,27 +58,7 @@ namespace POS.Entities
                 OnPropertyChanged("Product_id");
             }
         }
-        public ObservableCollection<string> StatusItems
-        {
-            get
-            {
-                return _statusItems;
-            }
-            set
-            {
-                _statusItems = value; OnPropertyChanged("SalesPeriods");
-            }
-        }
-        public string SelectedStats
-        {
-            get { return _stats; }
-            set
-            {
-                _stats = value;
-                OnPropertyChanged("SelectedStats");
-                // System.Windows.MessageBox.Show("New SelectedStats setting");
-            }
-        }
+        
         public int Quan
         {
             get
@@ -94,19 +72,7 @@ namespace POS.Entities
                 //System.Windows.MessageBox.Show("New Quan setting");
             }
         }
-        public string Note
-        {
-            get
-            {
-                return _note;
-            }
-            set
-            {
-                _note = value;
-                OnPropertyChanged("Note");
-                // System.Windows.MessageBox.Show("New Note setting");
-            }
-        }
+
 
         // Foreign keys
 
