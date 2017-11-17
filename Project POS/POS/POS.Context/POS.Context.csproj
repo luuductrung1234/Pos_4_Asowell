@@ -73,6 +73,10 @@
     <Compile Include="MigrationConfiguration.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711170540268_initdata.cs" />
+    <Compile Include="Migrations\201711170540268_initdata.Designer.cs">
+      <DependentUpon>201711170540268_initdata.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,8 +106,11 @@
       <Name>POS.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <EmbeddedResource Include="Migrations\201711170540268_initdata.resx">
+      <DependentUpon>201711170540268_initdata.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
