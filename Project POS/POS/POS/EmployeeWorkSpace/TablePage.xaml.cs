@@ -494,6 +494,12 @@ namespace POS.EmployeeWorkSpace
                             }
 
                             founded.IsPinned = 1;
+                            var ordertempcurrenttable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(founded.TableId)).First();
+                            if(ordertempcurrenttable != null)
+                            {
+                                ordertempcurrenttable.EmpId = (App.Current.Properties["EmpLogin"] as Entities.Employee).EmpId;
+                            }
+
                             rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
                             rec.MouseMove -= btnTableAdded_MoveDrag;
                             rec.Opacity = 1;
@@ -503,8 +509,8 @@ namespace POS.EmployeeWorkSpace
                             //pass
                             ((MainWindow)Window.GetWindow(this)).currentTable = founded;
                             var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
-                            orderControl.ucOrder.RefreshControl(founded);
                             ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
+                            orderControl.ucOrder.RefreshControl(_unitofwork, founded);
                             ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
                             ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
                             ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
@@ -533,8 +539,8 @@ namespace POS.EmployeeWorkSpace
                         //pass
                         ((MainWindow)Window.GetWindow(this)).currentTable = founded;
                         var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
-                        orderControl.ucOrder.RefreshControl(founded);
                         ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
+                        orderControl.ucOrder.RefreshControl(_unitofwork, founded);
                         ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
                         ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
                         ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;

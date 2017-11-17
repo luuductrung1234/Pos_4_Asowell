@@ -31,6 +31,7 @@ namespace POS.Entities
         public int Deleted { get; set; } // deleted
         public string ImageLink { get; set; } // ImageLink
         public int Discount { get; set; } // Discount
+        public string StandardStats { get; set; } //length(50)
 
         // Reverse navigation
 
