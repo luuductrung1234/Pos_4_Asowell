@@ -69,7 +69,7 @@ namespace POS.Helper.PrintHelper
             {
                 Margin = new Thickness(0, 10, 0, 0)
             };
-            Generate_TableText(blkTableText, Order.getMetaReceiptTable(), Order.OrderDetails);
+            Generate_TableText(blkTableText, Order.getMetaReceiptTable(), Order.GetOrderDetailsForReceipt());
 
             // Summary Text
             BlockUIContainer blkSummaryText = new BlockUIContainer()
@@ -79,12 +79,20 @@ namespace POS.Helper.PrintHelper
             Generate_SummaryText(blkSummaryText, Order, "vnd");
 
 
+            // Food Text
+            BlockUIContainer blkFootText = new BlockUIContainer()
+            {
+                Margin = new Thickness(0, 20, 0, 0)
+            };
+            Generate_FootText(blkFootText);
+
             //// Add Paragraph to Section
             //sec.Blocks.Add(p1);
             sec.Blocks.Add(blkHeadText);
             sec.Blocks.Add(blkInfoText);
             sec.Blocks.Add(blkTableText);
             sec.Blocks.Add(blkSummaryText);
+            sec.Blocks.Add(blkFootText);
 
             // Add Section to FlowDocument
             doc.Blocks.Add(sec);
@@ -93,6 +101,47 @@ namespace POS.Helper.PrintHelper
             return doc;
         }
 
+
+
+        /// <summary>
+        /// Create the Foot Section of Receipt
+        /// </summary>
+        /// <param name="blkFootText"></param>
+        private void Generate_FootText(BlockUIContainer blkFootText)
+        {
+            // Main stackPanel of Foot Text
+            StackPanel stpFootText = new StackPanel();
+
+            StackPanel stpThank = new StackPanel();
+            TextBlock txtThank = new TextBlock()
+            {
+                Text = "Thank you!",
+                FontSize = 11,
+                FontFamily = new FontFamily("Century Gothic"),
+                FontWeight = FontWeights.UltraBold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 0)
+            };
+            stpThank.Children.Add(txtThank);
+
+            StackPanel stpSeeAgain = new StackPanel();
+            TextBlock txtSeeAgain = new TextBlock()
+            {
+                Text = "See You Again!",
+                FontSize = 11,
+                FontFamily = new FontFamily("Century Gothic"),
+                FontWeight = FontWeights.UltraBold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 0)
+            };
+            stpSeeAgain.Children.Add(txtSeeAgain);
+
+
+            stpFootText.Children.Add(stpThank);
+            stpFootText.Children.Add(stpSeeAgain);
+
+            blkFootText.Child = stpFootText;
+        }
 
         /// <summary>
         /// Create the summary section of Receipt
@@ -119,7 +168,7 @@ namespace POS.Helper.PrintHelper
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
-                Margin = new Thickness(110, 0, 10, 0),
+                Margin = new Thickness(95, 0, 10, 0),
                 Width = 110
             };
             TextBlock tbTotalPriceValue = new TextBlock()
@@ -127,7 +176,8 @@ namespace POS.Helper.PrintHelper
                 Text = String.Format("{0:0.000}", order.TotalPrice),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
-                Width = 100
+                Width = 70,
+                TextAlignment = TextAlignment.Right
             };
             stpTotalPrice.Children.Add(tbTotalPriceLable);
             stpTotalPrice.Children.Add(tbTotalPriceValue);
@@ -143,15 +193,16 @@ namespace POS.Helper.PrintHelper
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
-                Margin = new Thickness(110, 0, 10, 0),
+                Margin = new Thickness(95, 0, 10, 0),
                 Width = 110
             };
             TextBlock tbCustomerPayValue = new TextBlock()
             {
-                Text = String.Format("{0:0.000}", order.TotalPrice),
+                Text = String.Format("{0:0.000}", order.CustomerPay),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
-                Width = 100
+                Width = 70,
+                TextAlignment = TextAlignment.Right
             };
             stpCustomerPay.Children.Add(tbCustomerPayLable);
             stpCustomerPay.Children.Add(tbCustomerPayValue);
@@ -167,7 +218,7 @@ namespace POS.Helper.PrintHelper
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
-                Margin = new Thickness(110, 0, 10, 0),
+                Margin = new Thickness(95, 0, 10, 0),
                 Width = 110
             };
             TextBlock tbPayBackValue = new TextBlock()
@@ -175,7 +226,8 @@ namespace POS.Helper.PrintHelper
                 Text = String.Format("{0:0.000}", order.PayBack),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
-                Width = 100
+                Width = 70,
+                TextAlignment = TextAlignment.Right
             };
             stpPayBack.Children.Add(tbPayBackLable);
             stpPayBack.Children.Add(tbPayBackValue);
@@ -217,11 +269,19 @@ namespace POS.Helper.PrintHelper
                     dgDataTable.ColumnDefinitions.Add(secondCol);
                     continue;
                 }
+                if (i == 2)
+                {
+                    ColumnDefinition otherCol = new ColumnDefinition();
+                    otherCol.Width = new GridLength(55);
+                    dgDataTable.ColumnDefinitions.Add(otherCol);
+                    continue;
+                }
                 else
                 {
                     ColumnDefinition otherCol = new ColumnDefinition();
                     otherCol.Width = new GridLength(70);
                     dgDataTable.ColumnDefinitions.Add(otherCol);
+                    continue;
                 }
             }
             // set Rows
@@ -235,12 +295,25 @@ namespace POS.Helper.PrintHelper
             for (int i = 0; i < 4; i++)
             {
                 TextBlock txtMeta = new TextBlock();
-                txtMeta.Text = gridMeta[i];
-                txtMeta.FontSize = 11;
-                txtMeta.FontWeight = FontWeights.Bold;
-                txtMeta.VerticalAlignment = VerticalAlignment.Top;
-                Grid.SetRow(txtMeta, 0);
-                Grid.SetColumn(txtMeta, i);
+                if (i == 2 || i == 3)
+                {
+                    txtMeta.Text = gridMeta[i];
+                    txtMeta.FontSize = 11;
+                    txtMeta.FontWeight = FontWeights.Bold;
+                    txtMeta.VerticalAlignment = VerticalAlignment.Stretch;
+                    txtMeta.TextAlignment = TextAlignment.Right;
+                    Grid.SetRow(txtMeta, 0);
+                    Grid.SetColumn(txtMeta, i);
+                }
+                else
+                {
+                    txtMeta.Text = gridMeta[i];
+                    txtMeta.FontSize = 11;
+                    txtMeta.FontWeight = FontWeights.Bold;
+                    txtMeta.VerticalAlignment = VerticalAlignment.Stretch;
+                    Grid.SetRow(txtMeta, 0);
+                    Grid.SetColumn(txtMeta, i);
+                }
 
                 dgDataTable.Children.Add(txtMeta);
             }
@@ -250,10 +323,11 @@ namespace POS.Helper.PrintHelper
             {
                 TextBlock txtProductName = new TextBlock();
                 txtProductName.Width = 115;
-                txtProductName.Text = orderItem.ProductName;
+                txtProductName.Text = seperateLongProductName(orderItem.ProductName);
                 txtProductName.FontSize = 11;
                 txtProductName.VerticalAlignment = VerticalAlignment.Top;
                 txtProductName.HorizontalAlignment = HorizontalAlignment.Left;
+                txtProductName.Margin = new Thickness(0,0,0,5);
                 Grid.SetRow(txtProductName, rowIndex);
                 Grid.SetColumn(txtProductName, 0);
                 dgDataTable.Children.Add(txtProductName);
@@ -262,6 +336,7 @@ namespace POS.Helper.PrintHelper
                 txtQuan.Text = orderItem.Quan.ToString();
                 txtQuan.FontSize = 11;
                 txtQuan.VerticalAlignment = VerticalAlignment.Top;
+                txtQuan.Margin = new Thickness(0, 0, 0, 5);
                 Grid.SetRow(txtQuan, rowIndex);
                 Grid.SetColumn(txtQuan, 1);
                 dgDataTable.Children.Add(txtQuan);
@@ -269,8 +344,9 @@ namespace POS.Helper.PrintHelper
                 TextBlock txtPrice = new TextBlock();
                 txtPrice.Text = String.Format("{0:0.000}", orderItem.ProductPrice);
                 txtPrice.FontSize = 11;
-                txtPrice.VerticalAlignment = VerticalAlignment.Top;
-                txtPrice.HorizontalAlignment = HorizontalAlignment.Left;
+                txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
+                txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
+                txtPrice.Margin = new Thickness(0, 0, 0, 5);
                 Grid.SetRow(txtPrice, rowIndex);
                 Grid.SetColumn(txtPrice, 2);
                 dgDataTable.Children.Add(txtPrice);
@@ -278,8 +354,9 @@ namespace POS.Helper.PrintHelper
                 TextBlock txtAmt = new TextBlock();
                 txtAmt.Text = String.Format("{0:0.000}", orderItem.Amt);
                 txtAmt.FontSize = 11;
-                txtAmt.VerticalAlignment = VerticalAlignment.Top;
-                txtAmt.TextAlignment = TextAlignment.Left;
+                txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
+                txtAmt.TextAlignment = TextAlignment.Right;
+                txtAmt.Margin = new Thickness(0, 0, 0, 5);
                 Grid.SetRow(txtAmt, rowIndex);
                 Grid.SetColumn(txtAmt, 3);
                 dgDataTable.Children.Add(txtAmt);
@@ -336,7 +413,7 @@ namespace POS.Helper.PrintHelper
         /// <param name="blkHeadText"></param>
         private void Generate_HeadText(BlockUIContainer blkHeadText, Owner owner)
         {
-
+            // Main stackPanel of Head Text
             StackPanel stpHeadText = new StackPanel()
             {
                 Orientation = Orientation.Vertical
@@ -406,7 +483,34 @@ namespace POS.Helper.PrintHelper
             stpHeadText.Children.Add(stpPageName);
 
             blkHeadText.Child = stpHeadText;
-        } 
+        }
+
+
+
+        private string seperateLongProductName(string productName)
+        {
+            string result = "";
+
+            string[] splProductName = productName.Split(' ');
+            result = splProductName[0];
+
+            string line = result;
+            for (int i = 1; i < splProductName.Length; i++)
+            {
+                line += " " + splProductName[i];
+                if (line.Length > 16)
+                {
+                    result += "\n" + splProductName[i];
+                    line = splProductName[i];
+                }
+                else
+                {
+                    result += " " + splProductName[i];
+                }
+            }
+
+            return result;
+        }
     }
 
     public class Owner

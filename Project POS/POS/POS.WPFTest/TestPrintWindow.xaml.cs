@@ -3,13 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Packaging;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Xps.Packaging;
 using POS.Entities;
 using POS.Helper.PrintHelper.Model;
-
+using POS.Repository.DAL;
+using Table = POS.Entities.Table;
 
 namespace POS.WPFTest
 {
@@ -18,53 +20,24 @@ namespace POS.WPFTest
     /// </summary>
     public partial class TestPrintWindow : Window
     {
+        private EmployeewsOfAsowell _unitofwork;
+        private Table curTable;
+        private IPrintHelper ph;
+
         public TestPrintWindow()
         {
             InitializeComponent();
+
+            _unitofwork = new EmployeewsOfAsowell();
+            curTable = _unitofwork.TableRepository.Get(x => x.TableId == 1).First();
         }
+
+
+
+
 
         private void PrintSimpleTextButton_Click(object sender, RoutedEventArgs e)
         {
-            // Create Print Helper
-            IPrintHelper ph = new ReceiptPrintHelper()
-            {
-                Owner = new Owner()
-                {
-                    ImgName = "logo.png",
-                    Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
-                    Phone = "0927333668",
-                    PageName = "RECEIPT"
-                },
-
-                Order = new OrderForPrint()
-                {
-                    No = "ORD0000001",
-                    Table = 1,
-                    Date = DateTime.Now,
-                    Casher = "Luong Nhat Duy",
-                    Customer = "Luu Duc Trung",
-                    CustomerPay = 500,
-                    OrderDetails = new List<OrderDetailsForPrint>()
-                    {
-                        new OrderDetailsForPrint(){Quan=2,ProductName="Pepsi",ProductPrice=25,Amt=50, SelectedStats = "Starter", ChairNumber = 1, Note = ""},
-                        new OrderDetailsForPrint(){Quan=1,ProductName="Pepsi",ProductPrice=25,Amt=50, SelectedStats = "Dessert", ChairNumber = 2, Note = ""},
-                        new OrderDetailsForPrint(){Quan=3,ProductName="Pepsi",ProductPrice=25,Amt=50, SelectedStats = "Starter", ChairNumber = 2, Note = "Nhieu da"},
-
-                        new OrderDetailsForPrint(){Quan=1,ProductName="Coca Cola",ProductPrice=25,Amt=25, SelectedStats = "Starter", ChairNumber = 3, Note = "It da"},
-                        new OrderDetailsForPrint(){Quan=1,ProductName="Coca Cola",ProductPrice=25,Amt=25, SelectedStats = "Starter", ChairNumber = 3, Note = ""},
-                        new OrderDetailsForPrint(){Quan=2,ProductName="Coca Cola",ProductPrice=25,Amt=25, SelectedStats = "Starter", ChairNumber = 4, Note = ""},
-
-                        new OrderDetailsForPrint(){Quan=1,ProductName="French Fries",ProductPrice=35,Amt=35, SelectedStats = "Starter", ChairNumber = 5, Note = "Chien it dau"},
-
-                        new OrderDetailsForPrint(){Quan=1,ProductName="Honey Butter Bread",ProductPrice=70,Amt=170, SelectedStats = "MainCost", ChairNumber = 1, Note = ""},
-                        new OrderDetailsForPrint(){Quan=1,ProductName="Honey Butter Bread",ProductPrice=70,Amt=170, SelectedStats = "Starter", ChairNumber = 3, Note = ""},
-                        new OrderDetailsForPrint(){Quan=1,ProductName="Honey Butter Bread",ProductPrice=70,Amt=170, SelectedStats = "Starter", ChairNumber = 2, Note = ""},
-
-                        new OrderDetailsForPrint(){Quan=1,ProductName="Comma Pizza",ProductPrice=50,Amt=150},
-                        new OrderDetailsForPrint(){Quan=1,ProductName="Soda",ProductPrice=25,Amt=25},
-                    }
-                }
-            };
 
             // Create a FlowDocument dynamically.
             FlowDocument doc = ph.CreateDocument();
@@ -170,6 +143,47 @@ namespace POS.WPFTest
 
 
             return doc;
+        }
+
+        private void CboPrintType_OnSelected(object sender, RoutedEventArgs e)
+        {
+            ComboBox PrintType = sender as ComboBox;
+
+            string type = (PrintType.SelectedItem as TextBlock).Text;
+
+
+            // Create Print Helper
+            if (type == "Receipt")
+            {
+                ph = new ReceiptPrintHelper()
+                {
+                    Owner = new Owner()
+                    {
+                        ImgName = "logo.png",
+                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
+                        Phone = "0927333668",
+                        PageName = "RECEIPT"
+                    },
+
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
+                };
+            }
+
+            if (type == "Bar")
+            {
+                ph = new BarPrintHelper()
+                {
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
+                };
+            }
+
+            if (type == "Kitchen")
+            {
+                ph = new KitchenPrintHelper()
+                {
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
+                };
+            }
         }
     }
 }

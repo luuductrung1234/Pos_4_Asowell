@@ -11,11 +11,21 @@
 
 
     <Window.Content>
-        <Button x:Name="BtnPrint"
-                Width="100"
-                Content="Print"
-                Click="PrintSimpleTextButton_Click"
-                Margin="96,73,96,158" />
+        <StackPanel>
+            <ComboBox x:Name="cboPrintType"
+                      SelectionChanged="CboPrintType_OnSelected">
+                <ComboBox.Items>
+                    <TextBlock>Receipt</TextBlock>
+                    <TextBlock>Bar</TextBlock>
+                    <TextBlock>Kitchen</TextBlock>
+                </ComboBox.Items>
+            </ComboBox>
+            <Button x:Name="BtnPrint"
+                    Content="Print"
+                    Click="PrintSimpleTextButton_Click"
+                    Margin="96,73,78,158"
+                    Height="38" />
+        </StackPanel>
 
     </Window.Content>
 </Window>

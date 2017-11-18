@@ -108,8 +108,8 @@ namespace POS.BusinessModel
 //                                                                    Ordertable = 1,
 //                                                                    Ordertime = DateTime.Now},
 //                                    TableOrderDetails = new List<OrderNoteDetails>() {
-//                                                                new OrderNoteDetails{ProductId="P000000001", OrdernoteId="ORN0000001", Quan=1, Note="", SelectedStats="Drink" } ,
-//                                                                new OrderNoteDetails{ProductId="P000000004", OrdernoteId="ORN0000001", Quan=4, Note="", SelectedStats="Drink" }
+//                                                                new OrderNoteDetails{ProductId="P000000001", OrdernoteId="ORN0000001", Quan=1, Note="", SelectedStats="Beverage" } ,
+//                                                                new OrderNoteDetails{ProductId="P000000004", OrdernoteId="ORN0000001", Quan=4, Note="", SelectedStats="Beverage" }
 //},
 //                    },
 //                    new Table {TableNumber = 2, ChairAmount = 10, Position = new Point(500, 500), IsPinned = true,
