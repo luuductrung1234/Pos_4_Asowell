@@ -75,8 +75,14 @@
                                           Width="135"
                                           Margin="0,0,20,0"
                                           SelectionChanged="cboType_SelectionChanged"></ComboBox>
+
+                                <Button x:Name="BtnOverViewReport"
+                                        Click="BtnOverViewReport_OnClick"
+                                        Content="OverView Report"
+                                        Width="140" />
                             </StackPanel>
                         </Border>
+                        
                     </StackPanel>
                 </materialDesign:ColorZone>
             </Grid>
