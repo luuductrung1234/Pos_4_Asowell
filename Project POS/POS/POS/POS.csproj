@@ -181,6 +181,9 @@
     <Compile Include="AdminWorkSpace\statisticsFoodPage.xaml.cs">
       <DependentUpon>statisticsFoodPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\StatisticsWorkingHourPage.xaml.cs">
+      <DependentUpon>StatisticsWorkingHourPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseConfigWindow.xaml.cs">
       <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
     </Compile>
@@ -313,6 +316,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\statisticsFoodPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\StatisticsWorkingHourPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
