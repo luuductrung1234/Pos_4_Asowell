@@ -3,6 +3,7 @@ using POS.Repository.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,6 +31,7 @@ namespace POS.AdminWorkSpace
         AdminRe curAdmin;
         CustomerPage ctmP;
         ReceiptNotePage receiptnotepage;
+        private statisticsFoodPage FoodPage;
 
         public AdminWindow()
         {
@@ -47,6 +49,7 @@ namespace POS.AdminWorkSpace
             ctmP=new CustomerPage(_unitowork);
             ordernotepage = new OrderNotePage(_unitowork);
             receiptnotepage = new ReceiptNotePage(_unitowork);
+            FoodPage=new statisticsFoodPage(_unitowork);
             Closing += AdminWindow_Closing;
         }
 
@@ -102,6 +105,11 @@ namespace POS.AdminWorkSpace
         private void bntReceipt_Click(object sender, RoutedEventArgs e)
         {
             myframe.Navigate(receiptnotepage);
+        }
+
+        private void View_Statistics_Quantity_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            myframe.Navigate(FoodPage);
         }
     }
 }
