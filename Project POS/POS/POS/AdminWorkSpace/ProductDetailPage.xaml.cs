@@ -39,7 +39,7 @@ namespace POS.AdminWorkSpace
             lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get();
 
             cboType.Items.Add(ProductType.All);
-            cboType.Items.Add(ProductType.Drink);
+            cboType.Items.Add(ProductType.Beverage);
             cboType.Items.Add(ProductType.Food);
             cboType.Items.Add(ProductType.Beer);
             cboType.Items.Add(ProductType.Wine);

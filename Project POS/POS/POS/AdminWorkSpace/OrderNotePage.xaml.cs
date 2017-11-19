@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using POS.Helper.PrintHelper.Report;
 
 namespace POS.AdminWorkSpace
 {
@@ -57,5 +58,10 @@ namespace POS.AdminWorkSpace
 
         }
 
+        private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
+        {
+            var optionDialog = new ReportOptionDialog(new OrderNoteReport(), _unitofwork);
+            optionDialog.Show();
+        }
     }
 }

@@ -101,6 +101,10 @@
       <Project>{4b925329-f8c2-4546-968b-4d9e010ec56d}</Project>
       <Name>POS.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\POS.Repository\POS.Repository.csproj">
+      <Project>{81743988-1EBF-42EC-812F-2574A4F0F3A3}</Project>
+      <Name>POS.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\POS\POS.csproj">
       <Project>{EF6CA9C2-949C-45CE-BA7B-C943E3E9D671}</Project>
       <Name>POS</Name>

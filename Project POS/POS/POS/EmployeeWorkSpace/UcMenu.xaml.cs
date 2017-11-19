@@ -33,7 +33,7 @@ namespace POS.EmployeeWorkSpace
             try
             {
                 _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
-                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Drink);
+                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage);
                 lvCategoryDishes.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Food);
                 lvCategoryBeer.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
                 lvCategoryWine.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine);
@@ -162,7 +162,7 @@ namespace POS.EmployeeWorkSpace
 
             if (filter.Length == 0)
             {
-                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Drink);
+                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage);
                 lvCategoryDishes.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Food);
                 lvCategoryBeer.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
                 lvCategoryWine.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine);
@@ -180,7 +180,7 @@ namespace POS.EmployeeWorkSpace
         {
             if (ItemBeverages.IsSelected == true)
             {
-                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Drink && p.Name.Contains(filter));
+                lvCategoryBeverages.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage && p.Name.Contains(filter));
                 lvCategoryBeverages.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemBeverages;
             }
