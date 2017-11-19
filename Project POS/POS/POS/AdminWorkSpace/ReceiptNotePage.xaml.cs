@@ -55,8 +55,8 @@ namespace POS.AdminWorkSpace
 
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
         {
-            var report = new ReceiptNoteReport().CreatePdfReport(_unitofwork);
-            
+            var optionDialog = new ReportOptionDialog(new ReceiptNoteReport(), _unitofwork);
+            optionDialog.Show();
         }
     }
 }

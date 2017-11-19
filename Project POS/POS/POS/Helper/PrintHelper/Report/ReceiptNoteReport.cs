@@ -13,7 +13,7 @@ namespace POS.Helper.PrintHelper.Report
 {
     public class ReceiptNoteReport : IListPdfReport
     {
-        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork)
+        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -74,7 +74,11 @@ namespace POS.Helper.PrintHelper.Report
                 //}
                 //dataSource.StronglyTypedList(listOfRows);
 
-                dataSource.StronglyTypedList(unitofwork.ReceiptNoteRepository.Get().ToList());
+                var receiptList = unitofwork.ReceiptNoteRepository.Get().ToList();
+
+                var receiptWithTimeList = receiptList.Where(x => x.Inday.Date.Equals(time.Date));
+
+                dataSource.StronglyTypedList(receiptWithTimeList);
             })
             .MainTableSummarySettings(summarySettings =>
             {
@@ -174,7 +178,7 @@ namespace POS.Helper.PrintHelper.Report
                 export.ToCsv();
                 export.ToXml();
             })
-            .Generate(data => data.AsPdfFile(string.Format("{0}\\SerializedData\\InStoragep-Report-{1}.pdf", AppPath.ApplicationPath, Guid.NewGuid().ToString("N"))));
+            .Generate(data => data.AsPdfFile(string.Format("{0}\\InStoragep-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
         }
     }
 

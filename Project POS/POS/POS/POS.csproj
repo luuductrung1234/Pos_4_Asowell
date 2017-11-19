@@ -175,6 +175,9 @@
     <Compile Include="AdminWorkSpace\ReceiptNotePage.xaml.cs">
       <DependentUpon>ReceiptNotePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\ReportOptionDialog.xaml.cs">
+      <DependentUpon>ReportOptionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\SalaryPage.xaml.cs">
       <DependentUpon>SalaryPage.xaml</DependentUpon>
     </Compile>
@@ -302,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\ReceiptNotePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\ReportOptionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -479,6 +486,8 @@
     <Resource Include="Icon\icons8_Sweet_Potato_32px.png" />
     <Resource Include="Icon\icons8_Wine_Glass_32px.png" />
     <Resource Include="Icon\icons8_Employee_50px_2.png" />
+    <Resource Include="Icon\Folder_30px.png" />
+    <Resource Include="Icon\Report Card_32px.png" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />

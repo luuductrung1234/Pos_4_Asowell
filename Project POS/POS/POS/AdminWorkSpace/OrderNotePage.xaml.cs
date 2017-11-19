@@ -60,7 +60,8 @@ namespace POS.AdminWorkSpace
 
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
         {
-            new OrderNoteReport().CreatePdfReport(_unitofwork);
+            var optionDialog = new ReportOptionDialog(new OrderNoteReport(), _unitofwork);
+            optionDialog.Show();
         }
     }
 }

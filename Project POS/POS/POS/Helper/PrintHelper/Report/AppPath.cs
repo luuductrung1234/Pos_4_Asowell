@@ -17,7 +17,7 @@ namespace POS.Helper.PrintHelper.Report
                 if (isInWeb)
                     return HttpRuntime.AppDomainAppPath;
 
-                return Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName; ;
+                return Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             }
         }
 

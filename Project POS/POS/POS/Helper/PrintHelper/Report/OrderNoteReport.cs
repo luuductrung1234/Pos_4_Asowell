@@ -14,7 +14,7 @@ namespace POS.Helper.PrintHelper.Report
 {
     public class OrderNoteReport : IListPdfReport
     {
-        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork)
+        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -76,8 +76,10 @@ namespace POS.Helper.PrintHelper.Report
                 //dataSource.StronglyTypedList(listOfRows);
 
                 var orderList = unitofwork.OrderRepository.Get().ToList();
+
+                var orderWithTimeList = orderList.Where(x => x.Ordertime.ToShortDateString().Equals(time.ToShortDateString())).ToList();
                 List<OrderNoteForReport> orderReportList = new List<OrderNoteForReport>();
-                foreach (var order in orderList)
+                foreach (var order in orderWithTimeList)
                 {
                     var orderRpt = new OrderNoteForReport()
                     {
@@ -258,7 +260,7 @@ namespace POS.Helper.PrintHelper.Report
                 export.ToCsv();
                 export.ToXml();
             })
-            .Generate(data => data.AsPdfFile(string.Format("{0}\\SerializedData\\Order-Report-{1}.pdf", AppPath.ApplicationPath, Guid.NewGuid().ToString("N"))));
+            .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
         }
     }
 }

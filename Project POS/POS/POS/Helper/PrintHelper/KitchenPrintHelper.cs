@@ -252,9 +252,7 @@ namespace POS.Helper.PrintHelper
                         FontWeight = FontWeights.Bold,
                         Margin = new Thickness(0,0,10,0)
                     };
-                    CheckBox ckbChair = new CheckBox();
                     stpChair.Children.Add(tbChairNumber);
-                    stpChair.Children.Add(ckbChair);
                     Grid.SetRow(stpChair, bigRowIndex);
                     Grid.SetColumn(stpChair, 0);
                     Grid.SetRowSpan(stpChair, chairInStatus.Value.Count);

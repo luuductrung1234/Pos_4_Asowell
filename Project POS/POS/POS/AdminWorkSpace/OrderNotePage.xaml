@@ -20,12 +20,12 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <materialDesign:ColorZone Mode="Standard"
-                                      Height="40"
+                                      Height="50"
                                       CornerRadius="2"
                                       materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                       Margin="0,0,0,0">
                 <StackPanel Orientation="Horizontal"
-                            Margin="8">
+                            Margin="2">
                     <Border Background="White"
                             MaxHeight="30"
                             CornerRadius="3"
@@ -72,13 +72,17 @@
                                       Margin="0,0,20,0"></ComboBox>
                         </StackPanel>
                     </Border>
-                    <Button
-                        x:Name="BtnOverViewReport"
-                        Content="OverView Report"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Right"
-                        Width="140"
-                        Click="BtnOverViewReport_OnClick"/>
+                    <Button x:Name="BtnOverViewReport"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Right"
+                            Width="76"
+                            Click="BtnOverViewReport_OnClick"
+                            Margin="0,7"
+                            ToolTip="Generate Report">
+                        <Image Source="../Icon/Report Card_32px.png"
+                               Width="27"
+                               Height="32"></Image>
+                    </Button>
                 </StackPanel>
             </materialDesign:ColorZone>
         </Grid>
@@ -130,7 +134,7 @@
                         <GridViewColumn Header="PayBack"
                                         Width="150"
                                         DisplayMemberBinding="{Binding PayBack}" />
-                        
+
                     </GridView>
                 </ListView.View>
             </ListView>

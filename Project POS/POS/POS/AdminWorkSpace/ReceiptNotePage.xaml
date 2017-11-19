@@ -24,12 +24,12 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <materialDesign:ColorZone Mode="Standard"
-                                          Height="40"
+                                          Height="50"
                                           CornerRadius="2"
                                           materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                           Margin="0,0,0,0">
                     <StackPanel Orientation="Horizontal"
-                                Margin="8">
+                                Margin="2">
                         <Border Background="White"
                                 MaxHeight="30"
                                 CornerRadius="3"
@@ -78,8 +78,13 @@
 
                                 <Button x:Name="BtnOverViewReport"
                                         Click="BtnOverViewReport_OnClick"
-                                        Content="OverView Report"
-                                        Width="140" />
+                                        Width="76"
+                                        Margin="0,0,0,-2"
+                                        ToolTip="Generate Report">
+                                    <Image Source="../Icon/Report Card_32px.png"
+                                           Width="27"
+                                           Height="32"></Image>
+                                </Button>
                             </StackPanel>
                         </Border>
                         
