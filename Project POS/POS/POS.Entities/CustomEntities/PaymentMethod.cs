@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POS.Entities.CustomEntities
 {
-    enum PaymentMethod
+    public enum PaymentMethod
     {
         All = -1,
         Cash,               // trả tiền mặt

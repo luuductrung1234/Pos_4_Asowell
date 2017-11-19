@@ -72,6 +72,13 @@
                                       Margin="0,0,20,0"></ComboBox>
                         </StackPanel>
                     </Border>
+                    <Button
+                        x:Name="BtnOverViewReport"
+                        Content="OverView Report"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Right"
+                        Width="140"
+                        Click="BtnOverViewReport_OnClick"/>
                 </StackPanel>
             </materialDesign:ColorZone>
         </Grid>

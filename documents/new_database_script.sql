@@ -31,7 +31,7 @@ CREATE TABLE [dbo].[Employee] (
 CREATE INDEX [IX_manager] ON [dbo].[Employee]([manager])
 CREATE TABLE [dbo].[OrderNote] (
     [ordernote_id] [varchar](10) NOT NULL,
-    [pay_method] [int],
+    [pay_method] [int] NOT NULL,
     [cus_id] [varchar](10),
     [emp_id] [varchar](10),
     [ordertable] [int] NOT NULL,

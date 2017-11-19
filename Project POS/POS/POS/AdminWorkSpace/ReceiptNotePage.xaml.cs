@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using POS.Helper.PrintHelper.Report;
 
 namespace POS.AdminWorkSpace
 {
@@ -50,6 +51,12 @@ namespace POS.AdminWorkSpace
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
+        {
+            var report = new ReceiptNoteReport().CreatePdfReport(_unitofwork);
+            
         }
     }
 }
