@@ -122,17 +122,25 @@ namespace POS.EmployeeWorkSpace
                     {
                         if(!foundinchairorderdetailstemp.SelectedStats.Equals(it.StandardStats) || !foundinchairorderdetailstemp.Note.Equals(""))
                         {
+                            o.ChairId = orderingChair.ChairId;
+                            o.OrdertempId = orderTempCurrentTable.OrdertempId;
+                            o.ProductId = it.ProductId;
+                            o.SelectedStats = it.StandardStats;
+                            o.Note = "";
+                            o.Quan = 1;
 
+                            _unitofwork.OrderDetailsTempRepository.Insert(o);
+                            _unitofwork.Save();
                         }
 
                         if(foundinchairorderdetailstemp.SelectedStats.Equals(it.StandardStats) && foundinchairorderdetailstemp.Note.Equals(""))
                         {
                             foundinchairorderdetailstemp.ProductId = it.ProductId;
                             foundinchairorderdetailstemp.Quan++;
-                        }
 
-                        _unitofwork.OrderDetailsTempRepository.Update(foundinchairorderdetailstemp);
-                        _unitofwork.Save();
+                            _unitofwork.OrderDetailsTempRepository.Update(foundinchairorderdetailstemp);
+                            _unitofwork.Save();
+                        }
                     }
                 }
 
