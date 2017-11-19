@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Report Option Dialog"
         Background="{DynamicResource MaterialDesignPaper}"
-        Height="190.043"
+        Height="226.908"
         Width="304.449">
     <StackPanel>
         <Button HorizontalAlignment="Left"
@@ -23,7 +23,7 @@
                    Height="20"></Image>
         </Button>
         <StackPanel Orientation="Horizontal"
-                    Margin="10,12,10,40">
+                    Margin="10,12,10,20">
             <TextBlock VerticalAlignment="Center"
                        Foreground="AliceBlue">Pick The Date Of Orders:</TextBlock>
             <DatePicker VerticalAlignment="Center"
@@ -34,13 +34,33 @@
                         Height="30"
                         SelectedDateChanged="DatePicker_OnSelectedDateChanged" />
         </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Margin="10,12,10,30">
+            <GroupItem x:Name="gReportType"></GroupItem>
+            <TextBlock Foreground="AliceBlue"
+                       Text="Overview Report:"
+                       Margin="0,0,7,0" />
+            <RadioButton GroupName="ReportType"
+                      x:Name="ChbOverviewReport"
+                      Style="{StaticResource {x:Type RadioButton}}"
+                      Margin="0,0,30,0"
+                      IsChecked="True" />
+
+            <TextBlock Margin="0,0,7,0"
+                       Foreground="AliceBlue"
+                       Text="Details Report:" />
+            <RadioButton GroupName="ReportType"
+                      x:Name="ChbDetailsReport"
+                      Style="{StaticResource {x:Type RadioButton}}" />
+
+        </StackPanel>
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <Button x:Name="BtnCancel"
                     Content="Cancel"
                     Width="80"
-                    Margin="0,0,10,0"
+                    Margin="0,0,20,0"
                     HorizontalAlignment="Center"
                     Click="BtnCancel_OnClick" />
             <Button x:Name="BtnOk"

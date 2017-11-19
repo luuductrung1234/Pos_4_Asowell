@@ -17,5 +17,7 @@ namespace POS.Helper.PrintHelper.Report
     public interface IListPdfReport
     {
         IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName);
+
+        IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName);
     }
 }

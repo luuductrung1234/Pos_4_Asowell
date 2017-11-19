@@ -217,6 +217,7 @@
     <Compile Include="Helper\PrintHelper\KitchenPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderForPrint.cs" />
+    <Compile Include="Helper\PrintHelper\Model\OrderNoteDetailsForReport.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderNoteForReport.cs" />
     <Compile Include="Helper\PrintHelper\ReceiptPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\Report\AppPath.cs" />

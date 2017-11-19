@@ -41,13 +41,26 @@ namespace POS.AdminWorkSpace
 
         private void BtnOk_OnClick(object sender, RoutedEventArgs e)
         {
+            if (ChbDetailsReport.IsChecked == false && ChbOverviewReport.IsChecked == false)
+            {
+                MessageBox.Show("Please select the type of report!");
+                return;
+            }
+
+
             try
             {
                 if (time != null && _reportHelper != null)
                 {
                     // generate report
-                    _reportHelper.CreatePdfReport(_unitofwork, time, folderPath);
-                    
+                    if (ChbOverviewReport.IsChecked == true)
+                    {
+                        _reportHelper.CreatePdfReport(_unitofwork, time, folderPath);
+                    }
+                    else
+                    {
+                        _reportHelper.CreateDetailsPdfReport(_unitofwork, time, folderPath);
+                    }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
 
