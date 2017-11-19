@@ -46,35 +46,41 @@
                                    Height="90"
                                    Source="C:\Users\Nam_Nguyen\Documents\Pos_4_Asowell\Project POS\POS\POS\Images\h1.jpg"
                                    Stretch="Fill" />
+                            <StackPanel Grid.Row="2" Margin="10,10,10,10">
                             <StackPanel Grid.Row="1"
                                         Orientation="Horizontal">
-                                <TextBlock Foreground="White">Name:</TextBlock>
+                                <TextBlock Foreground="White" Margin="0,0,10,0">Name:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding Name}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="2"
                                         Orientation="Horizontal">
-                                <TextBlock Foreground="White">IgdType:</TextBlock>
+                                <TextBlock Foreground="White"
+                                           Margin="0,0,10,0">IgdType:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding IgdType}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="3"
-                                        Orientation="Horizontal">
-                                <TextBlock Foreground="White">UnitBuy:</TextBlock>
+                                        Orientation="Horizontal" Margin="0,0,10,0">
+                                <TextBlock Foreground="White"
+                                           Margin="0,0,10,0">UnitBuy:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding UnitBuy}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="4"
                                         Orientation="Horizontal">
-                                <TextBlock Foreground="White">StandardPrice:</TextBlock>
+                                <TextBlock Foreground="White"
+                                           Margin="0,0,10,0">StandardPrice:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding StandardPrice}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="5"
                                         Orientation="Horizontal">
-                                <TextBlock Foreground="White">Info:</TextBlock>
+                                <TextBlock Foreground="White"
+                                           Margin="0,0,10,0">Info:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding WareHouse.Contain}"></TextBlock>
+                            </StackPanel>
                             </StackPanel>
                             <ProgressBar x:Name="prgcontent"
                                          Width="150"

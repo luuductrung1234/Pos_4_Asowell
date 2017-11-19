@@ -269,7 +269,7 @@ namespace POS.WareHouseWorkSpace
             {
                 foreach (var item in valueM9)
                 {
-                    totalMonthAmount1 += item.TotalAmount;
+                    totalMonthAmount9 += item.TotalAmount;
                 }
             }
             if (valueM10 == null)
@@ -422,7 +422,7 @@ namespace POS.WareHouseWorkSpace
             {
                 foreach (var item in valueM9)
                 {
-                    totalMonthAmount1 += item.TotalPrice;
+                    totalMonthAmount9 += item.TotalPrice;
                 }
             }
             if (valueM10 == null)
