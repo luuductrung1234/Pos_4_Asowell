@@ -42,8 +42,12 @@
                              Margin="0 16 0 16"
                              SelectedIndex="0">
                         <ListBoxItem x:Name="Viewstaticquantity"
-                                     Content="View_Statistics_Quantity"
+                                     Content="Product Statistic"
                                      PreviewMouseLeftButtonUp="View_Statistics_Quantity_OnPreviewMouseLeftButtonUp"
+                                     Foreground="White" />
+                        <ListBoxItem x:Name="ViewstaticWH"
+                                     Content="Working Hour Statistic"
+                                     PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
 
                     </ListBox>

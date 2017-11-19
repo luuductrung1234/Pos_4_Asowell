@@ -32,6 +32,7 @@ namespace POS.AdminWorkSpace
         CustomerPage ctmP;
         ReceiptNotePage receiptnotepage;
         private statisticsFoodPage FoodPage;
+        private StatisticsWorkingHourPage statisticsWorkingHourPage;
 
         public AdminWindow()
         {
@@ -50,6 +51,7 @@ namespace POS.AdminWorkSpace
             ordernotepage = new OrderNotePage(_unitowork);
             receiptnotepage = new ReceiptNotePage(_unitowork);
             FoodPage=new statisticsFoodPage(_unitowork);
+            statisticsWorkingHourPage=new StatisticsWorkingHourPage(_unitowork);
             Closing += AdminWindow_Closing;
         }
 
@@ -110,6 +112,11 @@ namespace POS.AdminWorkSpace
         private void View_Statistics_Quantity_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myframe.Navigate(FoodPage);
+        }
+
+        private void ViewstaticWH_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            myframe.Navigate(statisticsWorkingHourPage);
         }
     }
 }

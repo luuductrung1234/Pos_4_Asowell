@@ -13,8 +13,19 @@
       Title="statisticsFoodPage">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Fillter" VerticalAlignment="Center" FontSize="20" Foreground="White"></TextBlock>
+            <DatePicker Margin="0,16,0,-0.4"
+                        Text="MMM-yyyy"
+                        Width="151"></DatePicker>
+        </StackPanel>
         <lvc:CartesianChart x:Name="LvcQuantityChart"
                             Foreground="White"
+                            Grid.Row="1"
                             Series="{Binding SeriesCollection}">
 
             <lvc:CartesianChart.AxisY>

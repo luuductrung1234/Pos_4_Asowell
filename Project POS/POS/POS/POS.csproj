@@ -181,8 +181,8 @@
     <Compile Include="AdminWorkSpace\SalaryPage.xaml.cs">
       <DependentUpon>SalaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AdminWorkSpace\statisticsFoodPage.xaml.cs">
-      <DependentUpon>statisticsFoodPage.xaml</DependentUpon>
+    <Compile Include="AdminWorkSpace\StatisticsFoodPage.xaml.cs">
+      <DependentUpon>StatisticsFoodPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AdminWorkSpace\StatisticsWorkingHourPage.xaml.cs">
       <DependentUpon>StatisticsWorkingHourPage.xaml</DependentUpon>
@@ -323,7 +323,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AdminWorkSpace\statisticsFoodPage.xaml">
+    <Page Include="AdminWorkSpace\StatisticsFoodPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
