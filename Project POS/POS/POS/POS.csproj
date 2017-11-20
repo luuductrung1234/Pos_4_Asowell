@@ -120,6 +120,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Globalization" />
@@ -148,6 +149,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminNavWindow.xaml.cs">
+      <DependentUpon>AdminNavWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\AdminChangePass.xaml.cs">
       <DependentUpon>AdminChangePass.xaml</DependentUpon>
     </Compile>
@@ -236,6 +240,9 @@
     <Compile Include="WPFMaterialDesign\Converters\IngredientMaxProgressBarConverter.cs" />
     <Compile Include="WPFMaterialDesign\Converters\NonPercentConverter.cs" />
     <Compile Include="WPFMaterialDesign\Domain\NotifyPropertyChangedExtension.cs" />
+    <Compile Include="WPFMaterialDesign\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPFMaterialDesign\PaletteSelectorViewModel.cs" />
     <Compile Include="WPFMaterialDesign\UcPalette.xaml.cs">
       <DependentUpon>UcPalette.xaml</DependentUpon>
@@ -281,6 +288,10 @@
     <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\RotateTransformConverter.cs" />
     <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
     <Compile Include="WPFMaterialDesign\Transitions\TransitionAssist.cs" />
+    <Page Include="AdminNavWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminWorkSpace\AdminChangePass.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -370,6 +381,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WareHouseWorkSpace\LiveChartReceiptPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPFMaterialDesign\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -505,6 +520,10 @@
     <Resource Include="Icon\icons8_Employee_50px_2.png" />
     <Resource Include="Icon\Folder_30px.png" />
     <Resource Include="Icon\Report Card_32px.png" />
+    <Resource Include="Images\a86c410efa3e6b690d973f7c5b78444e--rocket-illustration-flat-design.jpg" />
+    <Resource Include="Icon\FAQ_100px.png" />
+    <Resource Include="Icon\Admin_96px.png" />
+    <Resource Include="Icon\Box_104px.png" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />
