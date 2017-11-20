@@ -444,6 +444,11 @@ namespace POS.EmployeeWorkSpace
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
+            if(currentTable == null || currentChair == null)
+            {
+                return;
+            }
+
             orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
             var ordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -474,7 +479,7 @@ namespace POS.EmployeeWorkSpace
             {
                 if (inputnote.ShowDialog() == true)
                 {
-                    tempdata.Note = inputnote.Note;
+                    tempdata.Note = inputnote.Note.ToLower();
 
                     if (ordernotedetails[index].Quan == 1)
                     {
@@ -483,8 +488,11 @@ namespace POS.EmployeeWorkSpace
                             if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
                             {
                                 cho.Quan++;
+                                _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
+                                _unitofwork.Save();
                                 _unitofwork.OrderDetailsTempRepository.Update(cho);
                                 _unitofwork.Save();
+                                RefreshControl(_unitofwork, currentTable);
                                 return;
                             }
                         }
@@ -493,6 +501,7 @@ namespace POS.EmployeeWorkSpace
                         _unitofwork.Save();
                         _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                         _unitofwork.Save();
+                        RefreshControl(_unitofwork, currentTable);
                         return;
                     }
 
@@ -502,6 +511,7 @@ namespace POS.EmployeeWorkSpace
                         {
                             if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
                             {
+                                tempdata.Note = ordernotedetails[index].Note;
                                 tempdata.Quan--;
                                 cho.Quan++;
                                 _unitofwork.OrderDetailsTempRepository.Update(cho);
@@ -510,9 +520,13 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.Save();
                                 _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                                 _unitofwork.Save();
-                                break;
+                                RefreshControl(_unitofwork, currentTable);
+                                return;
                             }
+                        }
 
+                        foreach(var cho in ordernotedetails)
+                        {
                             if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && !cho.Note.Equals(tempdata.Note))
                             {
                                 ordernotedetails[index].Quan--;
@@ -521,6 +535,8 @@ namespace POS.EmployeeWorkSpace
                                 tempdata.Quan = 1;
                                 _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                                 _unitofwork.Save();
+                                RefreshControl(_unitofwork, currentTable);
+                                return;
                             }
                         }
                     }
