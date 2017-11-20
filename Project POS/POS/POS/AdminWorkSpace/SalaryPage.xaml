@@ -78,18 +78,30 @@
                             <Button x:Name="bntAdd"
                                     Content="Add"
                                     Height="auto"
+                                    Width="100"
                                     Margin="0,0,20,0"
                                     FontWeight="Bold" />
                             <Button x:Name="bntEdit"
                                     Content="Edit"
                                     Height="auto"
+                                    Width="100"
                                     Margin="0,0,20,0"
                                     FontWeight="Bold" />
                             <Button x:Name="bntDel"
                                     Content="Delete"
                                     Height="auto"
-                                    Margin="0,0,50,0"
+                                    Width="100"
+                                    Margin="0,0,20,0"
                                     FontWeight="Bold" />
+                            <Button x:Name="BtnOverViewReport"
+                                    Click="BtnOverViewReport_OnClick"
+                                    Width="100"
+                                    Margin="0,0,0,-2"
+                                    ToolTip="Generate Report">
+                                <Image Source="../Icon/Report Card_32px.png"
+                                       Width="30"
+                                       Height="25"></Image>
+                            </Button>
                         </StackPanel>
                     </Border>
                 </StackPanel>

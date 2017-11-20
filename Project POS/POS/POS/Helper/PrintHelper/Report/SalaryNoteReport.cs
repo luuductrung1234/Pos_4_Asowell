@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using PdfRpt.Core.Contracts;
-using PdfRpt.FluentInterface;
-using POS.Entities.CustomEntities;
-using POS.Helper.PrintHelper.Model;
 using POS.Repository.DAL;
+using PdfRpt.FluentInterface;
+using POS.Helper.PrintHelper.Model;
+using System.Linq;
+using System.Collections.Generic;
+using POS.Entities;
+using POS.Entities.CustomEntities;
 
 namespace POS.Helper.PrintHelper.Report
 {
-    public class OrderNoteReport : IListPdfReport
+    public class SalaryNoteReport : IListPdfReport
     {
         public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName)
         {
@@ -18,7 +19,7 @@ namespace POS.Helper.PrintHelper.Report
                 doc.RunDirection(PdfRunDirection.LeftToRight);
                 doc.Orientation(PageOrientation.Landscape);
                 doc.PageSize(PdfPageSize.A4);
-                doc.DocumentMetadata(new DocumentMetadata { Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.", Subject = "Report", Title = "Order Report" });
+                doc.DocumentMetadata(new DocumentMetadata { Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.", Subject = "Report", Title = "Salary Report" });
                 doc.Compression(new CompressionSettings
                 {
                     EnableCompression = true,
@@ -47,7 +48,7 @@ namespace POS.Helper.PrintHelper.Report
                 {
                     defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
                     defaultHeader.ImagePath(System.IO.Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
-                    defaultHeader.Message("ORDER REPORT");
+                    defaultHeader.Message("SALARY REPORT");
                 });
             })
             .MainTableTemplate(template =>
@@ -61,39 +62,28 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
             {
-                //var listOfRows = new List<User>
-                //{
-                //    new User {Id = 0, LastName = "Test Degree Sign: 120°", Name = "Celsius", Balance = 0}
-                //};
+                var salaryList = unitofwork.SalaryNoteRepository.Get().ToList();
 
-                //for (var i = 1; i <= 200; i++)
-                //{
-                //    listOfRows.Add(new User { Id = i, LastName = "LastName " + i, Name = "Name " + i, Balance = i + 1000 });
-                //}
-                //dataSource.StronglyTypedList(listOfRows);
-
-                var orderList = unitofwork.OrderRepository.Get().ToList();
-
-                var orderWithTimeList = orderList.Where(x => x.Ordertime.Date.Equals(time.Date)).ToList();
-                List<OrderNoteForReport> orderReportList = new List<OrderNoteForReport>();
-                foreach (var order in orderWithTimeList)
+                var salaryWithTimeList = salaryList.Where(x => x.ForMonth == time.Month && x.ForYear == time.Year).ToList();
+                List<SalaryNoteForReport> salaryReportList = new List<SalaryNoteForReport>();
+                foreach (var salary in salaryWithTimeList)
                 {
-                    var orderRpt = new OrderNoteForReport()
+                    var salaryRpt = new SalaryNoteForReport()
                     {
-                        OrdernoteId = order.OrdernoteId,
-                        CusId = order.CusId,
-                        EmpId = order.EmpId,
-                        Ordertable = order.Ordertable,
-                        Ordertime = order.Ordertime,
-                        TotalPrice = order.TotalPrice,
-                        CustomerPay = order.CustomerPay,
-                        PayBack = order.PayBack,
-                        payMethod = ((PaymentMethod) order.paymentMethod).ToString(),
+                        SnId = salary.SnId,
+                        EmpId = salary.EmpId,
+                        EmpName = salary.Employee.Name,
+                        DatePay = (salary.DatePay==null)? "" : salary.DatePay.ToString(),
+                        SalaryValue = salary.SalaryValue,
+                        WorkHour = salary.WorkHour,
+                        ForMonth = salary.ForMonth,
+                        ForYear = salary.ForYear,
+                        IsPaid = (salary.IsPaid == 1)? "Yes" : "No"
                     };
-                    orderReportList.Add(orderRpt);
+                    salaryReportList.Add(salaryRpt);
                 }
 
-                dataSource.StronglyTypedList(orderReportList);
+                dataSource.StronglyTypedList(salaryReportList);
             })
             .MainTableSummarySettings(summarySettings =>
             {
@@ -116,7 +106,7 @@ namespace POS.Helper.PrintHelper.Report
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.OrdernoteId);
+                    column.PropertyName<SalaryNoteForReport>(x => x.SnId);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(1);
@@ -125,103 +115,84 @@ namespace POS.Helper.PrintHelper.Report
                     column.Font(font =>
                     {
                         font.Size(10);
-                        font.Color(System.Drawing.Color.Brown);
+                        font.Color(System.Drawing.Color.Blue);
                     });
                 });
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.CusId);
+                    column.PropertyName<SalaryNoteForReport>(x => x.EmpId);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(2);
-                    column.Width(2);
-                    column.HeaderCell("Customer");
+                    column.Width(3);
+                    column.HeaderCell("ID", horizontalAlignment: HorizontalAlignment.Left);
+                    column.Font(font =>
+                    {
+                        font.Size(10);
+                        font.Color(System.Drawing.Color.Crimson);
+                    });
                 });
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.EmpId);
-                    column.CellsHorizontalAlignment(HorizontalAlignment.Left);
+                    column.PropertyName<SalaryNoteForReport>(x => x.EmpName);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(3);
-                    column.Width(3);
-                    column.HeaderCell("Emp");
-                    column.PaddingLeft(25);
+                    column.Width(2);
+                    column.HeaderCell("Emp Name");
                 });
-
+                
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.Ordertable);
+                    column.PropertyName<SalaryNoteForReport>(x => x.DatePay);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(4);
                     column.Width(2);
-                    column.HeaderCell("Table");
+                    column.HeaderCell("Date Pay");
                 });
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.Ordertime);
+                    column.PropertyName<SalaryNoteForReport>(x => x.IsPaid);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(5);
                     column.Width(2);
-                    column.HeaderCell("Time");
+                    column.HeaderCell("Is Paid");
                 });
+
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.TotalPrice);
-                    column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                    column.PropertyName<SalaryNoteForReport>(x => x.ForMonth);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(6);
                     column.Width(2);
-                    column.HeaderCell("Total Amount (kVND)");
-                    column.ColumnItemsTemplate(template =>
-                    {
-                        template.TextBlock();
-                        template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                                                            ? string.Empty : string.Format("{0:n0}", obj));
-                    });
-                    column.AggregateFunction(aggregateFunction =>
-                    {
-                        aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
-                        aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                                                            ? string.Empty : string.Format("{0:n0}", obj));
-                    });
+                    column.HeaderCell("For Month");
                 });
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.CustomerPay);
-                    column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                    column.PropertyName<SalaryNoteForReport>(x => x.ForYear);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(7);
                     column.Width(2);
-                    column.HeaderCell("Customer Pay (kVND)");
-                    column.ColumnItemsTemplate(template =>
-                    {
-                        template.TextBlock();
-                        template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                            ? string.Empty : string.Format("{0:n0}", obj));
-                    });
-                    column.AggregateFunction(aggregateFunction =>
-                    {
-                        aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
-                        aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                            ? string.Empty : string.Format("{0:n0}", obj));
-                    });
+                    column.HeaderCell("For Year");
                 });
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.PayBack);
+                    column.PropertyName<SalaryNoteForReport>(x => x.WorkHour);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                     column.IsVisible(true);
                     column.Order(8);
                     column.Width(2);
-                    column.HeaderCell("Change (kVND)");
+                    column.HeaderCell("Hour (h)");
                     column.ColumnItemsTemplate(template =>
                     {
                         template.TextBlock();
@@ -238,12 +209,24 @@ namespace POS.Helper.PrintHelper.Report
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteForReport>(x => x.payMethod);
-                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                    column.PropertyName<SalaryNoteForReport>(x => x.SalaryValue);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Right);
                     column.IsVisible(true);
                     column.Order(9);
                     column.Width(2);
-                    column.HeaderCell("Payment");
+                    column.HeaderCell("Salary Value (kVND)");
+                    column.ColumnItemsTemplate(template =>
+                    {
+                        template.TextBlock();
+                        template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                                            ? string.Empty : string.Format("{0:n0}", obj));
+                    });
+                    column.AggregateFunction(aggregateFunction =>
+                    {
+                        aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                        aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                                            ? string.Empty : string.Format("{0:n0}", obj));
+                    });
                 });
 
             })
@@ -257,8 +240,10 @@ namespace POS.Helper.PrintHelper.Report
                 export.ToCsv();
                 export.ToXml();
             })
-            .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+            .Generate(data => data.AsPdfFile(string.Format("{0}\\Salary-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
         }
+
+
 
         public IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName)
         {
@@ -267,7 +252,7 @@ namespace POS.Helper.PrintHelper.Report
                 doc.RunDirection(PdfRunDirection.LeftToRight);
                 doc.Orientation(PageOrientation.Landscape);
                 doc.PageSize(PdfPageSize.A4);
-                doc.DocumentMetadata(new DocumentMetadata { Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.", Subject = "Report", Title = "Order Detail Report" });
+                doc.DocumentMetadata(new DocumentMetadata { Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.", Subject = "Report", Title = "Salary Detail Report" });
                 doc.Compression(new CompressionSettings
                 {
                     EnableCompression = true,
@@ -296,7 +281,7 @@ namespace POS.Helper.PrintHelper.Report
                 {
                     defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
                     defaultHeader.ImagePath(System.IO.Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
-                    defaultHeader.Message("ORDER DETAILS REPORT");
+                    defaultHeader.Message("Salary DETAILS REPORT");
                 });
             })
             .MainTableTemplate(template =>
@@ -310,39 +295,12 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
             {
-                //var listOfRows = new List<User>
-                //{
-                //    new User {Id = 0, LastName = "Test Degree Sign: 120°", Name = "Celsius", Balance = 0}
-                //};
 
-                //for (var i = 1; i <= 200; i++)
-                //{
-                //    listOfRows.Add(new User { Id = i, LastName = "LastName " + i, Name = "Name " + i, Balance = i + 1000 });
-                //}
-                //dataSource.StronglyTypedList(listOfRows);
+                var salaryDetailsList = unitofwork.WorkingHistoryRepository.Get().ToList();
 
-                var orderDetailsList = unitofwork.OrderNoteDetailsRepository.Get().ToList();
-
-                var orderDetailsWithTimeList = orderDetailsList.Where(x => x.OrderNote.Ordertime.Date.Equals(time.Date)).ToList();
-                List<OrderNoteDetailsForReport> orderDetailsReportList = new List<OrderNoteDetailsForReport>();
-                foreach (var details in orderDetailsWithTimeList)
-                {
-                    var detailsRpt = new OrderNoteDetailsForReport()
-                    {
-                        OrdernoteId = details.OrdernoteId,
-                        ProductId = details.ProductId,
-                        ProductName = details.Product.Name,
-                        EmpId = details.OrderNote.EmpId,
-                        TableNumber = details.OrderNote.Ordertable,
-                        OrderTime = details.OrderNote.Ordertime,
-                        Quan = details.Quan,
-                        PayMethod = ((PaymentMethod)details.OrderNote.paymentMethod).ToString()
-                    };
-
-                    orderDetailsReportList.Add(detailsRpt);
-                }
-
-                dataSource.StronglyTypedList(orderDetailsReportList);
+                var salaryDetailsWithTimeList = salaryDetailsList.Where(x => x.SalaryNote.ForMonth == time.Month && x.SalaryNote.ForYear == time.Year).ToList();
+                
+                dataSource.StronglyTypedList(salaryDetailsWithTimeList);
             })
             .MainTableSummarySettings(summarySettings =>
             {
@@ -365,12 +323,12 @@ namespace POS.Helper.PrintHelper.Report
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteDetailsForReport>(x => x.OrdernoteId);
+                    column.PropertyName<WorkingHistory>(x => x.WhId);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(1);
                     column.Width(3);
-                    column.HeaderCell("Order ID", horizontalAlignment: HorizontalAlignment.Left);
+                    column.HeaderCell("WorkHistory ID", horizontalAlignment: HorizontalAlignment.Left);
                     column.Font(font =>
                     {
                         font.Size(10);
@@ -380,12 +338,12 @@ namespace POS.Helper.PrintHelper.Report
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteDetailsForReport>(x => x.ProductId);
+                    column.PropertyName<WorkingHistory>(x => x.ResultSalary);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(2);
                     column.Width(3);
-                    column.HeaderCell("Prod ID", horizontalAlignment: HorizontalAlignment.Left);
+                    column.HeaderCell("Salary ID", horizontalAlignment: HorizontalAlignment.Left);
                     column.Font(font =>
                     {
                         font.Size(10);
@@ -395,62 +353,47 @@ namespace POS.Helper.PrintHelper.Report
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteDetailsForReport>(x => x.ProductName);
+                    column.PropertyName<WorkingHistory>(x => x.EmpId);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(3);
                     column.Width(3);
-                    column.HeaderCell("Prod Name");
+                    column.HeaderCell("Emp ID", horizontalAlignment: HorizontalAlignment.Left);
+                    column.Font(font =>
+                    {
+                        font.Size(10);
+                        font.Color(System.Drawing.Color.Crimson);
+                    });
                 });
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteDetailsForReport>(x => x.EmpId);
+                    column.PropertyName<WorkingHistory>(x => x.Employee.Name);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Left);
                     column.IsVisible(true);
                     column.Order(4);
                     column.Width(3);
-                    column.HeaderCell("Emp ID");
+                    column.HeaderCell("Emp Name");
                 });
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteDetailsForReport>(x => x.TableNumber);
+                    column.PropertyName<WorkingHistory>(x => x.StartTime);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(5);
                     column.Width(2);
-                    column.HeaderCell("Table");
+                    column.HeaderCell("Start Time");
                 });
 
                 columns.AddColumn(column =>
                 {
-                    column.PropertyName<OrderNoteDetailsForReport>(x => x.OrderTime);
+                    column.PropertyName<WorkingHistory>(x => x.EndTime);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
                     column.Order(6);
                     column.Width(2);
-                    column.HeaderCell("Time");
-                });
-
-                columns.AddColumn(column =>
-                {
-                    column.PropertyName<OrderNoteDetailsForReport>(x => x.Quan);
-                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
-                    column.IsVisible(true);
-                    column.Order(7);
-                    column.Width(2);
-                    column.HeaderCell("Qty");
-                });
-
-                columns.AddColumn(column =>
-                {
-                    column.PropertyName<OrderNoteDetailsForReport>(x => x.PayMethod);
-                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
-                    column.IsVisible(true);
-                    column.Order(9);
-                    column.Width(2);
-                    column.HeaderCell("Payment");
+                    column.HeaderCell("End Time");
                 });
 
             })
@@ -464,7 +407,7 @@ namespace POS.Helper.PrintHelper.Report
                 export.ToCsv();
                 export.ToXml();
             })
-            .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-DetailsReport-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+            .Generate(data => data.AsPdfFile(string.Format("{0}\\Salary-DetailsReport-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
         }
     }
 }

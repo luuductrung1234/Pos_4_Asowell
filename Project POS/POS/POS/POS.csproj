@@ -219,11 +219,13 @@
     <Compile Include="Helper\PrintHelper\Model\OrderForPrint.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderNoteDetailsForReport.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderNoteForReport.cs" />
+    <Compile Include="Helper\PrintHelper\Model\SalaryNoteForReport.cs" />
     <Compile Include="Helper\PrintHelper\ReceiptPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\Report\AppPath.cs" />
     <Compile Include="Helper\PrintHelper\Report\IListPdfReport.cs" />
     <Compile Include="Helper\PrintHelper\Report\OrderNoteReport.cs" />
     <Compile Include="Helper\PrintHelper\Report\ReceiptNoteReport.cs" />
+    <Compile Include="Helper\PrintHelper\Report\SalaryNoteReport.cs" />
     <Compile Include="WareHouseWorkSpace\IngredientPage.xaml.cs">
       <DependentUpon>IngredientPage.xaml</DependentUpon>
     </Compile>

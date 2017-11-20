@@ -351,34 +351,6 @@ namespace POS.Helper.PrintHelper.Report
                         template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
                             ? string.Empty : string.Format("{0:n0}", obj));
                     });
-                    //column.AggregateFunction(aggregateFunction =>
-                    //{
-                    //    aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
-                    //    aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                    //        ? string.Empty : string.Format("{0:n0}", obj));
-                    //});
-                });
-
-                columns.AddColumn(column =>
-                {
-                    column.PropertyName<ReceiptNoteDetail>(x => x.ReceiptNote.TotalAmount);
-                    column.CellsHorizontalAlignment(HorizontalAlignment.Right);
-                    column.IsVisible(true);
-                    column.Order(8);
-                    column.Width(2);
-                    column.HeaderCell("Total Amount (kVND)");
-                    column.ColumnItemsTemplate(template =>
-                    {
-                        template.TextBlock();
-                        template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                                                            ? string.Empty : string.Format("{0:n0}", obj));
-                    });
-                    column.AggregateFunction(aggregateFunction =>
-                    {
-                        aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
-                        aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
-                                                            ? string.Empty : string.Format("{0:n0}", obj));
-                    });
                 });
 
                 columns.AddColumn(column =>
@@ -386,7 +358,7 @@ namespace POS.Helper.PrintHelper.Report
                     column.PropertyName<ReceiptNoteDetail>(x => x.Note);
                     column.CellsHorizontalAlignment(HorizontalAlignment.Center);
                     column.IsVisible(true);
-                    column.Order(9);
+                    column.Order(8);
                     column.Width(4);
                     column.HeaderCell("Note");
                 });
