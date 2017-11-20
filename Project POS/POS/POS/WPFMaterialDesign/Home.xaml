@@ -1,0 +1,215 @@
+﻿<UserControl x:Class="POS.WPFMaterialDesign.Home"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <!-- throw in some extra colour for our floating action button -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Top"
+              Margin="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="../Images/asowell_icon.ico"
+                   Stretch="Uniform"
+                   Width="100"
+                   Height="100" />
+            <StackPanel Grid.Column="1"
+                        Margin="24 0 0 0"
+                        VerticalAlignment="Center">
+                <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}"
+                           TextWrapping="Wrap">Welcome to ASOWELL Point Of Sale System</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ExploreButton"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Click="ExploreButton_OnClick">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Binoculars" />
+                            <TextBlock Margin="8 0 0 0">EXPLORE</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="ExitButton"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Click="ExitButton_OnClick">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ExitToApp" />
+                            <TextBlock Margin="8 0 0 0">EXIT</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Disabled"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Bottom"
+                      Margin="0 0 0 32">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:Card Width="420"
+                                         Margin="4 2 8 16"
+                                         Height="270">
+                        <Grid VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="../Icon/FAQ_100px.png"
+                                   Grid.RowSpan="5"
+                                   StretchDirection="Both"
+                                   VerticalAlignment="Stretch"
+                                   Stretch="UniformToFill" />
+                            <TextBlock Grid.Column="1"
+                                       Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                       Margin="16 16 16 2">Get In Touch</TextBlock>
+                            <TextBlock Grid.Column="1"
+                                       Grid.Row="1"
+                                       TextWrapping="Wrap"
+                                       Margin="16 0 16 8"
+                                       Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                       VerticalAlignment="Center">Supporter and Develop team always ready to receipt your new request or problem while using this software through these chanels</TextBlock>
+                            <Border Grid.Column="1"
+                                    Grid.Row="2"
+                                    BorderThickness="0 1 0 0"
+                                    BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                    Margin="0 8 0 0">
+                                <Grid Margin="8">
+                                    <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                            HorizontalAlignment="Left"
+                                            x:Name="GitHubButton"
+                                            Click="GitHubButton_OnClick">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="GithubCircle" />
+                                            <TextBlock Margin="8 0 0 0"
+                                                       VerticalAlignment="Center">GitHub</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Column="1"
+                                    Grid.Row="3"
+                                    BorderThickness="0 1 0 0"
+                                    BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                <Grid Margin="8">
+                                    <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                            HorizontalAlignment="Right"
+                                            x:Name="EmailButton"
+                                            Click="EmailButton_OnClick">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Email" />
+                                            <TextBlock Margin="8 0 0 0"
+                                                       VerticalAlignment="Center">Email</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </materialDesign:Card>
+                    <materialDesign:Card Width="420"
+                                         Margin="8 2 4 16"
+                                         Height="270">
+                        <Grid VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="../Images/a86c410efa3e6b690d973f7c5b78444e--rocket-illustration-flat-design.jpg"
+                                   Width="160"
+                                   Height="160"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                           Margin="16 16 16 8">Brief Info</TextBlock>
+                                <TextBlock TextWrapping="Wrap"
+                                           Margin="16 0 16 8"
+                                           Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                           VerticalAlignment="Top">This project is completely open source to contribute. If you like it and want to say thanks you could hit the GitHub Star button
+                                                Feel free to use it for your own non-commercial projects. 
+                                                ASOWELL POS belong to ASOWELL restaurant and COMMATECH team, if you want to use it for your business, please contact us</TextBlock>
+                            </StackPanel>
+                            <Border Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    BorderThickness="0 1 0 0"
+                                    BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                    Padding="8">
+                                <DockPanel>
+                                    <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                            DockPanel.Dock="Right"
+                                            x:Name="ContactButton">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Phone" />
+                                            <TextBlock Margin="8 0 0 0"
+                                                       VerticalAlignment="Center">0927333668</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                    <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                               TextWrapping="Wrap"
+                                               Margin="16"
+                                               VerticalAlignment="Center">
+                                        PM Contact:
+                                    </TextBlock>
+                                </DockPanel>
+                            </Border>
+                        </Grid>
+                    </materialDesign:Card>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+
+        <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Bottom"
+                                 Margin="32"
+                                 Grid.Row="1">
+            <StackPanel>
+                <Button ToolTip="GitHub"
+                        Click="GitHubButton_OnClick">
+                    <materialDesign:PackIcon Kind="GithubCircle"
+                                             Height="20"
+                                             Width="20" />
+                </Button>
+                <Button ToolTip="Email"
+                        Click="EmailButton_OnClick"
+                        Background="{DynamicResource SecondaryAccentBrush}"
+                        Foreground="{DynamicResource SecondaryAccentForegroundBrush}">
+                    <materialDesign:PackIcon Kind="Email" />
+                </Button>
+
+            </StackPanel>
+        </materialDesign:PopupBox>
+    </Grid>
+</UserControl>
