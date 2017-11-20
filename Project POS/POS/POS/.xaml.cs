@@ -105,8 +105,8 @@ namespace POS
 
                                 Dispatcher.Invoke(() =>
                                 {
-                                    AdminWorkSpace.AdminWindow adminwindow = new AdminWorkSpace.AdminWindow();
-                                    adminwindow.Show();
+                                    AdminNavWindow navwindow = new AdminNavWindow();
+                                    navwindow.Show();
                                 });
 
                                 isfoundad = true;

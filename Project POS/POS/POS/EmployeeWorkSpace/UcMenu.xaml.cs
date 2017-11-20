@@ -103,11 +103,9 @@ namespace POS.EmployeeWorkSpace
                 if (orderingChair != null)
                 {
                     var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(orderingChair.ChairId)).ToList();
-                    var foundinchairorderdetailstemp = chairorderdetailstemp.SingleOrDefault(x => x.ProductId.Equals(it.ProductId));
+                    var foundinchairorderdetailstemp = chairorderdetailstemp.Where(x => x.ProductId.Equals(it.ProductId)).ToList();
 
-                    int i = chairorderdetailstemp.IndexOf(foundinchairorderdetailstemp);
-
-                    if (foundinchairorderdetailstemp == null)
+                    if (foundinchairorderdetailstemp.Count == 0)
                     {
                         o.ChairId = orderingChair.ChairId;
                         o.OrdertempId = orderTempCurrentTable.OrdertempId;
@@ -120,19 +118,34 @@ namespace POS.EmployeeWorkSpace
                     }
                     else
                     {
-                        if(!foundinchairorderdetailstemp.SelectedStats.Equals(it.StandardStats) || !foundinchairorderdetailstemp.Note.Equals(""))
+                        foreach (var order in foundinchairorderdetailstemp)
                         {
+                            if (!order.SelectedStats.Equals(it.StandardStats) || !order.Note.Equals(""))
+                            {
+                                o.ChairId = orderingChair.ChairId;
+                                o.OrdertempId = orderTempCurrentTable.OrdertempId;
+                                o.ProductId = it.ProductId;
+                                o.SelectedStats = it.StandardStats;
+                                o.Note = "";
+                                o.Quan = 1;
 
+                                _unitofwork.OrderDetailsTempRepository.Insert(o);
+                                _unitofwork.Save();
+
+                                break;
+                            }
+
+                            if (order.SelectedStats.Equals(it.StandardStats) && order.Note.Equals(""))
+                            {
+                                order.ProductId = it.ProductId;
+                                order.Quan++;
+
+                                _unitofwork.OrderDetailsTempRepository.Update(order);
+                                _unitofwork.Save();
+
+                                break;
+                            }
                         }
-
-                        if(foundinchairorderdetailstemp.SelectedStats.Equals(it.StandardStats) && foundinchairorderdetailstemp.Note.Equals(""))
-                        {
-                            foundinchairorderdetailstemp.ProductId = it.ProductId;
-                            foundinchairorderdetailstemp.Quan++;
-                        }
-
-                        _unitofwork.OrderDetailsTempRepository.Update(foundinchairorderdetailstemp);
-                        _unitofwork.Save();
                     }
                 }
 

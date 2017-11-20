@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:POS"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
              StartupUri="LoginWindow.xaml">
-
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

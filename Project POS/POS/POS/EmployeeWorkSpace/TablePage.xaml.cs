@@ -25,11 +25,30 @@ namespace POS.EmployeeWorkSpace
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         private EmployeewsOfAsowell _unitofwork;
         private List<Entities.Table> currentTableList;
+        private DropShadowBitmapEffect recShadow, recShadowOrdered;
 
         public Table(EmployeewsOfAsowell unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
+
+            recShadow = new DropShadowBitmapEffect
+            {
+                Color = new Color { A = 1, R = 255, G = 0, B = 0 },
+                ShadowDepth = 5,
+                Direction = 270,
+                Softness = 0.60,
+                Opacity = 0.75
+            };
+
+            recShadowOrdered = new DropShadowBitmapEffect
+            {
+                Color = new Color { A = 1, R = 0, G = 55, B = 55 },
+                ShadowDepth = 5,
+                Direction = 270,
+                Softness = 0.60,
+                Opacity = 0.75
+            };
 
             initTableData();
 
@@ -50,6 +69,7 @@ namespace POS.EmployeeWorkSpace
                     rec.MouseMove -= btnTableAdded_MoveDrag;
                     rec.Opacity = 1;
                     rec.Cursor = Cursors.Arrow;
+                    rec.SetValue(BitmapEffectProperty, recShadow);
                 }
                 else
                 {
@@ -61,6 +81,7 @@ namespace POS.EmployeeWorkSpace
                 if (t.IsOrdered == 1)
                 {
                     rec.Fill = Brushes.DarkCyan;
+                    rec.SetValue(BitmapEffectProperty, recShadowOrdered);
                 }
                 else
                 {
@@ -69,19 +90,6 @@ namespace POS.EmployeeWorkSpace
 
                 rec.ToolTip = setTooltip(rec);
             }
-
-            DropShadowBitmapEffect dropShadowEffect = new DropShadowBitmapEffect();
-            Color shadowColor = new Color();
-            shadowColor.ScA = 1;
-            shadowColor.ScB = 0;
-            shadowColor.ScG = 0;
-            shadowColor.ScR = 255;
-            dropShadowEffect.Color = shadowColor;
-            dropShadowEffect.Direction = 270;
-            dropShadowEffect.ShadowDepth = 5;
-            dropShadowEffect.Softness = 0.60;
-            dropShadowEffect.Opacity = 0.75;
-            recTest.SetValue(BitmapEffectProperty, dropShadowEffect);
         }
 
         //load table data
@@ -166,6 +174,7 @@ namespace POS.EmployeeWorkSpace
                     rec.MouseMove -= btnTableAdded_MoveDrag;
                     rec.Opacity = 1;
                     rec.Cursor = Cursors.Arrow;
+                    rec.SetValue(BitmapEffectProperty, recShadow);
                 }
                 else
                 {
@@ -177,20 +186,20 @@ namespace POS.EmployeeWorkSpace
                 if (t.IsOrdered == 1)
                 {
                     rec.Fill = Brushes.DarkCyan;
+                    rec.SetValue(BitmapEffectProperty, recShadowOrdered);
                 }
                 else
                 {
                     rec.Fill = Brushes.Red;
                 }
-
-                rec.ToolTip = setTooltip(rec);
+                
                 rec.MouseMove += btnTableAdded_MouseMove;
                 rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
                 Panel.SetZIndex(rec, 30);
                 grTable.Children.Add(rec);
 
-                //return rd.ReadToEnd();
+                rec.ToolTip = setTooltip(rec);
 
                 t.TableRec = rec;
             }
@@ -521,6 +530,7 @@ namespace POS.EmployeeWorkSpace
                             rec.Opacity = 1;
                             rec.Cursor = Cursors.Arrow;
                             rec.Fill = Brushes.DarkCyan;
+                            rec.SetValue(BitmapEffectProperty, recShadowOrdered);
 
                             //pass
                             ((MainWindow)Window.GetWindow(this)).currentTable = founded;
@@ -549,6 +559,7 @@ namespace POS.EmployeeWorkSpace
                         rec.Opacity = 1;
                         rec.Cursor = Cursors.Arrow;
                         rec.Fill = Brushes.DarkCyan;
+                        rec.SetValue(BitmapEffectProperty, recShadowOrdered);
 
                         MessageBox.Show("Go to order with table " + founded.TableNumber);
 
@@ -604,6 +615,7 @@ namespace POS.EmployeeWorkSpace
 
                 Entities.Table t = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(currentRec.Name.Substring(5)))).First();
                 t.IsPinned = 1;
+                currentRec.SetValue(BitmapEffectProperty, recShadow);
 
                 _unitofwork.TableRepository.Update(t);
                 _unitofwork.Save();
@@ -625,6 +637,8 @@ namespace POS.EmployeeWorkSpace
 
                 Entities.Table t = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(currentRec.Name.Substring(5)))).First();
                 t.IsPinned = 0;
+
+                currentRec.ClearValue(BitmapEffectProperty);
 
                 _unitofwork.TableRepository.Update(t);
                 _unitofwork.Save();

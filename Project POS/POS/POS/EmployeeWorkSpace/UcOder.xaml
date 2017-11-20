@@ -131,7 +131,8 @@
                                                   Foreground="Black"
                                                   IsReadOnly="True"
                                                   ItemsSource="{Binding StatusItems, Mode=TwoWay}"
-                                                  SelectedItem="{Binding StandardStats, Mode=TwoWay}">
+                                                  SelectedItem="{Binding SelectedStats, Mode=TwoWay}"
+                                                  SelectionChanged="cboStatus_SelectionChanged">
                                         </ComboBox>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
