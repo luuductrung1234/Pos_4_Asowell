@@ -255,6 +255,7 @@ namespace POS.Helper.PrintHelper.Report
             .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
         }
 
+
         public IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
@@ -453,6 +454,7 @@ namespace POS.Helper.PrintHelper.Report
             .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-DetailsReport-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
         }
 
+
         public IPdfReportData CreateEntityPdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
@@ -640,15 +642,18 @@ namespace POS.Helper.PrintHelper.Report
             .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-EntityReport-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
         }
 
+
         public IPdfReportData CreateMonthPdfReport(AdminwsOfAsowell unitofwork, string folderName)
         {
             throw new NotImplementedException();
         }
 
+
         public IPdfReportData CreateDayPdfReport(AdminwsOfAsowell unitofwork, string folderName)
         {
             throw new NotImplementedException();
         }
+
 
         public IPdfReportData CreateYearPdfReport(AdminwsOfAsowell unitofwork, string folderName)
         {

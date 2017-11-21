@@ -26,6 +26,7 @@
                        Foreground="White"></TextBlock>
             <DatePicker x:Name="DpTimeFilter"
                         Margin="0,16,0,-0.4"
+                        VerticalAlignment="Center"
                         Text="MMM-yyyy"
                         my:DatePickerCalendar.IsMonthYear="True"
                         my:DatePickerDateFormat.DateFormat="MMM-yyyy"

@@ -131,7 +131,7 @@
                                                   Foreground="Black"
                                                   IsReadOnly="True"
                                                   ItemsSource="{Binding StatusItems, Mode=TwoWay}"
-                                                  SelectedItem="{Binding SelectedStats, Mode=TwoWay}"
+                                                  SelectedItem="{Binding SelectedStats, Mode=OneWay}"
                                                   SelectionChanged="cboStatus_SelectionChanged">
                                         </ComboBox>
                                     </DataTemplate>

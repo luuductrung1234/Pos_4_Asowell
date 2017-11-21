@@ -87,6 +87,9 @@
                                         Content="Details"
                                         Click="btnEmpDetail_Click" />
                                 <Separator />
+                                <Button x:Name="btnOtherEmp"
+                                        Content="Other Employee"
+                                        Click="btnOtherEmp_Click" />
                                 <Button x:Name="bntLogout"
                                         Content="Log out"
                                         Click="bntLogout_Click" />

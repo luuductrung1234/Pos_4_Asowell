@@ -26,13 +26,14 @@ namespace POS.Entities
         public event PropertyChangedEventHandler PropertyChanged;
 
         private ObservableCollection<string> _statusItems = new ObservableCollection<string> { "Starter", "Main", "Dessert", "Drink" };
-        
+
         private int _ordertempId;// ordernote_id (Primary key) (length: 10)
         private string _productId; // product_id (Primary key) (length: 10)
         private int _chairId;
         private string _stats;      // SelectedStats
         private string _note;       // note (length: 500)
         private int _quan;          // quan
+        private string _oldstat;
 
         public ObservableCollection<string> StatusItems
         {
@@ -44,7 +45,7 @@ namespace POS.Entities
             }
         }
 
-        
+
         public int OrdertempId
         {
             get { return _ordertempId; }
@@ -76,10 +77,16 @@ namespace POS.Entities
             get { return _stats; }
             set
             {
+                _oldstat = _stats;
                 _stats = value;
                 OnPropertyChanged("SelectedStats");
             }
         } // SelectedStats
+        public string OldStat
+        {
+            get { return _oldstat; }
+            set { _oldstat = value; }
+        }//OldStat
         public int Quan
         {
             get { return _quan; }

@@ -492,14 +492,7 @@ namespace POS.EmployeeWorkSpace
         {
             int clicks = ClickAttach.GetClicks(ctrl);
             ClickAttach.SetClicks(ctrl, 0);
-            if (clicks > 0)
-            {
-                if (clicks == 1)
-                {
-                    //rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-                    //rec.MouseMove += btnTableAdded_MoveDrag;
-                }
-                else if (clicks == 2)
+            if (clicks == 2)
                 {
                     Entities.Table founded = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(rec.Name.Substring(5)))).First();
                     if (founded == null)
@@ -507,51 +500,22 @@ namespace POS.EmployeeWorkSpace
                         return;
                     }
 
-                    if (founded.IsPinned == 0)
-                    {
-                        MessageBoxResult mess = MessageBox.Show("You must be pin this table before you want to create new order. Do you want to pin now?", "Warning!", MessageBoxButton.YesNo);
-                        if (mess == MessageBoxResult.Yes)
-                        {
-                            if (founded.ChairAmount == 0)
-                            {
-                                MessageBox.Show("You must be set Chair Amount greater than 0!");
-                                return;
-                            }
-
-                            founded.IsPinned = 1;
-                            var ordertempcurrenttable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(founded.TableId)).First();
-                            if(ordertempcurrenttable != null)
-                            {
-                                ordertempcurrenttable.EmpId = (App.Current.Properties["EmpLogin"] as Entities.Employee).EmpId;
-                            }
-
-                            rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
-                            rec.MouseMove -= btnTableAdded_MoveDrag;
-                            rec.Opacity = 1;
-                            rec.Cursor = Cursors.Arrow;
-                            rec.Fill = Brushes.DarkCyan;
-                            rec.SetValue(BitmapEffectProperty, recShadowOrdered);
-
-                            //pass
-                            ((MainWindow)Window.GetWindow(this)).currentTable = founded;
-                            var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
-                            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
-                            orderControl.ucOrder.RefreshControl(_unitofwork, founded);
-                            ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
-                            ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
-                            ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
-                            ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
-
-                            _unitofwork.TableRepository.Update(founded);
-                            _unitofwork.Save();
-                        }
-                    }
-                    else
+                if (founded.IsPinned == 0)
+                {
+                    MessageBoxResult mess = MessageBox.Show("You must be pin this table before you want to create new order. Do you want to pin now?", "Warning!", MessageBoxButton.YesNo);
+                    if (mess == MessageBoxResult.Yes)
                     {
                         if (founded.ChairAmount == 0)
                         {
                             MessageBox.Show("You must be set Chair Amount greater than 0!");
                             return;
+                        }
+
+                        founded.IsPinned = 1;
+                        var ordertempcurrenttable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(founded.TableId)).First();
+                        if (ordertempcurrenttable != null)
+                        {
+                            ordertempcurrenttable.EmpId = (App.Current.Properties["EmpLogin"] as Entities.Employee).EmpId;
                         }
 
                         rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
@@ -560,8 +524,6 @@ namespace POS.EmployeeWorkSpace
                         rec.Cursor = Cursors.Arrow;
                         rec.Fill = Brushes.DarkCyan;
                         rec.SetValue(BitmapEffectProperty, recShadowOrdered);
-
-                        MessageBox.Show("Go to order with table " + founded.TableNumber);
 
                         //pass
                         ((MainWindow)Window.GetWindow(this)).currentTable = founded;
@@ -572,7 +534,37 @@ namespace POS.EmployeeWorkSpace
                         ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
                         ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
                         ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
+
+                        _unitofwork.TableRepository.Update(founded);
+                        _unitofwork.Save();
                     }
+                }
+                else
+                {
+                    if (founded.ChairAmount == 0)
+                    {
+                        MessageBox.Show("You must be set Chair Amount greater than 0!");
+                        return;
+                    }
+
+                    rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
+                    rec.MouseMove -= btnTableAdded_MoveDrag;
+                    rec.Opacity = 1;
+                    rec.Cursor = Cursors.Arrow;
+                    rec.Fill = Brushes.DarkCyan;
+                    rec.SetValue(BitmapEffectProperty, recShadowOrdered);
+
+                    MessageBox.Show("Go to order with table " + founded.TableNumber);
+
+                    //pass
+                    ((MainWindow)Window.GetWindow(this)).currentTable = founded;
+                    var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
+                    ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
+                    orderControl.ucOrder.RefreshControl(_unitofwork, founded);
+                    ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
+                    ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
+                    ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
+                    ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
                 }
             }
         }
@@ -770,7 +762,9 @@ namespace POS.EmployeeWorkSpace
 
             ckeckPosition(newRec, m);
 
-            var curTable = _unitofwork.TableRepository.Get(x => x.TableNumber.Equals(int.Parse(newRec.Name.Substring(5)))).First();
+            int tabNum = int.Parse(newRec.Name.Substring(5));
+
+            var curTable = _unitofwork.TableRepository.Get(x => x.TableNumber.Equals(tabNum)).First();
             if (curTable != null)
             {
                 curTable.PosX = Convert.ToInt32(newRec.Margin.Left);

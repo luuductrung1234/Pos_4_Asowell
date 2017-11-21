@@ -289,5 +289,10 @@ namespace POS.EmployeeWorkSpace
             chtm = new ChangeThemePage();
             chtm.Show();
         }
+
+        private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
