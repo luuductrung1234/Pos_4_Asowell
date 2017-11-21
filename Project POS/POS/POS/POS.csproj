@@ -217,6 +217,7 @@
     </Compile>
     <Compile Include="Helper\PrintHelper\AsowellPrinter.cs" />
     <Compile Include="Helper\PrintHelper\BarPrintHelper.cs" />
+    <Compile Include="Helper\PrintHelper\EndOfDayPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\IPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\KitchenPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
