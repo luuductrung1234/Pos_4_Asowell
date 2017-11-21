@@ -383,72 +383,23 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
+            string olstat = ordernotedetails[index].OldStat;
+
             OrderDetailsTemp tempdata = new OrderDetailsTemp();
             tempdata.ChairId = ordernotedetails[index].ChairId;
             tempdata.OrdertempId = ordernotedetails[index].OrdertempId;
             tempdata.ProductId = ordernotedetails[index].ProductId;
-            tempdata.SelectedStats = (e.OriginalSource as ComboBox).SelectedItem.ToString();
             tempdata.StatusItems = ordernotedetails[index].StatusItems;
             tempdata.Quan = ordernotedetails[index].Quan;
             tempdata.Note = ordernotedetails[index].Note;
 
-            if (ordernotedetails[index].Quan == 1)
-            {
-                foreach (var cho in ordernotedetails)
-                {
-                    if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
-                    {
-                        cho.Quan++;
-                        _unitofwork.OrderDetailsTempRepository.Update(cho);
-                        _unitofwork.Save();
-                        _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
-                        _unitofwork.Save();
-                        RefreshControl(_unitofwork, currentTable);
-                        return;
-                    }
-                }
+            ordernotedetails[index].SelectedStats = olstat;
 
-                _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
-                _unitofwork.Save();
-                _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
-                _unitofwork.Save();
-            }
-
-            if (ordernotedetails[index].Quan > 1)
-            {
-                foreach (var cho in ordernotedetails)
-                {
-                    if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
-                    {
-                        tempdata.Quan--;
-                        tempdata.SelectedStats = ordernotedetails[index].SelectedStats;
-                        cho.Quan++;
-                        _unitofwork.OrderDetailsTempRepository.Update(cho);
-                        _unitofwork.Save();
-                        _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
-                        _unitofwork.Save();
-                        _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
-                        _unitofwork.Save();
-                        RefreshControl(_unitofwork, currentTable);
-                        return;
-                    }
-                }
-
-                foreach (var cho in ordernotedetails)
-                {
-                    if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && !cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
-                    {
-                        ordernotedetails[index].Quan--;
-                        _unitofwork.OrderDetailsTempRepository.Update(ordernotedetails[index]);
-                        _unitofwork.Save();
-                        tempdata.Quan = 1;
-                        _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
-                        _unitofwork.Save();
-                        RefreshControl(_unitofwork, currentTable);
-                        return;
-                    }
-                }
-            }
+            _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
+            _unitofwork.Save();
+            tempdata.SelectedStats = (e.OriginalSource as ComboBox).SelectedItem.ToString();
+            _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
+            _unitofwork.Save();
 
             RefreshControl(_unitofwork, currentTable);
         }

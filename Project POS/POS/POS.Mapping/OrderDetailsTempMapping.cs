@@ -36,6 +36,7 @@ namespace POS.Mapping
             Property(x => x.SelectedStats).HasColumnName(@"SelectedStats").HasColumnType("nvarchar").HasMaxLength(50).IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.Note).HasColumnName(@"note").HasColumnType("varchar").IsUnicode(false).HasMaxLength(500).IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.Quan).HasColumnName(@"quan").HasColumnType("int").IsRequired();
+            Ignore(x => x.OldStat);
             
 
             // Foreign keys
