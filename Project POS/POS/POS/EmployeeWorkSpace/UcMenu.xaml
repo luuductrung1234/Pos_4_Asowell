@@ -55,20 +55,20 @@
         <dragablz:TabablzControl x:Name="tabControl"
                                  Background="DarkGray"
                                  Margin="0,10,0,49.6">
-            <!--Beverages-->
-            <TabItem x:Name="ItemBeverages"
+            <!--Starter-->
+            <TabItem x:Name="ItemStarter"
                      GotFocus="TabItem_GotFocus">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\Icon\icons8_Cocktail_32px_2.png"
+                        <Image Source="..\Icon\icons8_Restaurant_32px_4.png"
                                Height="25"
                                Width="25" />
-                        <TextBlock Text="Beverages"
+                        <TextBlock Text="Starter"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
                     </StackPanel>
                 </TabItem.Header>
-                <Grid x:Name="ItemGridBeverages">
+                <Grid x:Name="ItemGridStarter">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition />
@@ -76,7 +76,7 @@
                     <ListBox ItemsSource="{Binding Kinds}"
                              Grid.Row="1"
                              Margin="0 8 0 0"
-                             x:Name="lvCategoryBeverages"
+                             x:Name="lvCategoryStarter"
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -105,20 +105,20 @@
                     </ListBox>
                 </Grid>
             </TabItem>
-            <!--Dishes-->
-            <TabItem x:Name="ItemDishes"
+            <!--Main-->
+            <TabItem x:Name="ItemMain"
                      GotFocus="TabItem_GotFocus">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\Icon\icons8_Restaurant_32px_4.png"
                                Height="25"
                                Width="25" />
-                        <TextBlock Text="Dishes"
+                        <TextBlock Text="Main"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
                     </StackPanel>
                 </TabItem.Header>
-                <Grid x:Name="ItemGridDishes">
+                <Grid x:Name="ItemGridMain">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition />
@@ -126,7 +126,107 @@
                     <ListBox ItemsSource="{Binding Kinds}"
                              Grid.Row="1"
                              Margin="0 8 0 0"
-                             x:Name="lvCategoryDishes"
+                             x:Name="lvCategoryMain"
+                             PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemHeight="100"
+                                           ItemWidth="100" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="materialDesign:PackIconKind">
+                                <DockPanel Width="80"
+                                           Height="80"
+                                           Background="Transparent">
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               DockPanel.Dock="Bottom"
+                                               TextTrimming="CharacterEllipsis"
+                                               HorizontalAlignment="Center" />
+                                    <Image Source="{Binding ImageData}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Width="32"
+                                           Height="32" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <!--Dessert-->
+            <TabItem x:Name="ItemDessert"
+                     GotFocus="TabItem_GotFocus">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\Icon\icons8_Restaurant_32px_4.png"
+                               Height="25"
+                               Width="25" />
+                        <TextBlock Text="Dessert"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid x:Name="ItemGridDessert">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListBox ItemsSource="{Binding Kinds}"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             x:Name="lvCategoryDessert"
+                             PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemHeight="100"
+                                           ItemWidth="100" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="materialDesign:PackIconKind">
+                                <DockPanel Width="80"
+                                           Height="80"
+                                           Background="Transparent">
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               DockPanel.Dock="Bottom"
+                                               TextTrimming="CharacterEllipsis"
+                                               HorizontalAlignment="Center" />
+                                    <Image Source="{Binding ImageData}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Width="32"
+                                           Height="32" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <!--Beverages-->
+            <TabItem x:Name="ItemBeverages"
+                     GotFocus="TabItem_GotFocus">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\Icon\icons8_Cocktail_32px_2.png"
+                               Height="25"
+                               Width="25" />
+                        <TextBlock Text="Beverages"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid x:Name="ItemGridBeverages">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListBox ItemsSource="{Binding Kinds}"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             x:Name="lvCategoryBeverages"
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -225,55 +325,6 @@
                              Grid.Row="1"
                              Margin="0 8 0 0"
                              x:Name="lvCategoryWine"
-                             PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100"
-                                           ItemWidth="100" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel Width="80"
-                                           Height="80"
-                                           Background="Transparent">
-                                    <TextBlock Text="{Binding Name}"
-                                               Foreground="Black"
-                                               DockPanel.Dock="Bottom"
-                                               TextTrimming="CharacterEllipsis"
-                                               HorizontalAlignment="Center" />
-                                    <Image Source="{Binding ImageData}"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Width="32"
-                                           Height="32" />
-                                </DockPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-            </TabItem>
-            <!--Snack-->
-            <TabItem x:Name="ItemSnack">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="..\Icon\icons8_Sweet_Potato_32px.png"
-                               Height="25"
-                               Width="25" />
-                        <TextBlock Text="Snack"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center" />
-                    </StackPanel>
-                </TabItem.Header>
-                <Grid x:Name="ItemGridSnack">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <ListBox ItemsSource="{Binding Kinds}"
-                             Grid.Row="1"
-                             Margin="0 8 0 0"
-                             x:Name="lvCategorySnack"
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
