@@ -3,11 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:my="clr-namespace:POS.WPFMaterialDesign"
       xmlns:local="clr-namespace:POS.AdminWorkSpace"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      mc:Ignorable="d"
+      d:DesignHeight="300"
+      d:DesignWidth="300"
       Height="630"
       Width="1366"
       Title="statisticsFoodPage">
@@ -18,10 +20,19 @@
             <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Fillter" VerticalAlignment="Center" FontSize="20" Foreground="White"></TextBlock>
-            <DatePicker Margin="0,16,0,-0.4"
+            <TextBlock Text="Filter"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Foreground="White"></TextBlock>
+            <DatePicker x:Name="DpTimeFilter"
+                        Margin="0,16,0,-0.4"
+                        VerticalAlignment="Center"
                         Text="MMM-yyyy"
-                        Width="151"></DatePicker>
+                        my:DatePickerCalendar.IsMonthYear="True"
+                        my:DatePickerDateFormat.DateFormat="MMM-yyyy"
+                        Width="151" 
+                        SelectedDateChanged="DpTimeFilter_OnSelectedDateChanged"/>
+
         </StackPanel>
         <lvc:CartesianChart x:Name="LvcQuantityChart"
                             Foreground="White"

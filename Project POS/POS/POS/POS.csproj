@@ -217,6 +217,7 @@
     </Compile>
     <Compile Include="Helper\PrintHelper\AsowellPrinter.cs" />
     <Compile Include="Helper\PrintHelper\BarPrintHelper.cs" />
+    <Compile Include="Helper\PrintHelper\EndOfDayPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\IPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\KitchenPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\Model\OrderDetailsForPrint.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="WPFMaterialDesign\ButtonsViewModel.cs" />
     <Compile Include="WPFMaterialDesign\Converters\IngredientMaxProgressBarConverter.cs" />
     <Compile Include="WPFMaterialDesign\Converters\NonPercentConverter.cs" />
+    <Compile Include="WPFMaterialDesign\DatePickerCalendar.cs" />
     <Compile Include="WPFMaterialDesign\Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="WPFMaterialDesign\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>

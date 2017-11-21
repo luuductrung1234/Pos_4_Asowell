@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
+using POS.Entities;
 using POS.Repository.DAL;
 
 namespace POS.AdminWorkSpace
@@ -24,35 +25,21 @@ namespace POS.AdminWorkSpace
     public partial class statisticsFoodPage : Page
     {
         AdminwsOfAsowell _unitofwork;
+
+        private ChartValues<int> Values;
         public SeriesCollection SeriesCollection { get; set; }
+
         public Dictionary<string, int> CountList;
         public Func<decimal, string> Formatter { get; set; }
         public List<string> Labels { get; set; }
+
+
+
         public statisticsFoodPage(AdminwsOfAsowell unitofwork)
         {
-            CountList=new Dictionary<string, int>();
-            InitializeComponent();
-            //var OrderList = unitofwork.OrderNoteDetailsRepository.Get();
-            var ProductList = unitofwork.ProductRepository.Get();
-           // var td = from o in OrderList join pr in ProductList on o.ProductId equals pr.ProductId select o;
-            int count = 0;
-            foreach (var item in ProductList)
-            {
-                foreach (var item2 in unitofwork.OrderNoteDetailsRepository.Get(c=>c.ProductId.Equals(item.ProductId)))
-                {
-                    count += item2.Quan;
-                    
-                }
-                CountList.Add(item.Name, count);
-                count = 0;
-            }
-            ChartValues<int> Values = new ChartValues<int>();
-            Labels = new List<string>();
-            foreach (var item in CountList)
-            {
-                Values.Add(item.Value);
-                Labels.Add(item.Key);
-            }
+            // init data
+            _unitofwork = unitofwork;
+            Values = new ChartValues<int>();
             SeriesCollection = new SeriesCollection
             {
                 new ColumnSeries
@@ -61,9 +48,61 @@ namespace POS.AdminWorkSpace
                     Values = Values
                 }
             };
+            Labels = new List<string>();
             Formatter = value => value.ToString();
+            CountList = new Dictionary<string, int>();
+
+            // init UI
+            InitializeComponent();
+
+            // Fill data to chart
+            ChartDataFilling(false);
+        }
+
+        private void ChartDataFilling(bool isfilter)
+        {
+            CountList.Clear();
+
+            List<OrderNoteDetail> orderDetailsWithTime = new List<OrderNoteDetail>();
+            if (isfilter)
+            {
+                orderDetailsWithTime = _unitofwork.OrderNoteDetailsRepository.Get(x =>
+                    x.OrderNote.Ordertime.Year == DpTimeFilter.SelectedDate.Value.Year
+                    && x.OrderNote.Ordertime.Month == DpTimeFilter.SelectedDate.Value.Month).ToList();
+            }
+            else
+            {
+                orderDetailsWithTime = _unitofwork.OrderNoteDetailsRepository.Get().ToList();
+            }
+            
+
+            // var td = from o in OrderList join pr in ProductList on o.ProductId equals pr.ProductId select o;
+            int count = 0;
+            foreach (var item in _unitofwork.ProductRepository.Get())
+            {
+                foreach (var item2 in orderDetailsWithTime.Where(o => o.ProductId.Equals(item.ProductId)))
+                {
+                    count += item2.Quan;
+                }
+                CountList.Add(item.Name, count);
+                count = 0;
+            }
+
+
+            Values.Clear();
+            Labels.Clear();
+            foreach (var item in CountList)
+            {
+                Values.Add(item.Value);
+                Labels.Add(item.Key);
+            }
+
             DataContext = this;
-           
+        }
+
+        private void DpTimeFilter_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ChartDataFilling(true);
         }
     }
 }
