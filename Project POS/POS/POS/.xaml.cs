@@ -62,7 +62,6 @@ namespace POS
                         if (emp.Username.Equals(username) && emp.Pass.Equals(pass))
                         {
                             App.Current.Properties["EmpLogin"] = emp;
-                            ((MainWindow)Window.GetWindow(this)).AllEmp += emp.EmpId;
 
                             try
                             {
@@ -84,6 +83,9 @@ namespace POS
 
                             Dispatcher.Invoke(() =>
                             {
+                                EmpLoginListData.emploglist.Clear();
+                                EmpLoginListData.emploglist.Add(new EmpLoginList { Emp = emp, EmpSal = App.Current.Properties["EmpSN"] as SalaryNote, EmpWH = App.Current.Properties["EmpWH"] as WorkingHistory, TimePercent = 0 });
+
                                 EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
                                 main.Show();
                             });
@@ -96,7 +98,7 @@ namespace POS
 
                     }
                     //Get Admin
-                    bool isfoundad = false;
+                    bool isFoundAd = false;
                     if (!isFound)
                     {
                         foreach (var item in AdList)
@@ -111,13 +113,13 @@ namespace POS
                                     navwindow.Show();
                                 });
 
-                                isfoundad = true;
+                                isFoundAd = true;
                                 break;
 
                             }
 
                         }
-                        if (!isfoundad)
+                        if (!isFoundAd)
                         {
                             MessageBox.Show("incorrect username or password");
                             return;
