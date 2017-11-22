@@ -10,9 +10,12 @@ using POS.Entities.CustomEntities;
 
 namespace POS.Helper.PrintHelper.Report
 {
+    /// <summary>
+    /// Create Report about SalaryNote(outcome) in specific time
+    /// </summary>
     public class SalaryNoteReport : IListPdfReport
     {
-        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName)
+        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -61,30 +64,39 @@ namespace POS.Helper.PrintHelper.Report
                 //table.NumberOfDataRowsPerPage(5);
             })
             .MainTableDataSource(dataSource =>
-            {
-                var salaryList = unitofwork.SalaryNoteRepository.Get().ToList();
-
-                var salaryWithTimeList = salaryList.Where(x => x.ForMonth == time.Month && x.ForYear == time.Year).ToList();
-                List<SalaryNoteForReport> salaryReportList = new List<SalaryNoteForReport>();
-                foreach (var salary in salaryWithTimeList)
                 {
-                    var salaryRpt = new SalaryNoteForReport()
-                    {
-                        SnId = salary.SnId,
-                        EmpId = salary.EmpId,
-                        EmpName = salary.Employee.Name,
-                        DatePay = (salary.DatePay==null)? "" : salary.DatePay.ToString(),
-                        SalaryValue = salary.SalaryValue,
-                        WorkHour = salary.WorkHour,
-                        ForMonth = salary.ForMonth,
-                        ForYear = salary.ForYear,
-                        IsPaid = (salary.IsPaid == 1)? "Yes" : "No"
-                    };
-                    salaryReportList.Add(salaryRpt);
-                }
+                    var queryWithYear =
+                        unitofwork.SalaryNoteRepository.Get(x =>
+                            x.ForYear >= startTime.Year && x.ForYear <= endTime.Year).ToList();
 
-                dataSource.StronglyTypedList(salaryReportList);
-            })
+                    var queryWithStartTimeMonth = 
+                        queryWithYear.Where(x => (x.ForMonth >= startTime.Month && x.ForYear == startTime.Year)
+                                                                                || x.ForYear > startTime.Year).ToList();
+
+                    var queryWithEndTimeMonth =
+                        queryWithStartTimeMonth.Where(x => (x.ForMonth <= endTime.Month && x.ForYear == endTime.Year)
+                                                                                || x.ForYear < endTime.Year).ToList();
+
+                    List<SalaryNoteForReport> salaryReportList = new List<SalaryNoteForReport>();
+                    foreach (var salary in queryWithEndTimeMonth)
+                    {
+                        var salaryRpt = new SalaryNoteForReport()
+                        {
+                            SnId = salary.SnId,
+                            EmpId = salary.EmpId,
+                            EmpName = salary.Employee.Name,
+                            DatePay = (salary.DatePay == null) ? "" : salary.DatePay.ToString(),
+                            SalaryValue = salary.SalaryValue,
+                            WorkHour = salary.WorkHour,
+                            ForMonth = salary.ForMonth,
+                            ForYear = salary.ForYear,
+                            IsPaid = (salary.IsPaid == 1) ? "Yes" : "No"
+                        };
+                        salaryReportList.Add(salaryRpt);
+                    }
+
+                    dataSource.StronglyTypedList(salaryReportList);
+                })
             .MainTableSummarySettings(summarySettings =>
             {
                 summarySettings.OverallSummarySettings("Summary");
@@ -143,7 +155,7 @@ namespace POS.Helper.PrintHelper.Report
                     column.Width(2);
                     column.HeaderCell("Emp Name");
                 });
-                
+
                 columns.AddColumn(column =>
                 {
                     column.PropertyName<SalaryNoteForReport>(x => x.DatePay);
@@ -244,8 +256,7 @@ namespace POS.Helper.PrintHelper.Report
         }
 
 
-
-        public IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName)
+        public IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -296,11 +307,19 @@ namespace POS.Helper.PrintHelper.Report
             .MainTableDataSource(dataSource =>
             {
 
-                var salaryDetailsList = unitofwork.WorkingHistoryRepository.Get().ToList();
+                var queryWithYear =
+                    unitofwork.WorkingHistoryRepository.Get(x =>
+                        x.SalaryNote.ForYear >= startTime.Year && x.SalaryNote.ForYear <= endTime.Year).ToList();
 
-                var salaryDetailsWithTimeList = salaryDetailsList.Where(x => x.SalaryNote.ForMonth == time.Month && x.SalaryNote.ForYear == time.Year).ToList();
-                
-                dataSource.StronglyTypedList(salaryDetailsWithTimeList);
+                var queryWithStartTimeMonth =
+                    queryWithYear.Where(x => (x.SalaryNote.ForMonth >= startTime.Month && x.SalaryNote.ForYear == startTime.Year)
+                                             || x.SalaryNote.ForYear > startTime.Year).ToList();
+
+                var queryWithEndTimeMonth =
+                    queryWithStartTimeMonth.Where(x => (x.SalaryNote.ForMonth <= endTime.Month && x.SalaryNote.ForYear == endTime.Year)
+                                                       || x.SalaryNote.ForYear < endTime.Year).ToList();
+
+                dataSource.StronglyTypedList(queryWithEndTimeMonth);
             })
             .MainTableSummarySettings(summarySettings =>
             {
@@ -408,6 +427,221 @@ namespace POS.Helper.PrintHelper.Report
                 export.ToXml();
             })
             .Generate(data => data.AsPdfFile(string.Format("{0}\\Salary-DetailsReport-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+        }
+
+
+        public IPdfReportData CreateEntityPdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
+        {
+            return new PdfReport().DocumentPreferences(doc =>
+            {
+                doc.RunDirection(PdfRunDirection.LeftToRight);
+                doc.Orientation(PageOrientation.Landscape);
+                doc.PageSize(PdfPageSize.A4);
+                doc.DocumentMetadata(new DocumentMetadata { Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.", Subject = "Report", Title = "Salary Entities Report" });
+                doc.Compression(new CompressionSettings
+                {
+                    EnableCompression = true,
+                    EnableFullCompression = true
+                });
+                doc.PrintingPreferences(new PrintingPreferences
+                {
+                    ShowPrintDialogAutomatically = true
+                });
+            })
+            .DefaultFonts(fonts =>
+            {
+                fonts.Path(System.IO.Path.Combine(Environment.GetEnvironmentVariable("SystemRoot"), "fonts\\arial.ttf"),
+                           System.IO.Path.Combine(Environment.GetEnvironmentVariable("SystemRoot"), "fonts\\verdana.ttf"));
+                fonts.Size(9);
+                fonts.Color(System.Drawing.Color.Black);
+            })
+            .PagesFooter(footer =>
+            {
+                footer.DefaultFooter(DateTime.Now.ToString("MM/dd/yyyy"));
+            })
+            .PagesHeader(header =>
+            {
+                header.CacheHeader(cache: true); // It's a default setting to improve the performance.
+                header.DefaultHeader(defaultHeader =>
+                {
+                    defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
+                    defaultHeader.ImagePath(System.IO.Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
+                    defaultHeader.Message("SALARY ENTITIES REPORT");
+                });
+            })
+            .MainTableTemplate(template =>
+            {
+                template.BasicTemplate(BasicTemplate.BlackAndBlue2Template);
+            })
+            .MainTablePreferences(table =>
+            {
+                table.ColumnsWidthsType(TableColumnWidthType.Relative);
+                //table.NumberOfDataRowsPerPage(5);
+            })
+            .MainTableDataSource(dataSource =>
+            {
+                var queryWithYear =
+                    unitofwork.SalaryNoteRepository.Get(x =>
+                        x.ForYear >= startTime.Year && x.ForYear <= endTime.Year).ToList();
+
+                var queryWithStartTimeMonth =
+                    queryWithYear.Where(x => (x.ForMonth >= startTime.Month && x.ForYear == startTime.Year)
+                                             || x.ForYear > startTime.Year).ToList();
+
+                var queryWithEndTimeMonth =
+                    queryWithStartTimeMonth.Where(x => (x.ForMonth <= endTime.Month && x.ForYear == endTime.Year)
+                                                       || x.ForYear < endTime.Year).ToList();
+
+                List<SalaryEntityForReport> salaryEntityReportList = new List<SalaryEntityForReport>();
+                foreach (var emp in unitofwork.EmployeeRepository.Get().ToList())
+                {
+                    var queryWithEmployee = queryWithEndTimeMonth.Where(x => x.EmpId.Equals(emp.EmpId));
+
+                    double totalWorkHour = 0;
+                    decimal totalSalary = 0;
+                    foreach (var salNote in queryWithEmployee)
+                    {
+                        totalWorkHour += salNote.WorkHour;
+                        totalSalary += salNote.SalaryValue;
+                    }
+
+                    var salaryEntity = new SalaryEntityForReport()
+                    {
+                        Id = emp.EmpId,
+                        Name = emp.Name,
+                        WorkHour = totalWorkHour,
+                        Salary =  totalSalary
+                    };
+
+
+                    salaryEntityReportList.Add(salaryEntity);
+                }
+
+                dataSource.StronglyTypedList(salaryEntityReportList);
+            })
+            .MainTableSummarySettings(summarySettings =>
+            {
+                summarySettings.OverallSummarySettings("Summary");
+                summarySettings.PreviousPageSummarySettings("Previous Page Summary");
+                summarySettings.PageSummarySettings("Page Summary");
+            })
+            .MainTableColumns(columns =>
+            {
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName("rowNo");
+                    column.IsRowNumber(true);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                    column.IsVisible(true);
+                    column.Order(0);
+                    column.Width(1);
+                    column.HeaderCell("#");
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<SalaryEntityForReport>(x => x.Id);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                    column.IsVisible(true);
+                    column.Order(1);
+                    column.Width(3);
+                    column.HeaderCell("ID", horizontalAlignment: HorizontalAlignment.Left);
+                    column.Font(font =>
+                    {
+                        font.Size(10);
+                        font.Color(System.Drawing.Color.Blue);
+                    });
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<SalaryEntityForReport>(x => x.Name);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                    column.IsVisible(true);
+                    column.Order(2);
+                    column.Width(3);
+                    column.HeaderCell("Name", horizontalAlignment: HorizontalAlignment.Left);
+                    column.Font(font =>
+                    {
+                        font.Size(10);
+                        font.Color(System.Drawing.Color.Crimson);
+                    });
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<SalaryEntityForReport>(x => x.WorkHour);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                    column.IsVisible(true);
+                    column.Order(8);
+                    column.Width(2);
+                    column.HeaderCell("Work Hour(h)");
+                    column.ColumnItemsTemplate(template =>
+                    {
+                        template.TextBlock();
+                        template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                            ? string.Empty : string.Format("{0:n0}", obj));
+                    });
+                    //column.AggregateFunction(aggregateFunction =>
+                    //{
+                    //    aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                    //    aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                    //        ? string.Empty : string.Format("{0:n0}", obj));
+                    //});
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<SalaryEntityForReport>(x => x.Salary);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                    column.IsVisible(true);
+                    column.Order(9);
+                    column.Width(2);
+                    column.HeaderCell("Salary (kVND)");
+                    column.ColumnItemsTemplate(template =>
+                    {
+                        template.TextBlock();
+                        template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                                            ? string.Empty : string.Format("{0:n0}", obj));
+                    });
+                    column.AggregateFunction(aggregateFunction =>
+                    {
+                        aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                        aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                                                            ? string.Empty : string.Format("{0:n0}", obj));
+                    });
+                });
+
+            })
+            .MainTableEvents(events =>
+            {
+                events.DataSourceIsEmpty(message: "There is no data available to display.");
+            })
+            .Export(export =>
+            {
+                export.ToExcel();
+                export.ToCsv();
+                export.ToXml();
+            })
+            .Generate(data => data.AsPdfFile(string.Format("{0}\\Salary-EntityReport-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+        }
+
+
+        public IPdfReportData CreateMonthPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IPdfReportData CreateDayPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IPdfReportData CreateYearPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

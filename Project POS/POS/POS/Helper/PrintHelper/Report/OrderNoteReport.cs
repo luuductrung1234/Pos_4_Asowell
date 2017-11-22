@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NPOI.SS.Formula.Functions;
 using PdfRpt.Core.Contracts;
 using PdfRpt.FluentInterface;
 using POS.Entities.CustomEntities;
 using POS.Helper.PrintHelper.Model;
 using POS.Repository.DAL;
+using AggregateFunction = PdfRpt.Core.Contracts.AggregateFunction;
 
 namespace POS.Helper.PrintHelper.Report
 {
+    /// <summary>
+    /// Create Report about Order(income) in specific time
+    /// </summary>
     public class OrderNoteReport : IListPdfReport
     {
-        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName)
+        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -61,20 +66,10 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
             {
-                //var listOfRows = new List<User>
-                //{
-                //    new User {Id = 0, LastName = "Test Degree Sign: 120°", Name = "Celsius", Balance = 0}
-                //};
+                var orderWithTimeList = unitofwork.OrderRepository.Get(x =>
+                    x.Ordertime.CompareTo(startTime) >= 0 && x.Ordertime.CompareTo(endTime) <= 0);
 
-                //for (var i = 1; i <= 200; i++)
-                //{
-                //    listOfRows.Add(new User { Id = i, LastName = "LastName " + i, Name = "Name " + i, Balance = i + 1000 });
-                //}
-                //dataSource.StronglyTypedList(listOfRows);
 
-                var orderList = unitofwork.OrderRepository.Get().ToList();
-
-                var orderWithTimeList = orderList.Where(x => x.Ordertime.Date.Equals(time.Date)).ToList();
                 List<OrderNoteForReport> orderReportList = new List<OrderNoteForReport>();
                 foreach (var order in orderWithTimeList)
                 {
@@ -260,7 +255,8 @@ namespace POS.Helper.PrintHelper.Report
             .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-Report-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
         }
 
-        public IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime time, string folderName)
+
+        public IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -310,20 +306,11 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
             {
-                //var listOfRows = new List<User>
-                //{
-                //    new User {Id = 0, LastName = "Test Degree Sign: 120°", Name = "Celsius", Balance = 0}
-                //};
+                var orderDetailsWithTimeList = unitofwork.OrderNoteDetailsRepository.Get(x =>
+                    x.OrderNote.Ordertime.CompareTo(startTime) >= 0 && x.OrderNote.Ordertime.CompareTo(endTime) <= 0);
 
-                //for (var i = 1; i <= 200; i++)
-                //{
-                //    listOfRows.Add(new User { Id = i, LastName = "LastName " + i, Name = "Name " + i, Balance = i + 1000 });
-                //}
-                //dataSource.StronglyTypedList(listOfRows);
 
-                var orderDetailsList = unitofwork.OrderNoteDetailsRepository.Get().ToList();
 
-                var orderDetailsWithTimeList = orderDetailsList.Where(x => x.OrderNote.Ordertime.Date.Equals(time.Date)).ToList();
                 List<OrderNoteDetailsForReport> orderDetailsReportList = new List<OrderNoteDetailsForReport>();
                 foreach (var details in orderDetailsWithTimeList)
                 {
@@ -465,6 +452,212 @@ namespace POS.Helper.PrintHelper.Report
                 export.ToXml();
             })
             .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-DetailsReport-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+        }
+
+
+        public IPdfReportData CreateEntityPdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
+        {
+            return new PdfReport().DocumentPreferences(doc =>
+            {
+                doc.RunDirection(PdfRunDirection.LeftToRight);
+                doc.Orientation(PageOrientation.Landscape);
+                doc.PageSize(PdfPageSize.A4);
+                doc.DocumentMetadata(new DocumentMetadata { Author = "Asowell Restaurant", Application = "Asowell POS", Keywords = "IList Rpt.", Subject = "Report", Title = "Order Entities Report" });
+                doc.Compression(new CompressionSettings
+                {
+                    EnableCompression = true,
+                    EnableFullCompression = true
+                });
+                doc.PrintingPreferences(new PrintingPreferences
+                {
+                    ShowPrintDialogAutomatically = true
+                });
+            })
+            .DefaultFonts(fonts =>
+            {
+                fonts.Path(System.IO.Path.Combine(Environment.GetEnvironmentVariable("SystemRoot"), "fonts\\arial.ttf"),
+                           System.IO.Path.Combine(Environment.GetEnvironmentVariable("SystemRoot"), "fonts\\verdana.ttf"));
+                fonts.Size(9);
+                fonts.Color(System.Drawing.Color.Black);
+            })
+            .PagesFooter(footer =>
+            {
+                footer.DefaultFooter(DateTime.Now.ToString("MM/dd/yyyy"));
+            })
+            .PagesHeader(header =>
+            {
+                header.CacheHeader(cache: true); // It's a default setting to improve the performance.
+                header.DefaultHeader(defaultHeader =>
+                {
+                    defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
+                    defaultHeader.ImagePath(System.IO.Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
+                    defaultHeader.Message("ORDER ENTITIES REPORT");
+                });
+            })
+            .MainTableTemplate(template =>
+            {
+                template.BasicTemplate(BasicTemplate.BlackAndBlue2Template);
+            })
+            .MainTablePreferences(table =>
+            {
+                table.ColumnsWidthsType(TableColumnWidthType.Relative);
+                //table.NumberOfDataRowsPerPage(20);
+            })
+            .MainTableDataSource(dataSource =>
+            {
+                var orderDetailsWithTimeList = unitofwork.OrderNoteDetailsRepository.Get(x =>
+                    x.OrderNote.Ordertime.CompareTo(startTime) >= 0 && x.OrderNote.Ordertime.CompareTo(endTime) <= 0);
+
+
+
+                List<OrderEntityForReport> orderEntityReportList = new List<OrderEntityForReport>();
+                foreach (var product in unitofwork.ProductRepository.Get().ToList())
+                {
+                    var queryWithProduct = orderDetailsWithTimeList.Where(x => x.ProductId.Equals(product.ProductId));
+
+                    int billCount = queryWithProduct.Count();
+                    int quan = 0;
+                    decimal totalAmount = 0;
+                    foreach (var orderDetails in queryWithProduct)
+                    {
+                        quan += orderDetails.Quan;
+                        totalAmount += orderDetails.Quan * product.Price;
+                    }
+
+                    var orderEntity = new OrderEntityForReport()
+                    {
+                        Id = product.ProductId,
+                        Name = product.Name,
+                        Quan = quan,
+                        BillCount = billCount,
+                        TotalAmount = totalAmount
+                    };
+
+                    orderEntityReportList.Add(orderEntity);
+                }
+
+                dataSource.StronglyTypedList(orderEntityReportList);
+            })
+            .MainTableSummarySettings(summarySettings =>
+            {
+                summarySettings.OverallSummarySettings("Summary");
+                summarySettings.PreviousPageSummarySettings("Previous Page Summary");
+                summarySettings.PageSummarySettings("Page Summary");
+            })
+            .MainTableColumns(columns =>
+            {
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName("rowNo");
+                    column.IsRowNumber(true);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                    column.IsVisible(true);
+                    column.Order(0);
+                    column.Width(1);
+                    column.HeaderCell("#");
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<OrderEntityForReport>(x => x.Id);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                    column.IsVisible(true);
+                    column.Order(1);
+                    column.Width(3);
+                    column.HeaderCell("ID", horizontalAlignment: HorizontalAlignment.Left);
+                    column.Font(font =>
+                    {
+                        font.Size(10);
+                        font.Color(System.Drawing.Color.Blue);
+                    });
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<OrderEntityForReport>(x => x.Name);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                    column.IsVisible(true);
+                    column.Order(2);
+                    column.Width(3);
+                    column.HeaderCell("Name", horizontalAlignment: HorizontalAlignment.Left);
+                    column.Font(font =>
+                    {
+                        font.Size(10);
+                        font.Color(System.Drawing.Color.Crimson);
+                    });
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<OrderEntityForReport>(x => x.Quan);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Center);
+                    column.IsVisible(true);
+                    column.Order(3);
+                    column.Width(3);
+                    column.HeaderCell("Qty");
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<OrderEntityForReport>(x => x.BillCount);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Left);
+                    column.IsVisible(true);
+                    column.Order(4);
+                    column.Width(3);
+                    column.HeaderCell("Bill Count");
+                });
+
+                columns.AddColumn(column =>
+                {
+                    column.PropertyName<OrderEntityForReport>(x => x.TotalAmount);
+                    column.CellsHorizontalAlignment(HorizontalAlignment.Right);
+                    column.IsVisible(true);
+                    column.Order(5);
+                    column.Width(2);
+                    column.HeaderCell("Total Amount (kVND)");
+                    column.ColumnItemsTemplate(template =>
+                    {
+                        template.TextBlock();
+                        template.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                            ? string.Empty : string.Format("{0:n0}", obj));
+                    });
+                    column.AggregateFunction(aggregateFunction =>
+                    {
+                        aggregateFunction.NumericAggregateFunction(AggregateFunction.Sum);
+                        aggregateFunction.DisplayFormatFormula(obj => obj == null || string.IsNullOrEmpty(obj.ToString())
+                            ? string.Empty : string.Format("{0:n0}", obj));
+                    });
+                });
+            })
+            .MainTableEvents(events =>
+            {
+                events.DataSourceIsEmpty(message: "There is no data available to display.");
+            })
+            .Export(export =>
+            {
+                export.ToExcel();
+                export.ToCsv();
+                export.ToXml();
+            })
+            .Generate(data => data.AsPdfFile(string.Format("{0}\\Order-EntityReport-{1}.pdf", folderName, Guid.NewGuid().ToString("N"))));
+        }
+
+
+        public IPdfReportData CreateMonthPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IPdfReportData CreateDayPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IPdfReportData CreateYearPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

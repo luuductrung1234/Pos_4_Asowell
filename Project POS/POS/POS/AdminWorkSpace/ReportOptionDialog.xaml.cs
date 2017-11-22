@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using POS.Helper.PrintHelper.Report;
 using POS.Repository.DAL;
 
@@ -21,10 +11,11 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class ReportOptionDialog : Window
     {
-        private DateTime time = DateTime.Now;
+        private DateTime startTime;
+        private DateTime endTime;
         private IListPdfReport _reportHelper;
         private AdminwsOfAsowell _unitofwork;
-        private string folderPath = AppPath.ApplicationPath + "\\SerializedData";
+        private static string folderPath = AppPath.ApplicationPath + "\\SerializedData";
 
         public ReportOptionDialog(IListPdfReport reportHelper, AdminwsOfAsowell unitofwork)
         {
@@ -32,6 +23,9 @@ namespace POS.AdminWorkSpace
 
             _unitofwork = unitofwork;
             _reportHelper = reportHelper;
+
+            DpFrom.SelectedDate = DateTime.Now;
+            DpTo.SelectedDate = DateTime.Now;
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -41,30 +35,34 @@ namespace POS.AdminWorkSpace
 
         private void BtnOk_OnClick(object sender, RoutedEventArgs e)
         {
-            if (ChbDetailsReport.IsChecked == false && ChbOverviewReport.IsChecked == false)
-            {
-                MessageBox.Show("Please select the type of report!");
-                return;
-            }
-
-
             try
             {
-                if (time != null && _reportHelper != null)
+                if (_reportHelper != null && DpFrom.SelectedDate.Value != null && DpTo.SelectedDate.Value != null)
                 {
                     // generate report
                     if (ChbOverviewReport.IsChecked == true)
                     {
-                        _reportHelper.CreatePdfReport(_unitofwork, time, folderPath);
+                        _reportHelper.CreatePdfReport(_unitofwork, DpFrom.SelectedDate.Value.Date,
+                            DpTo.SelectedDate.Value.Date, folderPath);
+                    }
+                    else if (ChbDetailsReport.IsChecked == true)
+                    {
+                        _reportHelper.CreateDetailsPdfReport(_unitofwork, DpFrom.SelectedDate.Value.Date,
+                            DpTo.SelectedDate.Value.Date, folderPath);
                     }
                     else
                     {
-                        _reportHelper.CreateDetailsPdfReport(_unitofwork, time, folderPath);
+                        _reportHelper.CreateEntityPdfReport(_unitofwork, DpFrom.SelectedDate.Value.Date,
+                            DpTo.SelectedDate.Value.Date, folderPath);
                     }
 
                     MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
 
                     this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Please select the duration of time that you want to create Report!");
                 }
             }
             catch (Exception ex)
@@ -73,12 +71,94 @@ namespace POS.AdminWorkSpace
             }
         }
 
-        private void DatePicker_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void BtnFastChoiceMonthRpt_OnClick(object sender, RoutedEventArgs e)
         {
-            DatePicker picker = sender as DatePicker;
-            time = picker.SelectedDate.Value;
+            try
+            {
+                if (_reportHelper != null && DpFrom.SelectedDate.Value != null && DpTo.SelectedDate.Value != null)
+                {
+                    // generate report
+                    if (ChbOverviewReport.IsChecked == true)
+                    {
+                        _reportHelper.CreateMonthPdfReport(_unitofwork, folderPath);
+                    }
+
+                    MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
+
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Please select the duration of time that you want to create Report!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Generate new report fail! Something went wrong.");
+            }
         }
 
+        private void BtnFastChoiceDayRpt_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_reportHelper != null && DpFrom.SelectedDate.Value != null && DpTo.SelectedDate.Value != null)
+                {
+                    // generate report
+                    if (ChbOverviewReport.IsChecked == true)
+                    {
+                        _reportHelper.CreateDayPdfReport(_unitofwork, folderPath);
+                    }
+
+                    MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
+
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Please select the duration of time that you want to create Report!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Generate new report fail! Something went wrong.");
+            }
+        }
+
+        private void BtnFastChoiceYearRpt_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_reportHelper != null && DpFrom.SelectedDate.Value != null && DpTo.SelectedDate.Value != null)
+                {
+                    // generate report
+                    if (ChbOverviewReport.IsChecked == true)
+                    {
+                        _reportHelper.CreateYearPdfReport(_unitofwork, folderPath);
+                    }
+
+                    MessageBox.Show("new report was generated, please check your folder (path):\n\n" + folderPath);
+
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Please select the duration of time that you want to create Report!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Generate new report fail! Something went wrong.");
+            }
+        }
+
+
+
+        /// <summary>
+        /// Select Directory to store Report
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())

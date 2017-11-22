@@ -24,8 +24,20 @@ namespace POS.Repository.DAL
         private GenericRepository<OrderNoteDetail> _ordernotedetailsRepository;
         private GenericRepository<ReceiptNote> _receiptnoteRepository;
         private GenericRepository<ReceiptNoteDetail> _receiptnotedetailsRepository;
+        private GenericRepository<WareHouse> _wareHouseRepository;
 
 
+        public GenericRepository<WareHouse> WareHouseRepository
+        {
+            get
+            {
+                if (_wareHouseRepository == null)
+                {
+                    _wareHouseRepository = new GenericRepository<WareHouse>(context);
+                }
+                return _wareHouseRepository;
+            }
+        }
 
         public GenericRepository<ReceiptNoteDetail> ReceiptNoteDsetailsRepository
         {
