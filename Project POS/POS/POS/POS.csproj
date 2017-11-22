@@ -194,6 +194,9 @@
     <Compile Include="DatabaseConfigWindow.xaml.cs">
       <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeWorkSpace\AllEmployeeLogin.xaml.cs">
+      <DependentUpon>AllEmployeeLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeWorkSpace\ChangeThemePage.xaml.cs">
       <DependentUpon>ChangeThemePage.xaml</DependentUpon>
     </Compile>
@@ -347,6 +350,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DatabaseConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\AllEmployeeLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

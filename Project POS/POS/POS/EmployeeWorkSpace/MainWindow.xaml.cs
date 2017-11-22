@@ -34,6 +34,7 @@ namespace POS.EmployeeWorkSpace
         public ProgressBar proChair;
         public Entities.Table currentTable { get; set; }
         public Entities.Chair currentChair { get; set; }
+        public string AllEmp { get; set; }
         internal Table b;
         internal Dash d;
         internal Entry en;
@@ -42,6 +43,7 @@ namespace POS.EmployeeWorkSpace
         internal SettingFoodPage st;
         internal SettingTableSize stts;
         internal ChangeThemePage chtm;
+        internal AllEmployeeLogin ael;
 
         public MainWindow()
         {
@@ -71,6 +73,7 @@ namespace POS.EmployeeWorkSpace
             info = new Info();
             st = new SettingFoodPage(_unitofwork);
             stts = new SettingTableSize();
+            ael = new AllEmployeeLogin(_unitofwork);
 
             DispatcherTimer WorkTime = new DispatcherTimer();
             WorkTime.Tick += WorkTime_Tick;

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using POS.Entities;
 using POS.Repository.DAL;
+using POS.EmployeeWorkSpace;
 
 namespace POS
 {
@@ -61,6 +62,7 @@ namespace POS
                         if (emp.Username.Equals(username) && emp.Pass.Equals(pass))
                         {
                             App.Current.Properties["EmpLogin"] = emp;
+                            ((MainWindow)Window.GetWindow(this)).AllEmp += emp.EmpId;
 
                             try
                             {
