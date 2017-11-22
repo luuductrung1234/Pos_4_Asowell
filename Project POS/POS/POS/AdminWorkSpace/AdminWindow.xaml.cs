@@ -33,7 +33,7 @@ namespace POS.AdminWorkSpace
         ReceiptNotePage receiptnotepage;
         private statisticsFoodPage FoodPage;
         private StatisticsWorkingHourPage statisticsWorkingHourPage;
-
+        private HomePage homePage;
         public AdminWindow()
         {
             InitializeComponent();
@@ -117,6 +117,12 @@ namespace POS.AdminWorkSpace
         private void ViewstaticWH_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myframe.Navigate(statisticsWorkingHourPage);
+        }
+
+        private void HomePage_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            homePage=new HomePage(_unitowork);
+            myframe.Navigate(homePage);
         }
     }
 }

@@ -115,7 +115,7 @@
                                             DisplayMemberBinding="{Binding Info}" />
                             <GridViewColumn Header="Price"
                                             Width="100"
-                                            DisplayMemberBinding="{Binding Price}" />
+                                            DisplayMemberBinding="{Binding Price,StringFormat=0.000}" />
                             <GridViewColumn Header="Type"
                                             Width="80"
                                             DisplayMemberBinding="{Binding Type}" />
@@ -296,7 +296,7 @@
                                             DisplayMemberBinding="{Binding UnitBuy}" />
                             <GridViewColumn Header="StandardPrice"
                                             Width="120"
-                                            DisplayMemberBinding="{Binding StandardPrice}" />
+                                            DisplayMemberBinding="{Binding StandardPrice,StringFormat=0.000}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

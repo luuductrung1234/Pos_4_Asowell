@@ -73,7 +73,7 @@ namespace POS.EmployeeWorkSpace
             info = new Info();
             st = new SettingFoodPage(_unitofwork);
             stts = new SettingTableSize();
-            ael = new AllEmployeeLogin(_unitofwork);
+            ael = new AllEmployeeLogin();
 
             DispatcherTimer WorkTime = new DispatcherTimer();
             WorkTime.Tick += WorkTime_Tick;
