@@ -34,7 +34,6 @@ namespace POS.EmployeeWorkSpace
         public ProgressBar proChair;
         public Entities.Table currentTable { get; set; }
         public Entities.Chair currentChair { get; set; }
-        public string AllEmp { get; set; }
         internal Table b;
         internal Dash d;
         internal Entry en;
@@ -73,7 +72,6 @@ namespace POS.EmployeeWorkSpace
             info = new Info();
             st = new SettingFoodPage(_unitofwork);
             stts = new SettingTableSize();
-            ael = new AllEmployeeLogin();
 
             DispatcherTimer WorkTime = new DispatcherTimer();
             WorkTime.Tick += WorkTime_Tick;
@@ -244,47 +242,56 @@ namespace POS.EmployeeWorkSpace
 
         private void btnEmpDetail_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeDetail emd = new EmployeeDetail(cUser.Content.ToString(), _unitofwork);
-            emd.ShowDialog();
+            AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 1);
+            ael.ShowDialog();
+        }
+
+        private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
+        {
+            AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 2);
+            ael.ShowDialog();
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
-            WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
+            AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 3);
+            ael.ShowDialog();
 
-            wh.EndTime = DateTime.Now;
-            _unitofwork.WorkingHistoryRepository.Insert(wh);
-            _unitofwork.Save();
+            //WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
 
-            empSln = _unitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
-            var workH = wh.EndTime - wh.StartTime;
-            empSln.WorkHour += workH.Hours + workH.Minutes/60 + workH.Seconds/3600;
-            _unitofwork.SalaryNoteRepository.Update(empSln);
-            _unitofwork.Save();
+            //wh.EndTime = DateTime.Now;
+            //_unitofwork.WorkingHistoryRepository.Insert(wh);
+            //_unitofwork.Save();
 
-            foreach (var table in _unitofwork.TableRepository.Get())
-            {
-                var orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(table.TableId)).First();
-                orderTemp.CusId = "CUS0000001";
-                orderTemp.Ordertime = DateTime.Now;
-                orderTemp.TotalPrice = 0;
-                orderTemp.CustomerPay = 0;
-                orderTemp.PayBack = 0;
-                table.IsOrdered = 0;
-                var orderDetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTemp.OrdertempId));
-                if(orderDetails.Count() != 0)
-                {
-                    foreach(var od in orderDetails)
-                    {
-                        _unitofwork.OrderDetailsTempRepository.Delete(od);
-                        _unitofwork.Save();
-                    }
-                }
-            }
+            //empSln = _unitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
+            //var workH = wh.EndTime - wh.StartTime;
+            //empSln.WorkHour += workH.Hours + workH.Minutes/60 + workH.Seconds/3600;
+            //_unitofwork.SalaryNoteRepository.Update(empSln);
+            //_unitofwork.Save();
 
-            login = new Login();
-            this.Close();
-            login.Show();
+            //foreach (var table in _unitofwork.TableRepository.Get())
+            //{
+            //    var orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(table.TableId)).First();
+            //    orderTemp.CusId = "CUS0000001";
+            //    orderTemp.Ordertime = DateTime.Now;
+            //    orderTemp.TotalPrice = 0;
+            //    orderTemp.CustomerPay = 0;
+            //    orderTemp.PayBack = 0;
+            //    table.IsOrdered = 0;
+            //    var orderDetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTemp.OrdertempId));
+            //    if(orderDetails.Count() != 0)
+            //    {
+            //        foreach(var od in orderDetails)
+            //        {
+            //            _unitofwork.OrderDetailsTempRepository.Delete(od);
+            //            _unitofwork.Save();
+            //        }
+            //    }
+            //}
+
+            //login = new Login();
+            //this.Close();
+            //login.Show();
         }
 
         private void lbiChangeTheme_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -293,9 +300,5 @@ namespace POS.EmployeeWorkSpace
             chtm.Show();
         }
 
-        private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

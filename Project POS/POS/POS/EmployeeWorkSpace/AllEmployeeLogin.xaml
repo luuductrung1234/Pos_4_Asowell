@@ -10,16 +10,14 @@
         WindowStartupLocation="CenterScreen"
         Title="All Employee Login"
         Height="550"
-        Width="700">
+        Width="870">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}"
                x:Key="TextBlockLabel">
             <Setter Property="FontSize"
-                    Value="18" />
+                    Value="16" />
             <Setter Property="Foreground"
-                    Value="#FFFFEDBC" />
-            <Setter Property="FontWeight"
-                    Value="Bold" />
+                    Value="White" />
             <Setter Property="Width"
                     Value="120" />
             <Setter Property="HorizontalAlignment"
@@ -30,7 +28,9 @@
     </Window.Resources>
     <Grid x:Name="AllEmp">
         <materialDesign:ColorZone Mode="PrimaryDark"
-                                  Height="44">
+                                  Height="44"
+                                  Width="500"
+                                  HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal"
                         Margin="20,0,0,0">
                 <TextBlock VerticalAlignment="Center"
@@ -39,25 +39,29 @@
                            FontSize="18">Employee Login List</TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
-        <ListView x:Name="lsWH"
-                  Margin="0,49,0,227">
+        <ListView x:Name="lvLoginList"
+                  Height="411"
+                  Width="500"
+                  Margin="0,49,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="200"
+                    <GridViewColumn Width="150"
                                     Header="Username"
-                                    DisplayMemberBinding="{Binding Username}"/>
+                                    DisplayMemberBinding="{Binding Emp.Username}" />
                     <GridViewColumn Header="Name"
-                                    Width="200"
-                                    DisplayMemberBinding="{Binding Name}" />
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Emp.Name}" />
                     <GridViewColumn Header="Time Percent"
-                                    Width="200">
+                                    Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ProgressBar Style="{StaticResource MyMaterialDesignCircularProgressBar}"
                                              Value="{Binding TimePercent}"
                                              Maximum="100"
-                                             Width="45"
-                                             Height="45"
+                                             Width="40"
+                                             Height="40"
                                              IsIndeterminate="True" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -66,21 +70,100 @@
             </ListView.View>
         </ListView>
         <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
                     Height="44"
-                    Margin="216,297,216,178">
+                    Margin="54,465,0,0">
             <Button x:Name="btnLoginNew"
                     Content="Login Another"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="20,0,0,0"/>
+                    Margin="20,0,0,0"
+                    Click="btnLoginNew_Click" />
             <Button x:Name="btnLogout"
                     Content="Logout"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="20,0,20,0"/>
+                    Margin="20,0,0,0"
+                    Click="btnLogout_Click" />
+            <Button  x:Name="btnView"
+                     Content="View Details"
+                     Margin="20,0,20,0"
+                     Click="btnView_Click" />
         </StackPanel>
-        
+        <StackPanel x:Name="spLoginAnother"
+                    Width="350"
+                    Margin="510,0,0,0">
+            <StackPanel>
+                <materialDesign:ColorZone Mode="PrimaryMid"
+                                          BorderBrush="Black"
+                                          BorderThickness="1"
+                                          Width="250">
+                    <TextBlock x:Name="txbLabel"
+                               Text="Login Another"
+                               FontSize="35"
+                               TextAlignment="Center" />
+                </materialDesign:ColorZone>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                        <TextBlock x:Name="txbUserName"
+                                   TextWrapping="Wrap"
+                                   Text="User Name"
+                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                        <TextBox x:Name="txtUsername"
+                                 TextWrapping="Wrap"
+                                 Width="220"
+                                 Height="35"
+                                 FontSize="16"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Foreground="White" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                        <TextBlock x:Name="txbPass"
+                                   TextWrapping="Wrap"
+                                   Text="Password"
+                                   Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                        <PasswordBox x:Name="txtPass"
+                                     Width="220"
+                                     Height="35"
+                                     FontSize="16"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     Foreground="White" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                        <Button  x:Name="btnAcceptLogin"
+                                 Content="Login"
+                                 Margin="20,0,0,0"
+                                 Click="btnAcceptLogin_Click" />
+                        <Button  x:Name="btnAcceptLogout"
+                                 Content="Logout"
+                                 Margin="20,0,0,0"
+                                 Click="btnAcceptLogout_Click" />
+                        <Button  x:Name="btnAcceptView"
+                                 Content="View"
+                                 Margin="20,0,0,0"
+                                 Click="btnAcceptView_Click" />
+                        <Button  x:Name="btnAcceptCancel"
+                                 Content="Cancel"
+                                 Margin="20,0,0,0"
+                                 Click="btnAcceptCancel_Click" />
+                        <ProgressBar x:Name="PgbLoginProcess"
+                                     Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                     Value="0"
+                                     Maximum="100"
+                                     Width="40"
+                                     Height="40"
+                                     IsIndeterminate="True"
+                                     Grid.Row="1"
+                                     Visibility="Hidden" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

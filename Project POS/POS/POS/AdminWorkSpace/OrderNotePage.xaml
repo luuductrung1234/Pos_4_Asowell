@@ -127,13 +127,13 @@
                                         DisplayMemberBinding="{Binding Ordertime}" />
                         <GridViewColumn Header="Total Price"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding TotalPrice}" />
+                                        DisplayMemberBinding="{Binding TotalPrice,StringFormat=0.000}" />
                         <GridViewColumn Header="Customer Pay"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding CustomerPay}" />
+                                        DisplayMemberBinding="{Binding CustomerPay,StringFormat=0.000}" />
                         <GridViewColumn Header="PayBack"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding PayBack}" />
+                                        DisplayMemberBinding="{Binding PayBack,StringFormat=0.000}" />
 
                     </GridView>
                 </ListView.View>

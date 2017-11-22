@@ -148,7 +148,7 @@
                                         DisplayMemberBinding="{Binding DatePay}" />
                         <GridViewColumn Header="Salary Value"
                                         Width="150"
-                                        DisplayMemberBinding="{Binding SalaryValue}" />
+                                        DisplayMemberBinding="{Binding SalaryValue,StringFormat=0.000}" />
                         <GridViewColumn Header="Work Hour"
                                         Width="150"
                                         DisplayMemberBinding="{Binding WorkHour}" />
