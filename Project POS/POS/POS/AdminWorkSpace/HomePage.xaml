@@ -2,30 +2,36 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Background="{DynamicResource MaterialDesignPaper}"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:POS.AdminWorkSpace"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d"
       d:DesignHeight="300"
       d:DesignWidth="300"
-    Height="630"
+      Height="630"
       Width="1366"
       Title="HomePage">
 
     <ScrollViewer>
         <Grid>
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.1*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <RadioButton x:Name="rdToday" Foreground="White" GroupName="FilterByTime" Click="RdToday_OnClick">Today</RadioButton>
-                    <RadioButton x:Name="rdWeek"
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right">
+                    <RadioButton x:Name="rdAll"
                                  Foreground="White"
-                                 GroupName="FilterByTime" Click="RdWeek_OnClick">Week</RadioButton>
+                                 GroupName="FilterByTime"
+                                 Click="RdAll_OnClick">All</RadioButton>
+                    <RadioButton x:Name="rdToday"
+                                 Foreground="White"
+                                 GroupName="FilterByTime"
+                                 Click="RdToday_OnClick">Today</RadioButton>
                     <RadioButton x:Name="rdMonth"
                                  Foreground="White"
                                  Click="RdMonth_OnClick"
@@ -38,83 +44,87 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <lvc:PieChart Series="{Binding SeriesCollection, RelativeSource={RelativeSource AncestorType=Page}}"                                                                                   
-                              DataClick="Chart_OnDataClick"
-                              Hoverable="True"
-                              Grid.Row="1"
-                             >
-                    <lvc:PieChart.ChartLegend>
-                        <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
-                    </lvc:PieChart.ChartLegend>
-                    <lvc:PieChart.DataTooltip>
-                        <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
-                    </lvc:PieChart.DataTooltip>
-                </lvc:PieChart>
-                <lvc:PieChart Series="{Binding SeriesCollectionTime, RelativeSource={RelativeSource AncestorType=Page}}"
-                              DataClick="Chart_OnDataClick"
-                              Hoverable="True"
-                              LegendLocation="Top"
-                              Grid.Row="0">
-                    <lvc:PieChart.ChartLegend>
-                        <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
-                    </lvc:PieChart.ChartLegend>
-                    <lvc:PieChart.DataTooltip>
-                        <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
-                    </lvc:PieChart.DataTooltip>
-                </lvc:PieChart>
-            </Grid>
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock Foreground="White" FontSize="20" HorizontalAlignment="Center">Revenue</TextBlock>
-                        <Border>
-                            <TextBlock FontSize="50"
-                                       Text="{Binding revenue}"></TextBlock>
-                        </Border>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1"
-                                VerticalAlignment="Center">
-                        <StackPanel>
-                            <TextBlock Foreground="White" FontSize="20">sale value</TextBlock>
-                            <TextBlock x:Name="txtSaleValue" Foreground="White"
-                                       FontSize="20"/>
-                        </StackPanel>
-                        <StackPanel>
-                            <TextBlock Foreground="White"
-                                       FontSize="20">Total Bills</TextBlock>
-                            <TextBlock x:Name="txtTotalBills"
-                                       Foreground="White"
-                                       FontSize="20" />
-                        </StackPanel>
-                        <StackPanel>
-                            <TextBlock Foreground="White"
-                                       FontSize="20">Discounts</TextBlock>
-                            <TextBlock x:Name="txtDiscounts"
-                                       Foreground="White"
-                                       FontSize="20" />
-                        </StackPanel>
-                        <StackPanel>
-                            <TextBlock Foreground="White"
-                                       FontSize="20">Total Receivables</TextBlock>
-                            <TextBlock x:Name="txtReceivables"
-                                       Foreground="White"
-                                       FontSize="20" />
-                        </StackPanel>
-                    </StackPanel>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <lvc:PieChart Series="{Binding SeriesCollection, RelativeSource={RelativeSource AncestorType=Page}}"
+                                  DataClick="Chart_OnDataClick"
+                                  Hoverable="True"
+                                  Grid.Row="1">
+                        <lvc:PieChart.ChartLegend>
+                            <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                        </lvc:PieChart.ChartLegend>
+                        <lvc:PieChart.DataTooltip>
+                            <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                        </lvc:PieChart.DataTooltip>
+                    </lvc:PieChart>
+                    <lvc:PieChart Series="{Binding SeriesCollectionTime, RelativeSource={RelativeSource AncestorType=Page}}"
+                                  DataClick="Chart_OnDataClick"
+                                  Hoverable="True"
+                                  LegendLocation="Right"
+                                  Grid.Row="0">
+                        <lvc:PieChart.ChartLegend>
+                            <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                        </lvc:PieChart.ChartLegend>
+                        <lvc:PieChart.DataTooltip>
+                            <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                        </lvc:PieChart.DataTooltip>
+                    </lvc:PieChart>
                 </Grid>
-            </Grid>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0"
+                                    VerticalAlignment="Center">
+                            <TextBlock Foreground="White"
+                                       FontSize="20"
+                                       HorizontalAlignment="Center">Revenue</TextBlock>
+                            <Border>
+                                <TextBlock FontSize="50"
+                                           Text="{Binding revenue}"></TextBlock>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center">
+                            <StackPanel>
+                                <TextBlock Foreground="White"
+                                           FontSize="20">sale value</TextBlock>
+                                <TextBlock x:Name="txtSaleValue"
+                                           Foreground="White"
+                                           FontSize="20" />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Foreground="White"
+                                           FontSize="20">Total Bills</TextBlock>
+                                <TextBlock x:Name="txtTotalBills"
+                                           Foreground="White"
+                                           FontSize="20" />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Foreground="White"
+                                           FontSize="20">Discounts</TextBlock>
+                                <TextBlock x:Name="txtDiscounts"
+                                           Foreground="White"
+                                           FontSize="20" />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Foreground="White"
+                                           FontSize="20">Total Receivables</TextBlock>
+                                <TextBlock x:Name="txtReceivables"
+                                           Foreground="White"
+                                           FontSize="20" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
 

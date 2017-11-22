@@ -32,9 +32,9 @@ namespace POS.AdminWorkSpace
         public Dictionary<string, int> CountList;
         public Func<decimal, string> Formatter { get; set; }
         public List<string> Labels { get; set; }
+       
 
-
-
+        
         public statisticsFoodPage(AdminwsOfAsowell unitofwork)
         {
             // init data
