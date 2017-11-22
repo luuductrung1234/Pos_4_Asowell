@@ -49,6 +49,10 @@
                                      Content="Working Hour Statistic"
                                      PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
+                        <ListBoxItem x:Name="HomePage"
+                                     Content="Home"
+                                     PreviewMouseLeftButtonUp="HomePage_OnPreviewMouseLeftButtonUp"
+                                     Foreground="White" />
 
                     </ListBox>
                 </DockPanel>

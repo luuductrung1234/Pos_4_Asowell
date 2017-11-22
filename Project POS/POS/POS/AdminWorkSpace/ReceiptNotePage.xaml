@@ -126,7 +126,7 @@
                                             DisplayMemberBinding="{Binding Inday}" />
                             <GridViewColumn Header="Total Amount"
                                             Width="180"
-                                            DisplayMemberBinding="{Binding TotalAmount}" />
+                                            DisplayMemberBinding="{Binding TotalAmount,StringFormat=0.000}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -178,7 +178,7 @@
                                             DisplayMemberBinding="{Binding Quan}" />
                             <GridViewColumn Header="ItemPrice"
                                             Width="90"
-                                            DisplayMemberBinding="{Binding ItemPrice}" />
+                                            DisplayMemberBinding="{Binding ItemPrice,StringFormat=0.000}" />
                             <GridViewColumn Header="Note"
                                             Width="90"
                                             DisplayMemberBinding="{Binding Note}" />
