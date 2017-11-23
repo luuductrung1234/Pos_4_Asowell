@@ -41,6 +41,10 @@
                     <ListBox x:Name="DemoItemsListBox"
                              Margin="0 16 0 16"
                              SelectedIndex="0">
+                        <ListBoxItem x:Name="HomePage"
+                                     Content="Home"
+                                     PreviewMouseLeftButtonUp="HomePage_OnPreviewMouseLeftButtonUp"
+                                     Foreground="White" />
                         <ListBoxItem x:Name="Viewstaticquantity"
                                      Content="Product Statistic"
                                      PreviewMouseLeftButtonUp="View_Statistics_Quantity_OnPreviewMouseLeftButtonUp"
@@ -49,11 +53,7 @@
                                      Content="Working Hour Statistic"
                                      PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
-                        <ListBoxItem x:Name="HomePage"
-                                     Content="Home"
-                                     PreviewMouseLeftButtonUp="HomePage_OnPreviewMouseLeftButtonUp"
-                                     Foreground="White" />
-
+                        
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>

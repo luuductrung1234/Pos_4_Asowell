@@ -36,8 +36,14 @@ namespace POS.AdminWorkSpace
         public List<decimal> PriceList;
         public SeriesCollection SeriesCollection { get; set; }
         private List<PieSeries> EmpPieSeries { get; set; }
-
+        private ColumnSeries couSeries { get; set; }
+        public Dictionary<string, int> CountList;
+        public Dictionary<string, decimal> RevenueList;
+        public Func<decimal, string> Formatter { get; set; }
+        public ChartValues<decimal> Values;
+        public List<string> Labels { get; set; }
         public SeriesCollection SeriesCollectionTime { get; set; }
+        public SeriesCollection SerieColumnChart { get; set; }
         public PieSeries FirstPieSeries { get; set; }
         public PieSeries SecondPieSeries { get; set; }
         public PieSeries ThirdPieSeries { get; set; }
@@ -82,10 +88,55 @@ namespace POS.AdminWorkSpace
                 SeriesCollection.Add(item);
             }
 
+            //init datasource for ColumnChart
+            Values=new ChartValues<decimal>();
+            SerieColumnChart = new SeriesCollection
+            {
+                new ColumnSeries
+                {
+                    Title = "revenue",
+                    Values = Values
+                }
+            };
+            Labels = new List<string>();
+            Formatter = value => value.ToString();
+            RevenueList =new Dictionary<string, decimal>();
+            
+            
+
 
             // fill chart at first time
+            ColumnChartDatafilling(FILL_ALL);
             ChartDataFilling(FILL_ALL);
             ChartDataFillingByTime(FILL_ALL);
+
+        }
+
+        private void ColumnChartDatafilling(int filter)
+        {
+            List<OrderNote> orderNoteWithTime = new List<OrderNote>();
+            if (filter == FILL_BY_DAY)
+            {
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day).ToList();
+            }
+            else if (filter == FILL_BY_MONTH)
+            {
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Month == DateTime.Now.Month)
+                    .ToList();
+            }
+            else
+            {
+                orderNoteWithTime = _unitofwork.OrderRepository.Get().ToList();
+            }
+            decimal count = 0;
+            Values.Clear();
+            Labels.Clear();
+            foreach (var item in orderNoteWithTime)
+            {
+                Labels.Add(item.Ordertime.Day.ToString() + "/" + item.Ordertime.Month.ToString());
+                Values.Add(item.TotalPrice);
+            }
+            DataContext = this;
 
         }
 
@@ -124,8 +175,7 @@ namespace POS.AdminWorkSpace
             {
                 TotalPrice3 += item.TotalPrice;
             }
-
-
+            txtRevenue.Text = string.Format("{0:0.000}", (TotalPrice1 + TotalPrice2 + TotalPrice3)); 
             // binding
             FirstPieSeries.Values = new ChartValues<ObservableValue> { new ObservableValue((double)TotalPrice1) };
             FirstPieSeries.DataLabels = true;
@@ -192,18 +242,21 @@ namespace POS.AdminWorkSpace
         {
             ChartDataFillingByTime(1);
             ChartDataFilling(1);
+            ColumnChartDatafilling(1);
         }
 
         private void RdAll_OnClick(object sender, RoutedEventArgs e)
         {
             ChartDataFillingByTime(0);
             ChartDataFilling(0);
+            ColumnChartDatafilling(0);
         }
 
         private void RdMonth_OnClick(object sender, RoutedEventArgs e)
         {
             ChartDataFillingByTime(2);
             ChartDataFilling(2);
+            ColumnChartDatafilling(2);
         }
     }
 }

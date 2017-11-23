@@ -6,6 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:POS.AdminWorkSpace"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       d:DesignHeight="300"
       d:DesignWidth="300"
@@ -27,6 +28,7 @@
                     <RadioButton x:Name="rdAll"
                                  Foreground="White"
                                  GroupName="FilterByTime"
+                                 IsChecked="True"
                                  Click="RdAll_OnClick">All</RadioButton>
                     <RadioButton x:Name="rdToday"
                                  Foreground="White"
@@ -48,10 +50,14 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    <GroupBox Grid.Row="1"
+                              Header="Filter by Employee"
+                              materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+                              FontWeight="Bold">
                     <lvc:PieChart Series="{Binding SeriesCollection, RelativeSource={RelativeSource AncestorType=Page}}"
                                   DataClick="Chart_OnDataClick"
                                   Hoverable="True"
-                                  Grid.Row="1">
+                                  >
                         <lvc:PieChart.ChartLegend>
                             <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
                         </lvc:PieChart.ChartLegend>
@@ -59,11 +65,16 @@
                             <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
                         </lvc:PieChart.DataTooltip>
                     </lvc:PieChart>
-                    <lvc:PieChart Series="{Binding SeriesCollectionTime, RelativeSource={RelativeSource AncestorType=Page}}"
+                        </GroupBox>
+                    <GroupBox Grid.Row="0"
+                              Header="Filter by time in day"
+                              materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+                              FontWeight="Bold">
+                        <lvc:PieChart Series="{Binding SeriesCollectionTime, RelativeSource={RelativeSource AncestorType=Page}}"
                                   DataClick="Chart_OnDataClick"
                                   Hoverable="True"
                                   LegendLocation="Right"
-                                  Grid.Row="0">
+                                  >
                         <lvc:PieChart.ChartLegend>
                             <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
                         </lvc:PieChart.ChartLegend>
@@ -71,12 +82,26 @@
                             <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
                         </lvc:PieChart.DataTooltip>
                     </lvc:PieChart>
+                    </GroupBox>
                 </Grid>
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    <lvc:CartesianChart x:Name="LvcQuantityChart"
+                                        Foreground="White"
+                                        Grid.Row="1"
+                                        Series="{Binding SerieColumnChart}">
+
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Usage"
+                                      LabelFormatter="{Binding Formatter,StringFormat=0:000}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Labels="{Binding Labels}" />
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -84,19 +109,20 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0"
                                     VerticalAlignment="Center">
-                            <TextBlock Foreground="White"
+                            <TextBlock 
+                                Foreground="White"
                                        FontSize="20"
                                        HorizontalAlignment="Center">Revenue</TextBlock>
-                            <Border>
-                                <TextBlock FontSize="50"
-                                           Text="{Binding revenue}"></TextBlock>
+                            <Border HorizontalAlignment="Center">
+                                <TextBlock x:Name="txtRevenue" Foreground="red"
+                                    FontSize="50"></TextBlock>
                             </Border>
                         </StackPanel>
                         <StackPanel Grid.Column="1"
                                     VerticalAlignment="Center">
                             <StackPanel>
                                 <TextBlock Foreground="White"
-                                           FontSize="20">sale value</TextBlock>
+                                           FontSize="20">Sale Value</TextBlock>
                                 <TextBlock x:Name="txtSaleValue"
                                            Foreground="White"
                                            FontSize="20" />
