@@ -25,6 +25,7 @@ namespace POS.WareHouseWorkSpace
         AdminwsOfAsowell _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
+        private InputReceiptNote inputReceipt;
         
         public WareHouseWindow()
         {
@@ -51,7 +52,8 @@ namespace POS.WareHouseWorkSpace
 
         private void InputReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            inputReceipt=new InputReceiptNote(_unitofwork);
+            myFrame.Navigate(inputReceipt);
         }
 
         private void ViewReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

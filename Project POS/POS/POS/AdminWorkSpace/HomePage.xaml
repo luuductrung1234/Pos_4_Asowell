@@ -28,14 +28,20 @@
                     <RadioButton x:Name="rdAll"
                                  Foreground="White"
                                  GroupName="FilterByTime"
+                                 FontSize="14"
+                                 FontWeight="Bold"
                                  IsChecked="True"
                                  Click="RdAll_OnClick">All</RadioButton>
                     <RadioButton x:Name="rdToday"
                                  Foreground="White"
+                                 FontWeight="Bold"
+                                 FontSize="14"
                                  GroupName="FilterByTime"
                                  Click="RdToday_OnClick">Today</RadioButton>
                     <RadioButton x:Name="rdMonth"
                                  Foreground="White"
+                                 FontWeight="Bold"
+                                 FontSize="14"
                                  Click="RdMonth_OnClick"
                                  GroupName="FilterByTime">Month</RadioButton>
                 </StackPanel>
@@ -57,6 +63,7 @@
                     <lvc:PieChart Series="{Binding SeriesCollection, RelativeSource={RelativeSource AncestorType=Page}}"
                                   DataClick="Chart_OnDataClick"
                                   Hoverable="True"
+                                  Foreground="Black"
                                   >
                         <lvc:PieChart.ChartLegend>
                             <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
@@ -73,7 +80,7 @@
                         <lvc:PieChart Series="{Binding SeriesCollectionTime, RelativeSource={RelativeSource AncestorType=Page}}"
                                   DataClick="Chart_OnDataClick"
                                   Hoverable="True"
-                                  LegendLocation="Right"
+                                  Foreground="Black"
                                   >
                         <lvc:PieChart.ChartLegend>
                             <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
@@ -90,7 +97,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <lvc:CartesianChart x:Name="LvcQuantityChart"
-                                        Foreground="White"
+                                        Foreground="OrangeRed"
                                         Grid.Row="1"
                                         Series="{Binding SerieColumnChart}">
 
@@ -111,10 +118,13 @@
                                     VerticalAlignment="Center">
                             <TextBlock 
                                 Foreground="White"
+                                FontWeight="Bold"
                                        FontSize="20"
                                        HorizontalAlignment="Center">Revenue</TextBlock>
                             <Border HorizontalAlignment="Center">
-                                <TextBlock x:Name="txtRevenue" Foreground="red"
+                                <TextBlock x:Name="txtRevenue"
+                                           FontWeight="Bold"
+                                           Foreground="OrangeRed"
                                     FontSize="50"></TextBlock>
                             </Border>
                         </StackPanel>
@@ -122,29 +132,37 @@
                                     VerticalAlignment="Center">
                             <StackPanel>
                                 <TextBlock Foreground="White"
+                                           FontWeight="Bold"
                                            FontSize="20">Sale Value</TextBlock>
                                 <TextBlock x:Name="txtSaleValue"
                                            Foreground="White"
+                                           FontWeight="Bold"
                                            FontSize="20" />
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock Foreground="White"
+                                           FontWeight="Bold"
                                            FontSize="20">Total Bills</TextBlock>
                                 <TextBlock x:Name="txtTotalBills"
-                                           Foreground="White"
+                                           FontWeight="Bold"
+                                           Foreground="OrangeRed"
                                            FontSize="20" />
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock Foreground="White"
+                                           FontWeight="Bold"
                                            FontSize="20">Discounts</TextBlock>
                                 <TextBlock x:Name="txtDiscounts"
+                                           FontWeight="Bold"
                                            Foreground="White"
                                            FontSize="20" />
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock Foreground="White"
+                                           FontWeight="Bold"
                                            FontSize="20">Total Receivables</TextBlock>
                                 <TextBlock x:Name="txtReceivables"
+                                           FontWeight="Bold"
                                            Foreground="White"
                                            FontSize="20" />
                             </StackPanel>

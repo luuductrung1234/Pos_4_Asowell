@@ -959,8 +959,7 @@ select * from Employee
 go
 select * from Customer
 go
-select * from Ingredient
-go
+	
 select * from WareHouse
 go 
 select * from Product
