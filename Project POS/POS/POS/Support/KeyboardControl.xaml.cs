@@ -124,7 +124,7 @@ namespace POS.Support
                 await Task.Run(() =>
                 {
                     bool isFound = false;
-                    Employee loginEmp = _unitofwork.EmployeeRepository.Get(x => x.empCode == code).First();
+                    Employee loginEmp = _unitofwork.EmployeeRepository.Get(x => x.empCode == code).FirstOrDefault();
                     if (loginEmp != null)
                     {
                         App.Current.Properties["EmpLogin"] = loginEmp;
@@ -159,6 +159,11 @@ namespace POS.Support
 
                     }
 
+                    if (!isFound)
+                    {
+                        MessageBox.Show("incorrect username or password");
+                        return;
+                    }
                     Dispatcher.Invoke(() =>
                     {
                         parent.Close();
