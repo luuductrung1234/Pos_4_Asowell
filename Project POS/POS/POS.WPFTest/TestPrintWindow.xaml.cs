@@ -33,9 +33,6 @@ namespace POS.WPFTest
         }
 
 
-
-
-
         private void PrintSimpleTextButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -80,7 +77,7 @@ namespace POS.WPFTest
             printpriview.Show();
         }
 
-        // <summary>
+        /// <summary>
         /// This method creates a dynamic FlowDocument. You can add anything to this
         /// FlowDocument that you would like to send to the printer
         /// </summary>
@@ -183,6 +180,16 @@ namespace POS.WPFTest
                 {
                     Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
                 };
+            }
+
+            if (type == "End Of Day")
+            {
+                ph = new EndOfDayPrintHelper(_unitofwork);
+            }
+
+            if (type == "Shift")
+            {
+                
             }
         }
     }

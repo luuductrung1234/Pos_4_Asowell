@@ -42,12 +42,20 @@
                              PreviewMouseLeftButtonUp="DemoItemsListBox_PreviewMouseLeftButtonUp">
                         <ListBoxItem x:Name="lbiFoodList"
                                      Content="Food List"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     Visibility="Collapsed"
                                      PreviewMouseLeftButtonUp="lbiFoodList_PreviewMouseLeftButtonUp" />
+                        <ListBoxItem x:Name="lbiEODReport"
+                                     Content="End Of Day Report"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="LbiEODReport_OnPreviewMouseLeftButtonUp" />
                         <ListBoxItem x:Name="lbiSettingTableSize"
                                      Content="Setting Table Size"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="lbiTableSize_PreviewMouseLeftButtonUp" />
                         <ListBoxItem x:Name="lbiChangeTheme"
                                      Content="Setting Theme"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="lbiChangeTheme_PreviewMouseLeftButtonUp" />
                     </ListBox>
                 </DockPanel>

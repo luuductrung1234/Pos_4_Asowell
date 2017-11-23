@@ -22,6 +22,8 @@ namespace POS.Repository.DAL
         private GenericRepository<Ingredient> _ingredientRepository;
         private GenericRepository<Product> _productRepository;
         private GenericRepository<OrderNote> _orderRepository;
+        private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
+        private GenericRepository<ReceiptNote> _receiptNoteRepository;
 
         // business repo
         private GenericRepository<OrderDetailsTemp> _orderDetailsTempRepository;
@@ -40,7 +42,34 @@ namespace POS.Repository.DAL
             context.ChangeDatabase(initalCatalog, dataSource, userId, password);
         }
 
-       
+
+
+
+
+        public GenericRepository<ReceiptNote> ReceiptNoteRepository
+        {
+            get
+            {
+                if (_receiptNoteRepository == null)
+                {
+                    _receiptNoteRepository = new GenericRepository<ReceiptNote>(context);
+                }
+                return _receiptNoteRepository;
+            }
+        }
+
+        public GenericRepository<OrderNoteDetail> OrderDetailsRepository
+        {
+            get
+            {
+                if (_orderDetailsRepository == null)
+                {
+                    _orderDetailsRepository = new GenericRepository<OrderNoteDetail>(context);
+                }
+                return _orderDetailsRepository;
+            }
+        }
+
         public GenericRepository<Table> TableRepository
         {
             get

@@ -60,7 +60,7 @@
                      GotFocus="TabItem_GotFocus">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\Icon\icons8_Restaurant_32px_4.png"
+                        <Image Source="..\Icon\icons8_French_Fries_32px.png"
                                Height="25"
                                Width="25" />
                         <TextBlock Text="Starter"
@@ -110,7 +110,7 @@
                      GotFocus="TabItem_GotFocus">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\Icon\icons8_Restaurant_32px_4.png"
+                        <Image Source="..\Icon\icons8_Meal_32px.png"
                                Height="25"
                                Width="25" />
                         <TextBlock Text="Main"
@@ -160,7 +160,7 @@
                      GotFocus="TabItem_GotFocus">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\Icon\icons8_Restaurant_32px_4.png"
+                        <Image Source="..\Icon\icons8_Quesadilla_32px.png"
                                Height="25"
                                Width="25" />
                         <TextBlock Text="Dessert"

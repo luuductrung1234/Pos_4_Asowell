@@ -18,6 +18,8 @@
                     <TextBlock>Receipt</TextBlock>
                     <TextBlock>Bar</TextBlock>
                     <TextBlock>Kitchen</TextBlock>
+                    <TextBlock>End Of Day</TextBlock>
+                    <TextBlock>Shift</TextBlock>
                 </ComboBox.Items>
             </ComboBox>
             <Button x:Name="BtnPrint"

@@ -39,6 +39,7 @@ namespace POS.Mapping
             Property(x => x.CustomerPay).HasColumnName(@"customer_pay").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.PayBack).HasColumnName(@"pay_back").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.paymentMethod).HasColumnName(@"pay_method").HasColumnType("int").IsRequired();
+            Property(x => x.TotalPriceNonTax).HasColumnType(@"totalPrice_nonTax").HasColumnType("money").HasPrecision(19, 4);
 
             // Foreign keys
             HasOptional(a => a.Customer).WithMany(b => b.OrderNotes).HasForeignKey(c => c.CusId).WillCascadeOnDelete(false); // FK_dbo.OrderNote_dbo.Customer_cus_id

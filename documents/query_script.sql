@@ -886,7 +886,7 @@ insert into [Table]
 	([table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
 values
 (1, 6, 200, 200, 0, 1, 1),
-(2, 4, 100, 100, 0, 1, 1)
+(2, 4, 300, 300, 0, 1, 1)
 
 
 insert into [Chair]
@@ -901,7 +901,7 @@ values
 (1, 2),
 (2, 2),
 (3, 2),
-( 4, 2)
+(4, 2)
 
 insert into [OrderTemp]
 	( [cus_id], [emp_id], [table_owned], [ordertime], [total_price], [customer_pay], [pay_back])
@@ -959,8 +959,7 @@ select * from Employee
 go
 select * from Customer
 go
-select * from Ingredient
-go
+	
 select * from WareHouse
 go 
 select * from Product

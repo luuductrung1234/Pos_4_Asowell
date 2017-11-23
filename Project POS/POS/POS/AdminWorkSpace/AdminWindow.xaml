@@ -41,19 +41,31 @@
                     <ListBox x:Name="DemoItemsListBox"
                              Margin="0 16 0 16"
                              SelectedIndex="0">
-                        <ListBoxItem x:Name="Viewstaticquantity"
-                                     Content="Product Statistic"
-                                     PreviewMouseLeftButtonUp="View_Statistics_Quantity_OnPreviewMouseLeftButtonUp"
-                                     Foreground="White" />
-                        <ListBoxItem x:Name="ViewstaticWH"
-                                     Content="Working Hour Statistic"
-                                     PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
-                                     Foreground="White" />
                         <ListBoxItem x:Name="HomePage"
                                      Content="Home"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="HomePage_OnPreviewMouseLeftButtonUp"
+                                     Foreground="White"/>
+                        <ListBoxItem x:Name="EODReport"
+                                     Content="End Of Day Report"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="EODReport_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
-
+                        <ListBoxItem x:Name="Viewstaticquantity"
+                                     Content="Product Chart"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="View_Statistics_Quantity_OnPreviewMouseLeftButtonUp"
+                                     Foreground="White" />
+                                <ListBoxItem x:Name="ViewstaticWH"
+                                             Content="Working Hour Chart"
+                                             Style="{StaticResource {x:Type ListBoxItem}}"
+                                             PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
+                                             Foreground="White" />
+                                <ListBoxItem x:Name="CreateProduct"
+                                     Content="Create Product"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="CreateProduct_OnPreviewMouseLeftButtonUp"
+                                     Foreground="White" />
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
@@ -121,8 +133,9 @@
                                              Margin="0,578,29,31"
                                              HorizontalAlignment="Right">
                         <StackPanel>
-                            <Button Background="DarkGreen" ToolTip="Employee Infomation"
-                                     Click="EmployeeInfo_onClick">
+                            <Button Background="DarkGreen"
+                                    ToolTip="Employee Infomation"
+                                    Click="EmployeeInfo_onClick">
                                 <materialDesign:PackIcon Kind="AccountCardDetails" />
 
                             </Button>
@@ -130,11 +143,15 @@
                                     ToolTip="Salary">
                                 <materialDesign:PackIcon Kind="Coin" />
                             </Button>
-                            <Button Background="SkyBlue" Click="ProductInfo_onclick"
+                            <Button Background="SkyBlue"
+                                    Click="ProductInfo_onclick"
                                     ToolTip="Product Infomation">
                                 <materialDesign:PackIcon Kind="Food" />
                             </Button>
-                            <Button Background="Red" x:Name="bntCustomer" Click="bntCustomer_Click" ToolTip="Customer Infomation">
+                            <Button Background="Red"
+                                    x:Name="bntCustomer"
+                                    Click="bntCustomer_Click"
+                                    ToolTip="Customer Infomation">
                                 <materialDesign:PackIcon Kind="AccountStar" />
                             </Button>
                             <Button Background="RosyBrown"

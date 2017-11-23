@@ -34,7 +34,7 @@ namespace POS
 
         private void txtUsername_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 txtPass.Focus();
             }
@@ -42,7 +42,7 @@ namespace POS
 
         private async void txtPass_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 string username = txtUsername.Text;
                 string pass = txtPass.Password;

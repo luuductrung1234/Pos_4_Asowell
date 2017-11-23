@@ -65,35 +65,44 @@ namespace POS.EmployeeWorkSpace
             {
                 _unitofwork = new EmployeewsOfAsowell();
             }
-            
-            b = new Table(_unitofwork);
-            d = new Dash();
-            en = new Entry();
-            info = new Info();
-            st = new SettingFoodPage(_unitofwork);
-            stts = new SettingTableSize();
 
-            DispatcherTimer WorkTime = new DispatcherTimer();
-            WorkTime.Tick += WorkTime_Tick;
-            WorkTime.Interval = new TimeSpan(0, 0, 1);
-            WorkTime.Start();
-
-            initProgressTableChair();
-
-            this.Loaded += (sender, args) =>
+            try
             {
-                bntTable.IsEnabled = true;
-                bntDash.IsEnabled = false;
-                bntEntry.IsEnabled = true;
-                bntInfo.IsEnabled = true;
-                myFrame.Navigate(d);
-            };
+                b = new Table(_unitofwork);
+                d = new Dash();
+                en = new Entry();
+                info = new Info();
+                st = new SettingFoodPage(_unitofwork);
+                stts = new SettingTableSize();
 
-            this.Closing += (sender, args) =>
+                DispatcherTimer WorkTime = new DispatcherTimer();
+                WorkTime.Tick += WorkTime_Tick;
+                WorkTime.Interval = new TimeSpan(0, 0, 1);
+                WorkTime.Start();
+
+                initProgressTableChair();
+
+
+                this.Loaded += (sender, args) =>
+                {
+                    bntTable.IsEnabled = true;
+                    bntDash.IsEnabled = false;
+                    bntEntry.IsEnabled = true;
+                    bntInfo.IsEnabled = true;
+                    myFrame.Navigate(d);
+                };
+
+                this.Closing += (sender, args) =>
+                {
+                    WorkTime.Stop();
+                    _unitofwork.Dispose();
+                };
+
+            }
+            catch (Exception ex)
             {
-                WorkTime.Stop();
-                _unitofwork.Dispose();
-            };
+                Console.WriteLine(ex);
+            }
         }
 
         public void initProgressTableChair()
@@ -105,15 +114,15 @@ namespace POS.EmployeeWorkSpace
 
             foreach (Entities.Table t in _unitofwork.TableRepository.Get().ToList())
             {
-                if(t.ChairAmount != 0)
+                if (t.ChairAmount != 0)
                 {
                     var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(t.TableId)).ToList();
-                    if(chairoftable.Count != 0)
+                    if (chairoftable.Count != 0)
                     {
-                        foreach(var ch in chairoftable)
+                        foreach (var ch in chairoftable)
                         {
                             var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(ch.ChairId)).ToList();
-                            if(chairorderdetailstemp.Count != 0)
+                            if (chairorderdetailstemp.Count != 0)
                             {
                                 proChair.Value += 1;
                                 proChair.Maximum += 1;
@@ -156,15 +165,15 @@ namespace POS.EmployeeWorkSpace
             fm = timer.Minutes.ToString();
             fs = timer.Seconds.ToString();
 
-            if(timer.Hours < 10)
+            if (timer.Hours < 10)
             {
                 fH = "0" + timer.Hours;
             }
-            if(timer.Minutes < 10)
+            if (timer.Minutes < 10)
             {
                 fm = "0" + timer.Minutes;
             }
-            if(timer.Seconds < 10)
+            if (timer.Seconds < 10)
             {
                 fs = "0" + timer.Seconds;
             }
@@ -310,6 +319,10 @@ namespace POS.EmployeeWorkSpace
             chtm = new ChangeThemePage();
             chtm.Show();
         }
-        
+
+        private void LbiEODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

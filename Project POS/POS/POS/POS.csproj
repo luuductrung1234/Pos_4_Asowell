@@ -243,8 +243,12 @@
     <Compile Include="Helper\PrintHelper\Report\OrderNoteReport.cs" />
     <Compile Include="Helper\PrintHelper\Report\ReceiptNoteReport.cs" />
     <Compile Include="Helper\PrintHelper\Report\SalaryNoteReport.cs" />
+    <Compile Include="Helper\PrintHelper\ShiftPrintHelper.cs" />
     <Compile Include="WareHouseWorkSpace\IngredientPage.xaml.cs">
       <DependentUpon>IngredientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WareHouseWorkSpace\InputReceiptNote.xaml.cs">
+      <DependentUpon>InputReceiptNote.xaml</DependentUpon>
     </Compile>
     <Compile Include="WareHouseWorkSpace\LiveChartReceiptPage.xaml.cs">
       <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
@@ -403,6 +407,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WareHouseWorkSpace\IngredientPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WareHouseWorkSpace\InputReceiptNote.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
