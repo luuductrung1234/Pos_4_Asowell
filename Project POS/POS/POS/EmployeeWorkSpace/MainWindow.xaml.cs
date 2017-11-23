@@ -52,7 +52,7 @@ namespace POS.EmployeeWorkSpace
             proTable = pgbReservedTable as ProgressBar;
             proChair = pgbReservedChair as ProgressBar;
 
-            cUser.Content = emp.Username;
+            cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
 
             if ((App.Current.Properties["IsConfigDB"] as string).Equals("true"))
             {
@@ -240,6 +240,17 @@ namespace POS.EmployeeWorkSpace
             bntInfo.IsEnabled = true;
         }
 
+        private void btnEndWorking_Click(object sender, RoutedEventArgs e)
+        {
+            if(App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                return;
+            }
+
+            App.Current.Properties["CurrentEmpWorking"] = null;
+            cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+        }
+
         private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
         {
             AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 1);
@@ -299,6 +310,6 @@ namespace POS.EmployeeWorkSpace
             chtm = new ChangeThemePage();
             chtm.Show();
         }
-
+        
     }
 }

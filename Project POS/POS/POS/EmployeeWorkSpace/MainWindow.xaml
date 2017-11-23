@@ -83,6 +83,10 @@
                             </materialDesign:PopupBox.ToggleContent>
 
                             <StackPanel>
+                                <Button x:Name="btnEndWorking"
+                                        Content="End Working"
+                                        Click="btnEndWorking_Click" />
+                                <Separator />
                                 <Button x:Name="btnOtherEmp"
                                         Content="Other Employee"
                                         Click="btnOtherEmp_Click" />

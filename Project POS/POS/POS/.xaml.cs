@@ -155,7 +155,6 @@ namespace POS
                         if (!isFoundAd)
                         {
                             MessageBox.Show("incorrect username or password");
-                            txtUsername.Focus();
                             return;
                         }
                     }

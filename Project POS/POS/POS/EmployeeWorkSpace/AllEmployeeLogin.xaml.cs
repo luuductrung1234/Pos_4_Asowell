@@ -28,12 +28,13 @@ namespace POS.EmployeeWorkSpace
         MaterialDesignThemes.Wpf.Chip _cUser;
         private DispatcherTimer LoadForm;
         private bool IsShow = false;
-        private int _typeshow = 0;
+        private int _typeshow = 0; //1: login, 2: logout, 3: details, 4: start working
 
         public AllEmployeeLogin(EmployeewsOfAsowell unitofwork, MaterialDesignThemes.Wpf.Chip cUser, int typeshow)
         {
             _unitofwork = unitofwork;
             _employee = _unitofwork.EmployeeRepository.Get(x => x.Deleted == 0).ToList();
+
             _cUser = cUser;
             _typeshow = typeshow;
             InitializeComponent();
@@ -45,6 +46,11 @@ namespace POS.EmployeeWorkSpace
             LoadForm = new DispatcherTimer();
             LoadForm.Tick += LoadForm_Tick;
             LoadForm.Interval = new TimeSpan(0, 0, 0, 0, 1);
+
+            this.Closing += (sender, args) =>
+            {
+                this.DialogResult = false;
+            };
         }
 
         private void AllEmployeeLogin_Loaded(object sender, RoutedEventArgs e)
@@ -82,10 +88,12 @@ namespace POS.EmployeeWorkSpace
             btnLoginNew.Visibility = Visibility.Collapsed;
             btnLogout.Visibility = Visibility.Collapsed;
             btnView.Visibility = Visibility.Collapsed;
+            btnStart.Visibility = Visibility.Collapsed;
             //left control
             btnAcceptLogin.Visibility = Visibility.Collapsed;
             btnAcceptLogout.Visibility = Visibility.Collapsed;
             btnAcceptView.Visibility = Visibility.Collapsed;
+            btnAcceptStart.Visibility = Visibility.Collapsed;
             btnAcceptCancel.Visibility = Visibility.Collapsed;
 
             foreach (var e in EmpLoginListData.emploglist)
@@ -107,18 +115,25 @@ namespace POS.EmployeeWorkSpace
                 btnAcceptLogin.Visibility = Visibility.Visible;
                 btnAcceptCancel.Visibility = Visibility.Visible;
             }
-            if(_typeshow == 2)//details
+            else if(_typeshow == 2)//details
             {
                 btnView.Visibility = Visibility.Visible;
                 
                 btnAcceptView.Visibility = Visibility.Visible;
                 btnAcceptCancel.Visibility = Visibility.Visible;
             }
-            if(_typeshow == 3)//logout
+            else if(_typeshow == 3)//logout
             {
                 btnLogout.Visibility = Visibility.Visible;
 
                 btnAcceptLogout.Visibility = Visibility.Visible;
+                btnAcceptCancel.Visibility = Visibility.Visible;
+            }
+            else if(_typeshow == 4)//start
+            {
+                btnStart.Visibility = Visibility.Visible;
+
+                btnAcceptStart.Visibility = Visibility.Visible;
                 btnAcceptCancel.Visibility = Visibility.Visible;
             }
         }
@@ -135,6 +150,28 @@ namespace POS.EmployeeWorkSpace
             lvLoginList.UnselectAll();
             txbLabel.Text = "Login Another";
             setControl(true);
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            _emplog = lvLoginList.SelectedItem as EmpLoginList;
+            if (_emplog == null)
+            {
+                MessageBox.Show("Please choose one employee want to start working!");
+                return;
+            }
+
+            if (this.Width == 500)
+            {
+                IsShow = false;
+                LoadForm.Start();
+            }
+
+            spLoginAnother.Visibility = Visibility.Visible;
+            lvLoginList.UnselectAll();
+            txbLabel.Text = "Start Working";
+            setControl(false);
+            txtUsername.Text = _emplog.Emp.Username;
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
@@ -231,6 +268,18 @@ namespace POS.EmployeeWorkSpace
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private void btnAcceptStart_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+            {
+                MessageBox.Show("Login fail! Please try again!");
+                return;
+            }
+
+            App.Current.Properties["CurrentEmpWorking"] = _emplog;
+            _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
         }
 
         private void btnAcceptView_Click(object sender, RoutedEventArgs e)
@@ -413,6 +462,7 @@ namespace POS.EmployeeWorkSpace
                 txtPass.Password = "";
             }
         }
+        
     }
 
     public class EmpLoginList

@@ -14,6 +14,7 @@ using POS.BusinessModel;
 using POS.Repository.DAL;
 using System.Linq;
 using System.Windows.Media.Effects;
+using POS.Entities;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -192,7 +193,7 @@ namespace POS.EmployeeWorkSpace
                 {
                     rec.Fill = Brushes.Red;
                 }
-                
+
                 rec.MouseMove += btnTableAdded_MouseMove;
                 rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
@@ -493,12 +494,13 @@ namespace POS.EmployeeWorkSpace
             int clicks = ClickAttach.GetClicks(ctrl);
             ClickAttach.SetClicks(ctrl, 0);
             if (clicks == 2)
+            {
+                AllEmployeeLogin ael;
+                Entities.Table founded = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(rec.Name.Substring(5)))).First();
+                if (founded == null)
                 {
-                    Entities.Table founded = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(rec.Name.Substring(5)))).First();
-                    if (founded == null)
-                    {
-                        return;
-                    }
+                    return;
+                }
 
                 if (founded.IsPinned == 0)
                 {
@@ -511,32 +513,18 @@ namespace POS.EmployeeWorkSpace
                             return;
                         }
 
-                        founded.IsPinned = 1;
-                        var ordertempcurrenttable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(founded.TableId)).First();
-                        if (ordertempcurrenttable != null)
+                        if(App.Current.Properties["CurrentEmpWorking"] != null)
                         {
-                            ordertempcurrenttable.EmpId = (App.Current.Properties["EmpLogin"] as Entities.Employee).EmpId;
+                            navigateToOrder((App.Current.Properties["CurrentEmpWorking"] as EmpLoginList), rec, founded);
                         }
 
-                        rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
-                        rec.MouseMove -= btnTableAdded_MoveDrag;
-                        rec.Opacity = 1;
-                        rec.Cursor = Cursors.Arrow;
-                        rec.Fill = Brushes.DarkCyan;
-                        rec.SetValue(BitmapEffectProperty, recShadowOrdered);
+                        ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael.ShowDialog();
 
-                        //pass
-                        ((MainWindow)Window.GetWindow(this)).currentTable = founded;
-                        var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
-                        ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
-                        orderControl.ucOrder.RefreshControl(_unitofwork, founded);
-                        ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
-                        ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
-                        ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
-                        ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
-
-                        _unitofwork.TableRepository.Update(founded);
-                        _unitofwork.Save();
+                        if (!(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username.Equals(((MainWindow)Window.GetWindow(this)).cUser.Content))
+                        {
+                            navigateToOrder((App.Current.Properties["CurrentEmpWorking"] as EmpLoginList), rec, founded);
+                        }
                     }
                 }
                 else
@@ -547,24 +535,10 @@ namespace POS.EmployeeWorkSpace
                         return;
                     }
 
-                    rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
-                    rec.MouseMove -= btnTableAdded_MoveDrag;
-                    rec.Opacity = 1;
-                    rec.Cursor = Cursors.Arrow;
-                    rec.Fill = Brushes.DarkCyan;
-                    rec.SetValue(BitmapEffectProperty, recShadowOrdered);
+                    ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                    ael.ShowDialog();
 
-                    MessageBox.Show("Go to order with table " + founded.TableNumber);
-
-                    //pass
-                    ((MainWindow)Window.GetWindow(this)).currentTable = founded;
-                    var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
-                    ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
-                    orderControl.ucOrder.RefreshControl(_unitofwork, founded);
-                    ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
-                    ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
-                    ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
-                    ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
+                    navigateToOrder((App.Current.Properties["CurrentEmpWorking"] as EmpLoginList), rec, founded);
                 }
             }
         }
@@ -907,6 +881,37 @@ namespace POS.EmployeeWorkSpace
             }
 
             return "";
+        }
+
+        private void navigateToOrder(EmpLoginList currentEmp, Rectangle rec, Entities.Table founded)
+        {
+            var ordertempcurrenttable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(founded.TableId)).First();
+            if (ordertempcurrenttable != null)
+            {
+                ordertempcurrenttable.EmpId = (App.Current.Properties["EmpLogin"] as Entities.Employee).EmpId;
+            }
+
+            rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
+            rec.MouseMove -= btnTableAdded_MoveDrag;
+            rec.Opacity = 1;
+            rec.Cursor = Cursors.Arrow;
+            rec.Fill = Brushes.DarkCyan;
+            rec.SetValue(BitmapEffectProperty, recShadowOrdered);
+
+            founded.IsPinned = 1;
+
+            //pass
+            ((MainWindow)Window.GetWindow(this)).currentTable = founded;
+            var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
+            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
+            orderControl.ucOrder.RefreshControl(_unitofwork, founded);
+            ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
+            ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
+            ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
+            ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
+
+            _unitofwork.TableRepository.Update(founded);
+            _unitofwork.Save();
         }
 
     }
