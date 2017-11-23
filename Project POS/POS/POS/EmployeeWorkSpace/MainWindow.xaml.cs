@@ -300,5 +300,14 @@ namespace POS.EmployeeWorkSpace
             chtm.Show();
         }
 
+        private void LbiEODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void LbiShiftReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace POS.Entities.CustomEntities
         Cheque,             // trả sec
         Deferred,           // trả sau
         International,      // thanh toán quốc tế (VISA, MasterCard)
-        Credit              // tín dụng nói chung
+        Credit,             // tín dụng nói chung
+        OnAcount
     }
 }

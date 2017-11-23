@@ -243,6 +243,7 @@
     <Compile Include="Helper\PrintHelper\Report\OrderNoteReport.cs" />
     <Compile Include="Helper\PrintHelper\Report\ReceiptNoteReport.cs" />
     <Compile Include="Helper\PrintHelper\Report\SalaryNoteReport.cs" />
+    <Compile Include="Helper\PrintHelper\ShiftPrintHelper.cs" />
     <Compile Include="WareHouseWorkSpace\IngredientPage.xaml.cs">
       <DependentUpon>IngredientPage.xaml</DependentUpon>
     </Compile>

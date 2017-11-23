@@ -124,5 +124,15 @@ namespace POS.AdminWorkSpace
             homePage=new HomePage(_unitowork);
             myframe.Navigate(homePage);
         }
+
+        private void EODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CreateProduct_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
