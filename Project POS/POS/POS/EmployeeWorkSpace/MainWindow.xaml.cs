@@ -240,13 +240,13 @@ namespace POS.EmployeeWorkSpace
             bntInfo.IsEnabled = true;
         }
 
-        private void btnEmpDetail_Click(object sender, RoutedEventArgs e)
+        private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
         {
             AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 1);
             ael.ShowDialog();
         }
 
-        private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
+        private void btnEmpDetail_Click(object sender, RoutedEventArgs e)
         {
             AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 2);
             ael.ShowDialog();
