@@ -8,6 +8,6 @@ namespace POS.Entities
 {
     public partial class Employee
     {
-        public int empCode { get; set; }    //emp_code
+        public int? empCode { get; set; }    //emp_code
     }
 }
