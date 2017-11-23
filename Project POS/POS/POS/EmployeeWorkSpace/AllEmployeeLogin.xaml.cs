@@ -306,16 +306,10 @@ namespace POS.EmployeeWorkSpace
 
             spLoginAnother.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
-            txbLabel.Text = "Login Another";
             txtUsername.IsEnabled = true;
             txtPass.IsEnabled = true;
             txtUsername.Text = "";
             txtPass.Password = "";
-
-            btnAcceptLogin.Visibility = Visibility.Collapsed;
-            btnAcceptLogout.Visibility = Visibility.Collapsed;
-            btnAcceptView.Visibility = Visibility.Collapsed;
-            btnAcceptCancel.Visibility = Visibility.Collapsed;
         }
 
         private async Task Async(string username, string pass, EmpLoginList empout)
