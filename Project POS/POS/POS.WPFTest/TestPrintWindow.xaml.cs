@@ -29,7 +29,7 @@ namespace POS.WPFTest
             InitializeComponent();
 
             _unitofwork = new EmployeewsOfAsowell();
-            curTable = _unitofwork.TableRepository.Get(x => x.TableId == 5).First();
+            curTable = _unitofwork.TableRepository.Get(x => x.TableId == 1).First();
         }
 
 

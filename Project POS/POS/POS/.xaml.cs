@@ -6,6 +6,7 @@ using System.Windows;
 using POS.Entities;
 using POS.Repository.DAL;
 using POS.EmployeeWorkSpace;
+using System.Windows.Input;
 
 namespace POS
 {
@@ -21,13 +22,45 @@ namespace POS
             _unitempofwork = new EmployeewsOfAsowell();
             InitializeComponent();
 
+            txtUsername.Focus();
+
             this.WindowState = WindowState.Normal;
+            this.ResizeMode = ResizeMode.NoResize;
 
             this.Closing += Closing_LoginWindos;
 
             App.Current.Properties["IsConfigDB"] = "";
         }
 
+        private void txtUsername_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                txtPass.Focus();
+            }
+        }
+
+        private async void txtPass_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string username = txtUsername.Text;
+                string pass = txtPass.Password;
+                try
+                {
+                    btnLogin.IsEnabled = false;
+                    PgbLoginProcess.Visibility = Visibility.Visible;
+                    await LoginAsync(username, pass);
+
+                    btnLogin.IsEnabled = true;
+                    PgbLoginProcess.Visibility = Visibility.Collapsed;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -158,5 +191,6 @@ namespace POS
         {
             _unitempofwork.Dispose();
         }
+
     }
 }

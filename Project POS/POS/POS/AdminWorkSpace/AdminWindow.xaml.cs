@@ -52,6 +52,8 @@ namespace POS.AdminWorkSpace
             receiptnotepage = new ReceiptNotePage(_unitowork);
             FoodPage=new statisticsFoodPage(_unitowork);
             statisticsWorkingHourPage=new StatisticsWorkingHourPage(_unitowork);
+            homePage = new HomePage(_unitowork);
+            myframe.Navigate(homePage);
             Closing += AdminWindow_Closing;
         }
 
@@ -121,7 +123,7 @@ namespace POS.AdminWorkSpace
 
         private void HomePage_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            homePage=new HomePage(_unitowork);
+            
             myframe.Navigate(homePage);
         }
 

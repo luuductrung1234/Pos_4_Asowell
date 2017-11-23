@@ -56,17 +56,16 @@
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="View_Statistics_Quantity_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
-                        <ListBoxItem x:Name="ViewstaticWH"
-                                     Content="Working Hour Chart"
-                                     Style="{StaticResource {x:Type ListBoxItem}}"
-                                     PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
-                                     Foreground="White" />
-                        <ListBoxItem x:Name="CreateProduct"
+                                <ListBoxItem x:Name="ViewstaticWH"
+                                             Content="Working Hour Chart"
+                                             Style="{StaticResource {x:Type ListBoxItem}}"
+                                             PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
+                                             Foreground="White" />
+                                <ListBoxItem x:Name="CreateProduct"
                                      Content="Create Product"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="CreateProduct_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
-
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
