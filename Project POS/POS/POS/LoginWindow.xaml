@@ -7,96 +7,116 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:support="clr-namespace:POS.Support"
         mc:Ignorable="d"
         Title="Login"
         Height="400"
-        Width="400"
+        Width="405.176"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="201*" />
-            <RowDefinition Height="169*" />
-        </Grid.RowDefinitions>
-        <materialDesign:ColorZone Mode="PrimaryMid"
-                                  BorderBrush="Black"
-                                  BorderThickness="1"
-                                  HorizontalAlignment="Left"
-                                  Height="53"
-                                  Margin="88,51,0,0"
-                                  VerticalAlignment="Top"
-                                  Width="223">
+    <StackPanel Orientation="Horizontal">
 
-            <TextBlock Text="Login Form"
-                       FontSize="35"
-                       TextAlignment="Center" />
-        </materialDesign:ColorZone>
-        <TextBlock x:Name="txbUserName"
-                   HorizontalAlignment="Left"
-                   Margin="51,160,0,0"
-                   TextWrapping="Wrap"
-                   VerticalAlignment="Top"
-                   Text="User Name"
-                   FontSize="15" />
-        <TextBlock x:Name="txbPass"
-                   HorizontalAlignment="Left"
-                   Margin="51,10.4,0,0"
-                   TextWrapping="Wrap"
-                   Text="Password"
-                   VerticalAlignment="Top"
-                   Grid.Row="1"
-                   FontSize="15" />
-        <TextBox x:Name="txtUsername"
-                 HorizontalAlignment="Left"
-                 Height="25"
-                 Margin="191,153,0,0"
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top"
-                 Width="147"
-                 KeyDown="txtUsername_KeyDown"/>
-        <PasswordBox x:Name="txtPass"
+
+        <Grid x:Name="gNormalLoginForm">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="201*" />
+                <RowDefinition Height="169*" />
+            </Grid.RowDefinitions>
+            <materialDesign:ColorZone Mode="PrimaryMid"
+                                      BorderBrush="Black"
+                                      BorderThickness="1"
+                                      HorizontalAlignment="Left"
+                                      Height="53"
+                                      Margin="88,51,0,0"
+                                      VerticalAlignment="Top"
+                                      Width="223">
+
+                <TextBlock Text="Login Form"
+                           FontSize="35"
+                           TextAlignment="Center" />
+            </materialDesign:ColorZone>
+            <TextBlock x:Name="txbUserName"
+                       HorizontalAlignment="Left"
+                       Margin="51,160,0,0"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Top"
+                       Text="User Name"
+                       FontSize="15" />
+            <TextBlock x:Name="txbPass"
+                       HorizontalAlignment="Left"
+                       Margin="51,10.4,0,0"
+                       TextWrapping="Wrap"
+                       Text="Password"
+                       VerticalAlignment="Top"
+                       Grid.Row="1"
+                       FontSize="15" />
+            <TextBox x:Name="txtUsername"
                      HorizontalAlignment="Left"
                      Height="25"
-                     Margin="191,7.4,0,0"
+                     Margin="191,153,0,0"
+                     TextWrapping="Wrap"
                      VerticalAlignment="Top"
                      Width="147"
+                     KeyDown="txtUsername_KeyDown" />
+            <Button Margin="343,153,4,15"
+                    Width="50"
+                    Style="{DynamicResource MaterialDesignFlatButton}"
+                    Click="Button_Click">
+                <materialDesign:PackIcon Kind="AccountKey"
+                                         Foreground="DarkOrange"
+                                         HorizontalAlignment="Center" />
+            </Button>
+            <PasswordBox x:Name="txtPass"
+                         HorizontalAlignment="Left"
+                         Height="25"
+                         Margin="191,7.4,0,0"
+                         VerticalAlignment="Top"
+                         Width="147"
+                         Grid.Row="1"
+                         KeyDown="txtPass_KeyDown" />
+            <Button  x:Name="btnLogin"
+                     HorizontalAlignment="Left"
+                     Margin="51,89.4,0,0"
+                     VerticalAlignment="Top"
+                     Width="75"
                      Grid.Row="1"
-                     KeyDown="txtPass_KeyDown"/>
-        <Button  x:Name="btnLogin"
-                 HorizontalAlignment="Left"
-                 Margin="51,89.4,0,0"
-                 VerticalAlignment="Top"
-                 Width="75"
-                 Grid.Row="1"
-                 Click="btnLogin_Click">
-            Login
-        </Button>
-        <Button Style="{DynamicResource MaterialDesignFloatingActionButton}"
-                Foreground="Yellow"
-                x:Name="btnDatabase"
-                HorizontalAlignment="Left"
-                Margin="191,89.4,0,0"
-                VerticalAlignment="Top"
-                Width="38"
-                Grid.Row="1"
-                Height="32"
-                Click="btnDatabase_Click">
-            <materialDesign:PackIcon Kind="Database"
-                                     Foreground="Black" />
-            <Button.ToolTip>
-                Database Configuration
-            </Button.ToolTip>
-        </Button>
-        <ProgressBar x:Name="PgbLoginProcess"
-                     Style="{StaticResource MaterialDesignCircularProgressBar}"
-                     Value="0"
-                     Maximum="100"
-                     Width="Auto"
-                     Height="Auto"
-                     IsIndeterminate="True"
-                     Margin="293,89,69,48"
-                     Grid.Row="1" 
-                     Visibility="Hidden"/>
-    </Grid>
+                     Click="btnLogin_Click">
+                Login
+            </Button>
+            <Button Style="{DynamicResource MaterialDesignFloatingActionButton}"
+                    Foreground="Yellow"
+                    x:Name="btnDatabase"
+                    HorizontalAlignment="Left"
+                    Margin="191,89.4,0,0"
+                    VerticalAlignment="Top"
+                    Width="38"
+                    Grid.Row="1"
+                    Height="32"
+                    Click="btnDatabase_Click">
+                <materialDesign:PackIcon Kind="Database"
+                                         Foreground="Black" />
+                <Button.ToolTip>
+                    Database Configuration
+                </Button.ToolTip>
+            </Button>
+            <ProgressBar x:Name="PgbLoginProcess"
+                         Style="{StaticResource MaterialDesignCircularProgressBar}"
+                         Value="0"
+                         Maximum="100"
+                         Width="Auto"
+                         Height="Auto"
+                         IsIndeterminate="True"
+                         Margin="293,89,69,48"
+                         Grid.Row="1"
+                         Visibility="Hidden" />
+        </Grid>
+
+        <StackPanel>
+            <support:KeyboardControl 
+                x:Name="kbcEmpCodeLoginForm"
+                Height="369"
+                                     Width="397"></support:KeyboardControl>
+        </StackPanel>
+    </StackPanel>
 </Window>

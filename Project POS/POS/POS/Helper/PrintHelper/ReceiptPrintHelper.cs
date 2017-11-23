@@ -279,7 +279,7 @@ namespace POS.Helper.PrintHelper
                 else
                 {
                     ColumnDefinition otherCol = new ColumnDefinition();
-                    otherCol.Width = new GridLength(70);
+                    otherCol.Width = new GridLength(65);
                     dgDataTable.ColumnDefinitions.Add(otherCol);
                     continue;
                 }
