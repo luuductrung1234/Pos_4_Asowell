@@ -185,6 +185,9 @@
     <Compile Include="AdminWorkSpace\ReportOptionDialog.xaml.cs">
       <DependentUpon>ReportOptionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\ReportSalaryOptionDialog.xaml.cs">
+      <DependentUpon>ReportSalaryOptionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\SalaryPage.xaml.cs">
       <DependentUpon>SalaryPage.xaml</DependentUpon>
     </Compile>
@@ -344,6 +347,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\ReportOptionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\ReportSalaryOptionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -215,7 +215,7 @@ namespace POS.AdminWorkSpace
 
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
         {
-            var optionDialog = new ReportOptionDialog(new SalaryNoteReport(), _unitofwork);
+            var optionDialog = new ReportSalaryOptionDialog(new SalaryNoteReport(), _unitofwork);
             optionDialog.Show();
         }
     }
