@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using POS.Helper.PrintHelper;
 
 namespace POS.AdminWorkSpace
 {
@@ -129,7 +130,8 @@ namespace POS.AdminWorkSpace
 
         private void EODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            var printer = new DoPrintHelper(new EmployeewsOfAsowell(), DoPrintHelper.Eod_Printing, null);
+            printer.DoPrint();
         }
 
         private void CreateProduct_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

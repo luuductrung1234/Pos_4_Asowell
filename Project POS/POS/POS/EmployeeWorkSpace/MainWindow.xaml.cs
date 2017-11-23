@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Windows.Controls;
+using POS.Helper.PrintHelper;
 using Chair = POS.BusinessModel.Chair;
 
 namespace POS.EmployeeWorkSpace
@@ -322,7 +323,8 @@ namespace POS.EmployeeWorkSpace
 
         private void LbiEODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Eod_Printing, null);
+            printer.DoPrint();
         }
     }
 }

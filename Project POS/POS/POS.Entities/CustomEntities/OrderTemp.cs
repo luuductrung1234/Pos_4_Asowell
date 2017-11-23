@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace POS.Entities
 {
-    public partial class OrderNote
+    public partial class OrderTemp
     {
-        public int paymentMethod { get; set; }    // pay_method
-        public decimal TotalPriceNonTax { get; set; }  // totalPrice_nonTax
         public string SubEmpId { get; set; }    // subEmp_id
     }
 }

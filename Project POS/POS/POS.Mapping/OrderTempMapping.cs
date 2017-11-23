@@ -38,6 +38,7 @@ namespace POS.Mapping
             Property(x => x.TotalPrice).HasColumnName(@"total_price").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.CustomerPay).HasColumnName(@"customer_pay").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.PayBack).HasColumnName(@"pay_back").HasColumnType("money").IsRequired().HasPrecision(19,4);
+            Property(x => x.SubEmpId).HasColumnName(@"subEmp_id").HasColumnType("varchar").IsUnicode(false).IsOptional().HasMaxLength(200);
 
             // Foreign keys
             HasOptional(a => a.Table).WithMany(b => b.OrderTemps).HasForeignKey(c => c.TableOwned).WillCascadeOnDelete(false); // fk_table_owned_order

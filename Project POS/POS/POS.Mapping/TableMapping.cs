@@ -38,6 +38,7 @@ namespace POS.Mapping
             Property(x => x.IsPinned).HasColumnName(@"is_Pinned").HasColumnType("int").IsRequired();
             Property(x => x.IsOrdered).HasColumnName(@"is_Ordered").HasColumnType("int").IsRequired();
             Property(x => x.IsLocked).HasColumnName(@"is_Locked").HasColumnType("int").IsRequired();
+            Property(x => x.IsPrinted).HasColumnName(@"is_Printed").HasColumnType("int").IsRequired();
             Ignore(x => x.TableRec);
             InitializePartial();
         }
