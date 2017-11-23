@@ -63,10 +63,13 @@
     <Compile Include="Chair.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomEntities\Employee.cs" />
     <Compile Include="CustomEntities\OrderNote.cs" />
+    <Compile Include="CustomEntities\OrderTemp.cs" />
     <Compile Include="CustomEntities\PaymentMethod.cs" />
     <Compile Include="CustomEntities\Product.cs" />
     <Compile Include="CustomEntities\ProductType.cs" />
+    <Compile Include="CustomEntities\Table.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>

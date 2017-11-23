@@ -883,10 +883,10 @@ values
 --SET IDENTITY_INSERT [OrderDetailsTemp] ON
 
 insert into [Table]
-	([table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned])
+	([table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned], [is_Printed])
 values
-(1, 6, 200, 200, 0, 1, 1),
-(2, 4, 300, 300, 0, 1, 1)
+(1, 6, 200, 200, 0, 1, 1, 0),
+(2, 4, 300, 300, 0, 1, 1, 0)
 
 
 insert into [Chair]

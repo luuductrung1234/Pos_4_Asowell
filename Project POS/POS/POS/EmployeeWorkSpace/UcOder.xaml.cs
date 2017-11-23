@@ -8,8 +8,10 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using NPOI.SS.Formula.Functions;
 using POS.BusinessModel;
 using POS.Entities;
+using POS.Helper.PrintHelper;
 using POS.Repository.DAL;
 using Chair = POS.BusinessModel.Chair;
 
@@ -611,21 +613,77 @@ namespace POS.EmployeeWorkSpace
 
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
+            if (currentTable == null)
+                return;
+
+
             // printing
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, null);
+            printer.DoPrint();
 
-            // add data to database
-            ordertemptable.CustomerPay = ordertemptable.TotalPrice;
-            ordertemptable.PayBack = 0;
-            _unitofwork.OrderTempRepository.Update(ordertemptable);
-            _unitofwork.Save();
+            //// add data to database
+            //ordertemptable.CustomerPay = ordertemptable.TotalPrice;
+            //ordertemptable.PayBack = 0;
+            //_unitofwork.OrderTempRepository.Update(ordertemptable);
+            //_unitofwork.Save();
 
-            // clean the old table data
-            ClearTheTable();
+            //// clean the old table data
+            //ClearTheTable();
         }
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
-            // printing (with business process in restaurant)
+            if (currentTable == null)
+                return;
+
+            // printing
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, null);
+            printer.DoPrint();
+
+            // update IsPrinted for Table's Order
+        }
+
+        private void BtnGo_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (currentTable == null)
+                return;
+
+            // check order
+            bool isHaveDrink = false;
+            int orderCount = 0;
+            var chairQuery = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId));
+            foreach (var chair in chairQuery)
+            {
+                var orderDetailsQuery =
+                    _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(chair.ChairId));
+                orderCount += orderDetailsQuery.Count();
+                foreach (var details in orderDetailsQuery)
+                {
+                    if (details.SelectedStats == "Drink")
+                    {
+                        isHaveDrink = true;
+                        break;
+                    } 
+                }
+
+                if (isHaveDrink)
+                    break;
+            }
+
+            if (orderCount == 0)
+                return;
+
+            // printing
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Kitchen_Printing, currentTable);
+            printer.DoPrint();
+            if (isHaveDrink)
+            {
+                printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Bar_Printing, currentTable);
+                printer.DoPrint();
+            }
+            
+
+            // update IsPrinted for Table's Order
         }
 
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
