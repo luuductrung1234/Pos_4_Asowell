@@ -250,6 +250,23 @@ namespace POS.EmployeeWorkSpace
             bntInfo.IsEnabled = true;
         }
 
+        private void btnStartWorking_Click(object sender, RoutedEventArgs e)
+        {
+            if(App.Current.Properties["AdLogin"] != null)
+            {
+                return;
+            }
+
+            if(App.Current.Properties["CurrentEmpWorking"] != null)
+            {
+                MessageBox.Show("It's have some employee on working! Please wait!");
+                return;
+            }
+
+            AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 4);
+            ael.ShowDialog();
+        }
+
         private void btnEndWorking_Click(object sender, RoutedEventArgs e)
         {
             if(App.Current.Properties["AdLogin"] != null)
@@ -258,8 +275,10 @@ namespace POS.EmployeeWorkSpace
 
                 if(App.Current.Properties["CurrentEmpWorking"] != null)
                 {
-                    cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as Employee).Username;
+                    cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
                 }
+
+                return;
             }
 
             if (App.Current.Properties["CurrentEmpWorking"] == null)
@@ -268,23 +287,41 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            App.Current.Properties["CurrentEmpWorking"] = null;
+            if(App.Current.Properties["CurrentEmpWorking"] != null)
+            {
+                App.Current.Properties["CurrentEmpWorking"] = null;
+            }
         }
 
         private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["AdLogin"] != null)
+            {
+                return;
+            }
+
             AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 1);
             ael.ShowDialog();
         }
 
         private void btnEmpDetail_Click(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["AdLogin"] != null)
+            {
+                return;
+            }
+
             AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 2);
             ael.ShowDialog();
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["AdLogin"] != null)
+            {
+                return;
+            }
+
             AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 3);
             ael.ShowDialog();
 
@@ -336,5 +373,6 @@ namespace POS.EmployeeWorkSpace
             var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Eod_Printing, null);
             printer.DoPrint();
         }
+        
     }
 }
