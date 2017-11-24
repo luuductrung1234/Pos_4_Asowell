@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using POS.EmployeeWorkSpace;
 using POS.Entities;
 using POS.Repository.DAL;
@@ -91,6 +82,9 @@ namespace POS.Support
 
         private void BtnBackSpace_Click(object sender, RoutedEventArgs e)
         {
+            if (TxtInputValue.Text.Length == 0)
+                return;
+
             TxtInputValue.Text = TxtInputValue.Text.Remove(TxtInputValue.Text.Length - 1);
         }
 
@@ -103,7 +97,17 @@ namespace POS.Support
             if (parent == null)
                 return;
 
-            int code = int.Parse(TxtInputValue.Text);
+            int code;
+            try
+            {
+                code = int.Parse(TxtInputValue.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Incorrect input!");
+                return;
+            }
+            
             try
             {
                 BtnLogin.IsEnabled = false;

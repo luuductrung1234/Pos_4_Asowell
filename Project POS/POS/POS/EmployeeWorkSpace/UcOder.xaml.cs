@@ -673,15 +673,22 @@ namespace POS.EmployeeWorkSpace
             if (orderCount == 0)
                 return;
 
-            // printing
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Kitchen_Printing, currentTable);
-            printer.DoPrint();
-            if (isHaveDrink)
+            try
             {
-                printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Bar_Printing, currentTable);
-                printer.DoPrint();
+                // printing
+                var printer1 = new DoPrintHelper(_unitofwork, DoPrintHelper.Kitchen_Printing, currentTable);
+                printer1.DoPrint();
+                if (isHaveDrink)
+                {
+                    var printer2 = new DoPrintHelper(_unitofwork, DoPrintHelper.Bar_Printing, currentTable);
+                    printer2.DoPrint();
+                }
             }
-            
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
 
             // update IsPrinted for Table's Order
         }

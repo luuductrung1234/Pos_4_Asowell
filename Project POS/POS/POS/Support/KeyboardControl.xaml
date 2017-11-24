@@ -30,120 +30,108 @@
                     </Button>
                 </StackPanel>
 
-                <StackPanel x:Name="StkBoard"
-                            Orientation="Horizontal">
-
-                    <StackPanel x:Name="StkNumberBoard"
-                                Visibility="Visible">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="1"
-                                    x:Name="BtnOne"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnOne_Click" />
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="2"
-                                    x:Name="BtnTwo"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnTwo_Click" />
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="3"
-                                    x:Name="BtnThree"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnThree_Click" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="4"
-                                    x:Name="BtnFour"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnFour_Click" />
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="5"
-                                    x:Name="BtnFive"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnFive_Click" />
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="6"
-                                    x:Name="BtnSix"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnSix_Click" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="7"
-                                    x:Name="BtnSeven"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnSeven_Click" />
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="8"
-                                    x:Name="BtnEight"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnEight_Click" />
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="9"
-                                    x:Name="BtnNine"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnNine_Click" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    x:Name="BtnLogin"
-                                    Background="{DynamicResource MaterialDesignChipBackground}"
-                                    Click="btnLogin_Click">
-                                <materialDesign:PackIcon Kind="Login"
-                                                         HorizontalAlignment="Center"
-                                                         VerticalAlignment="Center" />
-                            </Button>
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="0"
-                                    x:Name="BtnZero"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnZero_Click" />
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    x:Name="BtnBackSpace"
-                                    Background="{DynamicResource MaterialDesignChipBackground}"
-                                    Click="BtnBackSpace_Click">
-                                <materialDesign:PackIcon Kind="Backspace"
-                                                         HorizontalAlignment="Center"
-                                                         VerticalAlignment="Center" />
-                            </Button>
-                        </StackPanel>
+                <StackPanel x:Name="StkNumberBoard"
+                            Visibility="Visible">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="1"
+                                x:Name="BtnOne"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnOne_Click" />
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="2"
+                                x:Name="BtnTwo"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnTwo_Click" />
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="3"
+                                x:Name="BtnThree"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnThree_Click" />
                     </StackPanel>
 
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="4"
+                                x:Name="BtnFour"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnFour_Click" />
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="5"
+                                x:Name="BtnFive"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnFive_Click" />
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="6"
+                                x:Name="BtnSix"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnSix_Click" />
+                    </StackPanel>
 
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="7"
+                                x:Name="BtnSeven"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnSeven_Click" />
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="8"
+                                x:Name="BtnEight"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnEight_Click" />
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="9"
+                                x:Name="BtnNine"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnNine_Click" />
+                    </StackPanel>
 
-                    <StackPanel x:Name="StkCharacterBoard"
-                                Width="233"
-                                Height="169">
-                        
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                x:Name="BtnLogin"
+                                Background="{DynamicResource MaterialDesignChipBackground}"
+                                Click="btnLogin_Click">
+                            <materialDesign:PackIcon Kind="Login"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center" />
+                        </Button>
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                Content="0"
+                                x:Name="BtnZero"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="BtnZero_Click" />
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="70"
+                                Margin="4"
+                                x:Name="BtnBackSpace"
+                                Background="{DynamicResource MaterialDesignChipBackground}"
+                                Click="BtnBackSpace_Click">
+                            <materialDesign:PackIcon Kind="Backspace"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center" />
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

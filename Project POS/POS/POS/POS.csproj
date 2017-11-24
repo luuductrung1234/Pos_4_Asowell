@@ -248,6 +248,9 @@
     <Compile Include="Helper\PrintHelper\Report\ReceiptNoteReport.cs" />
     <Compile Include="Helper\PrintHelper\Report\SalaryNoteReport.cs" />
     <Compile Include="Helper\PrintHelper\ShiftPrintHelper.cs" />
+    <Compile Include="Support\FloatKeyboardControl.xaml.cs">
+      <DependentUpon>FloatKeyboardControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Support\KeyboardControl.xaml.cs">
       <DependentUpon>KeyboardControl.xaml</DependentUpon>
     </Compile>
@@ -413,8 +416,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
     <Page Include="EmployeeWorkSpace\PermissionRequired.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Support\FloatKeyboardControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

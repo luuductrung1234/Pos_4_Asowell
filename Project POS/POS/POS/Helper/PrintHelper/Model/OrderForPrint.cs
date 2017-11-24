@@ -40,7 +40,7 @@ namespace POS.Helper.PrintHelper.Model
             var targetOrder = unitofwork.OrderTempRepository.Get(x => x.TableOwned == targetTable.TableId).First();
             No = targetOrder.OrdertempId.ToString();
             Casher = targetOrder.EmpId;
-            Customer = targetOrder.EmpId;
+            Customer = targetOrder.CusId;
             Table = targetTable.TableNumber;
             Date = targetOrder.Ordertime;
             TotalPrice = targetOrder.TotalPrice;
