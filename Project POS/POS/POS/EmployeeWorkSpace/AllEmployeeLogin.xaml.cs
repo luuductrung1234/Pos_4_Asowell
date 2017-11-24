@@ -235,6 +235,11 @@ namespace POS.EmployeeWorkSpace
                 lvLoginList.Items.Refresh();
 
                 setControl(true);
+
+                if(App.Current.Properties["CurrentEmpWorking"] != null)
+                {
+                    _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+                }
             }
             catch (Exception ex)
             {
@@ -263,6 +268,11 @@ namespace POS.EmployeeWorkSpace
                 lvLoginList.Items.Refresh();
 
                 setControl(true);
+
+                if (App.Current.Properties["CurrentEmpWorking"] != null)
+                {
+                    _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+                }
             }
             catch (Exception ex)
             {
@@ -280,6 +290,8 @@ namespace POS.EmployeeWorkSpace
 
             App.Current.Properties["CurrentEmpWorking"] = _emplog;
             _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+
+            this.Close();
         }
 
         private void btnAcceptView_Click(object sender, RoutedEventArgs e)
@@ -402,11 +414,7 @@ namespace POS.EmployeeWorkSpace
 
         private void checkEmployeeCount()
         {
-            if(EmpLoginListData.emploglist.Count == 1)
-            {
-                _cUser.Content = EmpLoginListData.emploglist.ElementAt(0).Emp.Username;
-            }
-            else if(EmpLoginListData.emploglist.Count == 0)
+            if (EmpLoginListData.emploglist.Count == 0)
             {
                 foreach (var table in _unitofwork.TableRepository.Get())
                 {

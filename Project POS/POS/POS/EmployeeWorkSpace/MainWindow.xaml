@@ -91,6 +91,9 @@
                             </materialDesign:PopupBox.ToggleContent>
 
                             <StackPanel>
+                                <Button x:Name="btnStartWorking"
+                                        Content="Start Working"
+                                        Click="btnStartWorking_Click" />
                                 <Button x:Name="btnEndWorking"
                                         Content="End Working"
                                         Click="btnEndWorking_Click" />

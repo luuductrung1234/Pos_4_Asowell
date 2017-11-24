@@ -544,10 +544,10 @@ namespace POS.EmployeeWorkSpace
                         return;
                     }
 
-                    string[] subemplist = ordertempcurrenttable.SubEmpId.Split(',');
-
                     if (founded.IsOrdered == 1)
                     {
+                        currentEmp = App.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
+
                         if (currentEmp != null)
                         {
                             if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
@@ -557,17 +557,22 @@ namespace POS.EmployeeWorkSpace
                             }
                             else
                             {
-                                for (int i = 0; i < subemplist.Count(); i++)
+                                if(ordertempcurrenttable.SubEmpId != null)
                                 {
-                                    if (subemplist[i].Equals(""))
-                                    {
-                                        continue;
-                                    }
+                                    string[] subemplist = ordertempcurrenttable.SubEmpId.Split(',');
 
-                                    if (currentEmp.Emp.EmpId.Equals(subemplist[i]))
+                                    for (int i = 0; i < subemplist.Count(); i++)
                                     {
-                                        navigateToOrder(currentEmp, rec, founded);
-                                        return;
+                                        if (subemplist[i].Equals(""))
+                                        {
+                                            continue;
+                                        }
+
+                                        if (currentEmp.Emp.EmpId.Equals(subemplist[i]))
+                                        {
+                                            navigateToOrder(currentEmp, rec, founded);
+                                            return;
+                                        }
                                     }
                                 }
 
@@ -585,6 +590,8 @@ namespace POS.EmployeeWorkSpace
                     }
                     else
                     {
+                        currentEmp = App.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
+
                         if (currentEmp != null)
                         {
                             if (ordertempcurrenttable != null)
@@ -604,29 +611,6 @@ namespace POS.EmployeeWorkSpace
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
                     }
                 }
-            }
-        }
-
-        private void checkCurrentEmp(EmpLoginList currentEmp, Rectangle rec, Entities.Table founded, OrderTemp ordertempcurrenttable)
-        {
-            if (App.Current.Properties["CurrentEmpWorking"] == null)
-            {
-                return;
-            }
-
-            currentEmp = App.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
-
-            if (currentEmp != null)
-            {
-                if (ordertempcurrenttable != null)
-                {
-                    ordertempcurrenttable.EmpId = currentEmp.Emp.EmpId;
-                    _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
-                    _unitofwork.Save();
-                }
-
-                navigateToOrder(currentEmp, rec, founded);
-                return;
             }
         }
 
@@ -1024,14 +1008,33 @@ namespace POS.EmployeeWorkSpace
             return "";
         }
 
-        private void navigateToOrder(EmpLoginList currentEmp, Rectangle rec, Entities.Table founded)
+        //method kiem tra sau khi start employee -> order
+        private void checkCurrentEmp(EmpLoginList currentEmp, Rectangle rec, Entities.Table founded, OrderTemp ordertempcurrenttable)
         {
-            var ordertempcurrenttable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(founded.TableId)).First();
-            if (ordertempcurrenttable != null)
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
             {
-                ordertempcurrenttable.EmpId = (App.Current.Properties["EmpLogin"] as Entities.Employee).EmpId;
+                return;
             }
 
+            currentEmp = App.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
+
+            if (currentEmp != null)
+            {
+                if (ordertempcurrenttable != null)
+                {
+                    ordertempcurrenttable.EmpId = currentEmp.Emp.EmpId;
+                    _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+                    _unitofwork.Save();
+                }
+
+                navigateToOrder(currentEmp, rec, founded);
+                return;
+            }
+        }
+
+        //method navigate to entry page
+        private void navigateToOrder(EmpLoginList currentEmp, Rectangle rec, Entities.Table founded)
+        {
             rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
             rec.MouseMove -= btnTableAdded_MoveDrag;
             rec.Opacity = 1;

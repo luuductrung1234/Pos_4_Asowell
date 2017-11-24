@@ -38,7 +38,7 @@ namespace POS.Mapping
             Property(x => x.TotalPrice).HasColumnName(@"total_price").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.CustomerPay).HasColumnName(@"customer_pay").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.PayBack).HasColumnName(@"pay_back").HasColumnType("money").IsRequired().HasPrecision(19,4);
-            Property(x => x.TotalPriceNonTax).HasColumnName(@"totalPrice_nonTax").HasColumnType("money").HasPrecision(19, 4);
+            Property(x => x.TotalPriceNonDisc).HasColumnName(@"totalPrice_nonDisc").HasColumnType("money").HasPrecision(19, 4);
             Property(x => x.Discount).HasColumnName(@"discount").HasColumnType("int").IsRequired();
             Property(x => x.SubEmpId).HasColumnName(@"subEmp_id").HasColumnType("varchar").IsUnicode(false).IsOptional().HasMaxLength(200);
 
