@@ -557,29 +557,8 @@ namespace POS.EmployeeWorkSpace
                             }
                             else
                             {
-                                if(ordertempcurrenttable.SubEmpId != null)
-                                {
-                                    string[] subemplist = ordertempcurrenttable.SubEmpId.Split(',');
-
-                                    for (int i = 0; i < subemplist.Count(); i++)
-                                    {
-                                        if (subemplist[i].Equals(""))
-                                        {
-                                            continue;
-                                        }
-
-                                        if (currentEmp.Emp.EmpId.Equals(subemplist[i]))
-                                        {
-                                            navigateToOrder(currentEmp, rec, founded);
-                                            return;
-                                        }
-                                    }
-                                }
-
-                                ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
-                                _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
-                                _unitofwork.Save();
                                 navigateToOrder(currentEmp, rec, founded);
+                                return;
                             }
                         }
 
@@ -601,7 +580,7 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.Save();
                             }
 
-                            navigateToOrder(currentEmp, rec, founded);
+                            checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
                             return;
                         }
 

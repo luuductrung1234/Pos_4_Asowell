@@ -212,6 +212,7 @@ namespace POS.EmployeeWorkSpace
                     (string)(sender as ComboBox).SelectedValue;
                 _unitofwork.OrderTempRepository.Update(ordertemptable);
                 _unitofwork.Save();
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
             }
         }
 
@@ -416,6 +417,22 @@ namespace POS.EmployeeWorkSpace
                 tempdata.Quan = ordernotedetails[index].Quan;
                 tempdata.Note = ordernotedetails[index].Note;
 
+                foreach(var cho in ordernotedetails)
+                {
+                    if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
+                    {
+                        cho.Quan += ordernotedetails[index].Quan;
+
+                        _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
+                        _unitofwork.Save();
+
+                        RefreshControl(_unitofwork, currentTable);
+
+                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                        return;
+                    }
+                }
+
                 _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
                 _unitofwork.Save();
                 tempdata.SelectedStats = (e.OriginalSource as ComboBox).SelectedItem.ToString();
@@ -423,11 +440,19 @@ namespace POS.EmployeeWorkSpace
                 _unitofwork.Save();
 
                 RefreshControl(_unitofwork, currentTable);
+
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
             }
         }
 
         private void bntDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (currentTable.IsPrinted == 1)
+            {
+                MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
+                return;
+            }
+
             int i = 0;
             foreach (ToggleButton btn in wp.Children)
             {
@@ -499,6 +524,7 @@ namespace POS.EmployeeWorkSpace
 
                     ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
                     RefreshControl(_unitofwork, currentTable);
+                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
                     break;
                 }
             }
@@ -508,6 +534,12 @@ namespace POS.EmployeeWorkSpace
         {
             if (currentTable == null || currentChair == null)
             {
+                return;
+            }
+
+            if(currentTable.IsPrinted == 1)
+            {
+                MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
                 return;
             }
 
@@ -553,6 +585,7 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.OrderDetailsTempRepository.Update(cho);
                                 _unitofwork.Save();
                                 RefreshControl(_unitofwork, currentTable);
+                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
                                 return;
                             }
                         }
@@ -562,6 +595,7 @@ namespace POS.EmployeeWorkSpace
                         _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                         _unitofwork.Save();
                         RefreshControl(_unitofwork, currentTable);
+                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
                         return;
                     }
 
@@ -581,6 +615,7 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                                 _unitofwork.Save();
                                 RefreshControl(_unitofwork, currentTable);
+                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
                                 return;
                             }
                         }
@@ -596,6 +631,7 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                                 _unitofwork.Save();
                                 RefreshControl(_unitofwork, currentTable);
+                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
                                 return;
                             }
                         }
@@ -605,6 +641,7 @@ namespace POS.EmployeeWorkSpace
             else
             {
                 inputnote.ShowDialog();
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
             }
         }
 
@@ -629,6 +666,8 @@ namespace POS.EmployeeWorkSpace
 
             //// clean the old table data
             //ClearTheTable();
+
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
@@ -636,17 +675,27 @@ namespace POS.EmployeeWorkSpace
             if (currentTable == null)
                 return;
 
+            currentTable.IsPrinted = 1;
+            _unitofwork.TableRepository.Update(currentTable);
+            _unitofwork.Save();
+
             // printing
             var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
             printer.DoPrint();
 
             // update IsPrinted for Table's Order
+
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
         private void BtnGo_OnClick(object sender, RoutedEventArgs e)
         {
             if (currentTable == null)
                 return;
+
+            currentTable.IsPrinted = 1;
+            _unitofwork.TableRepository.Update(currentTable);
+            _unitofwork.Save();
 
             // check order
             bool isHaveDrink = false;
@@ -681,14 +730,24 @@ namespace POS.EmployeeWorkSpace
                 printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Bar_Printing, currentTable);
                 printer.DoPrint();
             }
-            
+
 
             // update IsPrinted for Table's Order
+
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
+            if (currentTable.IsPrinted == 1)
+            {
+                MessageBox.Show("Invoice of this table is already printed! You can not delete this table!");
+                return;
+            }
+
             ClearTheTable();
+
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
         private void ClearTheTable()
@@ -723,6 +782,41 @@ namespace POS.EmployeeWorkSpace
             loadCustomerOwner();
             RefreshControlAllChair();
             _unitofwork.OrderTempRepository.Update(ordertemptable);
+            _unitofwork.Save();
+        }
+
+        private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
+        {
+            if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
+            {
+                return;
+            }
+
+            if (ordertempcurrenttable.SubEmpId != null)
+            {
+                string[] subemplist = ordertempcurrenttable.SubEmpId.Split(',');
+
+                for (int i = 0; i < subemplist.Count(); i++)
+                {
+                    if (subemplist[i].Equals(""))
+                    {
+                        continue;
+                    }
+
+                    if (currentEmp.Emp.EmpId.Equals(subemplist[i]))
+                    {
+                        return;
+                    }
+                }
+
+                ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
+                _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+                _unitofwork.Save();
+                return;
+            }
+
+            ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
+            _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
             _unitofwork.Save();
         }
 
