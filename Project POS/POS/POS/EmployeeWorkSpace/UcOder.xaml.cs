@@ -416,8 +416,9 @@ namespace POS.EmployeeWorkSpace
                 tempdata.StatusItems = ordernotedetails[index].StatusItems;
                 tempdata.Quan = ordernotedetails[index].Quan;
                 tempdata.Note = ordernotedetails[index].Note;
+                tempdata.SelectedStats = (e.OriginalSource as ComboBox).SelectedItem.ToString();
 
-                foreach(var cho in ordernotedetails)
+                foreach (var cho in ordernotedetails)
                 {
                     if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
                     {
@@ -435,7 +436,6 @@ namespace POS.EmployeeWorkSpace
 
                 _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
                 _unitofwork.Save();
-                tempdata.SelectedStats = (e.OriginalSource as ComboBox).SelectedItem.ToString();
                 _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                 _unitofwork.Save();
 
