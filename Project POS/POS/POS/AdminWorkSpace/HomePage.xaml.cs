@@ -176,21 +176,30 @@ namespace POS.AdminWorkSpace
             decimal TotalPrice1 = 0;
             decimal TotalPrice2 = 0;
             decimal TotalPrice3 = 0;
+            decimal TotalePrice_nonDiscount1 = 0;
+            decimal TotalePrice_nonDiscount2 = 0;
+            decimal TotalePrice_nonDiscount3 = 0;
             foreach (var item in orderNoteWithTime.Where(c => c.Ordertime.Hour >= 0 && c.Ordertime.Hour < 12))
             {
                 TotalPrice1 += item.TotalPrice;
+                TotalePrice_nonDiscount1 += item.TotalPriceNonDisc;
             }
             foreach (var item in orderNoteWithTime.Where(c => c.Ordertime.Hour >= 12 && c.Ordertime.Hour < 18))
             {
                 TotalPrice2 += item.TotalPrice;
+                TotalePrice_nonDiscount2 += item.TotalPriceNonDisc;
             }
             foreach (var item in orderNoteWithTime.Where(c =>
                 c.Ordertime.Hour >= 18 && (c.Ordertime.Hour <= 23 && c.Ordertime.Minute <= 59)))
             {
                 TotalPrice3 += item.TotalPrice;
+                TotalePrice_nonDiscount3 += item.TotalPriceNonDisc;
             }
             txtRevenue.Text = string.Format("{0:0.000}", (TotalPrice1 + TotalPrice2 + TotalPrice3));
+            txtReceivables.Text= string.Format("{0:0.000}", (TotalPrice1 + TotalPrice2 + TotalPrice3));
             txtTotalBills.Text = orderNoteWithTime.Count().ToString();
+            txtSaleValue.Text= string.Format("{0:0.000}", (TotalePrice_nonDiscount1 + TotalePrice_nonDiscount2 + TotalePrice_nonDiscount3));
+            txtDiscounts.Text= string.Format("{0:0.000}", (TotalePrice_nonDiscount1 + TotalePrice_nonDiscount2 + TotalePrice_nonDiscount3)- (TotalPrice1 + TotalPrice2 + TotalPrice3));
             // binding
             FirstPieSeries.Values = new ChartValues<ObservableValue> { new ObservableValue((double)TotalPrice1) };
             FirstPieSeries.DataLabels = true;
