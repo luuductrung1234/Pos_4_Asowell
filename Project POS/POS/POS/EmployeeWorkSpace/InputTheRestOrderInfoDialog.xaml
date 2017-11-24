@@ -1,0 +1,36 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS.EmployeeWorkSpace"
+        xmlns:Support="clr-namespace:POS.Support"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        x:Class="POS.EmployeeWorkSpace.InputTheRestOrderInfoDialog"
+        mc:Ignorable="d"
+        Height="300"
+        Width="300">
+    <StackPanel>
+        <materialDesign:ColorZone Mode="PrimaryDark"
+                                  Height="31"
+                                  Width="292"
+                                  HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,0,0,0">
+                <TextBlock VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           Margin="0,0,40,0"
+                           FontSize="18">Payment Form</TextBlock>
+                <ComboBox   x:Name="CboPaymentMethod"
+                            Width="100"
+                            SelectionChanged="Selector_OnSelectionChanged" />
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <Support:KeyboardControl x:Name="KbInput"
+                                 Height="240"
+                                 Margin="0,0,0,0"
+                                 VerticalAlignment="Top"
+                                 Width="Auto" />
+
+    </StackPanel>
+</Window>
