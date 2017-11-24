@@ -192,5 +192,10 @@ namespace POS
             _unitempofwork.Dispose();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            gNormalLoginForm.Visibility = Visibility.Collapsed;
+            kbcEmpCodeLoginForm.parent = this;
+        }
     }
 }

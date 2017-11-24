@@ -637,7 +637,7 @@ namespace POS.EmployeeWorkSpace
                 return;
 
             // printing
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, null);
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
             printer.DoPrint();
 
             // update IsPrinted for Table's Order
