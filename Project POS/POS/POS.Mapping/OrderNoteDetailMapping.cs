@@ -33,6 +33,7 @@ namespace POS.Mapping
             Property(x => x.OrdernoteId).HasColumnName(@"ordernote_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.ProductId).HasColumnName(@"product_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.Quan).HasColumnName(@"quan").HasColumnType("int").IsRequired();
+            Property(x => x.Discount).HasColumnName(@"discount").HasColumnType("int").IsRequired();
 
             // Foreign keys
             HasRequired(a => a.OrderNote).WithMany(b => b.OrderNoteDetails).HasForeignKey(c => c.OrdernoteId).WillCascadeOnDelete(false); // FK_dbo.OrderNoteDetails_dbo.OrderNote_ordernote_id
