@@ -34,10 +34,6 @@ namespace POS.WareHouseWorkSpace
             lvDataReceipt.ItemsSource = ReceiptList;
         }
 
-        private void BntAddnew_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
 
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
@@ -100,7 +96,8 @@ namespace POS.WareHouseWorkSpace
 
         private void BntDelAll_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            ReceiptList.Clear();
+            lvDataReceipt.Items.Refresh();
         }
 
         private void BntEdit_OnClick(object sender, RoutedEventArgs e)
@@ -108,6 +105,32 @@ namespace POS.WareHouseWorkSpace
             int index;
             ReceiptNoteDetail r = new ReceiptNoteDetail();
             DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
+                return;
+            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
+            InputNote inputNote=new InputNote(ReceiptList[index].Note);
+            if ((ReceiptList[index].Note==null||ReceiptList[index].Note.Equals("") || ReceiptList[index].Note.Equals(inputNote.Note)))
+            {
+                if (inputNote.ShowDialog() == true)
+                {
+                    r.Note = inputNote.Note;
+                    r.IgdId = ReceiptList[index].IgdId;
+                    r.Quan = ReceiptList[index].Quan;
+                    r.ItemPrice = ReceiptList[index].ItemPrice;
+                    ReceiptList[index] = r;
+                }
+            }
+            else
+            {
+                inputNote.ShowDialog();
+            }
+            lvDataReceipt.Items.Refresh();
         }
 
        
