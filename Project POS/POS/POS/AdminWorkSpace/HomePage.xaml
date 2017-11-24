@@ -135,7 +135,7 @@
                                            FontWeight="Bold"
                                            FontSize="20">Sale Value</TextBlock>
                                 <TextBlock x:Name="txtSaleValue"
-                                           Foreground="White"
+                                           Foreground="OrangeRed"
                                            FontWeight="Bold"
                                            FontSize="20" />
                             </StackPanel>
@@ -154,7 +154,7 @@
                                            FontSize="20">Discounts</TextBlock>
                                 <TextBlock x:Name="txtDiscounts"
                                            FontWeight="Bold"
-                                           Foreground="White"
+                                           Foreground="OrangeRed"
                                            FontSize="20" />
                             </StackPanel>
                             <StackPanel>
@@ -163,7 +163,7 @@
                                            FontSize="20">Total Receivables</TextBlock>
                                 <TextBlock x:Name="txtReceivables"
                                            FontWeight="Bold"
-                                           Foreground="White"
+                                           Foreground="OrangeRed"
                                            FontSize="20" />
                             </StackPanel>
                         </StackPanel>

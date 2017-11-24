@@ -153,6 +153,7 @@ namespace POS.EmployeeWorkSpace
                 //
                 lbSelected.UnselectAll();
 
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempCurrentTable);
                 ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControl(_unitofwork, orderingTable);
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = orderTempCurrentTable.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
@@ -260,6 +261,41 @@ namespace POS.EmployeeWorkSpace
             //{
             //    SearchBox.Text = "";
             //}
+        }
+
+        private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
+        {
+            if(currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
+            {
+                return;
+            }
+
+            if (ordertempcurrenttable.SubEmpId != null)
+            {
+                string[] subemplist = ordertempcurrenttable.SubEmpId.Split(',');
+
+                for (int i = 0; i < subemplist.Count(); i++)
+                {
+                    if (subemplist[i].Equals(""))
+                    {
+                        continue;
+                    }
+
+                    if (currentEmp.Emp.EmpId.Equals(subemplist[i]))
+                    {
+                        return;
+                    }
+                }
+
+                ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
+                _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+                _unitofwork.Save();
+                return;
+            }
+
+            ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
+            _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+            _unitofwork.Save();
         }
 
     }

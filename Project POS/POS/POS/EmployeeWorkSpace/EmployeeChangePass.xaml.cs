@@ -62,6 +62,13 @@ namespace POS.EmployeeWorkSpace
             _emp.Pass = newPass;
             _unitofwork.EmployeeRepository.Update(_emp);
             _unitofwork.Save();
+
+            var emplog = EmpLoginListData.emploglist.Where(x => x.Emp.Username.Equals(_emp.Username)).First();
+            if(emplog != null)
+            {
+                emplog.Emp.Pass = newPass;
+            }
+
             MessageBox.Show("Your password was changed!");
             this.Close();
         }

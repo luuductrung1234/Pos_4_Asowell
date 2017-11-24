@@ -24,75 +24,115 @@ namespace POS.WareHouseWorkSpace
     public partial class InputReceiptNote : Page
     {
         private AdminwsOfAsowell _unitofork;
-        private Ingredient ingredient;
+        private List<ReceiptNoteDetail> ReceiptList;
         public InputReceiptNote(AdminwsOfAsowell unitofork)
         {
             _unitofork = unitofork;
             InitializeComponent();
             lvDataIngredient.ItemsSource = _unitofork.IngredientRepository.Get();
+             ReceiptList = new List<ReceiptNoteDetail>();
+            lvDataReceipt.ItemsSource = ReceiptList;
         }
 
-        private void BntAddnew_OnClick(object sender, RoutedEventArgs e)
+
+
+        private void BntDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            int index;
+            ReceiptNoteDetail r = new ReceiptNoteDetail();
+            DependencyObject dep = (DependencyObject) e.OriginalSource;
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
+                return;
+
+            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
+            if (ReceiptList[index].Quan > 1)
+            {
+                r.Quan = ReceiptList[index].Quan-1;
+                r.IgdId = ReceiptList[index].IgdId;
+                r.ItemPrice = ReceiptList[index].ItemPrice;
+                ReceiptList[index] = r;
+            }
+            else
+            {
+                ReceiptList.RemoveAt(index);
+            }
+            lvDataReceipt.Items.Refresh();
+            
+        }
+    
+
+
+        private void lvDataIngredient_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            
+            Ingredient ingredient=(Ingredient)lvDataIngredient.SelectedItem;
+            ReceiptNoteDetail r=new ReceiptNoteDetail();
+
+            var foundIteminReceipt = ReceiptList.Where(c => c.IgdId.Equals(ingredient.IgdId)).FirstOrDefault();
+            if (foundIteminReceipt==null)
+            {
+                r.IgdId = ingredient.IgdId;
+                r.Quan = 1;
+                r.ItemPrice = ingredient.StandardPrice;
+                ReceiptList.Add(r);
+            }
+            else
+            {
+                foundIteminReceipt.Quan++;
+            }
+            lvDataReceipt.ItemsSource = ReceiptList;
+            lvDataReceipt.Items.Refresh();
+        }
+
+        private void BntAdd_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-
-        private void LvDataIngredient_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BntDelAll_OnClick(object sender, RoutedEventArgs e)
         {
-            ingredient = lvDataIngredient.SelectedItem as Ingredient;
-            if (ingredient == null)
-            {
-                
-                txtName.Text = "";
-                txtAmount.Text = "0";
-                txtStandardPrice.Text = "";
+            ReceiptList.Clear();
+            lvDataReceipt.Items.Refresh();
+        }
 
+        private void BntEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            int index;
+            ReceiptNoteDetail r = new ReceiptNoteDetail();
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
                 return;
-            }
-            txtName.Text = ingredient.Name;
-            txtAmount.Text = "0";
-            txtStandardPrice.Text = (ingredient.StandardPrice * decimal.Parse(txtAmount.Text)).ToString();
-        }
-
-        private void TxtAmount_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (txtAmount.Text.Equals(""))
+            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
+            InputNote inputNote=new InputNote(ReceiptList[index].Note);
+            if ((ReceiptList[index].Note==null||ReceiptList[index].Note.Equals("") || ReceiptList[index].Note.Equals(inputNote.Note)))
             {
-
-                txtStandardPrice.Text = "0.000";
-
+                if (inputNote.ShowDialog() == true)
+                {
+                    r.Note = inputNote.Note;
+                    r.IgdId = ReceiptList[index].IgdId;
+                    r.Quan = ReceiptList[index].Quan;
+                    r.ItemPrice = ReceiptList[index].ItemPrice;
+                    ReceiptList[index] = r;
+                }
             }
             else
             {
-                
-                txtStandardPrice.Text = (ingredient.StandardPrice * decimal.Parse(txtAmount.Text)).ToString();
+                inputNote.ShowDialog();
             }
-            
-
-
+            lvDataReceipt.Items.Refresh();
         }
 
-        private void TxtAmount_OnTextInput(object sender, TextCompositionEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
-        }
-
-
-        private void TxtAmount_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (txtAmount.Text.Equals(""))
-            {
-
-               txtStandardPrice.Text = "0.000";
-            }
-            else
-            {
-                 txtStandardPrice.Text = (ingredient.StandardPrice * decimal.Parse(txtAmount.Text)).ToString();
-
-            }
-
-        }
+       
     }
 }

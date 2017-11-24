@@ -289,6 +289,7 @@ namespace POS.EmployeeWorkSpace
 
             if(App.Current.Properties["CurrentEmpWorking"] != null)
             {
+                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
                 App.Current.Properties["CurrentEmpWorking"] = null;
             }
         }
