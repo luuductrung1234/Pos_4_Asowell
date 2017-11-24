@@ -658,7 +658,7 @@ namespace POS.EmployeeWorkSpace
             var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, null);
             printer.DoPrint();
 
-            //// add data to database
+            // add data to database
             //ordertemptable.CustomerPay = ordertemptable.TotalPrice;
             //ordertemptable.PayBack = 0;
             //_unitofwork.OrderTempRepository.Update(ordertemptable);
@@ -675,16 +675,16 @@ namespace POS.EmployeeWorkSpace
             if (currentTable == null)
                 return;
 
-            currentTable.IsPrinted = 1;
-            _unitofwork.TableRepository.Update(currentTable);
-            _unitofwork.Save();
-
             // printing
             var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
             printer.DoPrint();
 
             // update IsPrinted for Table's Order
+            currentTable.IsPrinted = 1;
+            _unitofwork.TableRepository.Update(currentTable);
+            _unitofwork.Save();
 
+            // update employee ID that effect to the OrderNote
             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
@@ -692,10 +692,6 @@ namespace POS.EmployeeWorkSpace
         {
             if (currentTable == null)
                 return;
-
-            currentTable.IsPrinted = 1;
-            _unitofwork.TableRepository.Update(currentTable);
-            _unitofwork.Save();
 
             // check order
             bool isHaveDrink = false;
@@ -740,7 +736,11 @@ namespace POS.EmployeeWorkSpace
 
 
             // update IsPrinted for Table's Order
+            currentTable.IsPrinted = 1;
+            _unitofwork.TableRepository.Update(currentTable);
+            _unitofwork.Save();
 
+            // update employee ID that effect to the OrderNote
             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
@@ -754,6 +754,7 @@ namespace POS.EmployeeWorkSpace
 
             ClearTheTable();
 
+            // update employee ID that effect to the OrderNote
             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
