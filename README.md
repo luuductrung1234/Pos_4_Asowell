@@ -5,13 +5,21 @@
 
 **Main Feature:**
 Phần mềm quản lý nhà hàng (cung cấp các dịch vụ ăn uống, kho trữ, thống kê...)
+
   o	Xây dựng phần mềm POS gồm các chức năng chính:
+
     •	Phần làm việc dành cho nhân viên: thực hiện các thao tác order phù hợp với business requirement của Asowel restaurant, xem thông tin cá nhân của nhân viên, tự động chấm công khi nhân viên đăng nhập vào phần mềm. Nhiều nhân viên có thể tham gia đăng nhập, và cùng tham gia order
+    
     •	Phần làm việc dành cho quản lý: quản lý tất cả thông tin và dữ liệu liên quan đến nhà hàng: Nhân viên, Khách hàng, Sản phẩm (món ăn), Nguyên liệu, Hoá đơn bán hàng, Hoá đơn nhập kho. Thống kê tài chính, thu (lượng bán ra), chi (lượng mua nguyên liệu và các chi phí phát sinh) của toàn hệ thống nhà hàng. Xuất báo cáo
+    
     •	Phần làm việc dành cho Kiểm kho: Theo dõi và thu thập dữ liệu về kho (lượng hàng tồn, lượng đã sử dụng). Nhập hoá đơn nhập kho. Thông kê dữ liệu liên quan đến kho. Xuất báo cáo
+    
   o	Chất lượng cần đảm bảo:
+    
     •	An toàn  trong các sự cố bất ngờ: ví dụ như mất điện, phần cứng hỏng
+    
     •	Bảo toàn dữ liệu, mã hoá các tài khoản
+    
     •	Truy xuất dữ liệu, thực thi các tác vụ chuyên môn (order, xuất báo cáo) nhanh gọn.
 
 
