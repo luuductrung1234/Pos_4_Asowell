@@ -24,12 +24,14 @@ namespace POS.WareHouseWorkSpace
     public partial class InputReceiptNote : Page
     {
         private AdminwsOfAsowell _unitofork;
-        private Ingredient ingredient;
+        private List<ReceiptNoteDetail> ReceiptList;
         public InputReceiptNote(AdminwsOfAsowell unitofork)
         {
             _unitofork = unitofork;
             InitializeComponent();
             lvDataIngredient.ItemsSource = _unitofork.IngredientRepository.Get();
+             ReceiptList = new List<ReceiptNoteDetail>();
+            lvDataReceipt.ItemsSource = ReceiptList;
         }
 
         private void BntAddnew_OnClick(object sender, RoutedEventArgs e)
@@ -38,61 +40,76 @@ namespace POS.WareHouseWorkSpace
         }
 
 
-        private void LvDataIngredient_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            ingredient = lvDataIngredient.SelectedItem as Ingredient;
-            if (ingredient == null)
+            int index;
+            ReceiptNoteDetail r = new ReceiptNoteDetail();
+            DependencyObject dep = (DependencyObject) e.OriginalSource;
+            while ((dep != null) && !(dep is ListViewItem))
             {
-                
-                txtName.Text = "";
-                txtAmount.Text = "0";
-                txtStandardPrice.Text = "";
+                dep = VisualTreeHelper.GetParent(dep);
+            }
 
+            if (dep == null)
                 return;
-            }
-            txtName.Text = ingredient.Name;
-            txtAmount.Text = "0";
-            txtStandardPrice.Text = (ingredient.StandardPrice * decimal.Parse(txtAmount.Text)).ToString();
-        }
 
-        private void TxtAmount_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (txtAmount.Text.Equals(""))
+            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
+            if (ReceiptList[index].Quan > 1)
             {
-
-                txtStandardPrice.Text = "0.000";
-
+                r.Quan = ReceiptList[index].Quan-1;
+                r.IgdId = ReceiptList[index].IgdId;
+                r.ItemPrice = ReceiptList[index].ItemPrice;
+                ReceiptList[index] = r;
             }
             else
             {
-                
-                txtStandardPrice.Text = (ingredient.StandardPrice * decimal.Parse(txtAmount.Text)).ToString();
+                ReceiptList.RemoveAt(index);
             }
+            lvDataReceipt.Items.Refresh();
             
-
-
         }
+    
 
-        private void TxtAmount_OnTextInput(object sender, TextCompositionEventArgs e)
+
+        private void lvDataIngredient_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var textBox = sender as TextBox;
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
-        }
+            
+            Ingredient ingredient=(Ingredient)lvDataIngredient.SelectedItem;
+            ReceiptNoteDetail r=new ReceiptNoteDetail();
 
-
-        private void TxtAmount_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (txtAmount.Text.Equals(""))
+            var foundIteminReceipt = ReceiptList.Where(c => c.IgdId.Equals(ingredient.IgdId)).FirstOrDefault();
+            if (foundIteminReceipt==null)
             {
-
-               txtStandardPrice.Text = "0.000";
+                r.IgdId = ingredient.IgdId;
+                r.Quan = 1;
+                r.ItemPrice = ingredient.StandardPrice;
+                ReceiptList.Add(r);
             }
             else
             {
-                 txtStandardPrice.Text = (ingredient.StandardPrice * decimal.Parse(txtAmount.Text)).ToString();
-
+                foundIteminReceipt.Quan++;
             }
-
+            lvDataReceipt.ItemsSource = ReceiptList;
+            lvDataReceipt.Items.Refresh();
         }
+
+        private void BntAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BntDelAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BntEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            int index;
+            ReceiptNoteDetail r = new ReceiptNoteDetail();
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+        }
+
+       
     }
 }
