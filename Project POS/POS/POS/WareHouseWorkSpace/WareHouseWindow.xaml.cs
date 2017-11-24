@@ -25,6 +25,7 @@ namespace POS.WareHouseWorkSpace
         AdminwsOfAsowell _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
+        private Login login;
         private InputReceiptNote inputReceipt;
         
         public WareHouseWindow()
@@ -42,7 +43,9 @@ namespace POS.WareHouseWorkSpace
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
-
+            login = new Login();
+            this.Close();
+            login.Show();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

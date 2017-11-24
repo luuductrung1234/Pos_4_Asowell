@@ -254,6 +254,9 @@
     <Compile Include="WareHouseWorkSpace\IngredientPage.xaml.cs">
       <DependentUpon>IngredientPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WareHouseWorkSpace\InputNote.xaml.cs">
+      <DependentUpon>InputNote.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WareHouseWorkSpace\InputReceiptNote.xaml.cs">
       <DependentUpon>InputReceiptNote.xaml</DependentUpon>
     </Compile>
@@ -413,7 +416,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
     <Page Include="EmployeeWorkSpace\PermissionRequired.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -423,6 +425,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WareHouseWorkSpace\IngredientPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WareHouseWorkSpace\InputNote.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

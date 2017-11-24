@@ -92,7 +92,8 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Grid.ColumnSpan="2"
+                <Grid Grid.ColumnSpan="1"
+                      Grid.Column="1"
                       Margin="206,0,0,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
                                   VerticalAlignment="Stretch"
