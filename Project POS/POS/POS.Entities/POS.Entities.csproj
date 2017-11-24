@@ -64,6 +64,7 @@
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomEntities\Employee.cs" />
+    <Compile Include="CustomEntities\OrderDetailsTemp.cs" />
     <Compile Include="CustomEntities\OrderNote.cs" />
     <Compile Include="CustomEntities\OrderNoteDetail.cs" />
     <Compile Include="CustomEntities\OrderTemp.cs" />

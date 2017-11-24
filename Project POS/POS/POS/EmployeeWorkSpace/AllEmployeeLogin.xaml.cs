@@ -224,11 +224,11 @@ namespace POS.EmployeeWorkSpace
             string pass = txtPass.Password.Trim();
             try
             {
-                btnLoginNew.IsEnabled = false;
+                btnAcceptLogin.IsEnabled = false;
                 PgbLoginProcess.Visibility = Visibility.Visible;
                 await Async(username, pass, null);
-
-                btnLoginNew.IsEnabled = true;
+                
+                btnAcceptLogin.IsEnabled = true;
                 PgbLoginProcess.Visibility = Visibility.Collapsed;
                 
                 lvLoginList.ItemsSource = EmpLoginListData.emploglist;

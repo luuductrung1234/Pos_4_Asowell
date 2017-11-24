@@ -1,0 +1,95 @@
+﻿<Window x:Class="POS.EmployeeWorkSpace.PermissionRequired"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Background="{DynamicResource MaterialDesignPaper}"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="All Employee Login"
+        Height="240"
+        Width="400">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}"
+               x:Key="TextBlockLabel">
+            <Setter Property="FontSize"
+                    Value="16" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="Width"
+                    Value="120" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="AllEmp">
+        <StackPanel>
+            <materialDesign:ColorZone Mode="PrimaryMid"
+                                      BorderBrush="Black"
+                                      BorderThickness="1"
+                                      Width="330">
+                <TextBlock x:Name="txbLabel"
+                           Text="Permission Required"
+                           FontSize="35"
+                           TextAlignment="Center" />
+            </materialDesign:ColorZone>
+            <StackPanel Margin="20,0,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <TextBlock x:Name="txbUserName"
+                               TextWrapping="Wrap"
+                               Text="User Name"
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBox x:Name="txtUsername"
+                             TextWrapping="Wrap"
+                             Width="220"
+                             Height="35"
+                             FontSize="16"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Foreground="White" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <TextBlock x:Name="txbPass"
+                               TextWrapping="Wrap"
+                               Text="Password"
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <PasswordBox x:Name="txtPass"
+                                 Width="220"
+                                 Height="35"
+                                 FontSize="16"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Foreground="White" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,20,0,0">
+                    <Button  x:Name="btnAcceptLogin"
+                             Content="Login"
+                             Margin="20,0,0,0"
+                             Click="btnAcceptLogin_Click" />
+                    <Button  x:Name="btnAcceptCancel"
+                             Content="Cancel"
+                             Margin="20,0,20,0"
+                             Click="btnAcceptCancel_Click" />
+                    <ProgressBar x:Name="PgbLoginProcess"
+                                 Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                 Value="0"
+                                 Maximum="100"
+                                 Width="30"
+                                 Height="30"
+                                 IsIndeterminate="True"
+                                 Grid.Row="1"
+                                 Visibility="Hidden" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

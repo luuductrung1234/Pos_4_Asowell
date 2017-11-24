@@ -252,13 +252,23 @@ namespace POS.EmployeeWorkSpace
 
         private void btnEndWorking_Click(object sender, RoutedEventArgs e)
         {
-            if(App.Current.Properties["CurrentEmpWorking"] == null)
+            if(App.Current.Properties["AdLogin"] != null)
             {
+                App.Current.Properties["AdLogin"] = null;
+
+                if(App.Current.Properties["CurrentEmpWorking"] != null)
+                {
+                    cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as Employee).Username;
+                }
+            }
+
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
                 return;
             }
 
             App.Current.Properties["CurrentEmpWorking"] = null;
-            cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
         }
 
         private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
