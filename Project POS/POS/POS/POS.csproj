@@ -224,6 +224,9 @@
     <Compile Include="EmployeeWorkSpace\InputNote.xaml.cs">
       <DependentUpon>InputNote.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeWorkSpace\PermissionRequired.xaml.cs">
+      <DependentUpon>PermissionRequired.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper\PrintHelper\AsowellPrinter.cs" />
     <Compile Include="Helper\PrintHelper\BarPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\DoPrintHelper.cs" />
@@ -404,6 +407,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\InputNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\PermissionRequired.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

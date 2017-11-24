@@ -495,12 +495,16 @@ namespace POS.EmployeeWorkSpace
             ClickAttach.SetClicks(ctrl, 0);
             if (clicks == 2)
             {
+                EmpLoginList currentEmp = App.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
+
                 AllEmployeeLogin ael;
                 Entities.Table founded = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(rec.Name.Substring(5)))).First();
                 if (founded == null)
                 {
                     return;
                 }
+
+                var ordertempcurrenttable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(founded.TableId)).First();
 
                 if (founded.IsPinned == 0)
                 {
@@ -513,18 +517,23 @@ namespace POS.EmployeeWorkSpace
                             return;
                         }
 
-                        if(App.Current.Properties["CurrentEmpWorking"] != null)
+                        if (currentEmp != null)
                         {
-                            navigateToOrder((App.Current.Properties["CurrentEmpWorking"] as EmpLoginList), rec, founded);
+                            if (ordertempcurrenttable != null)
+                            {
+                                ordertempcurrenttable.EmpId = currentEmp.Emp.EmpId;
+                                _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+                                _unitofwork.Save();
+                            }
+
+                            navigateToOrder(currentEmp, rec, founded);
+                            return;
                         }
 
                         ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
-                        if (!(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username.Equals(((MainWindow)Window.GetWindow(this)).cUser.Content))
-                        {
-                            navigateToOrder((App.Current.Properties["CurrentEmpWorking"] as EmpLoginList), rec, founded);
-                        }
+                        checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
                     }
                 }
                 else
@@ -535,11 +544,89 @@ namespace POS.EmployeeWorkSpace
                         return;
                     }
 
-                    ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
-                    ael.ShowDialog();
+                    string[] subemplist = ordertempcurrenttable.SubEmpId.Split(',');
 
-                    navigateToOrder((App.Current.Properties["CurrentEmpWorking"] as EmpLoginList), rec, founded);
+                    if (founded.IsOrdered == 1)
+                    {
+                        if (currentEmp != null)
+                        {
+                            if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
+                            {
+                                navigateToOrder(currentEmp, rec, founded);
+                                return;
+                            }
+                            else
+                            {
+                                for (int i = 0; i < subemplist.Count(); i++)
+                                {
+                                    if (subemplist[i].Equals(""))
+                                    {
+                                        continue;
+                                    }
+
+                                    if (currentEmp.Emp.EmpId.Equals(subemplist[i]))
+                                    {
+                                        navigateToOrder(currentEmp, rec, founded);
+                                        return;
+                                    }
+                                }
+
+                                ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
+                                _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+                                _unitofwork.Save();
+                                navigateToOrder(currentEmp, rec, founded);
+                            }
+                        }
+
+                        ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael.ShowDialog();
+
+                        checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
+                    }
+                    else
+                    {
+                        if (currentEmp != null)
+                        {
+                            if (ordertempcurrenttable != null)
+                            {
+                                ordertempcurrenttable.EmpId = currentEmp.Emp.EmpId;
+                                _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+                                _unitofwork.Save();
+                            }
+
+                            navigateToOrder(currentEmp, rec, founded);
+                            return;
+                        }
+
+                        ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael.ShowDialog();
+
+                        checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
+                    }
                 }
+            }
+        }
+
+        private void checkCurrentEmp(EmpLoginList currentEmp, Rectangle rec, Entities.Table founded, OrderTemp ordertempcurrenttable)
+        {
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                return;
+            }
+
+            currentEmp = App.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
+
+            if (currentEmp != null)
+            {
+                if (ordertempcurrenttable != null)
+                {
+                    ordertempcurrenttable.EmpId = currentEmp.Emp.EmpId;
+                    _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+                    _unitofwork.Save();
+                }
+
+                navigateToOrder(currentEmp, rec, founded);
+                return;
             }
         }
 
@@ -593,23 +680,51 @@ namespace POS.EmployeeWorkSpace
         //su kien khi lua chon move tu popup menu cua table
         private void moveTable_Click(object sender, RoutedEventArgs e)
         {
+            bool pass = false;
+
             if (currentRec.Opacity == 1)
             {
-                currentRec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-                currentRec.MouseMove += btnTableAdded_MoveDrag;
-                currentRec.Opacity = 0.65;
+                if (App.Current.Properties["AdLogin"] == null)
+                {
+                    MessageBoxResult mess = MessageBox.Show("You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
+                    if (mess == MessageBoxResult.Yes)
+                    {
+                        PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                        pr.ShowDialog();
 
-                currentRec.Cursor = Cursors.SizeAll;
+                        if (App.Current.Properties["AdLogin"] != null)
+                        {
+                            pass = true;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    pass = true;
+                }
 
-                Entities.Table t = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(currentRec.Name.Substring(5)))).First();
-                t.IsPinned = 0;
+                if (pass)
+                {
+                    currentRec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+                    currentRec.MouseMove += btnTableAdded_MoveDrag;
+                    currentRec.Opacity = 0.65;
 
-                currentRec.ClearValue(BitmapEffectProperty);
+                    currentRec.Cursor = Cursors.SizeAll;
 
-                _unitofwork.TableRepository.Update(t);
-                _unitofwork.Save();
+                    Entities.Table t = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(currentRec.Name.Substring(5)))).First();
+                    t.IsPinned = 0;
 
-                currentRec.ToolTip = setTooltip(currentRec);
+                    currentRec.ClearValue(BitmapEffectProperty);
+
+                    _unitofwork.TableRepository.Update(t);
+                    _unitofwork.Save();
+
+                    currentRec.ToolTip = setTooltip(currentRec);
+                }
             }
         }
 
@@ -631,31 +746,57 @@ namespace POS.EmployeeWorkSpace
         //su kien khi lua chon remove tu popup menu cua table
         private void removeTable_Click(object sender, RoutedEventArgs e)
         {
-            var t = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(currentRec.Name.Substring(5)))).First();
-
-            if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)) && t.IsOrdered == 1)
+            bool pass = false;
+            if (App.Current.Properties["AdLogin"] == null)
             {
-                MessageBox.Show("This table is ordering! You can not remove this table");
-                return;
-            }
-
-            if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)) && t.IsOrdered == 0)
-            {
-                var chairlist = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(t.TableId)).ToList();
-                var ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(t.TableId)).First();
-                foreach (var ch in chairlist)
+                MessageBoxResult mess = MessageBox.Show("You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
+                if (mess == MessageBoxResult.Yes)
                 {
-                    _unitofwork.ChairRepository.Delete(ch);
+                    PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                    pr.ShowDialog();
+
+                    if (App.Current.Properties["AdLogin"] != null)
+                    {
+                        pass = true;
+                    }
                 }
-                _unitofwork.OrderTempRepository.Delete(ordertemptable);
-                _unitofwork.TableRepository.Delete(t);
-                _unitofwork.Save();
-                grTable.Children.Remove(currentRec);
-                buttonTableCurrentNumber--;
-                return;
+                else
+                {
+                    pass = false;
+                }
+            }
+            else
+            {
+                pass = true;
             }
 
-            ((MainWindow)Window.GetWindow(this)).proTable.Maximum -= 1;
+            if (pass)
+            {
+                var t = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(currentRec.Name.Substring(5)))).First();
+
+                if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)) && t.IsOrdered == 1)
+                {
+                    MessageBox.Show("This table is ordering! You can not remove this table");
+                    return;
+                }
+
+                if (t.TableNumber == int.Parse(currentRec.Name.Substring(5)) && t.IsOrdered == 0)
+                {
+                    var chairlist = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(t.TableId)).ToList();
+                    var ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(t.TableId)).First();
+                    foreach (var ch in chairlist)
+                    {
+                        _unitofwork.ChairRepository.Delete(ch);
+                    }
+                    _unitofwork.OrderTempRepository.Delete(ordertemptable);
+                    _unitofwork.TableRepository.Delete(t);
+                    _unitofwork.Save();
+                    grTable.Children.Remove(currentRec);
+                    buttonTableCurrentNumber--;
+                    return;
+                }
+                ((MainWindow)Window.GetWindow(this)).proTable.Maximum -= 1;
+            }
         }
 
         Point startPoint;
