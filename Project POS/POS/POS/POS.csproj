@@ -224,6 +224,9 @@
     <Compile Include="EmployeeWorkSpace\InputNote.xaml.cs">
       <DependentUpon>InputNote.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeWorkSpace\InputTheRestOrderInfoDialog.xaml.cs">
+      <DependentUpon>InputTheRestOrderInfoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeWorkSpace\PermissionRequired.xaml.cs">
       <DependentUpon>PermissionRequired.xaml</DependentUpon>
     </Compile>
@@ -416,6 +419,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\InputNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\InputTheRestOrderInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using POS.EmployeeWorkSpace;
 using POS.Entities;
+using POS.Entities.CustomEntities;
 using POS.Repository.DAL;
 
 namespace POS.Support
@@ -14,8 +15,14 @@ namespace POS.Support
     /// </summary>
     public partial class KeyboardControl : UserControl
     {
+        public static int LOG_IN_TYPE = 1;
+        public static int ORDER_PAYMENT_TYPE = 2;
         private static EmployeewsOfAsowell _unitofwork;
-        public Login parent { get; set; }
+        public Window parent { get; set; }
+        public int Type { get; set; }
+
+        public Entities.OrderNote currentOrder { get; set; }
+        public string payMethod { get; set; }
 
         public KeyboardControl()
         {
@@ -23,6 +30,7 @@ namespace POS.Support
 
             _unitofwork = new EmployeewsOfAsowell();
             parent = null;
+            Type = LOG_IN_TYPE;
         }
 
         private void BtnDeleteInput_Click(object sender, RoutedEventArgs e)
@@ -90,34 +98,91 @@ namespace POS.Support
 
 
 
-
-
-        private async void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async void BtnGo_OnClick(object sender, RoutedEventArgs e)
         {
-            if (parent == null)
-                return;
+            if (Type == LOG_IN_TYPE)
+            {
+                if (parent == null)
+                    return;
 
-            int code;
-            try
-            {
-                code = int.Parse(TxtInputValue.Text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Incorrect input!");
-                return;
-            }
-            
-            try
-            {
-                BtnLogin.IsEnabled = false;
-                await LoginAsync(code);
+                int code;
+                try
+                {
+                    code = int.Parse(TxtInputValue.Text);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Incorrect input!");
+                    return;
+                }
 
-                BtnLogin.IsEnabled = true;
+                try
+                {
+                    BtnGo.IsEnabled = false;
+                    await LoginAsync(code);
+
+                    BtnGo.IsEnabled = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-            catch (Exception ex)
+
+            if (Type == ORDER_PAYMENT_TYPE)
             {
-                Console.WriteLine(ex.Message);
+                if (payMethod == "" || payMethod == null)
+                {
+                    MessageBox.Show("please choose Payment Method!");
+                    return;
+                }
+
+
+                if (payMethod == PaymentMethod.Cash.ToString())
+                {
+                    currentOrder.paymentMethod = (int) PaymentMethod.Cash;
+                }
+                else if (payMethod == PaymentMethod.Cheque.ToString())
+                {
+                    currentOrder.paymentMethod = (int)PaymentMethod.Cheque;
+                }
+                else if (payMethod == PaymentMethod.Credit.ToString())
+                {
+                    currentOrder.paymentMethod = (int)PaymentMethod.Credit;
+                }
+                else if (payMethod == PaymentMethod.Deferred.ToString())
+                {
+                    currentOrder.paymentMethod = (int)PaymentMethod.Deferred;
+                }
+                else if (payMethod == PaymentMethod.International.ToString())
+                {
+                    currentOrder.paymentMethod = (int)PaymentMethod.International;
+                }
+                else if (payMethod == PaymentMethod.OnAcount.ToString())
+                {
+                    currentOrder.paymentMethod = (int)PaymentMethod.OnAcount;
+                }
+
+
+                try
+                {
+                    int cusPay = int.Parse(TxtInputValue.Text);
+
+                    if (cusPay < currentOrder.TotalPrice)
+                    {
+                        MessageBox.Show("All payment ground up to higher number!");
+                        return;
+                    }
+
+                    currentOrder.CustomerPay = cusPay;
+                    currentOrder.PayBack = currentOrder.CustomerPay - currentOrder.TotalPrice;
+                    parent.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Incorrect input!");
+                    return;
+                }
             }
         }
 
@@ -182,5 +247,7 @@ namespace POS.Support
                 throw;
             }
         }
+
+        
     }
 }

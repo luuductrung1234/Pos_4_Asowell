@@ -47,14 +47,14 @@
                   VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150"
+                    <GridViewColumn Width="120"
                                     Header="Username"
                                     DisplayMemberBinding="{Binding Emp.Username}" />
                     <GridViewColumn Header="Name"
                                     Width="150"
                                     DisplayMemberBinding="{Binding Emp.Name}" />
                     <GridViewColumn Header="Time Percent"
-                                    Width="150">
+                                    Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ProgressBar Style="{StaticResource MyMaterialDesignCircularProgressBar}"
@@ -63,6 +63,23 @@
                                              Width="40"
                                              Height="40"
                                              IsIndeterminate="True" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Login"
+                                    Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="70"
+                                        x:Name="BtnCodeLogin"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" 
+                                        Click="BtnCodeLogin_OnClick">
+                                    <materialDesign:PackIcon Kind="AccountKey"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center" />
+                                </Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

@@ -464,7 +464,11 @@ namespace POS.EmployeeWorkSpace
                 txtPass.Password = "";
             }
         }
-        
+
+        private void BtnCodeLogin_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class EmpLoginList

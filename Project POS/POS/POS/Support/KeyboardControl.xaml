@@ -108,9 +108,9 @@
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                 Width="70"
                                 Margin="4"
-                                x:Name="BtnLogin"
+                                x:Name="BtnGo"
                                 Background="{DynamicResource MaterialDesignChipBackground}"
-                                Click="btnLogin_Click">
+                                Click="BtnGo_OnClick">
                             <materialDesign:PackIcon Kind="Login"
                                                      HorizontalAlignment="Center"
                                                      VerticalAlignment="Center" />

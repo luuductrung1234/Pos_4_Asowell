@@ -11,6 +11,7 @@ using System.Windows.Media;
 using NPOI.SS.Formula.Functions;
 using POS.BusinessModel;
 using POS.Entities;
+using POS.Entities.CustomEntities;
 using POS.Helper.PrintHelper;
 using POS.Repository.DAL;
 using Chair = POS.BusinessModel.Chair;
@@ -210,6 +211,9 @@ namespace POS.EmployeeWorkSpace
                 //((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId = (string) ((sender as ComboBox).SelectedItem as Customer).CusId;
                 ordertemptable.CusId =
                     (string)(sender as ComboBox).SelectedValue;
+                ordertemptable.Discount = _unitofwork.CustomerRepository.Get(x => x.CusId.Equals(ordertemptable.CusId))
+                    .FirstOrDefault().Discount;
+                loadTotalPrice();
                 _unitofwork.OrderTempRepository.Update(ordertemptable);
                 _unitofwork.Save();
                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
@@ -369,13 +373,20 @@ namespace POS.EmployeeWorkSpace
                                                item_discount = product.Discount
                                            };
 
+            // calculate totalPriceNonDisc and TotalPrice
             decimal Total = 0;
+            decimal TotalWithDiscount = 0;
             foreach (var item in query_item_in_ordertails)
             {
-                Total = (decimal)((float)Total + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
+                Total = (decimal)((float)Total + (float)(item.item_quan * (float)item.item_price));
+                TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
             }
-            txtTotal.Text = string.Format("{0:0.000}", Total) + " VND";
-            ordertemptable.TotalPrice = (decimal)Total;
+            TotalWithDiscount = (decimal)(((float)Total * (100-ordertemptable.Discount))/100.0);
+
+
+            txtTotal.Text = string.Format("{0:0.000}", TotalWithDiscount) + " VND";
+            ordertemptable.TotalPrice = (decimal)TotalWithDiscount;
+            ordertemptable.TotalPriceNonDisc = (decimal)Total;
         }
 
 
@@ -647,27 +658,53 @@ namespace POS.EmployeeWorkSpace
 
 
 
-
+        // NEED TO BE UPDATE TO THE TRANSACT MANIPULATION
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
             if (currentTable == null)
                 return;
 
 
-            // printing
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, null);
-            printer.DoPrint();
+            if (currentChair != null)//pay for chair
+            {
+                // devide the chair data to another Order
 
-            // add data to database
-            //ordertemptable.CustomerPay = ordertemptable.TotalPrice;
-            //ordertemptable.PayBack = 0;
-            //_unitofwork.OrderTempRepository.Update(ordertemptable);
-            //_unitofwork.Save();
 
-            //// clean the old table data
-            //ClearTheTable();
+                // input the rest data
 
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+
+                // conver data
+
+
+                // printing
+                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
+                printer.DoPrint();
+
+                //// clean the old table data
+                //ClearTheTable();
+            }
+            else //pay for table
+            {
+                // input the rest data
+                OrderNote newOrder = new OrderNote();
+                newOrder.TotalPrice = ordertemptable.TotalPrice;
+                newOrder.paymentMethod = (int)PaymentMethod.Cash;
+                newOrder.CustomerPay = newOrder.TotalPrice;
+                newOrder.PayBack = newOrder.CustomerPay - newOrder.TotalPrice;
+                InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
+                inputTheRest.ShowDialog();
+
+                // conver data
+
+
+
+                // printing
+                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
+                printer.DoPrint();
+
+                //// clean the old table data
+                //ClearTheTable();
+            }
         }
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
