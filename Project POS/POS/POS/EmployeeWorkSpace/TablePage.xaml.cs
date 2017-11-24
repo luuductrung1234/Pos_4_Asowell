@@ -557,7 +557,7 @@ namespace POS.EmployeeWorkSpace
                             }
                             else
                             {
-                                if(ordertempcurrenttable.SubEmpId.Length != 0)
+                                if(ordertempcurrenttable.SubEmpId != null)
                                 {
                                     string[] subemplist = ordertempcurrenttable.SubEmpId.Split(',');
 
