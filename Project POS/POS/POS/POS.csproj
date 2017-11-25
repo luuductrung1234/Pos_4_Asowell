@@ -233,7 +233,6 @@
     <Compile Include="EmployeeWorkSpace\PermissionRequired.xaml.cs">
       <DependentUpon>PermissionRequired.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper\PrintHelper\AsowellPrinter.cs" />
     <Compile Include="Helper\PrintHelper\BarPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\DoPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\EndOfDayPrintHelper.cs" />
