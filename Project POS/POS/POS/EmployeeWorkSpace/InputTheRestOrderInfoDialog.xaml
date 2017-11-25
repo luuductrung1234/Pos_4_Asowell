@@ -8,7 +8,8 @@
         x:Class="POS.EmployeeWorkSpace.InputTheRestOrderInfoDialog"
         mc:Ignorable="d"
         Height="300"
-        Width="300">
+        Width="300"
+        WindowStartupLocation="CenterScreen">
     <StackPanel>
         <materialDesign:ColorZone Mode="PrimaryDark"
                                   Height="31"
@@ -31,7 +32,7 @@
                                  Margin="0,0,0,0"
                                  VerticalAlignment="Top"
                                  Width="Auto"
-                                 GoClick="DoPayment_Click"/>
+                                 GoClick="DoPayment_Click" />
 
     </StackPanel>
 </Window>

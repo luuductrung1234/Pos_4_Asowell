@@ -135,7 +135,8 @@
                     Height="300"
                     Margin="10,0,0,0"
                     VerticalAlignment="Top"
-                    Width="580">
+                    Width="640"
+                    Orientation="Horizontal">
             <StackPanel.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="FontSize"
@@ -156,17 +157,17 @@
                        FontSize="24"
                        Margin="10" />
             
-            <StackPanel Width="400"
+            <StackPanel Width="360"
                         HorizontalAlignment="Left"
                         Margin="10">
                 <StackPanel Height="60"
                             Orientation="Horizontal">
                     <TextBlock HorizontalAlignment="Center"
                                TextWrapping="Wrap"
-                               Text="Kitchen Printer:"
+                               Text="Reception Printer:"
                                VerticalAlignment="Center"
                                Width="140" />
-                    <TextBox x:Name="txbKitPrinter"
+                    <TextBox x:Name="txtReceptionPrinter"
                              TextWrapping="Wrap"
                              Text=""
                              Width="200"
@@ -174,9 +175,25 @@
                              VerticalAlignment="Center"
                              FontSize="18"
                              Margin="0,14"
-                             Foreground="White"
-                             PreviewTextInput="CheckNumber_PreviewTextInput"
-                             TextChanged="txtWidth_TextChanged" />
+                             Foreground="White" />
+                </StackPanel>
+
+                <StackPanel Height="60"
+                            Orientation="Horizontal">
+                    <TextBlock HorizontalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Text="Kitchen Printer:"
+                               VerticalAlignment="Center"
+                               Width="140" />
+                    <TextBox x:Name="txtKitPrinter"
+                             TextWrapping="Wrap"
+                             Text=""
+                             Width="200"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             FontSize="18"
+                             Margin="0,14"
+                             Foreground="White"/>
                 </StackPanel>
 
                 <StackPanel Height="60"
@@ -186,7 +203,7 @@
                                Text="Bar Printer:"
                                VerticalAlignment="Center"
                                Width="140" />
-                    <TextBox x:Name="txbBarPrinter"
+                    <TextBox x:Name="txtBarPrinter"
                              TextWrapping="Wrap"
                              Text=""
                              Width="200"
@@ -194,26 +211,35 @@
                              VerticalAlignment="Center"
                              FontSize="18"
                              Margin="0,14"
-                             Foreground="White"
-                             PreviewTextInput="CheckNumber_PreviewTextInput"
-                             TextChanged="txtWidth_TextChanged" />
+                             Foreground="White" />
+                </StackPanel>
+
+                <StackPanel Height="60"
+                            Orientation="Horizontal">
+                    <TextBlock HorizontalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Text="Show Review Windows:"
+                               VerticalAlignment="Center"
+                               Width="140" />
+                    <CheckBox x:Name="chbShowReviewWin"
+                              />
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Height="59"
-                        Orientation="Horizontal"
+            <StackPanel Height="120"
+                        Orientation="Vertical"
                         HorizontalAlignment="Left"
-                        Margin="60,0,0,0">
+                        Margin="0,0,0,0">
                 <Button x:Name="btnPrinterApply"
                         Content="Apply"
                         FontSize="18"
                         Margin="10"
-                        Click="btnApply_Click" />
+                        Click="BtnPrinterApply_OnClick" />
                 <Button x:Name="btnPrinterCancel"
                         Content="Cancel"
                         FontSize="18"
                         Margin="10"
-                        Click="btnCancel_Click" />
+                        Click="BtnPrinterCancel_OnClick" />
             </StackPanel>
         </StackPanel>
     </Grid>

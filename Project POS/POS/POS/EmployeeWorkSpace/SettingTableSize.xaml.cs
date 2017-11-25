@@ -32,6 +32,26 @@ namespace POS.EmployeeWorkSpace
         {
             txtWidth.Text = ReadWriteData.readTableSize()[0];
             txtHeight.Text = ReadWriteData.readTableSize()[1];
+
+            string[] result = ReadWriteData.ReadPrinterSetting();
+            if (result != null)
+            {
+                txtReceptionPrinter.Text = result[0];
+                txtKitPrinter.Text = result[1];
+                txtBarPrinter.Text = result[2];
+
+                if (int.Parse(result[3]) == 1)
+                    chbShowReviewWin.IsChecked = true;
+                else
+                    chbShowReviewWin.IsChecked = false;
+            }
+            else
+            {
+                txtReceptionPrinter.Text = "";
+                txtKitPrinter.Text = "";
+                txtBarPrinter.Text = "";
+                chbShowReviewWin.IsChecked = true;
+            }
         }
 
         private void CheckNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -113,7 +133,40 @@ namespace POS.EmployeeWorkSpace
 
         private void BtnPrinterApply_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (txtKitPrinter.Text.Trim().Length == 0 || txtBarPrinter.Text.Trim().Length == 0 || txtReceptionPrinter.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Please input all Printer Name that required here!");
+                return;
+            }
+
+            if(chbShowReviewWin.IsChecked == true)
+                ReadWriteData.WritePrinterSetting(txtReceptionPrinter.Text + "," + txtKitPrinter.Text + "," + txtBarPrinter.Text + "," + "1");
+            else
+                ReadWriteData.WritePrinterSetting(txtReceptionPrinter.Text + "," + txtKitPrinter.Text + "," + txtBarPrinter.Text + "," + "0");
+        }
+
+        private void BtnPrinterCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            string[] result = ReadWriteData.ReadPrinterSetting();
+            if (result != null)
+            {
+                txtReceptionPrinter.Text = result[0];
+                txtKitPrinter.Text = result[1];
+                txtBarPrinter.Text = result[2];
+
+                if (int.Parse(result[3]) == 1)
+                    chbShowReviewWin.IsChecked = true;
+                else
+                    chbShowReviewWin.IsChecked = false;
+            }
+            else
+            {
+                txtReceptionPrinter.Text = "";
+                txtKitPrinter.Text = "";
+                txtBarPrinter.Text = "";
+                chbShowReviewWin.IsChecked = true;
+            }
+            
         }
     }
 }
