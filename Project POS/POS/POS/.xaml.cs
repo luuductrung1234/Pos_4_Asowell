@@ -62,6 +62,8 @@ namespace POS
             }
         }
 
+
+
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
@@ -173,6 +175,94 @@ namespace POS
             }
         }
 
+        private async void btnLoginCode_Click(object sender, RoutedEventArgs e)
+        {
+            int code;
+            try
+            {
+                code = int.Parse(KbEmpCodeLoginForm.InputValue);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Incorrect input!");
+                return;
+            }
+
+            try
+            {
+                KbEmpCodeLoginForm.ButtonGoAbleState(false);
+                await LoginByCodeAsync(code);
+                KbEmpCodeLoginForm.ButtonGoAbleState(true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task LoginByCodeAsync(int code)
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    bool isFound = false;
+                    Employee loginEmp = _unitempofwork.EmployeeRepository.Get(x => x.empCode == code).FirstOrDefault();
+                    if (loginEmp != null)
+                    {
+                        App.Current.Properties["EmpLogin"] = loginEmp;
+
+                        try
+                        {
+                            SalaryNote empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(loginEmp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
+
+                            App.Current.Properties["EmpSN"] = empSalaryNote;
+                            WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
+                            App.Current.Properties["EmpWH"] = empWorkHistory;
+                        }
+                        catch (Exception ex)
+                        {
+                            SalaryNote empSalary = new SalaryNote { EmpId = loginEmp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
+                            _unitempofwork.SalaryNoteRepository.Insert(empSalary);
+                            _unitempofwork.Save();
+                            WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
+                            App.Current.Properties["EmpWH"] = empWorkHistory;
+                            App.Current.Properties["EmpSN"] = empSalary;
+                        }
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            EmpLoginListData.emploglist.Clear();
+                            EmpLoginListData.emploglist.Add(new EmpLoginList { Emp = loginEmp, EmpSal = App.Current.Properties["EmpSN"] as SalaryNote, EmpWH = App.Current.Properties["EmpWH"] as WorkingHistory, TimePercent = 0 });
+
+                            EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
+                            main.Show();
+                        });
+                        isFound = true;
+
+                    }
+
+                    if (!isFound)
+                    {
+                        MessageBox.Show("incorrect username or password");
+                        return;
+                    }
+                    Dispatcher.Invoke(() =>
+                    {
+                        this.Close();
+                    });
+
+                });
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
         private void btnDatabase_Click(object sender, RoutedEventArgs e)
         {
             DatabaseConfigWindow dbConfig = new DatabaseConfigWindow();
@@ -192,10 +282,9 @@ namespace POS
             _unitempofwork.Dispose();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonChangeLoginType_Click(object sender, RoutedEventArgs e)
         {
             gNormalLoginForm.Visibility = Visibility.Collapsed;
-            kbcEmpCodeLoginForm.parent = this;
         }
     }
 }

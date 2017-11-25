@@ -62,7 +62,7 @@
             <Button Margin="343,153,4,15"
                     Width="50"
                     Style="{DynamicResource MaterialDesignFlatButton}"
-                    Click="Button_Click">
+                    Click="ButtonChangeLoginType_Click">
                 <materialDesign:PackIcon Kind="AccountKey"
                                          Foreground="DarkOrange"
                                          HorizontalAlignment="Center" />
@@ -114,9 +114,10 @@
 
         <StackPanel>
             <support:KeyboardControl 
-                x:Name="kbcEmpCodeLoginForm"
+                x:Name="KbEmpCodeLoginForm"
                 Height="369"
-                                     Width="397"></support:KeyboardControl>
+                Width="397"
+                GoClick="btnLoginCode_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>

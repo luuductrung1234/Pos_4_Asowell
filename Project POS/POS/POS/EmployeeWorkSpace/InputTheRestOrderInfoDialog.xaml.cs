@@ -23,14 +23,17 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class InputTheRestOrderInfoDialog : Window
     {
+        private Entities.OrderNote currentOrder;
+        private string _payMethod;
+        public bool IsSuccess { get; set; }
+
         public InputTheRestOrderInfoDialog(OrderNote currentOrder)
         {
             InitializeComponent();
 
-            KbInput.currentOrder = currentOrder;
-            KbInput.parent = this;
-            KbInput.Type = KeyboardControl.ORDER_PAYMENT_TYPE;
-            KbInput.payMethod = "";
+            this.currentOrder = currentOrder;
+            _payMethod = "";
+            IsSuccess = false;
 
             CboPaymentMethod.ItemsSource = new List<string>()
             {
@@ -46,7 +49,64 @@ namespace POS.EmployeeWorkSpace
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cboPayment = sender as ComboBox;
-            KbInput.payMethod = cboPayment.SelectedValue.ToString();
+            this._payMethod = cboPayment.SelectedValue.ToString();
+        }
+
+        private void btnLoginCode_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(_payMethod))
+            {
+                MessageBox.Show("please choose Payment Method!");
+                return;
+            }
+
+
+            if (_payMethod == PaymentMethod.Cash.ToString())
+            {
+                currentOrder.paymentMethod = (int)PaymentMethod.Cash;
+            }
+            else if (_payMethod == PaymentMethod.Cheque.ToString())
+            {
+                currentOrder.paymentMethod = (int)PaymentMethod.Cheque;
+            }
+            else if (_payMethod == PaymentMethod.Credit.ToString())
+            {
+                currentOrder.paymentMethod = (int)PaymentMethod.Credit;
+            }
+            else if (_payMethod == PaymentMethod.Deferred.ToString())
+            {
+                currentOrder.paymentMethod = (int)PaymentMethod.Deferred;
+            }
+            else if (_payMethod == PaymentMethod.International.ToString())
+            {
+                currentOrder.paymentMethod = (int)PaymentMethod.International;
+            }
+            else if (_payMethod == PaymentMethod.OnAcount.ToString())
+            {
+                currentOrder.paymentMethod = (int)PaymentMethod.OnAcount;
+            }
+
+
+            try
+            {
+                int cusPay = int.Parse(KbInput.InputValue);
+
+                if (cusPay < currentOrder.TotalPrice)
+                {
+                    MessageBox.Show("All payment ground up to higher number!");
+                    return;
+                }
+
+                currentOrder.CustomerPay = cusPay;
+                currentOrder.PayBack = currentOrder.CustomerPay - currentOrder.TotalPrice;
+                IsSuccess = true;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Incorrect input!");
+                return;
+            }
         }
     }
 }
