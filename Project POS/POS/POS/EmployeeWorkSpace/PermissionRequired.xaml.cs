@@ -97,7 +97,7 @@ namespace POS.EmployeeWorkSpace
 
         private void btnAcceptCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
     }
 }

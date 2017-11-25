@@ -46,7 +46,23 @@ namespace POS.BusinessModel
                     sWriter.WriteLine(size);
                 }
             }
+        }
 
+
+        public static string[] readPrinterSetting()
+        {
+            using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\printerSetting.txt", FileMode.Open))
+            {
+                using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
+                {
+                    string tableSize = rd.ReadLine();
+                    return tableSize.Split('-');
+                }
+            }
+        }
+        
+        public static void writePrinterSetting()
+        {
 
         }
 

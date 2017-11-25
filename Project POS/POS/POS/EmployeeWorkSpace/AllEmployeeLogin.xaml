@@ -1,11 +1,12 @@
-﻿<Window x:Class="POS.EmployeeWorkSpace.AllEmployeeLogin"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Background="{DynamicResource MaterialDesignPaper}"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:Support="clr-namespace:POS.Support"
+        x:Class="POS.EmployeeWorkSpace.AllEmployeeLogin"
+        Background="{DynamicResource MaterialDesignPaper}"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="All Employee Login"
@@ -36,7 +37,7 @@
                 <TextBlock VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            FontWeight="Bold"
-                           FontSize="18">Employee Login List</TextBlock>
+                           FontSize="18"><Run Text="Employee Login List" /></TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView x:Name="lvLoginList"
@@ -51,7 +52,7 @@
                                     Header="Username"
                                     DisplayMemberBinding="{Binding Emp.Username}" />
                     <GridViewColumn Header="Name"
-                                    Width="150"
+                                    Width="160"
                                     DisplayMemberBinding="{Binding Emp.Name}" />
                     <GridViewColumn Header="Time Percent"
                                     Width="120">
@@ -68,13 +69,13 @@
                     </GridViewColumn>
 
                     <GridViewColumn Header="Login"
-                                    Width="100">
+                                    Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                         Width="70"
                                         x:Name="BtnCodeLogin"
-                                        Background="{DynamicResource MaterialDesignDarkBackground}" 
+                                        Background="{DynamicResource MaterialDesignDarkBackground}"
                                         Click="BtnCodeLogin_OnClick">
                                     <materialDesign:PackIcon Kind="AccountKey"
                                                              HorizontalAlignment="Center"
@@ -116,7 +117,8 @@
         </StackPanel>
         <StackPanel x:Name="spLoginAnother"
                     Width="350"
-                    Margin="510,0,0,0">
+                    Margin="510,0,0,0"
+                    Panel.ZIndex="10">
             <StackPanel>
                 <materialDesign:ColorZone Mode="PrimaryMid"
                                           BorderBrush="Black"
@@ -141,7 +143,8 @@
                                  FontSize="16"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
-                                 Foreground="White" />
+                                 Foreground="White"
+                                 KeyDown="txtUsername_KeyDown" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,10,0,0">
@@ -155,7 +158,8 @@
                                      FontSize="16"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
-                                     Foreground="White" />
+                                     Foreground="White"
+                                     KeyDown="txtPass_KeyDown" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,10,0,0">
@@ -191,6 +195,7 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
+            <Support:KeyboardControl Width="Auto" />
         </StackPanel>
     </Grid>
 </Window>
