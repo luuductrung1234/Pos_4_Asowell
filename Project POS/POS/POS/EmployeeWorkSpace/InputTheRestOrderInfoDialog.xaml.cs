@@ -32,6 +32,7 @@ namespace POS.EmployeeWorkSpace
             InitializeComponent();
 
             this.currentOrder = currentOrder;
+            TbTotalPrice.Text = TbTotalPrice.Text + currentOrder.TotalPrice;
             _payMethod = "";
             IsSuccess = false;
 
@@ -113,6 +114,12 @@ namespace POS.EmployeeWorkSpace
                 MessageBox.Show("Incorrect input!");
                 return;
             }
+        }
+
+
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
