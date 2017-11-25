@@ -75,7 +75,7 @@ namespace POS.EmployeeWorkSpace
             else
             {
                 this.Width += 10;
-                if (this.Width == 870)
+                if (this.Width == 900)
                 {
                     LoadForm.Stop();
                 }
@@ -138,9 +138,70 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
-        private void BtnCodeLogin_OnClick(object sender, RoutedEventArgs e)
+        private void BtnCodeLogin_Click(object sender, RoutedEventArgs e)
         {
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
 
+            if (dep == null)
+                return;
+
+            int index = lvLoginList.ItemContainerGenerator.IndexFromContainer(dep);
+
+            EmpLoginList emp = EmpLoginListData.emploglist[index];
+            if(emp == null)
+            {
+                MessageBox.Show("Please choose employee to continue!");
+                return;
+            }
+
+            if (this.Width == 500)
+            {
+                IsShow = false;
+                LoadForm.Start();
+            }
+
+            spLoginAnother.Visibility = Visibility.Visible;
+            loginNormal.Visibility = Visibility.Collapsed;
+            loginCode.Visibility = Visibility.Visible;
+            lvLoginList.UnselectAll();
+            txbLabel.Text = "Login Another";
+            setControl(true);
+        }
+
+        private async void loginCode_GoClick(object sender, RoutedEventArgs e)
+        {
+            int code;
+            try
+            {
+                code = int.Parse(loginCode.InputValue);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Incorrect input!");
+                return;
+            }
+
+            try
+            {
+                loginCode.ButtonGoAbleState(false);
+                if(_typeshow == 2)
+                {
+                    await Async("", "", code, App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
+                }
+                else if(_typeshow == 4)
+                {
+                    
+                }
+                loginCode.ButtonGoAbleState(true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private void btnLoginNew_Click(object sender, RoutedEventArgs e)
@@ -152,6 +213,8 @@ namespace POS.EmployeeWorkSpace
             }
 
             spLoginAnother.Visibility = Visibility.Visible;
+            loginNormal.Visibility = Visibility.Visible;
+            loginCode.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Login Another";
             setControl(true);
@@ -173,6 +236,8 @@ namespace POS.EmployeeWorkSpace
             }
 
             spLoginAnother.Visibility = Visibility.Visible;
+            loginNormal.Visibility = Visibility.Visible;
+            loginCode.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Start Working";
             setControl(false);
@@ -195,6 +260,8 @@ namespace POS.EmployeeWorkSpace
             }
 
             spLoginAnother.Visibility = Visibility.Visible;
+            loginNormal.Visibility = Visibility.Visible;
+            loginCode.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "Logout";
             setControl(false);
@@ -217,6 +284,8 @@ namespace POS.EmployeeWorkSpace
             }
 
             spLoginAnother.Visibility = Visibility.Visible;
+            loginNormal.Visibility = Visibility.Visible;
+            loginCode.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
             txbLabel.Text = "View Details";
             setControl(false);
@@ -243,7 +312,7 @@ namespace POS.EmployeeWorkSpace
                     {
                         btnAcceptLogin.IsEnabled = false;
                         PgbLoginProcess.Visibility = Visibility.Visible;
-                        await Async(username, pass, null);
+                        await Async(username, pass, 0, null);
 
                         btnAcceptLogin.IsEnabled = true;
                         PgbLoginProcess.Visibility = Visibility.Collapsed;
@@ -288,7 +357,7 @@ namespace POS.EmployeeWorkSpace
                     {
                         btnAcceptLogout.IsEnabled = false;
                         PgbLoginProcess.Visibility = Visibility.Visible;
-                        await Async("", "", _emplog);
+                        await Async("", "", 0, _emplog);
 
                         btnAcceptLogout.IsEnabled = true;
                         PgbLoginProcess.Visibility = Visibility.Collapsed;
@@ -328,11 +397,12 @@ namespace POS.EmployeeWorkSpace
         {
             string username = txtUsername.Text.Trim();
             string pass = txtPass.Password.Trim();
+
             try
             {
                 btnAcceptLogin.IsEnabled = false;
                 PgbLoginProcess.Visibility = Visibility.Visible;
-                await Async(username, pass, null);
+                await Async(username, pass, 0, null);
                 
                 btnAcceptLogin.IsEnabled = true;
                 PgbLoginProcess.Visibility = Visibility.Collapsed;
@@ -355,6 +425,9 @@ namespace POS.EmployeeWorkSpace
 
         private async void btnAcceptLogout_Click(object sender, RoutedEventArgs e)
         {
+            string username = txtUsername.Text.Trim();
+            string pass = txtPass.Password.Trim();
+
             if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
             {
                 MessageBox.Show("Fail! Please try again!");
@@ -365,7 +438,7 @@ namespace POS.EmployeeWorkSpace
             {
                 btnAcceptLogout.IsEnabled = false;
                 PgbLoginProcess.Visibility = Visibility.Visible;
-                await Async("", "", _emplog);
+                await Async(username, pass, 0, _emplog);
 
                 btnAcceptLogout.IsEnabled = true;
                 PgbLoginProcess.Visibility = Visibility.Collapsed;
@@ -416,21 +489,20 @@ namespace POS.EmployeeWorkSpace
 
         private void btnAcceptCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Width == 870)
+            if (this.Width == 900)
             {
                 IsShow = true;
                 LoadForm.Start();
             }
 
             spLoginAnother.Visibility = Visibility.Collapsed;
+            loginNormal.Visibility = Visibility.Collapsed;
+            loginCode.Visibility = Visibility.Collapsed;
             lvLoginList.UnselectAll();
-            txtUsername.IsEnabled = true;
-            txtPass.IsEnabled = true;
-            txtUsername.Text = "";
-            txtPass.Password = "";
+            setControl(true);
         }
 
-        private async Task Async(string username, string pass, EmpLoginList empout)
+        private async Task Async(string username, string pass, int code, EmpLoginList empout)
         {
             try
             {
@@ -438,30 +510,37 @@ namespace POS.EmployeeWorkSpace
                 {
                     if (empout != null)
                     {
-                        empout.EmpWH.EndTime = DateTime.Now;
-                        _unitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);
-                        _unitofwork.Save();
-
-                        var workH = empout.EmpWH.EndTime - empout.EmpWH.StartTime;
-                        empout.EmpSal = _unitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(empout.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
-                        empout.EmpSal.WorkHour += workH.Hours + workH.Minutes / 60 + workH.Seconds / 3600;
-                        _unitofwork.SalaryNoteRepository.Update(empout.EmpSal);
-                        _unitofwork.Save();
-
-                        EmpLoginListData.emploglist.Remove(empout);
-
-                        Dispatcher.Invoke(() =>
+                        if((empout.Emp.Username.Equals(username) && empout.Emp.Pass.Equals(pass)) || empout.Emp.empCode.Equals(code))
                         {
-                            checkEmployeeCount();
-                        });
+                            empout.EmpWH.EndTime = DateTime.Now;
+                            _unitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);
+                            _unitofwork.Save();
 
-                        return;
+                            var workH = empout.EmpWH.EndTime - empout.EmpWH.StartTime;
+                            empout.EmpSal = _unitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(empout.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
+                            empout.EmpSal.WorkHour += workH.Hours + workH.Minutes / 60 + workH.Seconds / 3600;
+                            _unitofwork.SalaryNoteRepository.Update(empout.EmpSal);
+                            _unitofwork.Save();
+
+                            EmpLoginListData.emploglist.Remove(empout);
+
+                            Dispatcher.Invoke(() =>
+                            {
+                                checkEmployeeCount();
+                            });
+
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Fail! Please try again!");
+                        }
                     }
 
                     bool isFound = false;
                     foreach (Employee emp in _employee)
                     {
-                        if (emp.Username.Equals(username) && emp.Pass.Equals(pass))
+                        if ((emp.Username.Equals(username) && emp.Pass.Equals(pass)) || emp.empCode.Equals(code))
                         {
                             var chemp = EmpLoginListData.emploglist.Where(x => x.Emp.EmpId.Equals(emp.EmpId)).ToList();
                             if(chemp.Count != 0)
@@ -570,7 +649,6 @@ namespace POS.EmployeeWorkSpace
                 txtPass.Password = "";
             }
         }
-        
         
     }
 

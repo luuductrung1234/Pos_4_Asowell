@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         Title="All Employee Login"
         Height="550"
-        Width="870">
+        Width="900">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}"
                x:Key="TextBlockLabel">
@@ -76,7 +76,7 @@
                                         Width="70"
                                         x:Name="BtnCodeLogin"
                                         Background="{DynamicResource MaterialDesignDarkBackground}"
-                                        Click="BtnCodeLogin_OnClick">
+                                        Click="BtnCodeLogin_Click">
                                     <materialDesign:PackIcon Kind="AccountKey"
                                                              HorizontalAlignment="Center"
                                                              VerticalAlignment="Center" />
@@ -119,7 +119,7 @@
                     Width="350"
                     Margin="510,0,0,0"
                     Panel.ZIndex="10">
-            <StackPanel>
+            <StackPanel x:Name="loginNormal">
                 <materialDesign:ColorZone Mode="PrimaryMid"
                                           BorderBrush="Black"
                                           BorderThickness="1"
@@ -195,7 +195,8 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-            <Support:KeyboardControl Width="Auto" />
+            <Support:KeyboardControl x:Name="loginCode" Width="Auto" GoClick="loginCode_GoClick"
+                                     Height="300" />
         </StackPanel>
     </Grid>
 </Window>
