@@ -113,9 +113,7 @@
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="36"
-                                   FontWeight="Bold"
-                                   Margin="0,-3"
-                                   Width="239">ASOWEL POS</TextBlock>
+                                   FontWeight="Bold">ASOWEL POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>
