@@ -137,7 +137,12 @@ namespace POS.EmployeeWorkSpace
                 btnAcceptCancel.Visibility = Visibility.Visible;
             }
         }
-        
+
+        private void BtnCodeLogin_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void btnLoginNew_Click(object sender, RoutedEventArgs e)
         {
             if(this.Width == 500)
@@ -216,6 +221,107 @@ namespace POS.EmployeeWorkSpace
             txbLabel.Text = "View Details";
             setControl(false);
             txtUsername.Text = _emplog.Emp.Username;
+        }
+
+        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                txtPass.Focus();
+            }
+        }
+
+        private async void txtPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                if(_typeshow == 1)
+                {
+                    string username = txtUsername.Text.Trim();
+                    string pass = txtPass.Password.Trim();
+                    try
+                    {
+                        btnAcceptLogin.IsEnabled = false;
+                        PgbLoginProcess.Visibility = Visibility.Visible;
+                        await Async(username, pass, null);
+
+                        btnAcceptLogin.IsEnabled = true;
+                        PgbLoginProcess.Visibility = Visibility.Collapsed;
+
+                        lvLoginList.ItemsSource = EmpLoginListData.emploglist;
+                        lvLoginList.Items.Refresh();
+
+                        setControl(true);
+
+                        if (App.Current.Properties["CurrentEmpWorking"] != null)
+                        {
+                            _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else if(_typeshow == 2)
+                {
+                    if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+                    {
+                        MessageBox.Show("Login fail! Please try again!");
+                        return;
+                    }
+
+                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _unitofwork);
+                    ed.ShowDialog();
+
+                    setControl(true);
+                }
+                else if(_typeshow == 3)
+                {
+                    if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+                    {
+                        MessageBox.Show("Fail! Please try again!");
+                        return;
+                    }
+
+                    try
+                    {
+                        btnAcceptLogout.IsEnabled = false;
+                        PgbLoginProcess.Visibility = Visibility.Visible;
+                        await Async("", "", _emplog);
+
+                        btnAcceptLogout.IsEnabled = true;
+                        PgbLoginProcess.Visibility = Visibility.Collapsed;
+
+                        lvLoginList.ItemsSource = EmpLoginListData.emploglist;
+                        lvLoginList.Items.Refresh();
+
+                        setControl(true);
+
+                        if (App.Current.Properties["CurrentEmpWorking"] != null)
+                        {
+                            _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else if(_typeshow == 4)
+                {
+                    if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+                    {
+                        MessageBox.Show("Login fail! Please try again!");
+                        return;
+                    }
+
+                    App.Current.Properties["CurrentEmpWorking"] = _emplog;
+                    _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+
+                    this.Close();
+                }
+            }
         }
 
         private async void btnAcceptLogin_Click(object sender, RoutedEventArgs e)
@@ -464,11 +570,8 @@ namespace POS.EmployeeWorkSpace
                 txtPass.Password = "";
             }
         }
-
-        private void BtnCodeLogin_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        
+        
     }
 
     public class EmpLoginList
@@ -507,4 +610,5 @@ namespace POS.EmployeeWorkSpace
     {
         public static List<EmpLoginList> emploglist = new List<EmpLoginList>();
     }
+
 }
