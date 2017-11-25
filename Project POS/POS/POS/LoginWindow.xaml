@@ -11,14 +11,15 @@
         mc:Ignorable="d"
         Title="Login"
         Height="400"
-        Width="405.176"
+        Width="411.176"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
 
     <StackPanel Orientation="Horizontal">
 
 
-        <Grid x:Name="gNormalLoginForm">
+        <Grid x:Name="gNormalLoginForm"
+              Width="402">
             <Grid.RowDefinitions>
                 <RowDefinition Height="201*" />
                 <RowDefinition Height="169*" />
@@ -116,8 +117,8 @@
             <support:KeyboardControl 
                 x:Name="KbEmpCodeLoginForm"
                 Height="369"
-                Width="397"
-                GoClick="btnLoginCode_Click"/>
+                                     Width="399"
+                                     GoClick="btnLoginCode_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>

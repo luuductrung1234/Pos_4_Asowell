@@ -32,80 +32,35 @@ namespace POS.Support
             InitializeComponent();
         }
 
+        private void TxtInputValue_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            InputValue = TxtInputValue.Text;
+        }
+
         private void BtnDeleteInput_Click(object sender, RoutedEventArgs e)
         {
             TxtInputValue.Text = "";
-            InputValue = "";
+            //InputValue = "";
         }
 
-        private void BtnOne_Click(object sender, RoutedEventArgs e)
+        private void ButtonKey_Click(object sender, RoutedEventArgs e)
         {
-            TxtInputValue.Text += "1";
-            InputValue += "1";
-        }
-
-        private void BtnTwo_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "2";
-            InputValue += "2";
-        }
-
-        private void BtnThree_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "3";
-            InputValue += "3";
-        }
-
-        private void BtnFour_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "4";
-            InputValue += "4";
-        }
-
-        private void BtnFive_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "5";
-            InputValue += "5";
-        }
-
-        private void BtnSix_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "6";
-            InputValue += "6";
-        }
-
-        private void BtnSeven_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "7";
-            InputValue += "7";
-        }
-
-        private void BtnEight_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "8";
-            InputValue += "8";
-        }
-
-        private void BtnNine_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "9";
-            InputValue += "9";
-        }
-
-        private void BtnZero_Click(object sender, RoutedEventArgs e)
-        {
-            TxtInputValue.Text += "0";
-            InputValue += "0";
+            Button clickButton = sender as Button;
+            TxtInputValue.Text += clickButton.Content.ToString();
+            //InputValue += clickButton.Content.ToString();
         }
 
         private void BtnBackSpace_Click(object sender, RoutedEventArgs e)
         {
-            if (TxtInputValue.Text.Length == 0 || InputValue.Length == 0)
+            if (TxtInputValue.Text.Length == 0)
                 return;
 
             TxtInputValue.Text = TxtInputValue.Text.Remove(TxtInputValue.Text.Length - 1);
-            InputValue = InputValue.Remove(InputValue.Length - 1);
+            //InputValue = InputValue.Remove(InputValue.Length - 1);
         }
+
+
+
 
         private async void BtnGo_OnClick(object sender, RoutedEventArgs e)
         {
@@ -116,5 +71,7 @@ namespace POS.Support
         {
             BtnGo.IsEnabled = state;
         }
+
+        
     }
 }

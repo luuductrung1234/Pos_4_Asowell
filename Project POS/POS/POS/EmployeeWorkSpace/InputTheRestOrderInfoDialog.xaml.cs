@@ -52,7 +52,13 @@ namespace POS.EmployeeWorkSpace
             this._payMethod = cboPayment.SelectedValue.ToString();
         }
 
-        private void btnLoginCode_Click(object sender, RoutedEventArgs e)
+        public bool MyShowDialog()
+        {
+            this.ShowDialog();
+            return IsSuccess;
+        }
+
+        private void DoPayment_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(_payMethod))
             {

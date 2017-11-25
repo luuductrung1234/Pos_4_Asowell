@@ -50,11 +50,11 @@
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="LbiEODReport_OnPreviewMouseLeftButtonUp" />
                         <ListBoxItem x:Name="lbiSettingTableSize"
-                                     Content="Setting Table Size"
+                                     Content="Setting"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="lbiTableSize_PreviewMouseLeftButtonUp" />
                         <ListBoxItem x:Name="lbiChangeTheme"
-                                     Content="Setting Theme"
+                                     Content="Theme"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="lbiChangeTheme_PreviewMouseLeftButtonUp" />
                     </ListBox>

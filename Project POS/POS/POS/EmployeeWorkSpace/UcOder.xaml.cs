@@ -106,7 +106,7 @@ namespace POS.EmployeeWorkSpace
 
                 initStatus_RaiseEvent = false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -381,7 +381,7 @@ namespace POS.EmployeeWorkSpace
                 Total = (decimal)((float)Total + (float)(item.item_quan * (float)item.item_price));
                 TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
             }
-            TotalWithDiscount = (decimal)(((float)Total * (100-ordertemptable.Discount))/100.0);
+            TotalWithDiscount = (decimal)(((float)Total * (100 - ordertemptable.Discount)) / 100.0);
 
 
             txtTotal.Text = string.Format("{0:0.000}", TotalWithDiscount) + " VND";
@@ -548,7 +548,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            if(currentTable.IsPrinted == 1)
+            if (currentTable.IsPrinted == 1)
             {
                 MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
                 return;
@@ -664,16 +664,23 @@ namespace POS.EmployeeWorkSpace
             if (currentTable == null)
                 return;
 
-
-            if (currentChair != null)//pay for chair
+            bool isChairChecked = false;
+            foreach (var chairUIElement in wp.Children)
+            {
+                ToggleButton btnChair = chairUIElement as ToggleButton;
+                if (btnChair.IsChecked == true)
+                {
+                    isChairChecked = true;
+                    break;
+                }
+            }
+            if (isChairChecked)
             {
                 // devide the chair data to another Order
 
 
                 // input the rest data
 
-
-                // conver data
 
 
                 // printing
@@ -683,24 +690,34 @@ namespace POS.EmployeeWorkSpace
                 //// clean the old table data
                 //ClearTheTable();
             }
-            else //pay for table
+            else
             {
                 // input the rest data
                 OrderNote newOrder = new OrderNote();
                 newOrder.TotalPrice = ordertemptable.TotalPrice;
                 InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
-                inputTheRest.ShowDialog();
+                if (!inputTheRest.MyShowDialog())
+                {
+                    return;
+                }
 
-                // conver data
-
-
+                // convert data
+                if (ConvertTableToOrder(newOrder))
+                {
+                    _unitofwork.OrderRepository.Insert(newOrder);
+                    _unitofwork.Save();
+                }
+                else
+                {
+                    return;
+                }
 
                 // printing
                 var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
                 printer.DoPrint();
 
-                //// clean the old table data
-                //ClearTheTable();
+                // clean the old table data
+                ClearTheTable();
             }
         }
 
@@ -742,7 +759,7 @@ namespace POS.EmployeeWorkSpace
                     {
                         isHaveDrink = true;
                         break;
-                    } 
+                    }
                 }
 
                 if (isHaveDrink)
@@ -792,6 +809,70 @@ namespace POS.EmployeeWorkSpace
             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
+
+        /// <summary>
+        /// Split current selected Chair in current Table to the new stand alone Order
+        /// </summary>
+        /// <param name="newwOrder"></param>
+        private void SplitChairToOrder(OrderNote newwOrder)
+        {
+
+        }
+
+
+        /// <summary>
+        /// Migrate all Order info in current Table to OrderNote object that will be insert to Database
+        /// </summary>
+        /// <param name="newOrder"></param>
+        private bool ConvertTableToOrder(OrderNote newOrder)
+        {
+            if (currentTable == null)
+                return false;
+
+            var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId))
+                .FirstOrDefault();
+            if (currentOrderTemp != null)
+            {
+                newOrder.CusId = currentOrderTemp.CusId;
+                newOrder.EmpId = currentOrderTemp.EmpId;
+                newOrder.Ordertable = currentTable.TableNumber;
+                newOrder.Ordertime = currentOrderTemp.Ordertime;
+                newOrder.TotalPriceNonDisc = currentOrderTemp.TotalPriceNonDisc;
+                newOrder.TotalPrice = currentOrderTemp.TotalPrice;
+                newOrder.Discount = currentOrderTemp.Discount;
+                newOrder.SubEmpId = currentOrderTemp.SubEmpId;
+            }
+            else return false;
+
+            Dictionary<string, OrderNoteDetail> newDetailsList = new Dictionary<string, OrderNoteDetail>();
+            foreach (var details in currentOrderTemp.OrderDetailsTemps)
+            {
+                if (newDetailsList.ContainsKey(details.ProductId))
+                {
+                    newDetailsList[details.ProductId].Quan += details.Quan;
+                }
+                else
+                {
+                    newDetailsList.Add(details.ProductId, new OrderNoteDetail()
+                    {
+                        ProductId = details.ProductId,
+                        Discount = details.Discount,
+                        Quan = details.Quan
+                    });
+                }
+            }
+            foreach (var newDetails in newDetailsList)
+            {
+                newOrder.OrderNoteDetails.Add(newDetails.Value);
+            }
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// Clean the whole Order info in  current Table
+        /// </summary>
         private void ClearTheTable()
         {
             Entities.Table curTable = currentTable;

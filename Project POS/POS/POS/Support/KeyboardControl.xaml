@@ -19,7 +19,8 @@
                              Foreground="Coral"
                              FontSize="14"
                              FontWeight="Bold"
-                             x:Name="TxtInputValue" />
+                             x:Name="TxtInputValue" 
+                             TextChanged="TxtInputValue_OnTextChanged"/>
                     <Button Style="{DynamicResource MaterialDesignFlatButton}"
                             x:Name="BtnDeleteInput"
                             Width="40"
@@ -39,21 +40,21 @@
                                 Content="1"
                                 x:Name="BtnOne"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnOne_Click" />
+                                Click="ButtonKey_Click" />
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                 Width="70"
                                 Margin="4"
                                 Content="2"
                                 x:Name="BtnTwo"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnTwo_Click" />
+                                Click="ButtonKey_Click" />
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                 Width="70"
                                 Margin="4"
                                 Content="3"
                                 x:Name="BtnThree"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnThree_Click" />
+                                Click="ButtonKey_Click" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
@@ -63,21 +64,21 @@
                                 Content="4"
                                 x:Name="BtnFour"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnFour_Click" />
+                                Click="ButtonKey_Click" />
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                 Width="70"
                                 Margin="4"
                                 Content="5"
                                 x:Name="BtnFive"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnFive_Click" />
+                                Click="ButtonKey_Click" />
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                 Width="70"
                                 Margin="4"
                                 Content="6"
                                 x:Name="BtnSix"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnSix_Click" />
+                                Click="ButtonKey_Click" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
@@ -87,21 +88,21 @@
                                 Content="7"
                                 x:Name="BtnSeven"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnSeven_Click" />
+                                Click="ButtonKey_Click" />
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                 Width="70"
                                 Margin="4"
                                 Content="8"
                                 x:Name="BtnEight"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnEight_Click" />
+                                Click="ButtonKey_Click" />
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                 Width="70"
                                 Margin="4"
                                 Content="9"
                                 x:Name="BtnNine"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnNine_Click" />
+                                Click="ButtonKey_Click" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
@@ -121,7 +122,7 @@
                                 Content="0"
                                 x:Name="BtnZero"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
-                                Click="BtnZero_Click" />
+                                Click="ButtonKey_Click" />
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                 Width="70"
                                 Margin="4"

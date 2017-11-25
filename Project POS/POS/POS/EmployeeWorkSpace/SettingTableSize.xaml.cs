@@ -110,5 +110,10 @@ namespace POS.EmployeeWorkSpace
             txtWidth.Text = ReadWriteData.readTableSize()[0];
             txtHeight.Text = ReadWriteData.readTableSize()[1];
         }
+
+        private void BtnPrinterApply_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
