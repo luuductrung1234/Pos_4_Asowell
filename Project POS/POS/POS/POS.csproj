@@ -176,6 +176,9 @@
     <Compile Include="AdminWorkSpace\OrderNotePage.xaml.cs">
       <DependentUpon>OrderNotePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\ProductCreatorPage.xaml.cs">
+      <DependentUpon>ProductCreatorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\ProductDetailPage.xaml.cs">
       <DependentUpon>ProductDetailPage.xaml</DependentUpon>
     </Compile>
@@ -355,6 +358,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\OrderNotePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\ProductCreatorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
