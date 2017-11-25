@@ -752,9 +752,6 @@ namespace POS.EmployeeWorkSpace
                 // input the rest data
                 OrderNote newOrder = new OrderNote();
                 newOrder.TotalPrice = ordertemptable.TotalPrice;
-                newOrder.paymentMethod = (int)PaymentMethod.Cash;
-                newOrder.CustomerPay = newOrder.TotalPrice;
-                newOrder.PayBack = newOrder.CustomerPay - newOrder.TotalPrice;
                 InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
                 inputTheRest.ShowDialog();
 
