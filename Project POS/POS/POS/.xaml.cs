@@ -7,6 +7,7 @@ using POS.Entities;
 using POS.Repository.DAL;
 using POS.EmployeeWorkSpace;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace POS
 {
@@ -16,6 +17,7 @@ namespace POS
     public partial class Login : Window
     {
         internal EmployeewsOfAsowell _unitempofwork;
+        private DispatcherTimer LoadCodeLogin;
 
         public Login()
         {
@@ -27,9 +29,23 @@ namespace POS
             this.WindowState = WindowState.Normal;
             this.ResizeMode = ResizeMode.NoResize;
 
+            LoadCodeLogin = new DispatcherTimer();
+            LoadCodeLogin.Tick += LoadCodeLogin_Tick; ;
+            LoadCodeLogin.Interval = new TimeSpan(0, 0, 0, 0, 1);
+
             this.Closing += Closing_LoginWindos;
 
             App.Current.Properties["IsConfigDB"] = "";
+        }
+
+        private void LoadCodeLogin_Tick(object sender, EventArgs e)
+        {
+            gNormalLoginForm.Width -= 10;
+            if (gNormalLoginForm.Width == 0)
+            {
+                gNormalLoginForm.Visibility = Visibility.Collapsed;
+                LoadCodeLogin.Stop();
+            }
         }
 
         private void txtUsername_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -284,7 +300,8 @@ namespace POS
 
         private void ButtonChangeLoginType_Click(object sender, RoutedEventArgs e)
         {
-            gNormalLoginForm.Visibility = Visibility.Collapsed;
+            LoadCodeLogin.Start();
+            //gNormalLoginForm.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -19,7 +19,7 @@
 
 
         <Grid x:Name="gNormalLoginForm"
-              Width="402">
+              Width="400">
             <Grid.RowDefinitions>
                 <RowDefinition Height="201*" />
                 <RowDefinition Height="169*" />

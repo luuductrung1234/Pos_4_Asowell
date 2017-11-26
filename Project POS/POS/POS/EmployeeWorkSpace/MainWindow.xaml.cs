@@ -263,7 +263,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 4);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 4);
             ael.ShowDialog();
         }
 
@@ -306,7 +306,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 1);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 1);
             ael.ShowDialog();
         }
 
@@ -317,7 +317,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 2);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 2);
             ael.ShowDialog();
         }
 
@@ -328,7 +328,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin(_unitofwork, cUser, 3);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 3);
             ael.ShowDialog();
 
             //WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
