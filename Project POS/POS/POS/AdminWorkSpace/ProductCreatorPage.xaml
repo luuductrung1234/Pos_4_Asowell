@@ -259,14 +259,31 @@
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
                         <TextBlock Text="Price: "
-                                   Margin="0,0,75,0"
+                                   Margin="0,0,25,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtPrice"
                                  FontSize="18"
                                  Foreground="White"
-                                 Width="215"
+                                 Width="220"
                                  Margin="0,0,100,0" />
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,20,0,0" HorizontalAlignment="Center">
+                        <Button x:Name="bntAdd"
+                                Content="Add"
+                                Height="46"
+                                FontWeight="Bold"
+                                FontSize="20"
+                                Margin="0,0,50.8,0"
+                                Width="104" />
+                        <Button x:Name="bntDelete"
+                                Content="Delete"
+                                FontWeight="Bold"
+                                FontSize="20"
+                                Height="46"
+                                Width="106" />
+                    </StackPanel>
+                   
                 </StackPanel>
             </Grid>
         </Grid>

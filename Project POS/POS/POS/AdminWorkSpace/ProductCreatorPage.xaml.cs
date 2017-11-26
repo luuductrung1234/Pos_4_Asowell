@@ -21,24 +21,25 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class ProductCreatorPage : Page
     {
-        private AdminwsOfAsowell _unitofork;
-        public ProductCreatorPage(AdminwsOfAsowell unitofork)
+        private AdminwsOfAsowell _unitofwork;
+        public ProductCreatorPage(AdminwsOfAsowell unitofwork)
         {
-            _unitofork = unitofork;
-            lvAvaibleIngredient.ItemsSource = _unitofork.IngredientRepository.Get();
+            _unitofwork = unitofwork;
+            
             InitializeComponent();
+            lvAvaibleIngredient.ItemsSource = _unitofwork.IngredientRepository.Get();
         }
 
 
         private void LvAvaibleIngredient_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
 
         private void BntDeleteItem_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

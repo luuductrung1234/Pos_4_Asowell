@@ -56,15 +56,10 @@
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="View_Statistics_Quantity_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
-                                <ListBoxItem x:Name="ViewstaticWH"
-                                             Content="Working Hour Chart"
-                                             Style="{StaticResource {x:Type ListBoxItem}}"
-                                             PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
-                                             Foreground="White" />
-                                <ListBoxItem x:Name="CreateProduct"
-                                     Content="Create Product"
+                        <ListBoxItem x:Name="ViewstaticWH"
+                                     Content="Working Hour Chart"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
-                                     PreviewMouseLeftButtonUp="CreateProduct_OnPreviewMouseLeftButtonUp"
+                                     PreviewMouseLeftButtonUp="ViewstaticWH_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
                     </ListBox>
                 </DockPanel>
@@ -166,7 +161,13 @@
                                     ToolTip="Receipt Infomation">
                                 <materialDesign:PackIcon Kind="History" />
                             </Button>
+                            <Button x:Name="bntCreateNewProduct"
+                                Background="DarkSlateGray"
+                                    ToolTip="Create new Product"
+                                    Click="BntCreateNewProduct_OnClick">
+                                <materialDesign:PackIcon Kind="Creation" />
 
+                            </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>

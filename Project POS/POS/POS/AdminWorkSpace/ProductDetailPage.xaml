@@ -240,7 +240,7 @@
                                         Content="Edit"
                                         Height="auto"
                                         Margin="0,0,20,0"
-                                        FontWeight="Bold" />
+                                        FontWeight="Bold"/>
                                 <Button x:Name="bntDel"
                                         Content="Delete"
                                         Height="auto"
