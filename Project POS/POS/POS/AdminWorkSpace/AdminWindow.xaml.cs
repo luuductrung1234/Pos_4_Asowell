@@ -35,6 +35,7 @@ namespace POS.AdminWorkSpace
         private statisticsFoodPage FoodPage;
         private StatisticsWorkingHourPage statisticsWorkingHourPage;
         private HomePage homePage;
+        private ProductCreatorPage productCreator;
         public AdminWindow()
         {
             InitializeComponent();
@@ -54,6 +55,7 @@ namespace POS.AdminWorkSpace
             FoodPage=new statisticsFoodPage(_unitowork);
             statisticsWorkingHourPage=new StatisticsWorkingHourPage(_unitowork);
             homePage = new HomePage(_unitowork);
+            productCreator = new ProductCreatorPage(_unitowork);
             myframe.Navigate(homePage);
             Closing += AdminWindow_Closing;
         }
@@ -134,9 +136,10 @@ namespace POS.AdminWorkSpace
             printer.DoPrint();
         }
 
-        private void CreateProduct_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void BntCreateNewProduct_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            
+            myframe.Navigate(productCreator);
         }
     }
 }

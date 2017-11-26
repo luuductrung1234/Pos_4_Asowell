@@ -27,6 +27,7 @@ namespace POS.Helper.PrintHelper
             _unitofwork = unitofwork;
             From = DateTime.Now.Date;
             To = DateTime.Now.Date;
+            To = To.AddDays(1);
         }
 
         public FlowDocument CreateDocument()
@@ -201,14 +202,14 @@ namespace POS.Helper.PrintHelper
                 if (i == 0)
                 {
                     ColumnDefinition firstCol = new ColumnDefinition();
-                    firstCol.Width = new GridLength(220);
+                    firstCol.Width = new GridLength(180);
                     dgDataTable.ColumnDefinitions.Add(firstCol);
                     continue;
                 }
                 if (i == 1)
                 {
                     ColumnDefinition secondCol = new ColumnDefinition();
-                    secondCol.Width = new GridLength(40);
+                    secondCol.Width = new GridLength(80);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
                     continue;
                 }
@@ -266,7 +267,7 @@ namespace POS.Helper.PrintHelper
 
                     TextBlock txtAmount = new TextBlock()
                     {
-                        Text = keypairvalue.Amount.ToString(),
+                        Text = string.Format("{0:0.000}", keypairvalue.Amount),
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
@@ -333,14 +334,14 @@ namespace POS.Helper.PrintHelper
                 if (i == 0)
                 {
                     ColumnDefinition firstCol = new ColumnDefinition();
-                    firstCol.Width = new GridLength(220);
+                    firstCol.Width = new GridLength(180);
                     dgDataTable.ColumnDefinitions.Add(firstCol);
                     continue;
                 }
                 if (i == 1)
                 {
                     ColumnDefinition secondCol = new ColumnDefinition();
-                    secondCol.Width = new GridLength(40);
+                    secondCol.Width = new GridLength(80);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
                     continue;
                 }
@@ -398,7 +399,7 @@ namespace POS.Helper.PrintHelper
 
                     TextBlock txtAmount = new TextBlock()
                     {
-                        Text = keypairvalue.Amount.ToString(),
+                        Text = string.Format("{0:0.000}", keypairvalue.Amount),
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
@@ -465,14 +466,14 @@ namespace POS.Helper.PrintHelper
                 if (i == 0)
                 {
                     ColumnDefinition firstCol = new ColumnDefinition();
-                    firstCol.Width = new GridLength(220);
+                    firstCol.Width = new GridLength(180);
                     dgDataTable.ColumnDefinitions.Add(firstCol);
                     continue;
                 }
                 if (i == 1)
                 {
                     ColumnDefinition secondCol = new ColumnDefinition();
-                    secondCol.Width = new GridLength(40);
+                    secondCol.Width = new GridLength(80);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
                     continue;
                 }
@@ -530,7 +531,7 @@ namespace POS.Helper.PrintHelper
 
                     TextBlock txtAmount = new TextBlock()
                     {
-                        Text = keypairvalue.Amount.ToString(),
+                        Text = string.Format("{0:0.000}", keypairvalue.Amount),
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
@@ -560,11 +561,11 @@ namespace POS.Helper.PrintHelper
         {
             var result = new Dictionary<string, List<MyPairValue>>();
             var orderDetailsQuery =
-                _unitofwork.OrderDetailsRepository.Get(x => x.OrderNote.Ordertime.CompareTo(From.Date) >= 0
-                                                            && x.OrderNote.Ordertime.CompareTo(To.Date) <= 0);
+                _unitofwork.OrderDetailsRepository.Get(x => x.OrderNote.Ordertime.CompareTo(From) >= 0
+                                                            && x.OrderNote.Ordertime.CompareTo(To) <= 0);
             var orderQuery =
-                _unitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From.Date) >= 0
-                                                     && x.Ordertime.CompareTo(To.Date) <= 0);
+                _unitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
+                                                     && x.Ordertime.CompareTo(To) <= 0);
 
 
             // Total Alcohol
@@ -574,7 +575,7 @@ namespace POS.Helper.PrintHelper
             decimal alcoholTotalAmount = 0;
             foreach (var orderDetails in orderDetailsAlcoholQuery)
             {
-                alcoholTotalAmount += orderDetails.Quan * orderDetails.Product.Price;
+                alcoholTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100-orderDetails.Discount))/100;
             }
             MyPairValue alcoholCal = new MyPairValue()
             {
@@ -594,7 +595,7 @@ namespace POS.Helper.PrintHelper
             decimal beverageTotalAmount = 0;
             foreach (var orderDetails in orderDetailsBeverageQuery)
             {
-                beverageTotalAmount += orderDetails.Quan * orderDetails.Product.Price;
+                beverageTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
             }
             MyPairValue beverageCal = new MyPairValue()
             {
@@ -613,7 +614,7 @@ namespace POS.Helper.PrintHelper
             decimal foodTotalAmount = 0;
             foreach (var orderDetails in orderDetailsFoodQuery)
             {
-                foodTotalAmount += orderDetails.Quan * orderDetails.Product.Price;
+                foodTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
             }
             MyPairValue foodCal = new MyPairValue()
             {
@@ -632,7 +633,7 @@ namespace POS.Helper.PrintHelper
             decimal otherTotalAmount = 0;
             foreach (var orderDetails in orderDetailsOtherQuery)
             {
-                otherTotalAmount += orderDetails.Quan * orderDetails.Product.Price;
+                otherTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
             }
             MyPairValue otherCal = new MyPairValue()
             {
@@ -651,7 +652,7 @@ namespace POS.Helper.PrintHelper
             decimal totalAmount = 0;
             foreach (var orderDetails in orderDetailsQuery)
             {
-                totalAmount += orderDetails.Quan * orderDetails.Product.Price;
+                totalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100-orderDetails.Discount))/100;
             }
             MyPairValue orderTotalCal = new MyPairValue()
             {
@@ -664,7 +665,13 @@ namespace POS.Helper.PrintHelper
             decimal totalSVC = 0;
             foreach (var order in orderQuery)
             {
-                totalSVC += (order.TotalPrice * 50) / 100;
+                decimal curTotalAmount = 0;
+                foreach (var orderDetails in order.OrderNoteDetails)
+                {
+                    curTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
+                }
+
+                totalSVC += (curTotalAmount * 5) / 100;
             }
             MyPairValue SVCTotalCal = new MyPairValue()
             {
@@ -677,7 +684,13 @@ namespace POS.Helper.PrintHelper
             decimal totalVAT = 0;
             foreach (var order in orderQuery)
             {
-                totalVAT += (((order.TotalPrice * 50) / 100 + order.TotalPrice) * 10) / 100;
+                decimal curTotalAmount = 0;
+                foreach (var orderDetails in order.OrderNoteDetails)
+                {
+                    curTotalAmount += orderDetails.Quan * (orderDetails.Product.Price * (100 - orderDetails.Discount)) / 100;
+                }
+
+                totalVAT += ((((curTotalAmount * 5)/100) + curTotalAmount) * 10) / 100;
             }
             MyPairValue VATTotalCal = new MyPairValue()
             {
@@ -686,11 +699,30 @@ namespace POS.Helper.PrintHelper
                 Count = orderQuery.Count()
             };
 
+            // DIscount
+            decimal totalDisc = 0;
+            int countDisc = 0;
+            foreach (var order in orderQuery)
+            {
+                if (order.Discount != 0)
+                {
+                    countDisc++;
+                    totalDisc = order.TotalPriceNonDisc - order.TotalPrice;
+                }
+            }
+            MyPairValue DiscTotalCal = new MyPairValue()
+            {
+                Title = "Discount",
+                Amount = totalDisc,
+                Count = countDisc
+            };
+
             result.Add("SubTotal", new List<MyPairValue>()
             {
                 orderTotalCal,
                 SVCTotalCal,
-                VATTotalCal
+                VATTotalCal,
+                DiscTotalCal
             });
 
 
@@ -718,8 +750,8 @@ namespace POS.Helper.PrintHelper
         {
             var result = new Dictionary<string, List<MyPairValue>>();
             var orderQuery =
-                _unitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From.Date) >= 0
-                                                     && x.Ordertime.CompareTo(To.Date) <= 0);
+                _unitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
+                                                     && x.Ordertime.CompareTo(To) <= 0);
 
             //Total Cash
             var orderCashQuery = orderQuery.Where(x => x.paymentMethod == (int)PaymentMethod.Cash);
@@ -843,8 +875,8 @@ namespace POS.Helper.PrintHelper
             var result = new Dictionary<string, List<MyPairValue>>();
 
             var receiptQuery =
-                _unitofwork.ReceiptNoteRepository.Get(x => x.Inday.CompareTo(From.Date) >= 0
-                                                     && x.Inday.CompareTo(To.Date) <= 0);
+                _unitofwork.ReceiptNoteRepository.Get(x => x.Inday.CompareTo(From) >= 0
+                                                     && x.Inday.CompareTo(To) <= 0);
 
             //Total Receipt
             decimal totalAmount = 0;

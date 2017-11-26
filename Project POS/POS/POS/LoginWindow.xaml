@@ -108,7 +108,7 @@
                          Width="Auto"
                          Height="Auto"
                          IsIndeterminate="True"
-                         Margin="293,89,69,48"
+                         Margin="293,89,80,57"
                          Grid.Row="1"
                          Visibility="Hidden" />
         </Grid>

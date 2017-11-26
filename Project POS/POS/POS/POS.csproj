@@ -176,6 +176,9 @@
     <Compile Include="AdminWorkSpace\OrderNotePage.xaml.cs">
       <DependentUpon>OrderNotePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\ProductCreatorPage.xaml.cs">
+      <DependentUpon>ProductCreatorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\ProductDetailPage.xaml.cs">
       <DependentUpon>ProductDetailPage.xaml</DependentUpon>
     </Compile>
@@ -230,7 +233,6 @@
     <Compile Include="EmployeeWorkSpace\PermissionRequired.xaml.cs">
       <DependentUpon>PermissionRequired.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper\PrintHelper\AsowellPrinter.cs" />
     <Compile Include="Helper\PrintHelper\BarPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\DoPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\EndOfDayPrintHelper.cs" />
@@ -355,6 +357,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\OrderNotePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\ProductCreatorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -49,21 +49,35 @@ namespace POS.BusinessModel
         }
 
 
-        public static string[] readPrinterSetting()
+        public static string[] ReadPrinterSetting()
         {
             using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\printerSetting.txt", FileMode.Open))
             {
                 using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
                 {
-                    string tableSize = rd.ReadLine();
-                    return tableSize.Split('-');
+                    string printer = rd.ReadLine();
+                    string[] result = printer?.Split(',');
+
+                    if (result?.Length >= 4)
+                    {
+                        return result;
+                    }
                 }
+
+                MessageBox.Show("There has no previous setting, so the configuration will set to default!");
+                return null;
             }
         }
-        
-        public static void writePrinterSetting()
-        {
 
+        public static void WritePrinterSetting(string printers)
+        {
+            using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\printerSetting.txt", FileMode.Create))
+            {
+                using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                {
+                    sWriter.WriteLine(printers);
+                }
+            }
         }
 
         //check file tableImagePath isExist

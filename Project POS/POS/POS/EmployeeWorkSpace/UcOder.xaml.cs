@@ -381,6 +381,9 @@ namespace POS.EmployeeWorkSpace
                 Total = (decimal)((float)Total + (float)(item.item_quan * (float)item.item_price));
                 TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
             }
+
+            // tính năng giảm giá cho món có gì đó không ổn nên tốt nhất không cho set discount cho món do đó => Tại vị trí này Total và TotalWithDiscount vẫn bằng nhau 
+            Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
             TotalWithDiscount = (decimal)(((float)Total * (100 - ordertemptable.Discount)) / 100.0);
 
 
@@ -540,70 +543,6 @@ namespace POS.EmployeeWorkSpace
                 }
             }
         }
-        
-        private void DeleteChairOrderDetails()
-        {
-            if (currentTable.IsPrinted == 1)
-            {
-                MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
-                return;
-            }
-
-            int i = 0;
-            foreach (ToggleButton btn in wp.Children)
-            {
-                if (btn.IsChecked == false)
-                {
-                    i++;
-                }
-            }
-            if (i == 0)
-            {
-                MessageBox.Show("Choose exactly which chair you want to decrease food's quantity!");
-                return;
-            }
-
-            foreach (ToggleButton btn in wp.Children)
-            {
-                if (btn.IsChecked == true)
-                {
-                    //delete chair order note
-                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
-                    var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
-                                            && x.TableOwned.Equals(currentChair.TableOwned));
-                    var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId == foundchair.ChairId).ToList();
-                    
-                    if(chairordernotedetails.Count != 0)
-                    {
-                        foreach(var ch in chairordernotedetails)
-                        {
-                            _unitofwork.OrderDetailsTempRepository.Delete(chairordernotedetails);
-                            _unitofwork.Save();
-                        }
-
-                        currentTable.IsOrdered = 0;
-                    }
-
-                    foreach (Entities.Chair chair in chairoftable)
-                    {
-                        var chairorderdetailstemp = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
-                        if (chairorderdetailstemp.Count != 0)
-                        {
-                            currentTable.IsOrdered = 1;
-                        }
-                        break;
-                    }
-
-                    _unitofwork.TableRepository.Update(currentTable);
-                    _unitofwork.Save();
-
-                    ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
-                    RefreshControl(_unitofwork, currentTable);
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
-                    break;
-                }
-            }
-        }
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
@@ -741,18 +680,30 @@ namespace POS.EmployeeWorkSpace
             if (isChairChecked)
             {
                 // devide the chair data to another Order
-
+                OrderNote newOrder = new OrderNote();
+                if (!SplitChairToOrder(newOrder))
+                {
+                    return;
+                }
 
                 // input the rest data
+                InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
+                if (!inputTheRest.MyShowDialog())
+                {
+                    return;
+                }
 
+                // save to database
+                _unitofwork.OrderRepository.Insert(newOrder);
+                _unitofwork.Save();
 
 
                 // printing
                 var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
                 printer.DoPrint();
 
-                //// clean the old table data
-                //ClearTheTable();
+                //// clean the old chair order data
+                DeleteChairOrderDetails();
             }
             else
             {
@@ -765,7 +716,7 @@ namespace POS.EmployeeWorkSpace
                     return;
                 }
 
-                // convert data
+                // convert data and save to database
                 if (ConvertTableToOrder(newOrder))
                 {
                     _unitofwork.OrderRepository.Insert(newOrder);
@@ -878,9 +829,61 @@ namespace POS.EmployeeWorkSpace
         /// Split current selected Chair in current Table to the new stand alone Order
         /// </summary>
         /// <param name="newwOrder"></param>
-        private void SplitChairToOrder(OrderNote newwOrder)
+        private Boolean SplitChairToOrder(OrderNote newOrder)
         {
+            if (currentTable == null)
+                return false;
 
+
+            decimal total = 0;
+            decimal totalWithDiscount = 0;
+            foreach (var item in currentChair.OrderDetailsTemps)
+            {
+                total = (decimal)((float)total + (float)(item.Quan * (float)item.Product.Price));
+                totalWithDiscount = (decimal)((float)totalWithDiscount + (float)(item.Quan * ((float)item.Product.Price * ((100 - item.Discount) / 100.0))));
+            }
+            totalWithDiscount = (decimal)(((float)total * (100 - ordertemptable.Discount)) / 100.0);
+
+
+            var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId))
+                .FirstOrDefault();
+            if (currentOrderTemp != null)
+            {
+                newOrder.CusId = currentOrderTemp.CusId;
+                newOrder.EmpId = currentOrderTemp.EmpId;
+                newOrder.Ordertable = currentTable.TableNumber;
+                newOrder.Ordertime = currentOrderTemp.Ordertime;
+                newOrder.TotalPriceNonDisc = total;
+                newOrder.TotalPrice = totalWithDiscount;
+                newOrder.Discount = currentOrderTemp.Discount;
+                newOrder.SubEmpId = currentOrderTemp.SubEmpId;
+            }
+            else return false;
+
+
+            Dictionary<string, OrderNoteDetail> newDetailsList = new Dictionary<string, OrderNoteDetail>();
+            foreach (var details in currentChair.OrderDetailsTemps)
+            {
+                if (newDetailsList.ContainsKey(details.ProductId))
+                {
+                    newDetailsList[details.ProductId].Quan += details.Quan;
+                }
+                else
+                {
+                    newDetailsList.Add(details.ProductId, new OrderNoteDetail()
+                    {
+                        ProductId = details.ProductId,
+                        Discount = details.Discount,
+                        Quan = details.Quan
+                    });
+                }
+            }
+            foreach (var newDetails in newDetailsList)
+            {
+                newOrder.OrderNoteDetails.Add(newDetails.Value);
+            }
+
+            return true;
         }
 
 
@@ -970,6 +973,70 @@ namespace POS.EmployeeWorkSpace
             RefreshControlAllChair();
             _unitofwork.OrderTempRepository.Update(ordertemptable);
             _unitofwork.Save();
+        }
+
+        private void DeleteChairOrderDetails()
+        {
+            if (currentTable.IsPrinted == 1)
+            {
+                MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
+                return;
+            }
+
+            int i = 0;
+            foreach (ToggleButton btn in wp.Children)
+            {
+                if (btn.IsChecked == false)
+                {
+                    i++;
+                }
+            }
+            if (i == 0)
+            {
+                MessageBox.Show("Choose exactly which chair you want to decrease food's quantity!");
+                return;
+            }
+
+            foreach (ToggleButton btn in wp.Children)
+            {
+                if (btn.IsChecked == true)
+                {
+                    //delete chair order note
+                    var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
+                    var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
+                                            && x.TableOwned.Equals(currentChair.TableOwned));
+                    var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId == foundchair.ChairId).ToList();
+
+                    if (chairordernotedetails.Count != 0)
+                    {
+                        foreach (var ch in chairordernotedetails)
+                        {
+                            _unitofwork.OrderDetailsTempRepository.Delete(ch);
+                            _unitofwork.Save();
+                        }
+
+                        currentTable.IsOrdered = 0;
+                    }
+
+                    foreach (Entities.Chair chair in chairoftable)
+                    {
+                        var chairorderdetailstemp = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
+                        if (chairorderdetailstemp.Count != 0)
+                        {
+                            currentTable.IsOrdered = 1;
+                        }
+                        break;
+                    }
+
+                    _unitofwork.TableRepository.Update(currentTable);
+                    _unitofwork.Save();
+
+                    ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
+                    RefreshControl(_unitofwork, currentTable);
+                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                    break;
+                }
+            }
         }
 
         private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)

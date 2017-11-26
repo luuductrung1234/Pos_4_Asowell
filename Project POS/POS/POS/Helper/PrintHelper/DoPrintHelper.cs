@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.IO.Packaging;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Xps.Packaging;
+using POS.BusinessModel;
 using POS.Helper.PrintHelper.Model;
 using POS.Repository.DAL;
 using Table = POS.Entities.Table;
@@ -26,12 +29,39 @@ namespace POS.Helper.PrintHelper
         private IPrintHelper ph;
         private int type;
         private readonly Entities.Table curTable;
+        private PrintDialog printDlg;
+
+        private string _barPrinter;
+        private string _receptionPrinter;
+        private string _kitchentPrinter;
+        private bool isShowReview;
 
         public DoPrintHelper(EmployeewsOfAsowell unitofwork, int printType, Entities.Table currentTable)
         {
             _unitofwork = unitofwork;
             type = printType;
             curTable = currentTable;
+            printDlg = new PrintDialog();
+
+            string[] result = ReadWriteData.ReadPrinterSetting();
+            if (result != null)
+            {
+                _receptionPrinter = result[0];
+                _kitchentPrinter = result[1];
+                _barPrinter = result[2];
+
+                if (int.Parse(result[3]) == 1)
+                    isShowReview = true;
+                else
+                    isShowReview = false;
+            }
+            else
+            {
+                _receptionPrinter = "";
+                _kitchentPrinter = "";
+                _barPrinter = "";
+                isShowReview = true;
+            }
         }
 
         public void DoPrint()
@@ -50,44 +80,49 @@ namespace POS.Helper.PrintHelper
                 FlowDocument doc = ph.CreateDocument();
                 doc.Name = "FlowDoc";
 
-                // Create a PrintDialog
-                PrintDialog printDlg = new PrintDialog();
-                // Setting the printer
-                //printDlg.PrintQueue =new PrintQueue(new PrintServer(), "the printer name");
-
                 // Read the FlowDoucument xaml file
                 //Stream flowDocumentStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("TestWPF.PrintWindow.xaml");
                 //FileStream fs = new FileStream(startupProjectPath + "\\FlowDocument1.xaml", FileMode.Open, FileAccess.Read);
                 //FlowDocument flowDocument = (FlowDocument)XamlReader.Load(fs);
 
-                // Create IDocumentPaginatorSource from FlowDocument
-                IDocumentPaginatorSource idpSource = doc;
-
-                // Call PrintDocument method to send document to printer
-                printDlg.PrintDocument(idpSource.DocumentPaginator, "bill printing");
-
-                // convert FlowDocument to FixedDocument
-                //var paginator = idpSource.DocumentPaginator;
-                //var package = Package.Open(new MemoryStream(), FileMode.Create, FileAccess.ReadWrite);
-                //var packUri = new Uri("pack://temp.xps");
-                //PackageStore.RemovePackage(packUri);
-                //PackageStore.AddPackage(packUri, package);
-                //var xps = new XpsDocument(package, CompressionOption.NotCompressed, packUri.ToString());
-                //XpsDocument.CreateXpsDocumentWriter(xps).Write(paginator);
-                //FixedDocument fdoc = xps.GetFixedDocumentSequence().References[0].GetDocument(true);
-
-                //DocumentViewer previewWindow = new DocumentViewer
-                //{
-                //    Document = fdoc
-                //};
-                //Window printpriview = new Window();
-                //printpriview.Content = previewWindow;
-                //printpriview.Title = "Print Preview";
-                //printpriview.Show();
+                PrintToReal(doc);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void PrintToReal(FlowDocument doc)
+        {
+            // Create IDocumentPaginatorSource from FlowDocument
+            IDocumentPaginatorSource idpSource = doc;
+
+            if (!isShowReview)
+            {
+                // Call PrintDocument method to send document to printer
+                printDlg.PrintDocument(idpSource.DocumentPaginator, "bill printing");
+            }
+            else
+            {
+                // convert FlowDocument to FixedDocument
+                var paginator = idpSource.DocumentPaginator;
+                var package = Package.Open(new MemoryStream(), FileMode.Create, FileAccess.ReadWrite);
+                var packUri = new Uri("pack://temp.xps");
+                PackageStore.RemovePackage(packUri);
+                PackageStore.AddPackage(packUri, package);
+                var xps = new XpsDocument(package, CompressionOption.NotCompressed, packUri.ToString());
+                XpsDocument.CreateXpsDocumentWriter(xps).Write(paginator);
+                FixedDocument fdoc = xps.GetFixedDocumentSequence().References[0].GetDocument(true);
+
+                DocumentViewer previewWindow = new DocumentViewer
+                {
+                    Document = fdoc
+                };
+                Window printpriview = new Window();
+                printpriview.Content = previewWindow;
+                printpriview.Title = "Print Preview";
+                printpriview.Show();
             }
         }
 
@@ -96,6 +131,9 @@ namespace POS.Helper.PrintHelper
             // Create Print Helper
             if (type == Receipt_Printing)
             {
+                if(!string.IsNullOrEmpty(_receptionPrinter))
+                    printDlg.PrintQueue =new PrintQueue(new PrintServer(), _receptionPrinter);
+
                 ph = new ReceiptPrintHelper()
                 {
                     Owner = new Owner()
@@ -112,6 +150,9 @@ namespace POS.Helper.PrintHelper
 
             if (type == Bar_Printing)
             {
+                if (!string.IsNullOrEmpty(_barPrinter))
+                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _barPrinter);
+
                 ph = new BarPrintHelper()
                 {
                     Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
@@ -120,6 +161,9 @@ namespace POS.Helper.PrintHelper
 
             if (type == Kitchen_Printing)
             {
+                if (!string.IsNullOrEmpty(_kitchentPrinter))
+                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _kitchentPrinter);
+
                 ph = new KitchenPrintHelper()
                 {
                     Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
@@ -128,6 +172,9 @@ namespace POS.Helper.PrintHelper
 
             if (type == Eod_Printing)
             {
+                if (!string.IsNullOrEmpty(_receptionPrinter))
+                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
+
                 ph = new EndOfDayPrintHelper(_unitofwork);
             }
         }
