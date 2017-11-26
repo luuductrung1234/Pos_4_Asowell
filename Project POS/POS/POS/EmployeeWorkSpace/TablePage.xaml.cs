@@ -530,7 +530,7 @@ namespace POS.EmployeeWorkSpace
                             return;
                         }
 
-                        ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
@@ -562,7 +562,7 @@ namespace POS.EmployeeWorkSpace
                             }
                         }
 
-                        ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
@@ -584,7 +584,7 @@ namespace POS.EmployeeWorkSpace
                             return;
                         }
 
-                        ael = new AllEmployeeLogin(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);

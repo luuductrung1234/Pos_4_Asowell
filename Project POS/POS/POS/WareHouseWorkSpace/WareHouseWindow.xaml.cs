@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LiveCharts;
+using POS.Entities;
 using POS.Repository.DAL;
 
 namespace POS.WareHouseWorkSpace
@@ -26,6 +27,7 @@ namespace POS.WareHouseWorkSpace
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
         private Login login;
+        AdminRe curAdmin;
         private InputReceiptNote inputReceipt;
         
         public WareHouseWindow()
@@ -34,6 +36,10 @@ namespace POS.WareHouseWorkSpace
             _unitofwork = new AdminwsOfAsowell();
             _innIngredientPage=new IngredientPage(_unitofwork);
             _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
+            AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
+            curAdmin = _unitofwork.AdminreRepository
+                .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
+            CUserChip.Content = curAdmin.Name;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

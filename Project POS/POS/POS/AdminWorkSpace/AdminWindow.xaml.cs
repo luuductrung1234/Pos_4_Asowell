@@ -44,7 +44,7 @@ namespace POS.AdminWorkSpace
             AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
             curAdmin = _unitowork.AdminreRepository
                 .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
-            cUser.Content = curAdmin.Username;
+            cUser.Content = curAdmin.Name;
             
             empListPage = new EmployeeListPage(_unitowork, curAdmin);
             salarypage = new SalaryPage(_unitowork);

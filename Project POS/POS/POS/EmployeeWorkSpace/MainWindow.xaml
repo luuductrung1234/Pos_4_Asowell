@@ -74,7 +74,10 @@
                                       ToolTip="Extended Menu"/>
                         <materialDesign:PopupBox DockPanel.Dock="Right"
                                                  PlacementMode="BottomAndAlignRightEdges"
-                                                 StaysOpen="False">
+                                                 StaysOpen="False"
+                                                 Height="42"
+                                                 Margin="0,0,0,-0.4"
+                                                 VerticalAlignment="Bottom">
 
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:Chip x:Name="cUser"
