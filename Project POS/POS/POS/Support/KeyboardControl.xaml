@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:POS.Support"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Background="{DynamicResource  MaterialDesignBackground}"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d"
              Height="177.33"
              Width="200.213">
