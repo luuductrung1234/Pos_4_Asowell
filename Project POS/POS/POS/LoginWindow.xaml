@@ -102,7 +102,7 @@
                 </Button.ToolTip>
             </Button>
             <ProgressBar x:Name="PgbLoginProcess"
-                         Style="{StaticResource MyNonPercentMaterialDesignCircularProgressBar}"
+                         Style="{StaticResource MaterialDesignCircularProgressBar}"
                          Value="0"
                          Maximum="100"
                          Width="Auto"

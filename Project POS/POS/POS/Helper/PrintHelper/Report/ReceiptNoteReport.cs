@@ -67,6 +67,7 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
                 {
+                    endTime = endTime.AddDays(1);
                     var receiptWithTimeList = unitofwork.ReceiptNoteRepository.Get(x =>
                         x.Inday.CompareTo(startTime) >= 0 && x.Inday.CompareTo(endTime) <= 0);
 
@@ -224,7 +225,7 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
             {
-
+                endTime = endTime.AddDays(1);
                 var receiptDetailsWithTimeList = unitofwork.ReceiptNoteDsetailsRepository.Get(x =>
                     x.ReceiptNote.Inday.CompareTo(startTime) >= 0 && x.ReceiptNote.Inday.CompareTo(endTime) <= 0);
                 
@@ -411,6 +412,7 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
             {
+                endTime = endTime.AddDays(1);
                 var receiptDetailsWithTimeList = unitofwork.ReceiptNoteDsetailsRepository.Get(x =>
                     x.ReceiptNote.Inday.CompareTo(startTime) >= 0 && x.ReceiptNote.Inday.CompareTo(endTime) <= 0);
 

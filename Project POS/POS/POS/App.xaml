@@ -14,7 +14,7 @@
                 <ResourceDictionary>
                     <!-- include your primary palette -->
                     <ResourceDictionary.MergedDictionaries>
-                        
+
                         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Orange.xaml" />
                     </ResourceDictionary.MergedDictionaries>
@@ -64,7 +64,7 @@
                     <converters:PercentConverter x:Key="PercentCenverter" />
                     <converters:NonPercentConverter x:Key="NonPercentConverter" />
                     <converters:IngredientMaxProgressBarConverter x:Key="IngredientMaxProgressBarConverter" />
-                    
+
                     <Style x:Key="MyMaterialDesignLinearProgressBar"
                            TargetType="{x:Type ProgressBar}">
                         <Setter Property="Foreground"
@@ -240,7 +240,7 @@
                     <circularProgressBar:LargeArcConverter x:Key="LargeArcConverter" />
                     <circularProgressBar:RotateTransformConverter x:Key="RotateTransformConverter" />
                     <circularProgressBar:RotateTransformCentreConverter x:Key="RotateTransformCentreConverter" />
-                    
+
 
                     <Style x:Key="MyMaterialDesignCircularProgressBar"
                            TargetType="{x:Type ProgressBar}">
@@ -533,6 +533,20 @@
                                             </Path>
 
                                         </Canvas>
+                                        <Viewbox HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"
+                                                 Width="{Binding ElementName=PathGrid, Path=ActualWidth, Converter={StaticResource MyConverter}}"
+                                                 Height="{Binding ElementName=PathGrid, Path=ActualHeight, Converter={StaticResource MyConverter}}">
+
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}
+                                                                      ,Path=Value, Converter={StaticResource NonPercentConverter}}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="12">
+
+                                            </TextBlock>
+
+                                        </Viewbox>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <MultiDataTrigger>
@@ -584,7 +598,7 @@
             <Style TargetType="{x:Type dragablz:TabablzControl}"
                    BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
 
-            
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

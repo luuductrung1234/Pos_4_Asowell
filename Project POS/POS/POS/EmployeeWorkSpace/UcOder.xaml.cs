@@ -381,6 +381,9 @@ namespace POS.EmployeeWorkSpace
                 Total = (decimal)((float)Total + (float)(item.item_quan * (float)item.item_price));
                 TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
             }
+
+            // tính năng giảm giá cho món có gì đó không ổn nên tốt nhất không cho set discount cho món do đó => Tại vị trí này Total và TotalWithDiscount vẫn bằng nhau 
+            Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
             TotalWithDiscount = (decimal)(((float)Total * (100 - ordertemptable.Discount)) / 100.0);
 
 

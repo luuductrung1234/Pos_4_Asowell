@@ -203,7 +203,8 @@
                             Margin="0,0,10,0"
                             Click="BtnGo_OnClick"
                             Width="100" 
-                            ToolTip="print bill for bar and kitchen"/>
+                            ToolTip="print bill for bar and kitchen"
+                            Background="Blue"/>
                     <Button x:Name="bntPrint"
                             Content="Buzz"
                             VerticalAlignment="Top"
@@ -212,7 +213,8 @@
                             Margin="0,0,10,0"
                             Click="BntPrint_OnClick"
                             Width="100" 
-                            ToolTip="print temporary bill"/>
+                            ToolTip="print temporary bill"
+                            Background="Yellow" />
                     <Button x:Name="bntDelete"
                             Content="Delete"
                             VerticalAlignment="Top"
@@ -222,7 +224,8 @@
                             Margin="0,0,10,0"
                             Click="BntDelete_OnClick"
                             Width="100" 
-                            ToolTip="delete order"/>
+                            ToolTip="delete order"
+                            Background="Red"/>
                 </StackPanel>
             </Grid>
         </Grid>

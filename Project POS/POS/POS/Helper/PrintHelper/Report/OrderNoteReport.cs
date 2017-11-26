@@ -65,31 +65,32 @@ namespace POS.Helper.PrintHelper.Report
                 //table.NumberOfDataRowsPerPage(5);
             })
             .MainTableDataSource(dataSource =>
-            {
-                var orderWithTimeList = unitofwork.OrderRepository.Get(x =>
-                    x.Ordertime.CompareTo(startTime) >= 0 && x.Ordertime.CompareTo(endTime) <= 0);
-
-
-                List<OrderNoteForReport> orderReportList = new List<OrderNoteForReport>();
-                foreach (var order in orderWithTimeList)
                 {
-                    var orderRpt = new OrderNoteForReport()
-                    {
-                        OrdernoteId = order.OrdernoteId,
-                        CusId = order.CusId,
-                        EmpId = order.EmpId,
-                        Ordertable = order.Ordertable,
-                        Ordertime = order.Ordertime,
-                        TotalPrice = order.TotalPrice,
-                        CustomerPay = order.CustomerPay,
-                        PayBack = order.PayBack,
-                        payMethod = ((PaymentMethod) order.paymentMethod).ToString(),
-                    };
-                    orderReportList.Add(orderRpt);
-                }
+                    endTime = endTime.AddDays(1);
+                    var orderWithTimeList = unitofwork.OrderRepository.Get(x =>
+                        x.Ordertime.CompareTo(startTime) >= 0 && x.Ordertime.CompareTo(endTime) <= 0);
 
-                dataSource.StronglyTypedList(orderReportList);
-            })
+
+                    List<OrderNoteForReport> orderReportList = new List<OrderNoteForReport>();
+                    foreach (var order in orderWithTimeList)
+                    {
+                        var orderRpt = new OrderNoteForReport()
+                        {
+                            OrdernoteId = order.OrdernoteId,
+                            CusId = order.CusId,
+                            EmpId = order.EmpId,
+                            Ordertable = order.Ordertable,
+                            Ordertime = order.Ordertime,
+                            TotalPrice = order.TotalPrice,
+                            CustomerPay = order.CustomerPay,
+                            PayBack = order.PayBack,
+                            payMethod = ((PaymentMethod)order.paymentMethod).ToString(),
+                        };
+                        orderReportList.Add(orderRpt);
+                    }
+
+                    dataSource.StronglyTypedList(orderReportList);
+                })
             .MainTableSummarySettings(summarySettings =>
             {
                 summarySettings.OverallSummarySettings("Summary");
@@ -306,6 +307,7 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
             {
+                endTime = endTime.AddDays(1);
                 var orderDetailsWithTimeList = unitofwork.OrderNoteDetailsRepository.Get(x =>
                     x.OrderNote.Ordertime.CompareTo(startTime) >= 0 && x.OrderNote.Ordertime.CompareTo(endTime) <= 0);
 
@@ -505,6 +507,7 @@ namespace POS.Helper.PrintHelper.Report
             })
             .MainTableDataSource(dataSource =>
             {
+                endTime = endTime.AddDays(1);
                 var orderDetailsWithTimeList = unitofwork.OrderNoteDetailsRepository.Get(x =>
                     x.OrderNote.Ordertime.CompareTo(startTime) >= 0 && x.OrderNote.Ordertime.CompareTo(endTime) <= 0);
 
@@ -679,7 +682,7 @@ namespace POS.Helper.PrintHelper.Report
                 {
                     defaultHeader.RunDirection(PdfRunDirection.LeftToRight);
                     defaultHeader.ImagePath(System.IO.Path.Combine(AppPath.ApplicationPath, "Images\\logo.png"));
-                    defaultHeader.Message("ORDER REPORT (" + DateTime.Now.Month + "/" + DateTime.Now.Year  + ")");
+                    defaultHeader.Message("ORDER REPORT (" + DateTime.Now.Month + "/" + DateTime.Now.Year + ")");
                 });
             })
             .MainTableTemplate(template =>
