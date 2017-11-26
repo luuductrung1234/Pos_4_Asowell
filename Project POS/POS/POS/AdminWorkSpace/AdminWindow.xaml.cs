@@ -132,7 +132,7 @@ namespace POS.AdminWorkSpace
 
         private void EODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var printer = new DoPrintHelper(new EmployeewsOfAsowell(), DoPrintHelper.Eod_Printing, null);
+            var printer = new DoPrintHelper(new EmployeewsOfAsowell(), DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
 

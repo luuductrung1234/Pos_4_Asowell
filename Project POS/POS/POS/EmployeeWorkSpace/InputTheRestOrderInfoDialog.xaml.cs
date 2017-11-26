@@ -32,7 +32,7 @@ namespace POS.EmployeeWorkSpace
             InitializeComponent();
 
             this.currentOrder = currentOrder;
-            TbTotalPrice.Text = TbTotalPrice.Text + currentOrder.TotalPrice;
+            TbTotalPrice.Text = TbTotalPrice.Text + string.Format("{0:0.000}", currentOrder.TotalPrice) + " VND";
             _payMethod = "";
             IsSuccess = false;
 

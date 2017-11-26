@@ -9,5 +9,6 @@ namespace POS.Entities
     public partial class OrderDetailsTemp
     {
         public int Discount { get; set; }       // discount
+        public int IsPrinted { get; set; }      // is_printed
     }
 }

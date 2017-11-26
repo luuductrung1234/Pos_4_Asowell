@@ -706,7 +706,6 @@ namespace POS.Helper.PrintHelper
             {
                 if (order.Discount != 0)
                 {
-                    countDisc++;
                     totalDisc = order.TotalPriceNonDisc - order.TotalPrice;
                 }
             }

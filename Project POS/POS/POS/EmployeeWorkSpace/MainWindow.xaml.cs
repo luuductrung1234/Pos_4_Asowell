@@ -376,7 +376,7 @@ namespace POS.EmployeeWorkSpace
 
         private void LbiEODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Eod_Printing, null);
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
         
