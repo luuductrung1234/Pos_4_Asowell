@@ -164,6 +164,8 @@ namespace POS.EmployeeWorkSpace
                 LoadForm.Start();
             }
 
+            _emplog = emp;
+
             spLoginAnother.Visibility = Visibility.Visible;
             loginNormal.Visibility = Visibility.Collapsed;
             loginCode.Visibility = Visibility.Visible;
@@ -190,12 +192,26 @@ namespace POS.EmployeeWorkSpace
                 loginCode.ButtonGoAbleState(false);
                 if(_typeshow == 2)
                 {
-                    await Async("", "", code, App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
+                    await Async("", "", code, _emplog);
+                    setControl(true);
+                }
+                else if(_typeshow == 3)
+                {
+                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _unitofwork);
+                    ed.ShowDialog();
+                    setControl(true);
                 }
                 else if(_typeshow == 4)
                 {
-                    
+                    if (_emplog.Emp.empCode.Equals(code))
+                    {
+                        App.Current.Properties["CurrentEmpWorking"] = _emplog;
+                        _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
+                        setControl(true);
+                        this.Close();
+                    }
                 }
+
                 loginCode.ButtonGoAbleState(true);
             }
             catch (Exception ex)
@@ -548,8 +564,6 @@ namespace POS.EmployeeWorkSpace
                                 MessageBox.Show("This employee is already login!");
                                 return;
                             }
-
-                            App.Current.Properties["EmpLogin"] = emp;
 
                             try
                             {
