@@ -166,7 +166,13 @@
                                     ToolTip="Receipt Infomation">
                                 <materialDesign:PackIcon Kind="History" />
                             </Button>
+                            <Button x:Name="bntCreateNewProduct"
+                                Background="DarkSlateGray"
+                                    ToolTip="Create new Product"
+                                    Click="BntCreateNewProduct_OnClick">
+                                <materialDesign:PackIcon Kind="Creation" />
 
+                            </Button>
                         </StackPanel>
                     </materialDesign:PopupBox>
                 </Grid>

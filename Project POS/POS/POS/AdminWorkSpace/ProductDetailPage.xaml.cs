@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using POS.EmployeeWorkSpace;
 
 namespace POS.AdminWorkSpace
 {
@@ -207,8 +208,8 @@ namespace POS.AdminWorkSpace
 
         private void cboTypeI_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
+        
     }
 }
