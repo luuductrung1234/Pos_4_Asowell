@@ -80,6 +80,38 @@ namespace POS.BusinessModel
             }
         }
 
+        public static string[] ReadDBConfig()
+        {
+            using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\dbconfig.txt", FileMode.Open))
+            {
+                using (StreamReader rd = new StreamReader(fs, Encoding.UTF8))
+                {
+                    string dbConfig = rd.ReadLine();
+                    string[] result = dbConfig?.Split(',');
+
+                    if (result?.Length >= 5)
+                    {
+                        return result;
+                    }
+                }
+
+                
+                return null;
+            }
+        }
+
+        //ToDo: Need to encrypt config before save to file
+        public static void WriteDBConfig(string dbconfig)
+        {
+            using (FileStream fs = new FileStream(startupProjectPath + "\\SerializedData\\dbconfig.txt", FileMode.Create))
+            {
+                using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                {
+                    sWriter.WriteLine(dbconfig);
+                }
+            }
+        }
+
         //check file tableImagePath isExist
         public static bool checkTableImagePathFileExist()
         {

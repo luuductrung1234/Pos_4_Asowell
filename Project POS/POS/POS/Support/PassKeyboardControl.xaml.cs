@@ -21,8 +21,6 @@ namespace POS.Support
     /// </summary>
     public partial class PassKeyboardControl : UserControl
     {
-        
-
         public string InputValue { get; set; }
         private RoutedEventHandler _goClick;
         public event RoutedEventHandler GoClick

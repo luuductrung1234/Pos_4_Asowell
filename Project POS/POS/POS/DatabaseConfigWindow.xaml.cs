@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using POS.BusinessModel;
 
 namespace POS
 {
@@ -30,11 +31,15 @@ namespace POS
                 return;
             }
 
-            App.Current.Properties["InitialCatalog"] = initialCatalog;
-            App.Current.Properties["Source"] = source;
-            App.Current.Properties["UserId"] = userId;
-            App.Current.Properties["Password"] = pass;
-            App.Current.Properties["IsConfigDB"] = "true";
+            //App.Current.Properties["InitialCatalog"] = initialCatalog;
+            //App.Current.Properties["Source"] = source;
+            //App.Current.Properties["UserId"] = userId;
+            //App.Current.Properties["Password"] = pass;
+            //App.Current.Properties["IsConfigDB"] = "true";
+
+            ReadWriteData.WriteDBConfig(initialCatalog + "," + source + "," + userId + "," + pass + "," + "true");
+
+            MessageBox.Show("Please reset the Application!");
             Close();
         }
     }

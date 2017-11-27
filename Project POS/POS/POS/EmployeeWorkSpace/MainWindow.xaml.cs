@@ -55,18 +55,18 @@ namespace POS.EmployeeWorkSpace
 
             cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
 
-            if ((App.Current.Properties["IsConfigDB"] as string).Equals("true"))
-            {
-                _unitofwork = new EmployeewsOfAsowell(App.Current.Properties["InitialCatalog"] as string,
-                    App.Current.Properties["Source"] as string,
-                    App.Current.Properties["UserId"] as string,
-                    App.Current.Properties["Password"] as string);
-            }
-            else
-            {
-                _unitofwork = new EmployeewsOfAsowell();
-            }
 
+            //string[] config = ReadWriteData.ReadDBConfig();
+            //if (config != null)
+            //{
+            //    _unitofwork = new EmployeewsOfAsowell(config[0], config[1], config[2], config[3]);
+            //}
+            //else
+            //{
+            //    _unitofwork = new EmployeewsOfAsowell();
+            //}
+
+            _unitofwork = new EmployeewsOfAsowell();
             try
             {
                 b = new Table(_unitofwork);

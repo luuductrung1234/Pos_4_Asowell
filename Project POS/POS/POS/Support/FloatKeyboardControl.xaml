@@ -1,25 +1,27 @@
 ﻿<UserControl x:Class="POS.Support.FloatKeyboardControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:POS.Support"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             Height="177.33"
-             Width="200.213"
+             mc:Ignorable="d"
+             Height="189.83"
+             Width="371.213"
              Background="{DynamicResource  MaterialDesignBackground}">
     <Viewbox>
         <StackPanel>
-            <StackPanel Width="234"
-                        Height="196">
+            <StackPanel Width="447"
+                        Height="223">
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource {x:Type TextBox}}"
-                             Width="200"
+                             Width="401"
                              Foreground="Coral"
                              FontSize="14"
                              FontWeight="Bold"
-                             x:Name="TxtInputValue" />
+                             x:Name="TxtInputValue"
+                             Margin="5,0,0,2" 
+                             TextChanged="TxtInputValue_OnTextChanged"/>
                     <Button Style="{DynamicResource MaterialDesignFlatButton}"
                             x:Name="BtnDeleteInput"
                             Width="40"
@@ -31,119 +33,292 @@
                 </StackPanel>
 
                 <StackPanel x:Name="StkBoard"
-                            Orientation="Horizontal">
+                            Orientation="Horizontal"
+                            Height="191">
 
-                    <StackPanel x:Name="StkNumberBoard"
-                                Visibility="Collapsed">
+                    <StackPanel x:Name="StkCharacterBoard"
+                                Width="442"
+                                Margin="3,0,0,0"
+                                Visibility="Visible">
                         <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button">
+                                    <EventSetter Event="Click"
+                                                 Handler="BtnCharacterKey_Click"></EventSetter>
+                                </Style>
+                            </StackPanel.Resources>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="1"
-                                    x:Name="BtnOne"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnOne_Click" />
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="2"
-                                    x:Name="BtnTwo"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnTwo_Click" />
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="3"
-                                    x:Name="BtnThree"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnThree_Click" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="4"
-                                    x:Name="BtnFour"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnFour_Click" />
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="5"
-                                    x:Name="BtnFive"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnFive_Click" />
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="6"
-                                    x:Name="BtnSix"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnSix_Click" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="7"
-                                    x:Name="BtnSeven"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnSeven_Click" />
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="8"
-                                    x:Name="BtnEight"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnEight_Click" />
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
+                                    Width="44"
+                                    Height="39"
                                     Content="9"
-                                    x:Name="BtnNine"
-                                    Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnNine_Click" />
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="0"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button">
+                                    <EventSetter Event="Click"
+                                                 Handler="BtnCharacterKey_Click"></EventSetter>
+                                </Style>
+                            </StackPanel.Resources>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    x:Name="BtnGo"
-                                    Background="{DynamicResource MaterialDesignChipBackground}"
-                                    Click="BtnGo_OnClick">
-                                <materialDesign:PackIcon Kind="Login"
+                                    Width="44"
+                                    Height="39"
+                                    Content="q"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="w"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="e"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="r"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="t"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="y"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="u"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="i"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="o"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="p"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button">
+                                    <EventSetter Event="Click"
+                                                 Handler="BtnCharacterKey_Click"></EventSetter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="66"
+                                    Height="39"
+                                    Content="a"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="s"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="d"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="f"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="g"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="h"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="j"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="44"
+                                    Height="39"
+                                    Content="k"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="66"
+                                    Height="39"
+                                    Content="l"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="BtnShift"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="66"
+                                    Height="39"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}"
+                                    Click="BtnShift_OnClick">
+                                <materialDesign:PackIcon Kind="AppleKeyboardShift"
                                                          HorizontalAlignment="Center"
                                                          VerticalAlignment="Center" />
                             </Button>
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    Content="0"
-                                    x:Name="BtnZero"
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Button">
+                                        <EventSetter Event="Click"
+                                                     Handler="BtnCharacterKey_Click"></EventSetter>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="39"
+                                        Content="z"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="39"
+                                        Content="x"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="39"
+                                        Content="c"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="39"
+                                        Content="v"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="39"
+                                        Content="b"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="39"
+                                        Content="n"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="39"
+                                        Content="m"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            </StackPanel>
+                            <Button x:Name="BtnBackSpace"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="66"
+                                    Height="39"
                                     Background="{DynamicResource MaterialDesignDarkBackground}"
-                                    Click="BtnZero_Click" />
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    Width="70"
-                                    Margin="4"
-                                    x:Name="BtnBackSpace"
-                                    Background="{DynamicResource MaterialDesignChipBackground}"
                                     Click="BtnBackSpace_Click">
                                 <materialDesign:PackIcon Kind="Backspace"
                                                          HorizontalAlignment="Center"
                                                          VerticalAlignment="Center" />
                             </Button>
                         </StackPanel>
-                    </StackPanel>
 
-
-
-                    <StackPanel x:Name="StkCharacterBoard"
-                                Width="233"
-                                Height="169">
-
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Button">
+                                        <EventSetter Event="Click"
+                                                     Handler="BtnCharacterKey_Click"></EventSetter>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="66"
+                                        Height="30"
+                                        Content="@"
+                                        Background="{DynamicResource MaterialDesignDarkBackground}">
+                                </Button>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="30"
+                                        Content=","
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="220"
+                                        Height="30"
+                                        Content=" "
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        Width="44"
+                                        Height="30"
+                                        Content="."
+                                        Background="{DynamicResource MaterialDesignDarkBackground}" />
+                            </StackPanel>
+                            <Button x:Name="BtnGo"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"
+                                    Width="66"
+                                    Height="30"
+                                    Background="{DynamicResource MaterialDesignDarkBackground}"
+                                    Click="BtnGo_OnClick">
+                                <materialDesign:PackIcon Kind="KeyboardReturn"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center" />
+                            </Button>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

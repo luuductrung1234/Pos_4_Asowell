@@ -8,6 +8,7 @@ using POS.Repository.DAL;
 using POS.EmployeeWorkSpace;
 using System.Windows.Input;
 using System.Windows.Threading;
+using POS.BusinessModel;
 using POS.WareHouseWorkSpace;
 
 namespace POS
@@ -22,6 +23,16 @@ namespace POS
 
         public Login()
         {
+            //string[] config = ReadWriteData.ReadDBConfig();
+            //if (config != null)
+            //{
+            //    _unitempofwork = new EmployeewsOfAsowell(config[0], config[1], config[2], config[3]);
+            //}
+            //else
+            //{
+            //    _unitempofwork = new EmployeewsOfAsowell();
+            //}
+
             _unitempofwork = new EmployeewsOfAsowell();
             InitializeComponent();
 

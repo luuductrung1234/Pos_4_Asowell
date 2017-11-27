@@ -57,6 +57,8 @@ namespace POS.WareHouseWorkSpace
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
+            App.Current.Properties["AdLogin"] = null;
+            App.Current.Properties["EmpLogin"] = null;
             login = new Login();
             this.Close();
             login.Show();
@@ -65,6 +67,11 @@ namespace POS.WareHouseWorkSpace
 
         private void InputReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (App.Current.Properties["AdLogin"] != null)
+            {
+                MessageBox.Show("Your role is not allowed to do this!");
+                return;
+            }
             inputReceipt=new InputReceiptNote(_unitofwork);
             myFrame.Navigate(inputReceipt);
         }
