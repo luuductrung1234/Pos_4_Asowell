@@ -103,11 +103,13 @@
                                 Content="Apply"
                                 FontSize="18"
                                 Margin="10"
+                                Background="Orange"
                                 Click="btnApply_Click" />
                         <Button x:Name="btnCancel"
                                 Content="Cancel"
                                 FontSize="18"
                                 Margin="10"
+                                Background="Orange"
                                 Click="btnCancel_Click" />
                     </StackPanel>
 
@@ -175,7 +177,8 @@
                              VerticalAlignment="Center"
                              FontSize="18"
                              Margin="0,14"
-                             Foreground="White" />
+                             Foreground="White"
+                             TextChanged="TxtReceptionPrinter_OnTextChanged"/>
                 </StackPanel>
 
                 <StackPanel Height="60"
@@ -193,7 +196,8 @@
                              VerticalAlignment="Center"
                              FontSize="18"
                              Margin="0,14"
-                             Foreground="White"/>
+                             Foreground="White"
+                             TextChanged="TxtKitPrinter_OnTextChanged"/>
                 </StackPanel>
 
                 <StackPanel Height="60"
@@ -211,7 +215,8 @@
                              VerticalAlignment="Center"
                              FontSize="18"
                              Margin="0,14"
-                             Foreground="White" />
+                             Foreground="White"
+                             TextChanged="TxtBarPrinter_OnTextChanged"/>
                 </StackPanel>
 
                 <StackPanel Height="60"
@@ -222,7 +227,8 @@
                                VerticalAlignment="Center"
                                Width="140" />
                     <CheckBox x:Name="chbShowReviewWin"
-                              />
+                              Checked="ChbShowReviewWin_OnChecked"
+                              Unchecked="ChbShowReviewWin_OnUnchecked"/>
                 </StackPanel>
             </StackPanel>
 
@@ -234,11 +240,13 @@
                         Content="Apply"
                         FontSize="18"
                         Margin="10"
+                        Background="Orange"
                         Click="BtnPrinterApply_OnClick" />
                 <Button x:Name="btnPrinterCancel"
                         Content="Cancel"
                         FontSize="18"
                         Margin="10"
+                        Background="Orange"
                         Click="BtnPrinterCancel_OnClick" />
             </StackPanel>
         </StackPanel>

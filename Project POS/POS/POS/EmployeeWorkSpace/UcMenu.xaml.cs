@@ -123,7 +123,7 @@ namespace POS.EmployeeWorkSpace
                     {
                         foreach (var order in foundinchairorderdetailstemp)
                         {
-                            if (!order.SelectedStats.Equals(it.StandardStats) || !order.Note.Equals(""))
+                            if (!order.SelectedStats.Equals(it.StandardStats) || !order.Note.Equals("") || order.IsPrinted != 0)
                             {
                                 o.ChairId = orderingChair.ChairId;
                                 o.OrdertempId = orderTempCurrentTable.OrdertempId;
@@ -139,7 +139,7 @@ namespace POS.EmployeeWorkSpace
                                 break;
                             }
 
-                            if (order.SelectedStats.Equals(it.StandardStats) && order.Note.Equals(""))
+                            if (order.SelectedStats.Equals(it.StandardStats) && order.Note.Equals("") && order.IsPrinted == 0)
                             {
                                 order.ProductId = it.ProductId;
                                 order.Quan++;

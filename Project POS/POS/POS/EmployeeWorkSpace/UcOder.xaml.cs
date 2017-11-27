@@ -432,10 +432,16 @@ namespace POS.EmployeeWorkSpace
                 tempdata.Quan = ordernotedetails[index].Quan;
                 tempdata.Note = ordernotedetails[index].Note;
                 tempdata.SelectedStats = (e.OriginalSource as ComboBox).SelectedItem.ToString();
+                tempdata.IsPrinted = 0;
 
                 foreach (var cho in ordernotedetails)
                 {
-                    if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
+                    if (cho.OrdertempId.Equals(tempdata.OrdertempId)
+                        && cho.ChairId.Equals(tempdata.ChairId)
+                        && cho.ProductId.Equals(tempdata.ProductId)
+                        && cho.SelectedStats.Equals(tempdata.SelectedStats)
+                        && cho.Note.Equals(tempdata.Note)
+                        && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
                     {
                         cho.Quan += ordernotedetails[index].Quan;
 
@@ -580,6 +586,7 @@ namespace POS.EmployeeWorkSpace
             tempdata.StatusItems = ordernotedetails[index].StatusItems;
             tempdata.Quan = ordernotedetails[index].Quan;
             tempdata.Note = "";
+            tempdata.IsPrinted = 0;
 
             InputNote inputnote = new InputNote(ordernotedetails[index].Note);
             if (ordernotedetails[index].Note.Equals("") || ordernotedetails[index].Note.Equals(inputnote.Note))
@@ -592,7 +599,12 @@ namespace POS.EmployeeWorkSpace
                     {
                         foreach (var cho in ordernotedetails)
                         {
-                            if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
+                            if (cho.OrdertempId.Equals(tempdata.OrdertempId)
+                                && cho.ChairId.Equals(tempdata.ChairId)
+                                && cho.ProductId.Equals(tempdata.ProductId)
+                                && cho.SelectedStats.Equals(tempdata.SelectedStats)
+                                && cho.Note.Equals(tempdata.Note)
+                                && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
                             {
                                 cho.Quan++;
                                 _unitofwork.OrderDetailsTempRepository.Delete(ordernotedetails[index]);
@@ -618,7 +630,12 @@ namespace POS.EmployeeWorkSpace
                     {
                         foreach (var cho in ordernotedetails)
                         {
-                            if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && cho.Note.Equals(tempdata.Note))
+                            if (cho.OrdertempId.Equals(tempdata.OrdertempId)
+                                && cho.ChairId.Equals(tempdata.ChairId)
+                                && cho.ProductId.Equals(tempdata.ProductId)
+                                && cho.SelectedStats.Equals(tempdata.SelectedStats)
+                                && cho.Note.Equals(tempdata.Note)
+                                && (cho.IsPrinted == 0 && tempdata.IsPrinted == 0))
                             {
                                 tempdata.Note = ordernotedetails[index].Note;
                                 tempdata.Quan--;
@@ -637,7 +654,11 @@ namespace POS.EmployeeWorkSpace
 
                         foreach (var cho in ordernotedetails)
                         {
-                            if (cho.OrdertempId.Equals(tempdata.OrdertempId) && cho.ChairId.Equals(tempdata.ChairId) && cho.ProductId.Equals(tempdata.ProductId) && cho.SelectedStats.Equals(tempdata.SelectedStats) && !cho.Note.Equals(tempdata.Note))
+                            if (cho.OrdertempId.Equals(tempdata.OrdertempId)
+                                && cho.ChairId.Equals(tempdata.ChairId)
+                                && cho.ProductId.Equals(tempdata.ProductId)
+                                && cho.SelectedStats.Equals(tempdata.SelectedStats)
+                                && !cho.Note.Equals(tempdata.Note))
                             {
                                 ordernotedetails[index].Quan--;
                                 _unitofwork.OrderDetailsTempRepository.Update(ordernotedetails[index]);
@@ -796,15 +817,52 @@ namespace POS.EmployeeWorkSpace
                     printer2.DoPrint();
                 }
 
-                foreach (var orderDetials in currentTable.OrderTemps.First().OrderDetailsTemps)
+                List<OrderDetailsTemp> oldOrderDetails = new List<OrderDetailsTemp>();
+                List<OrderDetailsTemp> newOrderDetails = new List<OrderDetailsTemp>();
+                ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
+                orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
+                foreach (var orderDetails in orderdetailstempcurrenttablelist.ToList())
                 {
-                    if (orderDetials.IsPrinted == 0)
+                    if (orderDetails.IsPrinted == 0)
                     {
-                        orderDetials.IsPrinted = 1;
-                        _unitofwork.OrderDetailsTempRepository.Update(orderDetials);
+                        newOrderDetails.Add(new OrderDetailsTemp()
+                        {
+                            OrdertempId = orderDetails.OrdertempId,
+                            ProductId = orderDetails.ProductId,
+                            ChairId = orderDetails.ChairId,
+                            SelectedStats = orderDetails.SelectedStats,
+                            Note = orderDetails.Note,
+                            IsPrinted = 1,
+                            Discount = orderDetails.Discount,
+                            Quan = orderDetails.Quan,
+                        });
+                        _unitofwork.OrderDetailsTempRepository.Delete(orderDetails);
                     }
+                }                
+                foreach (var newDetails in newOrderDetails)
+                {
+                    bool isupdate = false;
+                    foreach (var orderDetailsTemp in orderdetailstempcurrenttablelist.Where(x => x.IsPrinted == 1))
+                    {
+                        if (newDetails.OrdertempId.Equals(orderDetailsTemp.OrdertempId)
+                            && newDetails.ChairId.Equals(orderDetailsTemp.ChairId)
+                            && newDetails.ProductId.Equals(orderDetailsTemp.ProductId)
+                            && newDetails.SelectedStats.Equals(orderDetailsTemp.SelectedStats)
+                            && newDetails.Note.Equals(orderDetailsTemp.Note))
+                        {
+                            orderDetailsTemp.Quan += newDetails.Quan;
+                            _unitofwork.OrderDetailsTempRepository.Update(orderDetailsTemp);
+                            isupdate = true;
+                            break;
+                        }
+                    }
+
+                    if(!isupdate)
+                        _unitofwork.OrderDetailsTempRepository.Insert(newDetails);
                 }
                 _unitofwork.Save();
+                RefreshControl(_unitofwork, currentTable);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
             }
             catch (Exception ex)
             {
@@ -846,14 +904,17 @@ namespace POS.EmployeeWorkSpace
                 return false;
 
 
-            decimal total = 0;
-            decimal totalWithDiscount = 0;
+            // calculate totalPriceNonDisc and TotalPrice
+            decimal Total = 0;
+            decimal TotalWithDiscount = 0;
             foreach (var item in currentChair.OrderDetailsTemps)
             {
-                total = (decimal)((float)total + (float)(item.Quan * (float)item.Product.Price));
-                totalWithDiscount = (decimal)((float)totalWithDiscount + (float)(item.Quan * ((float)item.Product.Price * ((100 - item.Discount) / 100.0))));
+                Total = (decimal)((float)Total + (float)(item.Quan * (float)item.Product.Price));
+                TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.Quan * ((float)item.Product.Price * ((100 - item.Discount) / 100.0))));
             }
-            totalWithDiscount = (decimal)(((float)total * (100 - ordertemptable.Discount)) / 100.0);
+            // tính năng giảm giá cho món có gì đó không ổn nên tốt nhất không cho set discount cho món do đó => Tại vị trí này Total và TotalWithDiscount vẫn bằng nhau 
+            Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
+            TotalWithDiscount = (decimal)(((float)Total * (100 - ordertemptable.Discount)) / 100.0);
 
 
             var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId))
@@ -864,8 +925,8 @@ namespace POS.EmployeeWorkSpace
                 newOrder.EmpId = currentOrderTemp.EmpId;
                 newOrder.Ordertable = currentTable.TableNumber;
                 newOrder.Ordertime = currentOrderTemp.Ordertime;
-                newOrder.TotalPriceNonDisc = total;
-                newOrder.TotalPrice = totalWithDiscount;
+                newOrder.TotalPriceNonDisc = Total;
+                newOrder.TotalPrice = TotalWithDiscount;
                 newOrder.Discount = currentOrderTemp.Discount;
                 newOrder.SubEmpId = currentOrderTemp.SubEmpId;
             }
@@ -988,12 +1049,6 @@ namespace POS.EmployeeWorkSpace
 
         private void DeleteChairOrderDetails()
         {
-            if (currentTable.IsPrinted == 1)
-            {
-                MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
-                return;
-            }
-
             int i = 0;
             foreach (ToggleButton btn in wp.Children)
             {

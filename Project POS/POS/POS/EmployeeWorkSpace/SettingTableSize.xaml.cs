@@ -21,11 +21,15 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class SettingTableSize : Page
     {
+        private bool isLoading;
+
         public SettingTableSize()
         {
             InitializeComponent();
 
+            isLoading = true;
             this.Loaded += SettingTableSize_Loaded;
+            
         }
 
         private void SettingTableSize_Loaded(object sender, RoutedEventArgs e)
@@ -52,6 +56,8 @@ namespace POS.EmployeeWorkSpace
                 txtBarPrinter.Text = "";
                 chbShowReviewWin.IsChecked = true;
             }
+
+            isLoading = false;
         }
 
         private void CheckNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -82,6 +88,9 @@ namespace POS.EmployeeWorkSpace
             width = Convert.ToInt32(txtWidth.Text);
 
             recDemo.Width = width;
+
+            if(!isLoading)
+            btnApply.Background = Brushes.Red;
         }
 
         private void txtHeight_TextChanged(object sender, TextChangedEventArgs e)
@@ -104,6 +113,9 @@ namespace POS.EmployeeWorkSpace
             height = Convert.ToInt32(txtHeight.Text.Trim());
 
             recDemo.Height = height;
+
+            if (!isLoading)
+                btnApply.Background = Brushes.Red;
         }
 
         private void btnApply_Click(object sender, RoutedEventArgs e)
@@ -123,12 +135,16 @@ namespace POS.EmployeeWorkSpace
                 Login log = new Login();
                 log.Show();
             }
+
+            btnApply.Background = Brushes.Orange;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             txtWidth.Text = ReadWriteData.readTableSize()[0];
             txtHeight.Text = ReadWriteData.readTableSize()[1];
+
+            btnApply.Background = Brushes.Orange;
         }
 
         private void BtnPrinterApply_OnClick(object sender, RoutedEventArgs e)
@@ -143,6 +159,8 @@ namespace POS.EmployeeWorkSpace
                 ReadWriteData.WritePrinterSetting(txtReceptionPrinter.Text + "," + txtKitPrinter.Text + "," + txtBarPrinter.Text + "," + "1");
             else
                 ReadWriteData.WritePrinterSetting(txtReceptionPrinter.Text + "," + txtKitPrinter.Text + "," + txtBarPrinter.Text + "," + "0");
+
+            btnPrinterApply.Background = Brushes.Orange;
         }
 
         private void BtnPrinterCancel_OnClick(object sender, RoutedEventArgs e)
@@ -166,7 +184,38 @@ namespace POS.EmployeeWorkSpace
                 txtBarPrinter.Text = "";
                 chbShowReviewWin.IsChecked = true;
             }
-            
+
+            btnPrinterApply.Background = Brushes.Orange;
+        }
+
+        private void TxtReceptionPrinter_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!isLoading)
+                btnPrinterApply.Background = Brushes.Red;
+        }
+
+        private void TxtKitPrinter_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!isLoading)
+                btnPrinterApply.Background = Brushes.Red;
+        }
+
+        private void TxtBarPrinter_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!isLoading)
+                btnPrinterApply.Background = Brushes.Red;
+        }
+
+        private void ChbShowReviewWin_OnChecked(object sender, RoutedEventArgs e)
+        {
+            if (!isLoading)
+                btnPrinterApply.Background = Brushes.Red;
+        }
+
+        private void ChbShowReviewWin_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            if (!isLoading)
+                btnPrinterApply.Background = Brushes.Red;
         }
     }
 }
