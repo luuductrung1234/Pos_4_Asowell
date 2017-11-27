@@ -259,6 +259,9 @@
     <Compile Include="Support\KeyboardControl.xaml.cs">
       <DependentUpon>KeyboardControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Support\PassKeyboardControl.xaml.cs">
+      <DependentUpon>PassKeyboardControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WareHouseWorkSpace\IngredientPage.xaml.cs">
       <DependentUpon>IngredientPage.xaml</DependentUpon>
     </Compile>
@@ -441,6 +444,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Support\KeyboardControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Support\PassKeyboardControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

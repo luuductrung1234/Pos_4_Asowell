@@ -204,8 +204,11 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-            <Support:KeyboardControl x:Name="loginCode" Width="Auto" GoClick="loginCode_GoClick"
-                                     Height="300" />
+            <Support:PassKeyboardControl x:Name="loginCode"
+                                         Width="Auto"
+                                         GoClick="loginCode_GoClick"
+                                         Height="300"
+                                         TurnOffKeyboard="LoginCode_OnTurnOffKeyboard"/>
         </StackPanel>
     </Grid>
 </Window>

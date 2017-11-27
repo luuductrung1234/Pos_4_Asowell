@@ -234,6 +234,10 @@ namespace POS.EmployeeWorkSpace
                         setControl(true);
                         this.Close();
                     }
+                    else
+                    {
+                        MessageBox.Show("Login fail Employee's code is not correct!");
+                    }
                 }
 
                 loginCode.ButtonGoAbleState(true);
@@ -695,7 +699,11 @@ namespace POS.EmployeeWorkSpace
                 txtPass.Password = "";
             }
         }
-        
+
+        private void LoginCode_OnTurnOffKeyboard(object sender, RoutedEventArgs e)
+        {
+            //do nothing
+        }
     }
 
     public class EmpLoginList
