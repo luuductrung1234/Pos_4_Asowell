@@ -8,6 +8,7 @@ using POS.Repository.DAL;
 using POS.EmployeeWorkSpace;
 using System.Windows.Input;
 using System.Windows.Threading;
+using POS.WareHouseWorkSpace;
 
 namespace POS
 {
@@ -116,29 +117,52 @@ namespace POS
             {
                 await Task.Run(() =>
                 {
-                    bool isFound = false;
-                    List<Employee> empList = _unitempofwork.EmployeeRepository.Get().ToList();
-                    List<AdminRe> AdList = _unitempofwork.AdminreRepository.Get().ToList();
-                    foreach (Employee emp in empList)
+                    Employee emp = _unitempofwork.EmployeeRepository.Get(x => x.Username.Equals(username) && x.Pass.Equals(pass)).FirstOrDefault();
+                    if (emp != null)
                     {
-                        if (emp.Username.Equals(username) && emp.Pass.Equals(pass))
+                        App.Current.Properties["EmpLogin"] = emp;
+                        if (emp.EmpRole == 3)
                         {
-                            App.Current.Properties["EmpLogin"] = emp;
-
+                            Dispatcher.Invoke(() =>
+                            {
+                                WareHouseWindow wareHouse = new WareHouseWindow();
+                                wareHouse.Show();
+                            });
+                        }
+                        else
+                        {
                             try
                             {
-                                SalaryNote empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
+                                SalaryNote empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle =>
+                                    sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
+                                    sle.ForYear.Equals(DateTime.Now.Year)).First();
 
                                 App.Current.Properties["EmpSN"] = empSalaryNote;
-                                WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
+                                WorkingHistory empWorkHistory = new WorkingHistory
+                                {
+                                    ResultSalary = empSalaryNote.SnId,
+                                    EmpId = empSalaryNote.EmpId
+                                };
                                 App.Current.Properties["EmpWH"] = empWorkHistory;
                             }
                             catch (Exception ex)
                             {
-                                SalaryNote empSalary = new SalaryNote { EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
+                                SalaryNote empSalary = new SalaryNote
+                                {
+                                    EmpId = emp.EmpId,
+                                    SalaryValue = 0,
+                                    WorkHour = 0,
+                                    ForMonth = DateTime.Now.Month,
+                                    ForYear = DateTime.Now.Year,
+                                    IsPaid = 0
+                                };
                                 _unitempofwork.SalaryNoteRepository.Insert(empSalary);
                                 _unitempofwork.Save();
-                                WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
+                                WorkingHistory empWorkHistory = new WorkingHistory
+                                {
+                                    ResultSalary = empSalary.SnId,
+                                    EmpId = empSalary.EmpId
+                                };
                                 App.Current.Properties["EmpWH"] = empWorkHistory;
                                 App.Current.Properties["EmpSN"] = empSalary;
                             }
@@ -146,47 +170,42 @@ namespace POS
                             Dispatcher.Invoke(() =>
                             {
                                 EmpLoginListData.emploglist.Clear();
-                                EmpLoginListData.emploglist.Add(new EmpLoginList { Emp = emp, EmpSal = App.Current.Properties["EmpSN"] as SalaryNote, EmpWH = App.Current.Properties["EmpWH"] as WorkingHistory, TimePercent = 0 });
+                                EmpLoginListData.emploglist.Add(new EmpLoginList
+                                {
+                                    Emp = emp,
+                                    EmpSal = App.Current.Properties["EmpSN"] as SalaryNote,
+                                    EmpWH = App.Current.Properties["EmpWH"] as WorkingHistory,
+                                    TimePercent = 0
+                                });
 
                                 EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
                                 main.Show();
                             });
-                            isFound = true;
-
-                            //end create
-
-                            break;
                         }
-
                     }
-                    //Get Admin
-                    bool isFoundAd = false;
-                    if (!isFound)
+                    else    
                     {
-                        foreach (var item in AdList)
+                        //Get Admin
+                        AdminRe ad = _unitempofwork.AdminreRepository.Get(x => x.Username.Equals(username) && x.Pass.Equals(pass)).FirstOrDefault();
+                        if (ad != null)
                         {
-                            if (item.Username.Equals(username) && item.Pass.Equals(pass))
+                            App.Current.Properties["AdLogin"] = ad;
+
+                            Dispatcher.Invoke(() =>
                             {
-                                App.Current.Properties["AdLogin"] = item;
-
-                                Dispatcher.Invoke(() =>
-                                {
-                                    AdminNavWindow navwindow = new AdminNavWindow();
-                                    navwindow.Show();
-                                });
-
-                                isFoundAd = true;
-                                break;
-
-                            }
-
+                                AdminNavWindow navwindow = new AdminNavWindow();
+                                navwindow.Show();
+                            });
                         }
-                        if (!isFoundAd)
+
+                        if (ad == null && emp == null)
                         {
                             MessageBox.Show("incorrect username or password");
                             return;
                         }
                     }
+                    
+
                     Dispatcher.Invoke(() =>
                     {
                         this.Close();
@@ -233,47 +252,79 @@ namespace POS
             {
                 await Task.Run(() =>
                 {
-                    bool isFound = false;
                     Employee loginEmp = _unitempofwork.EmployeeRepository.Get(x => x.empCode == code).FirstOrDefault();
                     if (loginEmp != null)
                     {
                         App.Current.Properties["EmpLogin"] = loginEmp;
 
-                        try
+                        if (loginEmp.EmpRole == 3)
                         {
-                            SalaryNote empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(loginEmp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
-
-                            App.Current.Properties["EmpSN"] = empSalaryNote;
-                            WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
-                            App.Current.Properties["EmpWH"] = empWorkHistory;
+                            Dispatcher.Invoke(() =>
+                            {
+                                WareHouseWindow wareHouse = new WareHouseWindow();
+                                wareHouse.Show();
+                            });
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            SalaryNote empSalary = new SalaryNote { EmpId = loginEmp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
-                            _unitempofwork.SalaryNoteRepository.Insert(empSalary);
-                            _unitempofwork.Save();
-                            WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
-                            App.Current.Properties["EmpWH"] = empWorkHistory;
-                            App.Current.Properties["EmpSN"] = empSalary;
+                            try
+                            {
+                                SalaryNote empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle =>
+                                    sle.EmpId.Equals(loginEmp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
+                                    sle.ForYear.Equals(DateTime.Now.Year)).First();
+
+                                App.Current.Properties["EmpSN"] = empSalaryNote;
+                                WorkingHistory empWorkHistory = new WorkingHistory
+                                {
+                                    ResultSalary = empSalaryNote.SnId,
+                                    EmpId = empSalaryNote.EmpId
+                                };
+                                App.Current.Properties["EmpWH"] = empWorkHistory;
+                            }
+                            catch (Exception ex)
+                            {
+                                SalaryNote empSalary = new SalaryNote
+                                {
+                                    EmpId = loginEmp.EmpId,
+                                    SalaryValue = 0,
+                                    WorkHour = 0,
+                                    ForMonth = DateTime.Now.Month,
+                                    ForYear = DateTime.Now.Year,
+                                    IsPaid = 0
+                                };
+                                _unitempofwork.SalaryNoteRepository.Insert(empSalary);
+                                _unitempofwork.Save();
+                                WorkingHistory empWorkHistory = new WorkingHistory
+                                {
+                                    ResultSalary = empSalary.SnId,
+                                    EmpId = empSalary.EmpId
+                                };
+                                App.Current.Properties["EmpWH"] = empWorkHistory;
+                                App.Current.Properties["EmpSN"] = empSalary;
+                            }
+
+                            Dispatcher.Invoke(() =>
+                            {
+                                EmpLoginListData.emploglist.Clear();
+                                EmpLoginListData.emploglist.Add(new EmpLoginList
+                                {
+                                    Emp = loginEmp,
+                                    EmpSal = App.Current.Properties["EmpSN"] as SalaryNote,
+                                    EmpWH = App.Current.Properties["EmpWH"] as WorkingHistory,
+                                    TimePercent = 0
+                                });
+
+                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
+                                main.Show();
+                            });
                         }
-
-                        Dispatcher.Invoke(() =>
-                        {
-                            EmpLoginListData.emploglist.Clear();
-                            EmpLoginListData.emploglist.Add(new EmpLoginList { Emp = loginEmp, EmpSal = App.Current.Properties["EmpSN"] as SalaryNote, EmpWH = App.Current.Properties["EmpWH"] as WorkingHistory, TimePercent = 0 });
-
-                            EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
-                            main.Show();
-                        });
-                        isFound = true;
-
                     }
-
-                    if (!isFound)
+                    else
                     {
                         MessageBox.Show("incorrect username or password");
                         return;
                     }
+
                     Dispatcher.Invoke(() =>
                     {
                         this.Close();

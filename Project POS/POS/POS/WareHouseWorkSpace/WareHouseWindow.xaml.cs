@@ -27,7 +27,8 @@ namespace POS.WareHouseWorkSpace
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
         private Login login;
-        AdminRe curAdmin;
+        private AdminRe curAdmin;
+        private Employee curEmp;
         private InputReceiptNote inputReceipt;
         
         public WareHouseWindow()
@@ -36,15 +37,22 @@ namespace POS.WareHouseWorkSpace
             _unitofwork = new AdminwsOfAsowell();
             _innIngredientPage=new IngredientPage(_unitofwork);
             _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
-            AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-            curAdmin = _unitofwork.AdminreRepository
-                .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
-            CUserChip.Content = curAdmin.Name;
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+            if (App.Current.Properties["AdLogin"] != null)
+            {
+                AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
+                curAdmin = _unitofwork.AdminreRepository
+                    .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
+                CUserChip.Content = curAdmin.Name;
+            }
+            else
+            {
+                Employee getEmp = App.Current.Properties["EmpLogin"] as Employee;
+                curEmp = _unitofwork.EmployeeRepository
+                    .Get(emp => emp.Username.Equals(getEmp.Username) && emp.Pass.Equals(getEmp.Pass)).First();
+                CUserChip.Content = curEmp.Name;
+            }
+            
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
@@ -54,10 +62,6 @@ namespace POS.WareHouseWorkSpace
             login.Show();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void InputReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {

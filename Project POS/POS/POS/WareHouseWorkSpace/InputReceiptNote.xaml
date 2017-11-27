@@ -54,7 +54,7 @@
                                     DisplayMemberBinding="{Binding UnitBuy}" />
                     <GridViewColumn Header="Standard Price"
                                     Width="150"
-                                    DisplayMemberBinding="{Binding StandardPrice}" />
+                                    DisplayMemberBinding="{Binding StandardPrice, StringFormat=0.000}" />
                 </GridView>
             </ListView.View>
         </ListView>
@@ -89,8 +89,15 @@
                                         DisplayMemberBinding="{Binding Quan}" />
                         <GridViewColumn Header="Price"
                                         Width="90"
-                                        DisplayMemberBinding="{Binding ItemPrice,StringFormat=0.000}" />
-
+                                        >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="txtItemPrice"
+                                             Text="{Binding ItemPrice,StringFormat=0.000}"
+                                             TextChanged="TxtItemPrice_OnTextChanged"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="Edit"
                                         Width="90">
                             <GridViewColumn.CellTemplate>
@@ -125,8 +132,8 @@
             </ListView>
             <TextBlock x:Name="textBlock"
                        HorizontalAlignment="Left"
-                       Margin="425,394,0,0"
-                       FontSize="20"
+                       Margin="10,416,0,0"
+                       FontSize="22"
                        TextWrapping="Wrap"
                        Foreground="White"
                        Text="Total Price"
@@ -135,31 +142,28 @@
                        Width="111" />
             <TextBlock x:Name="txtTotalPrice"
                        HorizontalAlignment="Left"
-                       Margin="570,394,0,0"
-                       FontSize="20"
+                       Margin="158,416,0,0"
+                       FontSize="22"
                        TextWrapping="Wrap"
                        Foreground="White"
                        VerticalAlignment="Top"
                        Height="33"
-                       Width="180" />
+                       Width="180"
+                       Text="{Binding appResource}"/>
             <Button x:Name="bntAdd"
                     Content="Add"
-                    HorizontalAlignment="Left"
-                    Margin="199,530,0,0"
+                    Margin="199,530,492.4,0"
                     Click="BntAdd_OnClick"
                     FontSize="25"
                     VerticalAlignment="Top"
-                    Width="117"
                     Height="49" />
             <Button x:Name="bntDelAll"
                     Content="Delete"
-                    HorizontalAlignment="Left"
                     Click="BntDelAll_OnClick"
-                    Margin="468,530,0,0"
+                    Margin="468,530,223.4,0"
                     FontSize="25"
                     Height="49"
-                    VerticalAlignment="Top"
-                    Width="117" />
+                    VerticalAlignment="Top" />
         </Grid>
     </Grid>
 
