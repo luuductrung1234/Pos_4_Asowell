@@ -668,7 +668,7 @@ namespace POS.EmployeeWorkSpace
             else
             {
                 _cUser.Content = EmpLoginListData.emploglist.Count + " employee(s) available";
-                if(App.Current.Properties["CurrentEmpWorking"] == null)
+                if(App.Current.Properties["CurrentEmpWorking"] != null)
                 {
                     _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
                 }
