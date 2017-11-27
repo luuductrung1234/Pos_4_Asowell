@@ -881,16 +881,45 @@ namespace POS.EmployeeWorkSpace
 
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
+            bool pass = false;
             if (currentTable.IsPrinted == 1)
             {
-                MessageBox.Show("Invoice of this table is already printed! You can not delete this table!");
-                return;
+                if (App.Current.Properties["AdLogin"] == null)
+                {
+                    MessageBoxResult mess = MessageBox.Show("This table is already printed! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
+                    if (mess == MessageBoxResult.Yes)
+                    {
+                        PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                        pr.ShowDialog();
+
+                        if (App.Current.Properties["AdLogin"] != null)
+                        {
+                            ClearTheTable();
+
+                            // update employee ID that effect to the OrderNote
+                            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    ClearTheTable();
+
+                    // update employee ID that effect to the OrderNote
+                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                }
             }
+            else
+            {
+                ClearTheTable();
 
-            ClearTheTable();
-
-            // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                // update employee ID that effect to the OrderNote
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+            }
         }
 
 
