@@ -38,13 +38,24 @@ namespace POS
             App.Current.Properties["IsConfigDB"] = "";
         }
 
+        private bool isCodeLoginTurnOn = false;
         private void LoadCodeLogin_Tick(object sender, EventArgs e)
         {
-            gNormalLoginForm.Width -= 10;
-            if (gNormalLoginForm.Width == 0)
+            if (isCodeLoginTurnOn)
             {
-                gNormalLoginForm.Visibility = Visibility.Collapsed;
-                LoadCodeLogin.Stop();
+                gNormalLoginForm.Width -= 10;
+                if (gNormalLoginForm.Width == 0)
+                {
+                    LoadCodeLogin.Stop();
+                }
+            }
+            else
+            {
+                gNormalLoginForm.Width += 10;
+                if (gNormalLoginForm.Width == 400)
+                {
+                    LoadCodeLogin.Stop();
+                }
             }
         }
 
@@ -300,8 +311,15 @@ namespace POS
 
         private void ButtonChangeLoginType_Click(object sender, RoutedEventArgs e)
         {
+            isCodeLoginTurnOn = true;
             LoadCodeLogin.Start();
             //gNormalLoginForm.Visibility = Visibility.Collapsed;
+        }
+
+        private void KbEmpCodeLoginForm_OnTurnOffKeyboard(object sender, RoutedEventArgs e)
+        {
+            isCodeLoginTurnOn = false;
+            LoadCodeLogin.Start();
         }
     }
 }

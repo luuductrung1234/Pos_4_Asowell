@@ -114,11 +114,11 @@
         </Grid>
 
         <StackPanel>
-            <support:KeyboardControl 
-                x:Name="KbEmpCodeLoginForm"
-                Height="369"
-                                     Width="399"
-                                     GoClick="btnLoginCode_Click"/>
+            <support:PassKeyboardControl x:Name="KbEmpCodeLoginForm"
+                                         Height="369"
+                                         Width="399"
+                                         GoClick="btnLoginCode_Click"
+                                         TurnOffKeyboard="KbEmpCodeLoginForm_OnTurnOffKeyboard" />
         </StackPanel>
     </StackPanel>
 </Window>
