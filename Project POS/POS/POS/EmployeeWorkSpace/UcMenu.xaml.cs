@@ -114,6 +114,7 @@ namespace POS.EmployeeWorkSpace
                         o.SelectedStats = it.StandardStats;
                         o.Note = "";
                         o.Quan = 1;
+                        o.IsPrinted = 0;
                         o.Discount = it.Discount;
                         _unitofwork.OrderDetailsTempRepository.Insert(o);
                         _unitofwork.Save();
@@ -130,6 +131,7 @@ namespace POS.EmployeeWorkSpace
                                 o.SelectedStats = it.StandardStats;
                                 o.Note = "";
                                 o.Quan = 1;
+                                o.IsPrinted = 0;
                                 o.Discount = it.Discount;
                                 _unitofwork.OrderDetailsTempRepository.Insert(o);
                                 _unitofwork.Save();

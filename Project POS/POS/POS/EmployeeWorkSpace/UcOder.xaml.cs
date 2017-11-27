@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -699,7 +700,7 @@ namespace POS.EmployeeWorkSpace
 
 
                 // printing
-                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
+                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
                 printer.DoPrint();
 
                 //// clean the old chair order data
@@ -728,7 +729,7 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 // printing
-                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
+                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
                 printer.DoPrint();
 
                 // clean the old table data
@@ -742,7 +743,7 @@ namespace POS.EmployeeWorkSpace
                 return;
 
             // printing
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, currentTable);
+            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.TempReceipt_Printing, currentTable);
             printer.DoPrint();
 
             // update IsPrinted for Table's Order
@@ -794,6 +795,16 @@ namespace POS.EmployeeWorkSpace
                     var printer2 = new DoPrintHelper(_unitofwork, DoPrintHelper.Bar_Printing, currentTable);
                     printer2.DoPrint();
                 }
+
+                foreach (var orderDetials in currentTable.OrderTemps.First().OrderDetailsTemps)
+                {
+                    if (orderDetials.IsPrinted == 0)
+                    {
+                        orderDetials.IsPrinted = 1;
+                        _unitofwork.OrderDetailsTempRepository.Update(orderDetials);
+                    }
+                }
+                _unitofwork.Save();
             }
             catch (Exception ex)
             {

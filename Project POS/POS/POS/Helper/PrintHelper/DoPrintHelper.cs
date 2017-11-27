@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Xps.Packaging;
 using POS.BusinessModel;
+using POS.Entities;
 using POS.Helper.PrintHelper.Model;
 using POS.Repository.DAL;
 using Table = POS.Entities.Table;
@@ -20,15 +21,17 @@ namespace POS.Helper.PrintHelper
 {
     public class DoPrintHelper
     {
-        public static readonly int Receipt_Printing = 1;
+        public static readonly int TempReceipt_Printing = 1;
         public static readonly int Kitchen_Printing = 2;
         public static readonly int Bar_Printing = 3;
         public static readonly int Eod_Printing = 4;
+        public static readonly int Receipt_Printing = 5;
 
         private readonly EmployeewsOfAsowell _unitofwork;
         private IPrintHelper ph;
         private int type;
         private readonly Entities.Table curTable;
+        private readonly OrderNote curOrder;
         private PrintDialog printDlg;
 
         private string _barPrinter;
@@ -36,7 +39,7 @@ namespace POS.Helper.PrintHelper
         private string _kitchentPrinter;
         private bool isShowReview;
 
-        public DoPrintHelper(EmployeewsOfAsowell unitofwork, int printType, Entities.Table currentTable)
+        public DoPrintHelper(EmployeewsOfAsowell unitofwork, int printType, Entities.Table currentTable = null)
         {
             _unitofwork = unitofwork;
             type = printType;
@@ -64,9 +67,37 @@ namespace POS.Helper.PrintHelper
             }
         }
 
+        public DoPrintHelper(EmployeewsOfAsowell unitofwork, int printType, OrderNote currentOrder)
+        {
+            _unitofwork = unitofwork;
+            type = printType;
+            curOrder = currentOrder;
+            printDlg = new PrintDialog();
+
+            string[] result = ReadWriteData.ReadPrinterSetting();
+            if (result != null)
+            {
+                _receptionPrinter = result[0];
+                _kitchentPrinter = result[1];
+                _barPrinter = result[2];
+
+                if (int.Parse(result[3]) == 1)
+                    isShowReview = true;
+                else
+                    isShowReview = false;
+            }
+            else
+            {
+                _receptionPrinter = "";
+                _kitchentPrinter = "";
+                _barPrinter = "";
+                isShowReview = true;
+            }
+        }
+
         public void DoPrint()
         {
-            if (curTable == null && type != Eod_Printing)
+            if (curTable == null && type != Eod_Printing && curOrder == null)
             {
                 return;
             }
@@ -131,6 +162,26 @@ namespace POS.Helper.PrintHelper
             // Create Print Helper
             if (type == Receipt_Printing)
             {
+                if (!string.IsNullOrEmpty(_receptionPrinter))
+                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
+
+                ph = new ReceiptPrintHelper()
+                {
+                    Owner = new Owner()
+                    {
+                        ImgName = "logo.png",
+                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
+                        Phone = "0927333668",
+                        PageName = "RECEIPT"
+                    },
+
+                    Order = new OrderForPrint().GetAndConvertOrder(curOrder, _unitofwork).GetAndConverOrderDetails(curOrder, _unitofwork)
+                };
+            }
+
+
+            if (type == TempReceipt_Printing)
+            {
                 if(!string.IsNullOrEmpty(_receptionPrinter))
                     printDlg.PrintQueue =new PrintQueue(new PrintServer(), _receptionPrinter);
 
@@ -144,7 +195,7 @@ namespace POS.Helper.PrintHelper
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, TempReceipt_Printing)
                 };
             }
 
@@ -155,7 +206,7 @@ namespace POS.Helper.PrintHelper
 
                 ph = new BarPrintHelper()
                 {
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, Bar_Printing)
                 };
             }
 
@@ -166,7 +217,7 @@ namespace POS.Helper.PrintHelper
 
                 ph = new KitchenPrintHelper()
                 {
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, Kitchen_Printing)
                 };
             }
 

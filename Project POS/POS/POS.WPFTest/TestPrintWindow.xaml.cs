@@ -142,55 +142,55 @@ namespace POS.WPFTest
             return doc;
         }
 
-        private void CboPrintType_OnSelected(object sender, RoutedEventArgs e)
-        {
-            ComboBox PrintType = sender as ComboBox;
+        private void CboPrintType_OnSelected(object sender, RoutedEventArgs e) { }
+        //{
+        //    ComboBox PrintType = sender as ComboBox;
 
-            string type = (PrintType.SelectedItem as TextBlock).Text;
+        //    string type = (PrintType.SelectedItem as TextBlock).Text;
 
 
-            // Create Print Helper
-            if (type == "Receipt")
-            {
-                ph = new ReceiptPrintHelper()
-                {
-                    Owner = new Owner()
-                    {
-                        ImgName = "logo.png",
-                        Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
-                        Phone = "0927333668",
-                        PageName = "RECEIPT"
-                    },
+        //    // Create Print Helper
+        //    if (type == "Receipt")
+        //    {
+        //        ph = new ReceiptPrintHelper()
+        //        {
+        //            Owner = new Owner()
+        //            {
+        //                ImgName = "logo.png",
+        //                Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
+        //                Phone = "0927333668",
+        //                PageName = "RECEIPT"
+        //            },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
-                };
-            }
+        //            Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, )
+        //        };
+        //    }
 
-            if (type == "Bar")
-            {
-                ph = new BarPrintHelper()
-                {
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
-                };
-            }
+        //    if (type == "Bar")
+        //    {
+        //        ph = new BarPrintHelper()
+        //        {
+        //            Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
+        //        };
+        //    }
 
-            if (type == "Kitchen")
-            {
-                ph = new KitchenPrintHelper()
-                {
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
-                };
-            }
+        //    if (type == "Kitchen")
+        //    {
+        //        ph = new KitchenPrintHelper()
+        //        {
+        //            Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork)
+        //        };
+        //    }
 
-            if (type == "End Of Day")
-            {
-                ph = new EndOfDayPrintHelper(_unitofwork);
-            }
+        //    if (type == "End Of Day")
+        //    {
+        //        ph = new EndOfDayPrintHelper(_unitofwork);
+        //    }
 
-            if (type == "Shift")
-            {
+        //    if (type == "Shift")
+        //    {
                 
-            }
-        }
+        //    }
+        //}
     }
 }
