@@ -495,6 +495,11 @@ namespace POS.EmployeeWorkSpace
             ClickAttach.SetClicks(ctrl, 0);
             if (clicks == 2)
             {
+                if (App.Current.Properties["AdLogin"] != null)
+                {
+                    return;
+                }
+
                 EmpLoginList currentEmp = App.Current.Properties["CurrentEmpWorking"] as EmpLoginList;
 
                 AllEmployeeLogin ael;

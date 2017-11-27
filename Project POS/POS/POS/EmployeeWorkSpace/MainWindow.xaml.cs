@@ -331,6 +331,18 @@ namespace POS.EmployeeWorkSpace
             AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 3);
             ael.ShowDialog();
 
+            if(App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                if(en.IsEnabled == true)
+                {
+                    myFrame.Navigate(b);
+                    bntTable.IsEnabled = false;
+                    bntDash.IsEnabled = true;
+                    bntEntry.IsEnabled = true;
+                    bntInfo.IsEnabled = true;
+                }
+            }
+
             //WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
 
             //wh.EndTime = DateTime.Now;
