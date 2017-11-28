@@ -78,7 +78,7 @@ namespace POS.AdminWorkSpace
             // init datasource for Employee PieChart
             SeriesCollection = new SeriesCollection();
             EmpPieSeries = new List<PieSeries>();
-            foreach (var item in _unitofwork.EmployeeRepository.Get())
+            foreach (var item in _unitofwork.EmployeeRepository.Get(x => x.Deleted.Equals(0)))
             {
                 EmpPieSeries.Add(new PieSeries() { Title = item.EmpId + ": " + item.Name });
             }
