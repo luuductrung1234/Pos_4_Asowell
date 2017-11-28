@@ -30,7 +30,7 @@ namespace POS.AdminWorkSpace
             
             _unitofwork = unitofwork;
             InitializeComponent();
-            lvDataCustomer.ItemsSource = _unitofwork.CustomerRepository.Get();
+            lvDataCustomer.ItemsSource = _unitofwork.CustomerRepository.Get(x=>x.Deleted.Equals(0));
             for (int i = 0; i <= 100; i++)
             {
                 cbodiscount.Items.Add(i.ToString());

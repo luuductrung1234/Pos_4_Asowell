@@ -18,7 +18,7 @@ namespace POS.EmployeeWorkSpace
         {
             _cloudUnitofwork = cloudUnitofwork;
             InitializeComponent();
-            lvData.ItemsSource = _cloudUnitofwork.ProductRepository.Get();
+            lvData.ItemsSource = _cloudUnitofwork.ProductRepository.Get(c=>c.Deleted.Equals(0));
             for(int i = 0; i <= 100; i++)
             {
                 cbopromotion.Items.Add(i.ToString());

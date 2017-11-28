@@ -33,7 +33,7 @@ namespace POS.WareHouseWorkSpace
             _unitofork = unitofork;
             InitializeComponent();
 
-            lvDataIngredient.ItemsSource = _unitofork.IngredientRepository.Get();
+            lvDataIngredient.ItemsSource = _unitofork.IngredientRepository.Get(c => c.Deleted.Equals(0));
 
             ReceiptDetailsList = new List<ReceiptNoteDetail>();
             lvDataReceipt.ItemsSource = ReceiptDetailsList;
