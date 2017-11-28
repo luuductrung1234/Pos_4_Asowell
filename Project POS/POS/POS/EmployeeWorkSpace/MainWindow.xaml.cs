@@ -78,10 +78,15 @@ namespace POS.EmployeeWorkSpace
                 st = new SettingFoodPage(_cloudUnitofwork);
                 stts = new SettingTableSize();
 
-                DispatcherTimer WorkTime = new DispatcherTimer();
-                WorkTime.Tick += WorkTime_Tick;
-                WorkTime.Interval = new TimeSpan(0, 0, 1);
-                WorkTime.Start();
+                DispatcherTimer workTimer = new DispatcherTimer();
+                workTimer.Tick += WorkTime_Tick;
+                workTimer.Interval = new TimeSpan(0, 0, 1);
+                workTimer.Start();
+
+                DispatcherTimer RefreshTimer = new DispatcherTimer();
+                RefreshTimer.Tick += Refresh_Tick;
+                RefreshTimer.Interval = new TimeSpan(0, 5, 0);
+                RefreshTimer.Start();
 
                 initProgressTableChair();
 
@@ -97,7 +102,7 @@ namespace POS.EmployeeWorkSpace
 
                 this.Closing += (sender, args) =>
                 {
-                    WorkTime.Stop();
+                    workTimer.Stop();
                     _unitofwork.Dispose();
                 };
 
@@ -107,6 +112,7 @@ namespace POS.EmployeeWorkSpace
                 Console.WriteLine(ex);
             }
         }
+        
 
         public void initProgressTableChair()
         {
@@ -156,6 +162,11 @@ namespace POS.EmployeeWorkSpace
         {
             proTable.ToolTip = "Reserved table(" + proTable.Value + "/" + proTable.Maximum + ")";
             proChair.ToolTip = "Reserved chair(" + proChair.Value + "/" + proChair.Maximum + ")";
+        }
+
+        private void Refresh_Tick(object sender, EventArgs e)
+        {
+            en.ucMenu.UcMenu_Loaded(en.ucMenu, null);
         }
 
         private void WorkTime_Tick(object sender, EventArgs e)

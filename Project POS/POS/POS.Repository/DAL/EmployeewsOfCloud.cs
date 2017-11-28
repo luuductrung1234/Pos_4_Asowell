@@ -39,7 +39,8 @@ namespace POS.Repository.DAL
 
         public EmployeewsOfCloud(string connectionString)
         {
-            context = new AsowellContext(connectionString);
+            cloudConnectString = connectionString;
+            context = new AsowellContext(cloudConnectString);
         }
 
 
@@ -188,6 +189,13 @@ namespace POS.Repository.DAL
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public void Refresh()
+        {
+            this.Save();
+            this.Dispose();
+            this.context = new AsowellContext(cloudConnectString);
         }
     }
 }

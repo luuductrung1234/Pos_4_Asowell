@@ -91,7 +91,7 @@ namespace POS.EmployeeWorkSpace
                     rec.Fill = Brushes.Red;
                 }
 
-                rec.ToolTip = setTooltip(rec);
+                rec.ToolTip = SetTooltip(rec);
             }
         }
 
@@ -202,7 +202,7 @@ namespace POS.EmployeeWorkSpace
                 Panel.SetZIndex(rec, 30);
                 grTable.Children.Add(rec);
 
-                rec.ToolTip = setTooltip(rec);
+                rec.ToolTip = SetTooltip(rec);
 
                 t.TableRec = rec;
             }
@@ -339,7 +339,7 @@ namespace POS.EmployeeWorkSpace
 
                 ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
 
-                rec.ToolTip = setTooltip(rec);
+                rec.ToolTip = SetTooltip(rec);
             }
         }
 
@@ -417,7 +417,7 @@ namespace POS.EmployeeWorkSpace
 
             currentTableList.Add(ReadWriteData.writeOnAddNew(_unitofwork, rec, App.Current.Properties["EmpLogin"] as Entities.Employee));
 
-            rec.ToolTip = setTooltip(rec);
+            rec.ToolTip = SetTooltip(rec);
         }
 
         //method tao popup menu cho table
@@ -643,7 +643,7 @@ namespace POS.EmployeeWorkSpace
                 _unitofwork.TableRepository.Update(t);
                 _unitofwork.Save();
 
-                currentRec.ToolTip = setTooltip(currentRec);
+                currentRec.ToolTip = SetTooltip(currentRec);
             }
         }
 
@@ -693,7 +693,7 @@ namespace POS.EmployeeWorkSpace
                     _unitofwork.TableRepository.Update(t);
                     _unitofwork.Save();
 
-                    currentRec.ToolTip = setTooltip(currentRec);
+                    currentRec.ToolTip = SetTooltip(currentRec);
                 }
             }
         }
@@ -709,7 +709,7 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.TableRepository.Update(t);
             _unitofwork.Save();
 
-            currentRec.ToolTip = setTooltip(currentRec);
+            currentRec.ToolTip = SetTooltip(currentRec);
             ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
         }
 
@@ -803,7 +803,7 @@ namespace POS.EmployeeWorkSpace
         //su kien khi move qua Table
         private void btnTableAdded_MouseMove(object sender, MouseEventArgs e)
         {
-            (sender as Rectangle).ToolTip = setTooltip(sender as Rectangle);
+            //(sender as Rectangle).ToolTip = SetTooltip(sender as Rectangle);
         }
 
         Point currentPointer;
@@ -938,7 +938,7 @@ namespace POS.EmployeeWorkSpace
         }
 
         //method set tooltip cho table
-        private string setTooltip(Rectangle rec)
+        private string SetTooltip(Rectangle rec)
         {
             foreach (Entities.Table table in currentTableList)
             {
@@ -953,24 +953,21 @@ namespace POS.EmployeeWorkSpace
 
                     if (table.IsOrdered == 1)
                     {
-                        foreach (var cus in _cloudUnitofwork.CustomerRepository.Get())
+                        Customer cus = null;
+                        if ((cus = _cloudUnitofwork.CustomerRepository.Get(x => x.CusId.Equals(ordertemptable.CusId)).FirstOrDefault()) != null)
                         {
-                            if (ordertemptable.CusId.Equals(cus.CusId))
-                            {
-                                tt += "\nOrder Customer: " + cus.Name;
-                            }
+                            tt += "\nOrder Customer: " + cus.Name;
                         }
+
 
                         if (table.IsOrdered == 1)
                         {
                             foreach (var tableOD in orderdetailstemptable)
                             {
-                                foreach (var pro in _cloudUnitofwork.ProductRepository.Get())
+                                Product prod = null;
+                                if ((prod = _cloudUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(tableOD.ProductId)).FirstOrDefault()) != null)
                                 {
-                                    if (pro.ProductId.Equals(tableOD.ProductId))
-                                    {
-                                        tt += "\nProduct Name: " + pro.Name;
-                                    }
+                                    tt += "\nProduct Name: " + prod.Name;
                                 }
 
                                 tt += ", Quantity: " + tableOD.Quan;

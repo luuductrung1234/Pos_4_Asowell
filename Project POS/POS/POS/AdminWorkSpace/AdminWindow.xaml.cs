@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using POS.Helper.PrintHelper;
 
 namespace POS.AdminWorkSpace
@@ -57,8 +58,12 @@ namespace POS.AdminWorkSpace
             homePage = new HomePage(_unitowork);
             productCreator = new ProductCreatorPage(_unitowork);
             myframe.Navigate(homePage);
+
+            
+
             Closing += AdminWindow_Closing;
         }
+        
 
         private void AdminWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

@@ -990,8 +990,11 @@ namespace POS.EmployeeWorkSpace
             decimal TotalWithDiscount = 0;
             foreach (var item in currentChair.OrderDetailsTemps)
             {
-                Total = (decimal)((float)Total + (float)(item.Quan * (float)item.Product.Price));
-                TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.Quan * ((float)item.Product.Price * ((100 - item.Discount) / 100.0))));
+                var prod = _cloudUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(item.ProductId)).FirstOrDefault();
+                if (prod == null)
+                    return false;
+                Total = (decimal)((float)Total + (float)(item.Quan * (float)prod.Price));
+                TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.Quan * ((float)prod.Price * ((100 - item.Discount) / 100.0))));
             }
             // tính năng giảm giá cho món có gì đó không ổn nên tốt nhất không cho set discount cho món do đó => Tại vị trí này Total và TotalWithDiscount vẫn bằng nhau 
             Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);

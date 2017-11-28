@@ -29,7 +29,7 @@ namespace POS.EmployeeWorkSpace
             this.Loaded += UcMenu_Loaded;
         }
 
-        private void UcMenu_Loaded(object sender, RoutedEventArgs e)
+        public void UcMenu_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {

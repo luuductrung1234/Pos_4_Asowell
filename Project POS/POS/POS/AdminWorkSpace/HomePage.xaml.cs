@@ -55,7 +55,6 @@ namespace POS.AdminWorkSpace
         {
             InitializeComponent();
             _unitofwork = unitofwork;
-            InitializeComponent();
             // init datasource for Time PieChart
             SeriesCollectionTime = new SeriesCollection();
             PriceList = new List<decimal>();
@@ -89,7 +88,7 @@ namespace POS.AdminWorkSpace
             }
 
             //init datasource for ColumnChart
-            Values=new ChartValues<decimal>();
+            Values = new ChartValues<decimal>();
             SerieColumnChart = new SeriesCollection
             {
                 new ColumnSeries
@@ -100,8 +99,6 @@ namespace POS.AdminWorkSpace
             };
             Labels = new List<string>();
             Formatter = value => value.ToString();
-            
-            
 
 
             // fill chart at first time
