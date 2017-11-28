@@ -217,11 +217,12 @@
                         <TextBlock Text="ImageLink: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <TextBlock x:Name="txtLinkImg"
+                        <Button x:Name="bntLinkImg"
                                   FontSize="18"
-                                  Foreground="White"
-                                  Width="215"
-                                  Margin="0,0,100,0" />
+                                  Foreground="White"                                  
+                                  Margin="0,0,100,0" >
+                            <materialDesign:PackIcon Kind="FolderImage" Foreground="Black" />
+                        </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
