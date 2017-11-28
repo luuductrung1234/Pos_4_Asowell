@@ -21,12 +21,12 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class PermissionRequired : Window
     {
-        private EmployeewsOfAsowell _unitofwork;
+        private EmployeewsOfCloud _cloudUnitofwork;
         MaterialDesignThemes.Wpf.Chip _cUser;
 
-        public PermissionRequired(EmployeewsOfAsowell unitofwork, MaterialDesignThemes.Wpf.Chip cUser)
+        public PermissionRequired(EmployeewsOfCloud cloudUnitofwork, MaterialDesignThemes.Wpf.Chip cUser)
         {
-            _unitofwork = unitofwork;
+            _cloudUnitofwork = cloudUnitofwork;
             _cUser = cUser;
             InitializeComponent();
 
@@ -59,7 +59,7 @@ namespace POS.EmployeeWorkSpace
             {
                 await Task.Run(() =>
                 {
-                    List<AdminRe> AdList = _unitofwork.AdminreRepository.Get().ToList();
+                    List<AdminRe> AdList = _cloudUnitofwork.AdminreRepository.Get().ToList();
 
                     //Get Admin
                     bool isFoundAd = false;

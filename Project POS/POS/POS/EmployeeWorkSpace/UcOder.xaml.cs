@@ -25,6 +25,7 @@ namespace POS.EmployeeWorkSpace
     public partial class UcOder : UserControl
     {
         private EmployeewsOfAsowell _unitofwork;
+        private EmployeewsOfCloud _cloudUnitofwork;
         private Entities.Table currentTable;
         private Entities.Chair currentChair;
         private OrderTemp ordertemptable;
@@ -42,6 +43,7 @@ namespace POS.EmployeeWorkSpace
         private void UcOder_Loaded(object sender, RoutedEventArgs e)
         {
             _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
+            _cloudUnitofwork = ((MainWindow)Window.GetWindow(this))._cloudUnitofwork;
             currentTable = ((MainWindow)Window.GetWindow(this)).currentTable;
             currentChair = ((MainWindow)Window.GetWindow(this)).currentChair;
 
@@ -92,7 +94,7 @@ namespace POS.EmployeeWorkSpace
 
                 // chuyen product_id thanh product name
                 var query = from orderdetails in chairordernotedetails
-                            join product in _unitofwork.ProductRepository.Get()
+                            join product in _cloudUnitofwork.ProductRepository.Get()
                                     on orderdetails.ProductId equals product.ProductId
 
                             select new OrderDetails_Product_Joiner
@@ -126,7 +128,7 @@ namespace POS.EmployeeWorkSpace
 
             // chuyen product_id thanh product name
             var query = from orderdetails in orderdetailstempcurrenttablelist
-                        join product in _unitofwork.ProductRepository.Get()
+                        join product in _cloudUnitofwork.ProductRepository.Get()
                         on orderdetails.ProductId equals product.ProductId
 
                         select new OrderDetails_Product_Joiner
@@ -183,7 +185,7 @@ namespace POS.EmployeeWorkSpace
 
         private void loadCustomerOwner()
         {
-            cboCustomers.ItemsSource = _unitofwork.CustomerRepository.Get();
+            cboCustomers.ItemsSource = _cloudUnitofwork.CustomerRepository.Get();
             cboCustomers.SelectedValuePath = "CusId";
             cboCustomers.DisplayMemberPath = "Name";
             cboCustomers.MouseEnter += (sender, args) =>
@@ -218,7 +220,7 @@ namespace POS.EmployeeWorkSpace
                 //((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId = (string) ((sender as ComboBox).SelectedItem as Customer).CusId;
                 ordertemptable.CusId =
                     (string)(sender as ComboBox).SelectedValue;
-                ordertemptable.Discount = _unitofwork.CustomerRepository.Get(x => x.CusId.Equals(ordertemptable.CusId))
+                ordertemptable.Discount = _cloudUnitofwork.CustomerRepository.Get(x => x.CusId.Equals(ordertemptable.CusId))
                     .FirstOrDefault().Discount;
                 loadTotalPrice();
                 _unitofwork.OrderTempRepository.Update(ordertemptable);
@@ -371,7 +373,7 @@ namespace POS.EmployeeWorkSpace
 
             // chuyen product_id thanh product name
             var query_item_in_ordertails = from orderdetails in chairordernotedetails
-                                           join product in _unitofwork.ProductRepository.Get()
+                                           join product in _cloudUnitofwork.ProductRepository.Get()
                                            on orderdetails.ProductId equals product.ProductId
                                            select new
                                            {
@@ -747,12 +749,12 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 // save to database
-                _unitofwork.OrderRepository.Insert(newOrder);
-                _unitofwork.Save();
+                _cloudUnitofwork.OrderRepository.Insert(newOrder);
+                _cloudUnitofwork.Save();
 
 
                 // printing
-                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
+                var printer = new DoPrintHelper(_unitofwork, _cloudUnitofwork, DoPrintHelper.Receipt_Printing, newOrder);
                 printer.DoPrint();
 
                 //// clean the old chair order data
@@ -772,8 +774,8 @@ namespace POS.EmployeeWorkSpace
                 // convert data and save to database
                 if (ConvertTableToOrder(newOrder))
                 {
-                    _unitofwork.OrderRepository.Insert(newOrder);
-                    _unitofwork.Save();
+                    _cloudUnitofwork.OrderRepository.Insert(newOrder);
+                    _cloudUnitofwork.Save();
                 }
                 else
                 {
@@ -781,7 +783,7 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 // printing
-                var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Receipt_Printing, newOrder);
+                var printer = new DoPrintHelper(_unitofwork, _cloudUnitofwork, DoPrintHelper.Receipt_Printing, newOrder);
                 printer.DoPrint();
 
                 // clean the old table data
@@ -801,7 +803,7 @@ namespace POS.EmployeeWorkSpace
                 return;
 
             // printing
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.TempReceipt_Printing, currentTable);
+            var printer = new DoPrintHelper(_unitofwork, _cloudUnitofwork, DoPrintHelper.TempReceipt_Printing, currentTable);
             printer.DoPrint();
 
             // update IsPrinted for Table's Order
@@ -852,11 +854,11 @@ namespace POS.EmployeeWorkSpace
             try
             {
                 // printing
-                var printer1 = new DoPrintHelper(_unitofwork, DoPrintHelper.Kitchen_Printing, currentTable);
+                var printer1 = new DoPrintHelper(_unitofwork, _cloudUnitofwork, DoPrintHelper.Kitchen_Printing, currentTable);
                 printer1.DoPrint();
                 if (isHaveDrink)
                 {
-                    var printer2 = new DoPrintHelper(_unitofwork, DoPrintHelper.Bar_Printing, currentTable);
+                    var printer2 = new DoPrintHelper(_unitofwork, _cloudUnitofwork, DoPrintHelper.Bar_Printing, currentTable);
                     printer2.DoPrint();
                 }
 
@@ -939,7 +941,7 @@ namespace POS.EmployeeWorkSpace
                     MessageBoxResult mess = MessageBox.Show("This table is already printed! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                     if (mess == MessageBoxResult.Yes)
                     {
-                        PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                        PermissionRequired pr = new PermissionRequired(_cloudUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
                         pr.ShowDialog();
 
                         if (App.Current.Properties["AdLogin"] != null)
@@ -1111,13 +1113,17 @@ namespace POS.EmployeeWorkSpace
 
             ordertemptable.EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId;
             ordertemptable.CusId = "CUS0000001";
+            ordertemptable.Discount = 0;
             ordertemptable.TableOwned = curTable.TableId;
             ordertemptable.Ordertime = DateTime.Now;
+            ordertemptable.TotalPriceNonDisc = 0;
             ordertemptable.TotalPrice = 0;
             ordertemptable.CustomerPay = 0;
             ordertemptable.PayBack = 0;
+            ordertemptable.SubEmpId = "";
 
             curTable.IsOrdered = 0;
+            curTable.IsPrinted = 0;
 
             ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
             loadCustomerOwner();

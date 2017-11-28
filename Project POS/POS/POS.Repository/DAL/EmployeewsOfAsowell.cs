@@ -13,17 +13,7 @@ namespace POS.Repository.DAL
     /// </summary>
     public class EmployeewsOfAsowell : IDisposable
     {
-        private AsowellContext context = new AsowellContext();
-        private GenericRepository<AdminRe> _adminreRepository;
-        private GenericRepository<Customer> _customerRepository;
-        private GenericRepository<Employee> _employeeRepository;
-        private GenericRepository<SalaryNote> _salarynoteRepository;
-        private GenericRepository<WorkingHistory> _workinghistoryRepository;
-        private GenericRepository<Ingredient> _ingredientRepository;
-        private GenericRepository<Product> _productRepository;
-        private GenericRepository<OrderNote> _orderRepository;
-        private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
-        private GenericRepository<ReceiptNote> _receiptNoteRepository;
+        private AsowellContext context;
 
         // business repo
         private GenericRepository<OrderDetailsTemp> _orderDetailsTempRepository;
@@ -36,39 +26,12 @@ namespace POS.Repository.DAL
             context = new AsowellContext();
         }
 
-        public EmployeewsOfAsowell(string initalCatalog, string dataSource, string userId, string password)
+        public EmployeewsOfAsowell(string connectionString)
         {
-            context.ChangeDatabase(initalCatalog, dataSource, userId, password);
-            context = new AsowellContext();
+            context = new AsowellContext(connectionString);
         }
 
-
-
-
-
-        public GenericRepository<ReceiptNote> ReceiptNoteRepository
-        {
-            get
-            {
-                if (_receiptNoteRepository == null)
-                {
-                    _receiptNoteRepository = new GenericRepository<ReceiptNote>(context);
-                }
-                return _receiptNoteRepository;
-            }
-        }
-
-        public GenericRepository<OrderNoteDetail> OrderDetailsRepository
-        {
-            get
-            {
-                if (_orderDetailsRepository == null)
-                {
-                    _orderDetailsRepository = new GenericRepository<OrderNoteDetail>(context);
-                }
-                return _orderDetailsRepository;
-            }
-        }
+        
 
         public GenericRepository<Table> TableRepository
         {
@@ -115,102 +78,6 @@ namespace POS.Repository.DAL
                     _orderDetailsTempRepository = new GenericRepository<OrderDetailsTemp>(context);
                 }
                 return _orderDetailsTempRepository;
-            }
-        }
-
-        public GenericRepository<AdminRe> AdminreRepository
-        {
-            get
-            {
-                if (_adminreRepository == null)
-                {
-                    _adminreRepository = new GenericRepository<AdminRe>(context);
-                }
-                return _adminreRepository;
-            }
-        }
-
-        public GenericRepository<Customer> CustomerRepository
-        {
-            get
-            {
-                if (_customerRepository == null)
-                {
-                    _customerRepository = new GenericRepository<Customer>(context);
-                }
-                return _customerRepository;
-            }
-        }
-
-        public GenericRepository<Employee> EmployeeRepository
-        {
-            get
-            {
-                if (_employeeRepository == null)
-                {
-                    _employeeRepository = new GenericRepository<Employee>(context);
-                }
-                return _employeeRepository;
-            }
-        }
-
-        public GenericRepository<Ingredient> IngredientRepository
-        {
-            get
-            {
-                if (_ingredientRepository == null)
-                {
-                    _ingredientRepository = new GenericRepository<Ingredient>(context);
-                }
-                return _ingredientRepository;
-            }
-        }
-
-        public GenericRepository<Product> ProductRepository
-        {
-            get
-            {
-                if (_productRepository == null)
-                {
-                    _productRepository = new GenericRepository<Product>(context);
-                }
-                return _productRepository;
-            }
-        }
-
-        public GenericRepository<OrderNote> OrderRepository
-        {
-            get
-            {
-                if (_orderRepository == null)
-                {
-                    _orderRepository = new GenericRepository<OrderNote>(context);
-                }
-                return _orderRepository;
-            }
-        }
-
-        public GenericRepository<SalaryNote> SalaryNoteRepository
-        {
-            get
-            {
-                if (_salarynoteRepository == null)
-                {
-                    _salarynoteRepository = new GenericRepository<SalaryNote>(context);
-                }
-                return _salarynoteRepository;
-            }
-        }
-
-        public GenericRepository<WorkingHistory> WorkingHistoryRepository
-        {
-            get
-            {
-                if (_workinghistoryRepository == null)
-                {
-                    _workinghistoryRepository = new GenericRepository<WorkingHistory>(context);
-                }
-                return _workinghistoryRepository;
             }
         }
 

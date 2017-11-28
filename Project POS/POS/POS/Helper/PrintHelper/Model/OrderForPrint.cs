@@ -70,7 +70,7 @@ namespace POS.Helper.PrintHelper.Model
         /// <param name="targetTable"></param>
         /// <param name="unitofwork"></param>
         /// <returns></returns>
-        public OrderForPrint GetAndConverOrderDetails(Entities.Table targetTable, EmployeewsOfAsowell unitofwork, int printType)
+        public OrderForPrint GetAndConverOrderDetails(Entities.Table targetTable, EmployeewsOfAsowell unitofwork, EmployeewsOfCloud cloudUnitofwork, int printType)
         {
             // get Chairs data from target Table
             var targetChairs = unitofwork.ChairRepository.Get(x => x.TableOwned == targetTable.TableId);
@@ -92,11 +92,11 @@ namespace POS.Helper.PrintHelper.Model
                 OrderDetails.Add(new OrderDetailsForPrint()
                 {
                     Quan = orderDetailsTemp.Quan,
-                    ProductName = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Name,
-                    ProductPrice = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Price,
+                    ProductName = cloudUnitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Name,
+                    ProductPrice = cloudUnitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Price,
 
                     ProductId = orderDetailsTemp.ProductId,
-                    ProductType = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Type,
+                    ProductType = cloudUnitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Type,
                     ChairNumber = unitofwork.ChairRepository.Get(c => c.ChairId == orderDetailsTemp.ChairId).First().ChairNumber,
                     Note = orderDetailsTemp.Note,
                     SelectedStats = orderDetailsTemp.SelectedStats,
@@ -108,7 +108,7 @@ namespace POS.Helper.PrintHelper.Model
             return this;
         }
 
-        public OrderForPrint GetAndConverOrderDetails(OrderNote targetOrder, EmployeewsOfAsowell unitofwork)
+        public OrderForPrint GetAndConverOrderDetails(OrderNote targetOrder, EmployeewsOfAsowell unitofwork, EmployeewsOfCloud cloudUnitofwork)
         {
 
             // convert
@@ -117,11 +117,11 @@ namespace POS.Helper.PrintHelper.Model
                 OrderDetails.Add(new OrderDetailsForPrint()
                 {
                     Quan = orderDetailsTemp.Quan,
-                    ProductName = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Name,
-                    ProductPrice = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Price,
+                    ProductName = cloudUnitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Name,
+                    ProductPrice = cloudUnitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Price,
 
                     ProductId = orderDetailsTemp.ProductId,
-                    ProductType = unitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Type,
+                    ProductType = cloudUnitofwork.ProductRepository.Get(p => p.ProductId == orderDetailsTemp.ProductId).First().Type,
                 });
 
             }

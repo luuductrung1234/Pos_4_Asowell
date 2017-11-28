@@ -132,13 +132,14 @@ namespace POS.AdminWorkSpace
 
         private void EODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var printer = new DoPrintHelper(new EmployeewsOfAsowell(), DoPrintHelper.Eod_Printing);
+            //ToDo: May be shoud close the repository after print
+            var printer = new DoPrintHelper(new EmployeewsOfAsowell(), new EmployeewsOfCloud(), DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
 
         private void BntCreateNewProduct_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            MessageBox.Show("Create new product feature is now not working. We will update later!");
             myframe.Navigate(productCreator);
         }
     }

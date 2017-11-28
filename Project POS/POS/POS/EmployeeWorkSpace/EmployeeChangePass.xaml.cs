@@ -21,12 +21,12 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class EmployeeChangePass : Window
     {
-        private EmployeewsOfAsowell _unitofwork;
+        private EmployeewsOfCloud _cloudUnitofwork;
         private Employee _emp;
 
-        public EmployeeChangePass(EmployeewsOfAsowell unitofwork, Employee emp)
+        public EmployeeChangePass(EmployeewsOfCloud cloudUnitofwork, Employee emp)
         {
-            _unitofwork = unitofwork;
+            _cloudUnitofwork = cloudUnitofwork;
             InitializeComponent();
             _emp = emp;
             this.WindowStyle = WindowStyle.SingleBorderWindow;
@@ -60,8 +60,8 @@ namespace POS.EmployeeWorkSpace
             }
 
             _emp.Pass = newPass;
-            _unitofwork.EmployeeRepository.Update(_emp);
-            _unitofwork.Save();
+            _cloudUnitofwork.EmployeeRepository.Update(_emp);
+            _cloudUnitofwork.Save();
 
             var emplog = EmpLoginListData.emploglist.Where(x => x.Emp.Username.Equals(_emp.Username)).First();
             if(emplog != null)

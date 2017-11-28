@@ -28,6 +28,7 @@ namespace POS.EmployeeWorkSpace
         /// in Employee WorkSpace
         /// </summary>
         internal EmployeewsOfAsowell _unitofwork;
+        internal EmployeewsOfCloud _cloudUnitofwork;
 
         Employee emp;
         SalaryNote empSln;
@@ -67,13 +68,14 @@ namespace POS.EmployeeWorkSpace
             //}
 
             _unitofwork = new EmployeewsOfAsowell();
+            _cloudUnitofwork = new EmployeewsOfCloud();
             try
             {
-                b = new Table(_unitofwork);
+                b = new Table(_unitofwork, _cloudUnitofwork);
                 d = new Dash();
                 en = new Entry();
                 info = new Info();
-                st = new SettingFoodPage(_unitofwork);
+                st = new SettingFoodPage(_cloudUnitofwork);
                 stts = new SettingTableSize();
 
                 DispatcherTimer WorkTime = new DispatcherTimer();
@@ -263,7 +265,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 4);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudUnitofwork, cUser, 4);
             ael.ShowDialog();
         }
 
@@ -306,7 +308,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 1);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudUnitofwork, cUser, 1);
             ael.ShowDialog();
         }
 
@@ -317,7 +319,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 2);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudUnitofwork, cUser, 2);
             ael.ShowDialog();
         }
 
@@ -328,7 +330,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, cUser, 3);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudUnitofwork, cUser, 3);
             ael.ShowDialog();
 
             if(App.Current.Properties["CurrentEmpWorking"] == null)
@@ -388,7 +390,7 @@ namespace POS.EmployeeWorkSpace
 
         private void LbiEODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var printer = new DoPrintHelper(_unitofwork, DoPrintHelper.Eod_Printing);
+            var printer = new DoPrintHelper(_unitofwork, _cloudUnitofwork, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
         

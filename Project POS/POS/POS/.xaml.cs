@@ -18,7 +18,7 @@ namespace POS
     /// </summary>
     public partial class Login : Window
     {
-        internal EmployeewsOfAsowell _unitempofwork;
+        internal EmployeewsOfCloud _unitofwork;
         private DispatcherTimer LoadCodeLogin;
 
         public Login()
@@ -26,14 +26,14 @@ namespace POS
             //string[] config = ReadWriteData.ReadDBConfig();
             //if (config != null)
             //{
-            //    _unitempofwork = new EmployeewsOfAsowell(config[0], config[1], config[2], config[3]);
+            //    _unitofwork = new EmployeewsOfAsowell(config[0], config[1], config[2], config[3]);
             //}
             //else
             //{
-            //    _unitempofwork = new EmployeewsOfAsowell();
+            //    _unitofwork = new EmployeewsOfAsowell();
             //}
 
-            _unitempofwork = new EmployeewsOfAsowell();
+            _unitofwork = new EmployeewsOfCloud();
             InitializeComponent();
 
             txtUsername.Focus();
@@ -46,8 +46,6 @@ namespace POS
             LoadCodeLogin.Interval = new TimeSpan(0, 0, 0, 0, 1);
 
             this.Closing += Closing_LoginWindos;
-
-            App.Current.Properties["IsConfigDB"] = "";
         }
 
         private bool isCodeLoginTurnOn = false;
@@ -128,7 +126,7 @@ namespace POS
             {
                 await Task.Run(() =>
                 {
-                    Employee emp = _unitempofwork.EmployeeRepository.Get(x => x.Username.Equals(username) && x.Pass.Equals(pass)).FirstOrDefault();
+                    Employee emp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username) && x.Pass.Equals(pass)).FirstOrDefault();
                     if (emp != null)
                     {
                         App.Current.Properties["EmpLogin"] = emp;
@@ -144,7 +142,7 @@ namespace POS
                         {
                             try
                             {
-                                SalaryNote empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle =>
+                                SalaryNote empSalaryNote = _unitofwork.SalaryNoteRepository.Get(sle =>
                                     sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
                                     sle.ForYear.Equals(DateTime.Now.Year)).First();
 
@@ -167,8 +165,8 @@ namespace POS
                                     ForYear = DateTime.Now.Year,
                                     IsPaid = 0
                                 };
-                                _unitempofwork.SalaryNoteRepository.Insert(empSalary);
-                                _unitempofwork.Save();
+                                _unitofwork.SalaryNoteRepository.Insert(empSalary);
+                                _unitofwork.Save();
                                 WorkingHistory empWorkHistory = new WorkingHistory
                                 {
                                     ResultSalary = empSalary.SnId,
@@ -197,7 +195,7 @@ namespace POS
                     else    
                     {
                         //Get Admin
-                        AdminRe ad = _unitempofwork.AdminreRepository.Get(x => x.Username.Equals(username) && x.Pass.Equals(pass)).FirstOrDefault();
+                        AdminRe ad = _unitofwork.AdminreRepository.Get(x => x.Username.Equals(username) && x.Pass.Equals(pass)).FirstOrDefault();
                         if (ad != null)
                         {
                             App.Current.Properties["AdLogin"] = ad;
@@ -263,7 +261,7 @@ namespace POS
             {
                 await Task.Run(() =>
                 {
-                    Employee loginEmp = _unitempofwork.EmployeeRepository.Get(x => x.empCode == code).FirstOrDefault();
+                    Employee loginEmp = _unitofwork.EmployeeRepository.Get(x => x.empCode == code).FirstOrDefault();
                     if (loginEmp != null)
                     {
                         App.Current.Properties["EmpLogin"] = loginEmp;
@@ -280,7 +278,7 @@ namespace POS
                         {
                             try
                             {
-                                SalaryNote empSalaryNote = _unitempofwork.SalaryNoteRepository.Get(sle =>
+                                SalaryNote empSalaryNote = _unitofwork.SalaryNoteRepository.Get(sle =>
                                     sle.EmpId.Equals(loginEmp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) &&
                                     sle.ForYear.Equals(DateTime.Now.Year)).First();
 
@@ -303,8 +301,8 @@ namespace POS
                                     ForYear = DateTime.Now.Year,
                                     IsPaid = 0
                                 };
-                                _unitempofwork.SalaryNoteRepository.Insert(empSalary);
-                                _unitempofwork.Save();
+                                _unitofwork.SalaryNoteRepository.Insert(empSalary);
+                                _unitofwork.Save();
                                 WorkingHistory empWorkHistory = new WorkingHistory
                                 {
                                     ResultSalary = empSalary.SnId,
@@ -356,19 +354,11 @@ namespace POS
         {
             DatabaseConfigWindow dbConfig = new DatabaseConfigWindow();
             dbConfig.ShowDialog();
-
-            if ((App.Current.Properties["IsConfigDB"] as string).Equals("true"))
-            {
-                _unitempofwork = new EmployeewsOfAsowell(App.Current.Properties["InitialCatalog"] as string,
-                    App.Current.Properties["Source"] as string,
-                    App.Current.Properties["UserId"] as string,
-                    App.Current.Properties["Password"] as string);
-            }
         }
 
         private void Closing_LoginWindos(object sender, EventArgs args)
         {
-            _unitempofwork.Dispose();
+            _unitofwork.Dispose();
         }
 
         private void ButtonChangeLoginType_Click(object sender, RoutedEventArgs e)

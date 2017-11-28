@@ -28,6 +28,8 @@ namespace POS.Helper.PrintHelper
         public static readonly int Receipt_Printing = 5;
 
         private readonly EmployeewsOfAsowell _unitofwork;
+        private readonly EmployeewsOfCloud _cloudUnitofwork;
+
         private IPrintHelper ph;
         private int type;
         private readonly Entities.Table curTable;
@@ -39,9 +41,10 @@ namespace POS.Helper.PrintHelper
         private string _kitchentPrinter;
         private bool isShowReview;
 
-        public DoPrintHelper(EmployeewsOfAsowell unitofwork, int printType, Entities.Table currentTable = null)
+        public DoPrintHelper(EmployeewsOfAsowell unitofwork, EmployeewsOfCloud cloudUnitofwork,  int printType, Entities.Table currentTable = null)
         {
             _unitofwork = unitofwork;
+            _cloudUnitofwork = cloudUnitofwork;
             type = printType;
             curTable = currentTable;
             printDlg = new PrintDialog();
@@ -67,9 +70,10 @@ namespace POS.Helper.PrintHelper
             }
         }
 
-        public DoPrintHelper(EmployeewsOfAsowell unitofwork, int printType, OrderNote currentOrder)
+        public DoPrintHelper(EmployeewsOfAsowell unitofwork, EmployeewsOfCloud cloudUnitofwork, int printType, OrderNote currentOrder)
         {
             _unitofwork = unitofwork;
+            _cloudUnitofwork = cloudUnitofwork;
             type = printType;
             curOrder = currentOrder;
             printDlg = new PrintDialog();
@@ -175,7 +179,7 @@ namespace POS.Helper.PrintHelper
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curOrder, _unitofwork).GetAndConverOrderDetails(curOrder, _unitofwork)
+                    Order = new OrderForPrint().GetAndConvertOrder(curOrder, _unitofwork).GetAndConverOrderDetails(curOrder, _unitofwork, _cloudUnitofwork)
                 };
             }
 
@@ -195,7 +199,7 @@ namespace POS.Helper.PrintHelper
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, TempReceipt_Printing)
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, _cloudUnitofwork, TempReceipt_Printing)
                 };
             }
 
@@ -206,7 +210,7 @@ namespace POS.Helper.PrintHelper
 
                 ph = new BarPrintHelper()
                 {
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, Bar_Printing)
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, _cloudUnitofwork, Bar_Printing)
                 };
             }
 
@@ -217,7 +221,7 @@ namespace POS.Helper.PrintHelper
 
                 ph = new KitchenPrintHelper()
                 {
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, Kitchen_Printing)
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, _cloudUnitofwork, Kitchen_Printing)
                 };
             }
 
@@ -226,7 +230,7 @@ namespace POS.Helper.PrintHelper
                 if (!string.IsNullOrEmpty(_receptionPrinter))
                     printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
 
-                ph = new EndOfDayPrintHelper(_unitofwork);
+                ph = new EndOfDayPrintHelper(_cloudUnitofwork);
             }
         }
     }

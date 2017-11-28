@@ -1,26 +1,25 @@
-﻿using POS.Context;
-using POS.Entities;
-using POS.Repository.Generic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using POS.Context;
+using POS.Entities;
+using POS.Repository.Generic;
 
 namespace POS.Repository.DAL
 {
-    public class AdminwsOfAsowell : IDisposable
+    public class EmployeewsOfCloud : IDisposable
     {
         private string cloudConnectString =
-            "Server=tcp:commasv.database.windows.net,1433;" +
-            "Initial Catalog=DBAsowell;" +
-            "Persist Security Info=False;" +
-            "User ID=sampleuser;Password=Trung1997;" +
-            "MultipleActiveResultSets=False;Encrypt=True;" +
-            "TrustServerCertificate=False;Connection Timeout=30;";
+                "Server=tcp:commasv.database.windows.net,1433;" +
+                "Initial Catalog=DBAsowell;" +
+                "Persist Security Info=False;" +
+                "User ID=sampleuser;Password=Trung1997;" +
+                "MultipleActiveResultSets=False;Encrypt=True;" +
+                "TrustServerCertificate=False;Connection Timeout=30;";
 
-
-        private AsowellContext context = new AsowellContext();
+        private AsowellContext context;
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
         private GenericRepository<Employee> _employeeRepository;
@@ -28,87 +27,47 @@ namespace POS.Repository.DAL
         private GenericRepository<WorkingHistory> _workinghistoryRepository;
         private GenericRepository<Ingredient> _ingredientRepository;
         private GenericRepository<Product> _productRepository;
-        private GenericRepository<ProductDetail> _productdetailsRepository;
         private GenericRepository<OrderNote> _orderRepository;
-        private GenericRepository<OrderNoteDetail> _ordernotedetailsRepository;
-        private GenericRepository<ReceiptNote> _receiptnoteRepository;
-        private GenericRepository<ReceiptNoteDetail> _receiptnotedetailsRepository;
-        private GenericRepository<WareHouse> _wareHouseRepository;
+        private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
+        private GenericRepository<ReceiptNote> _receiptNoteRepository;
 
 
-        public AdminwsOfAsowell()
+        public EmployeewsOfCloud()
         {
             context = new AsowellContext(cloudConnectString);
         }
 
-        public AdminwsOfAsowell(string connectionString)
+        public EmployeewsOfCloud(string connectionString)
         {
             context = new AsowellContext(connectionString);
         }
 
 
 
-
-
-        public GenericRepository<WareHouse> WareHouseRepository
-        {
-            get
-            {
-                if (_wareHouseRepository == null)
-                {
-                    _wareHouseRepository = new GenericRepository<WareHouse>(context);
-                }
-                return _wareHouseRepository;
-            }
-        }
-
-        public GenericRepository<ReceiptNoteDetail> ReceiptNoteDsetailsRepository
-        {
-            get
-            {
-                if (_receiptnotedetailsRepository == null)
-                {
-                    _receiptnotedetailsRepository = new GenericRepository<ReceiptNoteDetail>(context);
-                }
-                return _receiptnotedetailsRepository;
-            }
-        }
-
         public GenericRepository<ReceiptNote> ReceiptNoteRepository
         {
             get
             {
-                if (_receiptnoteRepository == null)
+                if (_receiptNoteRepository == null)
                 {
-                    _receiptnoteRepository = new GenericRepository<ReceiptNote>(context);
+                    _receiptNoteRepository = new GenericRepository<ReceiptNote>(context);
                 }
-                return _receiptnoteRepository;
+                return _receiptNoteRepository;
             }
         }
 
-        public GenericRepository<OrderNoteDetail> OrderNoteDetailsRepository
+        public GenericRepository<OrderNoteDetail> OrderDetailsRepository
         {
             get
             {
-                if (_ordernotedetailsRepository == null)
+                if (_orderDetailsRepository == null)
                 {
-                    _ordernotedetailsRepository = new GenericRepository<OrderNoteDetail>(context);
+                    _orderDetailsRepository = new GenericRepository<OrderNoteDetail>(context);
                 }
-                return _ordernotedetailsRepository;
+                return _orderDetailsRepository;
             }
         }
-
-        public GenericRepository<ProductDetail> ProductDetailsRepository
-        {
-            get
-            {
-                if (_productdetailsRepository == null)
-                {
-                    _productdetailsRepository = new GenericRepository<ProductDetail>(context);
-                }
-                return _productdetailsRepository;
-            }
-        }
+        
 
         public GenericRepository<AdminRe> AdminreRepository
         {

@@ -25,12 +25,14 @@ namespace POS.EmployeeWorkSpace
     {
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         private EmployeewsOfAsowell _unitofwork;
+        private EmployeewsOfCloud _cloudUnitofwork;
         private List<Entities.Table> currentTableList;
         private DropShadowBitmapEffect recShadow, recShadowOrdered;
 
-        public Table(EmployeewsOfAsowell unitofwork)
+        public Table(EmployeewsOfAsowell unitofwork, EmployeewsOfCloud cloudUnitofwork)
         {
             _unitofwork = unitofwork;
+            _cloudUnitofwork = cloudUnitofwork;
             InitializeComponent();
 
             recShadow = new DropShadowBitmapEffect
@@ -535,7 +537,7 @@ namespace POS.EmployeeWorkSpace
                             return;
                         }
 
-                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
@@ -567,7 +569,7 @@ namespace POS.EmployeeWorkSpace
                             }
                         }
 
-                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
@@ -589,7 +591,7 @@ namespace POS.EmployeeWorkSpace
                             return;
                         }
 
-                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
@@ -657,7 +659,7 @@ namespace POS.EmployeeWorkSpace
                     MessageBoxResult mess = MessageBox.Show("You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                     if (mess == MessageBoxResult.Yes)
                     {
-                        PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                        PermissionRequired pr = new PermissionRequired(_cloudUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
                         pr.ShowDialog();
 
                         if (App.Current.Properties["AdLogin"] != null)
@@ -720,7 +722,7 @@ namespace POS.EmployeeWorkSpace
                 MessageBoxResult mess = MessageBox.Show("You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                 if (mess == MessageBoxResult.Yes)
                 {
-                    PermissionRequired pr = new PermissionRequired(_unitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                    PermissionRequired pr = new PermissionRequired(_cloudUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
                     pr.ShowDialog();
 
                     if (App.Current.Properties["AdLogin"] != null)
@@ -951,7 +953,7 @@ namespace POS.EmployeeWorkSpace
 
                     if (table.IsOrdered == 1)
                     {
-                        foreach (var cus in _unitofwork.CustomerRepository.Get())
+                        foreach (var cus in _cloudUnitofwork.CustomerRepository.Get())
                         {
                             if (ordertemptable.CusId.Equals(cus.CusId))
                             {
@@ -963,7 +965,7 @@ namespace POS.EmployeeWorkSpace
                         {
                             foreach (var tableOD in orderdetailstemptable)
                             {
-                                foreach (var pro in _unitofwork.ProductRepository.Get())
+                                foreach (var pro in _cloudUnitofwork.ProductRepository.Get())
                                 {
                                     if (pro.ProductId.Equals(tableOD.ProductId))
                                     {

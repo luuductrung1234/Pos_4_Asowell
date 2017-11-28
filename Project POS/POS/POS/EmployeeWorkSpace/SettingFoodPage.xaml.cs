@@ -12,13 +12,13 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class SettingFoodPage : Page
     {
-        private EmployeewsOfAsowell _unitofwork;
+        private EmployeewsOfCloud _cloudUnitofwork;
 
-        public SettingFoodPage(EmployeewsOfAsowell unitofwork)
+        public SettingFoodPage(EmployeewsOfCloud cloudUnitofwork)
         {
-            _unitofwork = unitofwork;
+            _cloudUnitofwork = cloudUnitofwork;
             InitializeComponent();
-            lvData.ItemsSource = _unitofwork.ProductRepository.Get();
+            lvData.ItemsSource = _cloudUnitofwork.ProductRepository.Get();
             for(int i = 0; i <= 100; i++)
             {
                 cbopromotion.Items.Add(i.ToString());
@@ -48,10 +48,10 @@ namespace POS.EmployeeWorkSpace
                 bntUpdate.Content = "Save";
             }else if (bntUpdate.Content.Equals("Save"))
             {
-                Product p = _unitofwork.ProductRepository.GetById(txtID.Text);
+                Product p = _cloudUnitofwork.ProductRepository.GetById(txtID.Text);
                 p.Discount= int.Parse(cbopromotion.SelectedValue.ToString());
-               _unitofwork.ProductRepository.Update(p);
-                _unitofwork.Save();
+                _cloudUnitofwork.ProductRepository.Update(p);
+                _cloudUnitofwork.Save();
 
 
                 txtName.IsEnabled = false;

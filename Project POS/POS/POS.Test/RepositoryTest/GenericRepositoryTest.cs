@@ -9,7 +9,7 @@ namespace POS.Test.RepositoryTest
     [TestClass]
     public class GenericRepositoryTest
     {
-        private EmployeewsOfAsowell _unitofwork = new EmployeewsOfAsowell();
+        private EmployeewsOfCloud _unitofwork = new EmployeewsOfCloud();
 
         [TestMethod]
         public void AutoGeneteId_DBAsowell_Test()

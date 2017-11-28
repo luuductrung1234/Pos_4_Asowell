@@ -626,6 +626,7 @@
     <Resource Include="Images\h3.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Helper\ComHelper\" />
     <Folder Include="SerializedData\" />
   </ItemGroup>
   <ItemGroup>
