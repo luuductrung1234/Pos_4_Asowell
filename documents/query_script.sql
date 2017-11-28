@@ -180,7 +180,7 @@ go
 
 
 
---	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other	
+--	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other
 insert into Product
 	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])
 values		-- đồ uống
@@ -237,6 +237,63 @@ values		-- đồ uống
 ('P000000078',	N'Bloody Mary',				N'',		50,		7, 0, 0, 'Drink'),
 ('P000000079',	N'Negroni',					N'',		50,		7, 0, 0, 'Drink'),
 ('P000000080',	N'Whiskey Sour',			N'',		50,		7, 0, 0, 'Drink')
+
+
+
+insert into Product 
+	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])
+values		-- thức ăn
+('P000000081',	N'Fruit Platter',			N'',		50,		1, 0, 0, 'BreakFast'),
+('P000000082',	N'Bread Basket',			N'',		50,		1, 0, 0, 'BreakFast'),
+('P000000083',	N'Banana Bread',			N'',		50,		1, 0, 0, 'BreakFast'),
+('P000000084',	N'Cinnamon Toast',			N'',		50,		1, 0, 0, 'BreakFast'),
+('P000000085',	N'French Toast',			N'',		50,		1, 0, 0, 'BreakFast'),
+('P000000086',	N'Lemon Pancake',			N'',		60,		1, 0, 0, 'BreakFast'),
+('P000000087',	N'Braised Mix Mushroom',	N'',		70,		1, 0, 0, 'BreakFast'),
+('P000000088',	N'Fried/Poach Eggs',		N'',		70,		1, 0, 0, 'BreakFast'),
+('P000000089',	N'Bake Eggs with Chorizo',	N'',		70,		1, 0, 0, 'BreakFast'),
+('P000000090',	N'Ham Cheese Omelet',		N'',		70,		1, 0, 0, 'BreakFast'),
+																
+('P000000091',	N'Cheese melt',				N'',		50,		1, 0, 0, 'KigBreakFast'),
+('P000000092',	N'Honey Bter Bread',		N'',		70,		1, 0, 0, 'KigBreakFast'),
+('P000000093',	N'Chocolate Fruits',		N'',		70,		1, 0, 0, 'KigBreakFast'),
+('P000000094',	N'Fried Egg Toast',			N'',		80,		1, 0, 0, 'KigBreakFast'),
+
+('P000000095',	N'Sweet Potatoes Fries',	N'',		50,		1, 0, 0, 'Starter'),
+('P000000096',	N'Roasted Garlic Bread',	N'',		60,		1, 0, 0, 'Starter'),
+('P000000097',	N'Mix Italian Olives',		N'',		60,		1, 0, 0, 'Starter'),
+('P000000098',	N'Freshly shuck',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000099',	N'Warm Edamame',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000100',	N'Bocconcini Bruschetta',	N'',		60,		1, 0, 0, 'Starter'),
+('P000000101',	N'Duck Liver Pate',			N'',		70,		1, 0, 0, 'Starter'),
+('P000000102',	N'3 Cheese Board',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000103',	N'Dips Board',				N'',		60,		1, 0, 0, 'Starter'),
+('P000000104',	N'Chorizos roll',			N'',		80,		1, 0, 0, 'Starter'),
+
+('P000000105',	N'Garden Green',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000106',	N'Roasted Vegs',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000107',	N'Caesar Salad',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000108',	N'Cajun Chicken',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000109',	N'Minute Steak',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000110',	N'Chicken Melt',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000111',	N'House Burger',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000112',	N'Spaghetti Bolognese',		N'',		80,		1, 0, 0, 'Starter'),
+('P000000113',	N'Salmon Tagliatelle',		N'',		80,		1, 0, 0, 'Starter'),
+('P000000114',	N'Chicken Pesto',			N'',		80,		1, 0, 0, 'Starter'),
+('P000000115',	N'Seafood Marinara',		N'',		80,		1, 0, 0, 'Starter'),
+
+('P000000116',	N'Mussle Pot Blue Cheese',	N'',		100,	1, 0, 0, 'Main'),
+('P000000117',	N'Mussel Pot Tomatoes',		N'',		100,	1, 0, 0, 'Main'),
+('P000000118',	N'Mussel Pot Thai',			N'',		100,	1, 0, 0, 'Main'),
+('P000000119',	N'Grilled Salmon',			N'',		120,	1, 0, 0, 'Main'),
+('P000000120',	N'1/2 Chicken',				N'',		100,	1, 0, 0, 'Main'),
+('P000000121',	N'Soak Duck',				N'',		120,	1, 0, 0, 'Main'),
+('P000000122',	N'BBQ Ribs',				N'',		150,	1, 0, 0, 'Main'),
+('P000000123',	N'Lamb Rack',				N'',		150,	1, 0, 0, 'Main'),
+('P000000124',	N'Rib Eye',					N'',		150,	1, 0, 0, 'Main')
+
+
+
 
 insert into Product 
 	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])

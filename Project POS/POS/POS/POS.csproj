@@ -591,7 +591,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo.png" />
-    <Resource Include="Images\miy.jpg" />
     <Resource Include="Images\softwarepdate.jpg" />
     <Resource Include="Images\Search_50px.png" />
     <Resource Include="Icon\icons8_Unpin_32px.png" />
@@ -618,12 +617,6 @@
     <Resource Include="Icon\icons8_Quesadilla_32px.png" />
     <Resource Include="Icon\icons8_Checked_Checkbox_32px.png" />
     <Resource Include="Icon\icons8_Unchecked_Checkbox_32px.png" />
-    <Content Include="Images\h1.jpg" />
-    <Resource Include="Images\h2.jpg" />
-    <Resource Include="Images\h6.jpg" />
-    <Resource Include="Images\h5.jpg" />
-    <Resource Include="Images\h4.jpg" />
-    <Resource Include="Images\h3.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\ComHelper\" />
@@ -645,6 +638,18 @@
       <Project>{81743988-1ebf-42ec-812f-2574a4f0f3a3}</Project>
       <Name>POS.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\3CheeseBoard.jpg" />
+    <Resource Include="Images\3DipsBoard.jpg" />
+    <Resource Include="Images\Boconccini_Bruschetta.jpg" />
+    <Resource Include="Images\Chorizo_sausage_rolls.jpg" />
+    <Resource Include="Images\Duck_liver_Pate.jpg" />
+    <Resource Include="Images\freshly-shucked-oysters.jpg" />
+    <Resource Include="Images\italian_Mix_Olives.jpg" />
+    <Resource Include="Images\roasted_garlic_bread.jpg" />
+    <Resource Include="Images\Sweet_Potatoes_fries.jpg" />
+    <Resource Include="Images\warm_Edamame.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -175,6 +175,8 @@ namespace POS.Helper.PrintHelper.Model
 
             if (TableOwned != null)
             {
+                //Todo: add BreakFast and KigBreakFast
+
                 //Starter
                 var starterQuery = OrderDetails.Where(od => od.SelectedStats == "Starter").ToList();
                 var starterList = new Dictionary<int, List<OrderDetailsForPrint>>();

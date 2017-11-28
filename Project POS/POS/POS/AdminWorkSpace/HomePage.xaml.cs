@@ -108,6 +108,15 @@ namespace POS.AdminWorkSpace
 
         }
 
+        public void RefreshHome()
+        {
+            rdAll.IsChecked = true;
+
+            ColumnChartDatafilling(FILL_ALL);
+            ChartDataFilling(FILL_ALL);
+            ChartDataFillingByTime(FILL_ALL);
+        }
+
         private void ColumnChartDatafilling(int filter)
         {
             List<OrderNote> orderNoteWithTime = new List<OrderNote>();
