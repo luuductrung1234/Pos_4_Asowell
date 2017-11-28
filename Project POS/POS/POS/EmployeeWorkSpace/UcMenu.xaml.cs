@@ -66,6 +66,9 @@ namespace POS.EmployeeWorkSpace
             base.OnApplyTemplate();
         }
 
+
+
+        //ToDo: Need to update the contain in Warehouse database when new order occur
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if(App.Current.Properties["CurrentEmpWorking"] == null)

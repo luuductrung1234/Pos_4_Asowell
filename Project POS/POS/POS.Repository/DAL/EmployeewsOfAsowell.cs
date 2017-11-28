@@ -38,8 +38,8 @@ namespace POS.Repository.DAL
 
         public EmployeewsOfAsowell(string initalCatalog, string dataSource, string userId, string password)
         {
-            context = new AsowellContext();
             context.ChangeDatabase(initalCatalog, dataSource, userId, password);
+            context = new AsowellContext();
         }
 
 

@@ -706,7 +706,8 @@ namespace POS.Helper.PrintHelper
             {
                 if (order.Discount != 0)
                 {
-                    totalDisc = order.TotalPriceNonDisc - order.TotalPrice;
+                    totalDisc += order.TotalPriceNonDisc - order.TotalPrice;
+                    countDisc++;
                 }
             }
             MyPairValue DiscTotalCal = new MyPairValue()

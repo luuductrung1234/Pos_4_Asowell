@@ -27,6 +27,21 @@ namespace POS.Repository.DAL
         private GenericRepository<WareHouse> _wareHouseRepository;
 
 
+        public AdminwsOfAsowell()
+        {
+            context = new AsowellContext();
+        }
+
+        public AdminwsOfAsowell(string initalCatalog, string dataSource, string userId, string password)
+        {
+            context = new AsowellContext();
+            context.ChangeDatabase(initalCatalog, dataSource, userId, password);
+        }
+
+
+
+
+
         public GenericRepository<WareHouse> WareHouseRepository
         {
             get

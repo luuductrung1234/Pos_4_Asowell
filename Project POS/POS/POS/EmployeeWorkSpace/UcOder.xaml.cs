@@ -478,6 +478,7 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+        //ToDo: Set the contain back when the order didn't call any more
         private void bntDelete_Click(object sender, RoutedEventArgs e)
         {
             if (App.Current.Properties["CurrentEmpWorking"] == null)
@@ -707,7 +708,7 @@ namespace POS.EmployeeWorkSpace
 
 
 
-        // NEED TO BE UPDATE TO THE TRANSACT MANIPULATION
+        //ToDo: NEED TO BE UPDATE TO THE TRANSACT MANIPULATION
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
             if (App.Current.Properties["CurrentEmpWorking"] == null)
@@ -921,6 +922,7 @@ namespace POS.EmployeeWorkSpace
             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
         }
 
+        //ToDo: Set the contain back when the order didn't call any more
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
             if (App.Current.Properties["CurrentEmpWorking"] == null)

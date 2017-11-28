@@ -56,9 +56,7 @@ namespace POS.Support
                 return;
 
             TxtInputValue.Text = TxtInputValue.Text.Remove(TxtInputValue.Text.Length - 1);
-            //InputValue = InputValue.Remove(InputValue.Length - 1);
         }
-
 
 
 

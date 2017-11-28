@@ -50,7 +50,8 @@ values
 ('EMP0000003',	'AD00000001', 'emp_username3', 	'password3',	N'Lý Đông Nghi', 		'1996-01-01',	'2017-10-01',	11,		N'19 Nguyễn Hữu Thọ, Tân Phong, Quận 7',			'example_email3@gmail.com',		'01677048100',	1, 0, 3333),
 ('EMP0000004',	'AD00000001', 'emp_username4', 	'password4',	N'Bảo Nguyên', 			'1996-01-01',	'2017-10-01',	12,		N'1017/34 Lê Văn Lương, Phước Kiển, Nhà Bè',		'example_email4@gmail.com',		'0965164474',	2, 0, 4444),
 ('EMP0000005',	'AD00000001', 'emp_username5', 	'password5',	N'Lương Nhật Duy', 		'1996-01-01',	'2017-10-01',	11,		N'10/7 Lý Phục Mang, Quận 7',						'example_email5@gmail.com',		'01215925627',	2, 0, 5555),
-('EMP0000006',	'AD00000001', 'emp_username6', 	'password6',	N'Đinh Thanh Hưng', 	'1996-01-01',	'2017-10-01',	10,		N'1558A phường 7, Quận 8',							'example_email6@gmail.com',		'01207305775',	2, 0, 6666)
+('EMP0000006',	'AD00000001', 'emp_username6', 	'password6',	N'Đinh Thanh Hưng', 	'1996-01-01',	'2017-10-01',	10,		N'1558A phường 7, Quận 8',							'example_email6@gmail.com',		'01207305775',	2, 0, 6666),
+('EMP0000007',	'AD00000001', 'emp_username7', 	'password7',	N'Trần Anh Tuấn', 		'1996-01-01',	'2017-10-01',	10,		N'Lâm Văn Bền phường Tân Quy, Quận 7',				'example_email7@gmail.com',		'09093343424',	3, 0, 7777)
 go
 
 

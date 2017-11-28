@@ -21,8 +21,6 @@ namespace POS.Support
     /// </summary>
     public partial class PassKeyboardControl : UserControl
     {
-        
-
         public string InputValue { get; set; }
         private RoutedEventHandler _goClick;
         public event RoutedEventHandler GoClick
@@ -60,7 +58,7 @@ namespace POS.Support
         private void BtnDeleteInput_Click(object sender, RoutedEventArgs e)
         {
             TxtInputValue.Password = "";
-            //InputValue = "";
+            picBackspace.Kind = PackIconKind.KeyboardReturn;
         }
 
         private void ButtonKey_Click(object sender, RoutedEventArgs e)
@@ -94,6 +92,9 @@ namespace POS.Support
         private async void BtnGo_OnClick(object sender, RoutedEventArgs e)
         {
             _goClick(sender, e);
+
+            TxtInputValue.Password = "";
+            picBackspace.Kind = PackIconKind.KeyboardReturn;
         }
 
         public void ButtonGoAbleState(bool state)
