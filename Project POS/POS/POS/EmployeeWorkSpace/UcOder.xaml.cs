@@ -209,6 +209,12 @@ namespace POS.EmployeeWorkSpace
         {
             if (!initCus_raiseEvent)
             {
+                if (App.Current.Properties["CurrentEmpWorking"] == null)
+                {
+                    MessageBox.Show("No employee on working! Please try again!");
+                    return;
+                }
+
                 //((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId = (string) ((sender as ComboBox).SelectedItem as Customer).CusId;
                 ordertemptable.CusId =
                     (string)(sender as ComboBox).SelectedValue;
@@ -399,6 +405,12 @@ namespace POS.EmployeeWorkSpace
         {
             if (!initStatus_RaiseEvent)
             {
+                if (App.Current.Properties["CurrentEmpWorking"] == null)
+                {
+                    MessageBox.Show("No employee on working! Please try again!");
+                    return;
+                }
+
                 if (currentChair == null)
                 {
                     return;
@@ -468,6 +480,12 @@ namespace POS.EmployeeWorkSpace
 
         private void bntDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                MessageBox.Show("No employee on working! Please try again!");
+                return;
+            }
+
             if (currentTable.IsPrinted == 1)
             {
                 MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
@@ -553,6 +571,12 @@ namespace POS.EmployeeWorkSpace
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                MessageBox.Show("No employee on working! Please try again!");
+                return;
+            }
+
             if (currentTable == null || currentChair == null)
             {
                 return;
@@ -686,6 +710,12 @@ namespace POS.EmployeeWorkSpace
         // NEED TO BE UPDATE TO THE TRANSACT MANIPULATION
         private void bntPay_Click(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                MessageBox.Show("No employee on working! Please try again!");
+                return;
+            }
+
             if (currentTable == null)
                 return;
 
@@ -760,6 +790,12 @@ namespace POS.EmployeeWorkSpace
 
         private void BntPrint_OnClick(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                MessageBox.Show("No employee on working! Please try again!");
+                return;
+            }
+
             if (currentTable == null)
                 return;
 
@@ -778,6 +814,12 @@ namespace POS.EmployeeWorkSpace
 
         private void BtnGo_OnClick(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                MessageBox.Show("No employee on working! Please try again!");
+                return;
+            }
+
             if (currentTable == null)
                 return;
 
@@ -881,6 +923,12 @@ namespace POS.EmployeeWorkSpace
 
         private void BntDelete_OnClick(object sender, RoutedEventArgs e)
         {
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                MessageBox.Show("No employee on working! Please try again!");
+                return;
+            }
+
             bool pass = false;
             if (currentTable.IsPrinted == 1)
             {

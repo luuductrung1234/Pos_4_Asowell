@@ -1016,6 +1016,46 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+        private void btnTableButtonSwap_Click(object sender, RoutedEventArgs e)
+        {
+            //if(App.Current.Properties["CurrentEmpWorking"] == null)
+            //{
+            //    MessageBox.Show("You must be start working for this action!");
+            //    return;
+            //}
+
+            SwapOrMergeTable smt = new SwapOrMergeTable(_unitofwork, currentTableList);
+            smt.ShowDialog();
+
+            //foreach(var rec in currentTableList)
+            //{
+            //    rec.TableRec.MouseLeftButtonDown += btnTableAdded_StartDrag;
+            //    rec.TableRec.MouseMove += btnTableAdded_MoveDrag;
+            //    rec.TableRec.MouseMove += btnTableAdded_MouseMove;
+            //    rec.TableRec.MouseLeftButtonDown += btnTableAdded_Click;
+            //    rec.TableRec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+
+            //    Image img = new Image { Source = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "..\\Icon\\icons8_Meal_32px.png")) };
+            //    img.Width = 32;
+            //    img.Height = 32;
+            //    Thickness m;
+            //    m = img.Margin;
+            //    m.Left = rec.TableRec.Margin.Left;
+            //    m.Top = rec.TableRec.Margin.Top;
+            //    img.Margin = m;
+            //    grTable.Children.Add(img);
+            //    MessageBox.Show(rec.PosX + ":" + rec.PosY);
+            //    MessageBox.Show(img.Margin.Left + ":" + img.Margin.Top);
+            //}
+
+            //currentRec.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "..\\Icon\\icons8_Meal_32px.png")) };
+        }
+
+        private void btnTableButtonMerge_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //method navigate to entry page
         private void navigateToOrder(EmpLoginList currentEmp, Rectangle rec, Entities.Table founded)
         {

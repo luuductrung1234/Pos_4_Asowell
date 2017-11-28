@@ -233,6 +233,9 @@
     <Compile Include="EmployeeWorkSpace\PermissionRequired.xaml.cs">
       <DependentUpon>PermissionRequired.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeWorkSpace\SwapOrMergeTable.xaml.cs">
+      <DependentUpon>SwapOrMergeTable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper\PrintHelper\BarPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\DoPrintHelper.cs" />
     <Compile Include="Helper\PrintHelper\EndOfDayPrintHelper.cs" />
@@ -439,6 +442,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EmployeeWorkSpace\SwapOrMergeTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Support\FloatKeyboardControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -609,6 +616,8 @@
     <Resource Include="Icon\icons8_French_Fries_32px.png" />
     <Resource Include="Icon\icons8_Meal_32px.png" />
     <Resource Include="Icon\icons8_Quesadilla_32px.png" />
+    <Resource Include="Icon\icons8_Checked_Checkbox_32px.png" />
+    <Resource Include="Icon\icons8_Unchecked_Checkbox_32px.png" />
     <Content Include="Images\h1.jpg" />
     <Resource Include="Images\h2.jpg" />
     <Resource Include="Images\h6.jpg" />

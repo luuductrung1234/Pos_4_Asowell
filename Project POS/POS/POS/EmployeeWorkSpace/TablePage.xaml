@@ -43,6 +43,34 @@
                                          Height="20"
                                          Margin="0" />
             </Button>
+            <Button x:Name="btnTableButtonSwap"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Width="56"
+                    Panel.ZIndex="20"
+                    Height="36"
+                    ToolTip="Swap Table"
+                    Click="btnTableButtonSwap_Click"
+                    Margin="0,41,0,0">
+                <materialDesign:PackIcon Kind="SwapHorizontal"
+                                         Width="20"
+                                         Height="20"
+                                         Margin="0" />
+            </Button>
+            <Button x:Name="btnTableButtonMerge"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Width="56"
+                    Panel.ZIndex="20"
+                    Height="36"
+                    ToolTip="Merge Table"
+                    Click="btnTableButtonMerge_Click"
+                    Margin="0,82,0,0">
+                <materialDesign:PackIcon Kind="CallMerge"
+                                         Width="20"
+                                         Height="20"
+                                         Margin="0" />
+            </Button>
             <Border BorderBrush="Black"
                     BorderThickness="1"
                     HorizontalAlignment="Left"
@@ -60,7 +88,7 @@
                            VerticalAlignment="Center" />
             </Border>
             <Image x:Name="imgTable"
-                   Source="..\Icon\icons8_Table_52px.png"
+                   Source="..\Icon\icons8_Meal_32px.png"
                    Width="1366"
                    Height="660"
                    Stretch="Fill"
@@ -70,6 +98,9 @@
                    DragLeave="imgTable_DragLeave"
                    Drop="imgTable_Drop"
                    MouseRightButtonDown="imgTable_MouseRightContextMenu" />
+            <Rectangle x:Name="testrec" Width="100" Height="100">
+                
+            </Rectangle>
         </Grid>
 
     </Grid>

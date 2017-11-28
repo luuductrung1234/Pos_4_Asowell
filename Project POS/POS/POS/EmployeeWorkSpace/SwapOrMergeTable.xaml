@@ -1,0 +1,42 @@
+﻿<Window x:Class="POS.EmployeeWorkSpace.SwapOrMergeTable"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Background="{DynamicResource MaterialDesignPaper}"
+        xmlns:local="clr-namespace:POS.EmployeeWorkSpace"
+        xmlns:wpfmd="clr-namespace:POS.EmployeeWorkSpace.WPFMaterialDesign"
+        mc:Ignorable="d"
+        Title="Swap or Merge Table"
+        Height="500"
+        Width="800">
+    <Grid>
+        <Border BorderThickness="2"
+                BorderBrush="Red"
+                HorizontalAlignment="Left"
+                Height="469"
+                VerticalAlignment="Top"
+                Width="500">
+            <WrapPanel x:Name="wpTableContainer" />
+        </Border>
+        <StackPanel HorizontalAlignment="Left"
+                    Height="449"
+                    Margin="505,10,0,0"
+                    VerticalAlignment="Top"
+                    Width="277">
+            <Button x:Name="btnSwap"
+                    Content="Swap"
+                    Margin="10"
+                    Click="btnSwap_Click"/>
+            <Button x:Name="btnMerge"
+                    Content="Merge"
+                    Margin="10"
+                    Click="btnMerge_Click"/>
+            <Button x:Name="btnCancel"
+                    Content="Cancel"
+                    Margin="10"
+                    Click="btnCancel_Click"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -68,6 +68,11 @@ namespace POS.EmployeeWorkSpace
 
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if(App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                return;
+            }
+
             orderingTable = ((MainWindow)Window.GetWindow(this)).currentTable;
             orderingChair = ((MainWindow)Window.GetWindow(this)).currentChair;
             ListBox lbSelected = sender as ListBox;
