@@ -31,6 +31,13 @@ namespace POS.EmployeeWorkSpace
         Entities.Table first;
         Entities.Table second;
 
+        OrderTemp orderOfFirst;
+        List<OrderDetailsTemp> orderDetailsOfFirst;
+        List<List<OrderDetailsTemp>> chairOrderDetailsOfFirst;
+        OrderTemp orderOfSecond;
+        List<OrderDetailsTemp> orderDetailsOfSecond;
+        List<List<OrderDetailsTemp>> chairOrderDetailsOfSecond;
+
         public SwapOrMergeTable(EmployeewsOfAsowell unitofwork, List<Entities.Table> currentTableList)
         {
             _unitofwork = unitofwork;
@@ -50,6 +57,11 @@ namespace POS.EmployeeWorkSpace
         {
             foreach (var t in _currentTableList)
             {
+                if(t.IsPinned == 0)
+                {
+                    continue;
+                }
+
                 ToggleButton button = new ToggleButton();
                 button.Name = "id" + t.TableId.ToString();
                 button.Content = (t.TableNumber).ToString();
@@ -71,7 +83,7 @@ namespace POS.EmployeeWorkSpace
                 {
                     button.Background = Brushes.DarkCyan;
                 }
-
+                
                 wpTableContainer.Children.Add(button);
             }
         }
@@ -144,46 +156,43 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            //var chairOfFirst = _currentChairList.Where(x => x.TableOwned.Equals(first.TableId)).ToList();
-            //var chairOfSecond = _currentChairList.Where(x => x.TableOwned.Equals(second.TableId)).ToList();
-
-            //foreach (var f in chairOfFirst)
-            //{
-            //    f.TableOwned = second.TableId;
-            //}
-
-            //foreach(var s in chairOfSecond)
-            //{
-            //    s.TableOwned = first.TableId;
-            //}
-
-            var orderOfFirst = _orderTempList.Where(x => x.TableOwned.Equals(first.TableId)).First();
-            var orderOfSecond = _orderTempList.Where(x => x.TableOwned.Equals(second.TableId)).First();
-
-            var orderDetailsOfFirst = _orderDetailsTempList.Where(x => x.OrdertempId.Equals(orderOfFirst.OrdertempId)).ToList();
-            var orderDetailsOfSecond = _orderDetailsTempList.Where(x => x.OrdertempId.Equals(orderOfSecond.OrdertempId)).ToList();
-
-            //if(orderOfFirst.Count > second.ChairAmount)
-            //{
-            //    MessageBoxResult mess = MessageBox.Show("Table " + second.TableNumber + " have no enough chair to swap with table " + first.TableNumber +
-            //        "! Do you want to set its chair automatically?",
-            //        "Warning!", MessageBoxButton.YesNo);
-            //    if(mess == MessageBoxResult.Yes)
-            //    {
-            //        foreach()
-            //    }
-            //    else
-            //    {
-            //        return;
-            //    }
-            //}
-            //if(orderOfSecond.Count > first.ChairAmount)
-            //{
-
-            //}
+            loadData();
 
             orderOfFirst.TableOwned = second.TableId;
-            orderOfFirst.TableOwned = first.TableId;
+            orderOfSecond.TableOwned = first.TableId;
+
+            _unitofwork.OrderTempRepository.Update(orderOfFirst);
+            _unitofwork.OrderTempRepository.Update(orderOfSecond);
+            _unitofwork.Save();
+
+            _currentChairList = _unitofwork.ChairRepository.Get().ToList();
+            _orderTempList = _unitofwork.OrderTempRepository.Get().ToList();
+            _orderDetailsTempList = _unitofwork.OrderDetailsTempRepository.Get().ToList();
+
+            loadData();
+
+            var chairOfFirst = _currentChairList.Where(x => x.TableOwned.Equals(first.TableId)).ToList();
+            var chairOfSecond = _currentChairList.Where(x => x.TableOwned.Equals(second.TableId)).ToList();
+
+            first.ChairAmount = chairOfSecond.Count;
+            second.ChairAmount = chairOfFirst.Count;
+
+            _unitofwork.TableRepository.Update(first);
+            _unitofwork.TableRepository.Update(second);
+
+            foreach(var ch in chairOfFirst)
+            {
+                ch.TableOwned = second.TableId;
+                _unitofwork.ChairRepository.Update(ch);
+            }
+
+            foreach(var ch in chairOfSecond)
+            {
+                ch.TableOwned = first.TableId;
+                _unitofwork.ChairRepository.Update(ch);
+            }
+
+            MessageBox.Show("Swapped Successful!");
         }
 
         private void btnMerge_Click(object sender, RoutedEventArgs e)
@@ -194,6 +203,18 @@ namespace POS.EmployeeWorkSpace
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void loadData()
+        {
+            orderOfFirst = _orderTempList.Where(x => x.TableOwned.Equals(first.TableId)).First();
+            orderOfSecond = _orderTempList.Where(x => x.TableOwned.Equals(second.TableId)).First();
+
+            orderDetailsOfFirst = _orderDetailsTempList.Where(x => x.OrdertempId.Equals(orderOfFirst.OrdertempId)).ToList();
+            orderDetailsOfSecond = _orderDetailsTempList.Where(x => x.OrdertempId.Equals(orderOfSecond.OrdertempId)).ToList();
+
+            chairOrderDetailsOfFirst = orderDetailsOfFirst.GroupBy(x => x.ChairId).Select(a => a.ToList()).ToList();
+            chairOrderDetailsOfSecond = orderDetailsOfSecond.GroupBy(x => x.ChairId).Select(x => x.ToList()).ToList();
         }
     }
 }
