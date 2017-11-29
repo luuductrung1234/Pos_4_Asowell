@@ -1133,6 +1133,13 @@ namespace POS.EmployeeWorkSpace
             RefreshControlAllChair();
             _unitofwork.OrderTempRepository.Update(ordertemptable);
             _unitofwork.Save();
+
+            Table b = new Table(_unitofwork, _cloudUnitofwork);
+
+            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(b);
+            ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
+            ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
+            ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
         }
 
         private void DeleteChairOrderDetails()
@@ -1190,6 +1197,16 @@ namespace POS.EmployeeWorkSpace
                     checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
                     break;
                 }
+            }
+
+            if(currentTable.IsOrdered == 0)
+            {
+                Table b = new Table(_unitofwork, _cloudUnitofwork);
+
+                ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(b);
+                ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
+                ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
+                ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
             }
         }
 

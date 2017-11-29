@@ -216,13 +216,13 @@ namespace POS.EmployeeWorkSpace
                     await Async("", "", code, null);
                     setControl(true);
                 }
-                else if (_typeshow == 2)//logout
+                else if (_typeshow == 2)//view
                 {
                     EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _cloudUnitofwork);
                     ed.ShowDialog();
                     setControl(true);
                 }
-                else if(_typeshow == 3)//view
+                else if(_typeshow == 3)//logout
                 {
                     await Async("", "", code, _emplog);
                     setControl(true);
@@ -580,6 +580,7 @@ namespace POS.EmployeeWorkSpace
                         else
                         {
                             MessageBox.Show("Fail! Please try again!");
+                            return;
                         }
                     }
 
@@ -664,6 +665,7 @@ namespace POS.EmployeeWorkSpace
                         }
                     }
 
+                    App.Current.Properties["CurrentEmpWorking"] = null;
                     _main.Close();
                     Login login = new Login();
                     this.Close();
