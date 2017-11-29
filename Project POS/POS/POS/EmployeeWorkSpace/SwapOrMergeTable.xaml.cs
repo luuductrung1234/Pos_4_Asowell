@@ -158,6 +158,7 @@ namespace POS.EmployeeWorkSpace
 
             loadData();
 
+            //swap ordertemp
             orderOfFirst.TableOwned = second.TableId;
             orderOfSecond.TableOwned = first.TableId;
 
@@ -192,12 +193,62 @@ namespace POS.EmployeeWorkSpace
                 _unitofwork.ChairRepository.Update(ch);
             }
 
+            //temporary first table to swap
+            Entities.Table tempFirst = new Entities.Table
+            {
+                TableId = first.TableId,
+                TableNumber = first.TableNumber,
+                ChairAmount = first.ChairAmount,
+                PosX = first.PosX,
+                PosY = first.PosY,
+                IsPinned = first.IsPinned,
+                IsOrdered = first.IsOrdered,
+                IsLocked = first.IsLocked,
+                IsPrinted = first.IsPrinted,
+                TableRec = first.TableRec,
+            };
+
+            //temporary second table to swap
+            Entities.Table tempSecond = new Entities.Table
+            {
+                TableId = second.TableId,
+                TableNumber = second.TableNumber,
+                ChairAmount = second.ChairAmount,
+                PosX = second.PosX,
+                PosY = second.PosY,
+                IsPinned = second.IsPinned,
+                IsOrdered = second.IsOrdered,
+                IsLocked = second.IsLocked,
+                IsPrinted = second.IsPrinted,
+                TableRec = second.TableRec,                
+            };
+
+            //setting new first table
+            first.IsOrdered = tempSecond.IsOrdered;
+            first.IsLocked = tempSecond.IsLocked;
+            first.IsPrinted = tempSecond.IsPrinted;
+
+            //setting new second table
+            second.IsOrdered = tempFirst.IsOrdered;
+            second.IsLocked = tempFirst.IsLocked;
+            second.IsPrinted = tempFirst.IsPrinted;
+
+            _unitofwork.TableRepository.Update(first);
+            _unitofwork.TableRepository.Update(second);
+            _unitofwork.Save();
+
             MessageBox.Show("Swapped Successful!");
         }
 
         private void btnMerge_Click(object sender, RoutedEventArgs e)
         {
+            if (first == null || second == null)
+            {
+                MessageBox.Show("You must be choose two table to swap!");
+                return;
+            }
 
+            loadData();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
