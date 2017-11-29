@@ -35,9 +35,9 @@ namespace POS.AdminWorkSpace
 
         private void initPageData()
         {
-            lvProduct.ItemsSource = _unitofwork.ProductRepository.Get();
+            lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(c=>c.Deleted.Equals(0));
             lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product");
-            lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get();
+            lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(c => c.Deleted.Equals(0));
 
             cboType.Items.Add(ProductType.All);
             cboType.Items.Add(ProductType.Beverage);

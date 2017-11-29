@@ -78,7 +78,7 @@ namespace POS.AdminWorkSpace
             // init datasource for Employee PieChart
             SeriesCollection = new SeriesCollection();
             EmpPieSeries = new List<PieSeries>();
-            foreach (var item in _unitofwork.EmployeeRepository.Get())
+            foreach (var item in _unitofwork.EmployeeRepository.Get(x => x.Deleted.Equals(0)))
             {
                 EmpPieSeries.Add(new PieSeries() { Title = item.EmpId + ": " + item.Name });
             }
@@ -106,6 +106,15 @@ namespace POS.AdminWorkSpace
             ChartDataFilling(FILL_ALL);
             ChartDataFillingByTime(FILL_ALL);
 
+        }
+
+        public void RefreshHome()
+        {
+            rdAll.IsChecked = true;
+
+            ColumnChartDatafilling(FILL_ALL);
+            ChartDataFilling(FILL_ALL);
+            ChartDataFillingByTime(FILL_ALL);
         }
 
         private void ColumnChartDatafilling(int filter)

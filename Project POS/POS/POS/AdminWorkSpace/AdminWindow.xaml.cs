@@ -59,11 +59,19 @@ namespace POS.AdminWorkSpace
             productCreator = new ProductCreatorPage(_unitowork);
             myframe.Navigate(homePage);
 
-            
+            DispatcherTimer RefreshTimer = new DispatcherTimer();
+            RefreshTimer.Tick += Refresh_Tick;
+            RefreshTimer.Interval = new TimeSpan(0, 2, 0);
+            RefreshTimer.Start();
 
             Closing += AdminWindow_Closing;
         }
-        
+
+        private void Refresh_Tick(object sender, EventArgs e)
+        {
+            homePage.RefreshHome();
+        }
+
 
         private void AdminWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
