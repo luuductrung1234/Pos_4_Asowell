@@ -29,33 +29,48 @@ namespace POS.EmployeeWorkSpace
             this.Loaded += UcMenu_Loaded;
         }
 
+        internal bool IsRefreshMenu = true;
         public void UcMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            try
+            if (IsRefreshMenu)
             {
-                _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
-                _cloudUnitofwork = ((MainWindow)Window.GetWindow(this))._cloudUnitofwork;
-                lvCategoryStarter.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
-                lvCategoryMain.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main"));
-                lvCategoryDessert.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
-                lvCategoryBeverages.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage);
-                lvCategoryBeer.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
-                lvCategoryWine.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine);
-                lvCategoryOther.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other);
-
-                orderingTable = ((MainWindow)Window.GetWindow(this)).currentTable;
-                orderingChair = ((MainWindow)Window.GetWindow(this)).currentChair;
-
-                if (orderingTable == null)
+                try
                 {
-                    return;
+                    _unitofwork = ((MainWindow) Window.GetWindow(this))._unitofwork;
+                    _cloudUnitofwork = ((MainWindow) Window.GetWindow(this))._cloudUnitofwork;
+                    lvCategoryStarter.ItemsSource =
+                        _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
+                    lvCategoryMain.ItemsSource =
+                        _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main"));
+                    lvCategoryDessert.ItemsSource =
+                        _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
+                    lvCategoryBeverages.ItemsSource =
+                        _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Beverage);
+                    lvCategoryBeer.ItemsSource =
+                        _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Beer);
+                    lvCategoryWine.ItemsSource =
+                        _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Wine);
+                    lvCategoryOther.ItemsSource =
+                        _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Other);
+
+
+                    IsRefreshMenu = false;
+
+
+                    //orderingTable = ((MainWindow) Window.GetWindow(this)).currentTable;
+                    //orderingChair = ((MainWindow) Window.GetWindow(this)).currentChair;
+
+                    //if (orderingTable == null)
+                    //{
+                    //    return;
+                    //}
+
+                    //((MainWindow) Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
                 }
+                catch (Exception ex)
+                {
 
-                ((MainWindow)Window.GetWindow(this)).en.ucOrder.RefreshControlAllChair();
-            }
-            catch (Exception ex)
-            {
-
+                }
             }
         }
 
@@ -163,7 +178,7 @@ namespace POS.EmployeeWorkSpace
                     }
                 }
 
-                //
+                
                 lbSelected.UnselectAll();
 
                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempCurrentTable);
@@ -278,6 +293,7 @@ namespace POS.EmployeeWorkSpace
 
         private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
         {
+            ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
             if(currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
             {
                 return;
@@ -309,6 +325,7 @@ namespace POS.EmployeeWorkSpace
             ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
             _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
             _unitofwork.Save();
+            
         }
 
     }

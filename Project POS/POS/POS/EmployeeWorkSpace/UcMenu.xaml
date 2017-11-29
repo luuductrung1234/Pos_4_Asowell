@@ -130,14 +130,14 @@
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100"
-                                           ItemWidth="100" />
+                                <WrapPanel ItemHeight="140"
+                                           ItemWidth="140" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel Width="80"
-                                           Height="80"
+                                <DockPanel Width="120"
+                                           Height="120"
                                            Background="Transparent">
                                     <TextBlock Text="{Binding Name}"
                                                Foreground="Black"
@@ -180,14 +180,14 @@
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100"
-                                           ItemWidth="100" />
+                                <WrapPanel ItemHeight="140"
+                                           ItemWidth="140" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel Width="80"
-                                           Height="80"
+                                <DockPanel Width="120"
+                                           Height="120"
                                            Background="Transparent">
                                     <TextBlock Text="{Binding Name}"
                                                Foreground="Black"
@@ -230,14 +230,14 @@
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100"
-                                           ItemWidth="100" />
+                                <WrapPanel ItemHeight="140"
+                                           ItemWidth="140" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel Width="80"
-                                           Height="80"
+                                <DockPanel Width="120"
+                                           Height="120"
                                            Background="Transparent">
                                     <TextBlock Text="{Binding Name}"
                                                Foreground="Black"
@@ -279,14 +279,14 @@
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100"
-                                           ItemWidth="100" />
+                                <WrapPanel ItemHeight="140"
+                                           ItemWidth="140" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel Width="80"
-                                           Height="80"
+                                <DockPanel Width="120"
+                                           Height="120"
                                            Background="Transparent">
                                     <TextBlock Text="{Binding Name}"
                                                Foreground="Black"
@@ -328,14 +328,14 @@
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100"
-                                           ItemWidth="100" />
+                                <WrapPanel ItemHeight="140"
+                                           ItemWidth="140" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel Width="80"
-                                           Height="80"
+                                <DockPanel Width="120"
+                                           Height="120"
                                            Background="Transparent">
                                     <TextBlock Text="{Binding Name}"
                                                Foreground="Black"
@@ -377,14 +377,14 @@
                              PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100"
-                                           ItemWidth="100" />
+                                <WrapPanel ItemHeight="140"
+                                           ItemWidth="140" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="materialDesign:PackIconKind">
-                                <DockPanel Width="80"
-                                           Height="80"
+                                <DockPanel Width="120"
+                                           Height="120"
                                            Background="Transparent">
                                     <TextBlock Text="{Binding Name}"
                                                Foreground="Black"

@@ -85,7 +85,7 @@ namespace POS.EmployeeWorkSpace
 
                 DispatcherTimer RefreshTimer = new DispatcherTimer();
                 RefreshTimer.Tick += Refresh_Tick;
-                RefreshTimer.Interval = new TimeSpan(0, 5, 0);
+                RefreshTimer.Interval = new TimeSpan(0, 2, 0);
                 RefreshTimer.Start();
 
                 initProgressTableChair();
@@ -96,7 +96,6 @@ namespace POS.EmployeeWorkSpace
                     bntTable.IsEnabled = true;
                     bntDash.IsEnabled = false;
                     bntEntry.IsEnabled = true;
-                    bntInfo.IsEnabled = true;
                     myFrame.Navigate(d);
                 };
 
@@ -166,6 +165,7 @@ namespace POS.EmployeeWorkSpace
 
         private void Refresh_Tick(object sender, EventArgs e)
         {
+            en.ucMenu.IsRefreshMenu = true;
             en.ucMenu.UcMenu_Loaded(en.ucMenu, null);
         }
 
@@ -200,9 +200,7 @@ namespace POS.EmployeeWorkSpace
             bntTable.IsEnabled = true;
             bntDash.IsEnabled = false;
             bntEntry.IsEnabled = true;
-            bntInfo.IsEnabled = true;
             myFrame.Navigate(d);
-
         }
 
         private void bntTable_Click(object sender, RoutedEventArgs e)
@@ -211,7 +209,6 @@ namespace POS.EmployeeWorkSpace
             bntTable.IsEnabled = false;
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = true;
-            bntInfo.IsEnabled = true;
         }
 
         private void bntEntry_Click(object sender, RoutedEventArgs e)
@@ -220,16 +217,6 @@ namespace POS.EmployeeWorkSpace
             bntTable.IsEnabled = true;
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = false;
-            bntInfo.IsEnabled = true;
-        }
-
-        private void bntInfo_Click(object sender, RoutedEventArgs e)
-        {
-            myFrame.Navigate(info);
-            bntTable.IsEnabled = true;
-            bntDash.IsEnabled = true;
-            bntEntry.IsEnabled = true;
-            bntInfo.IsEnabled = false;
         }
 
 
@@ -251,7 +238,6 @@ namespace POS.EmployeeWorkSpace
             bntTable.IsEnabled = true;
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = true;
-            bntInfo.IsEnabled = true;
         }
 
         private void lbiTableSize_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -260,7 +246,6 @@ namespace POS.EmployeeWorkSpace
             bntTable.IsEnabled = true;
             bntDash.IsEnabled = true;
             bntEntry.IsEnabled = true;
-            bntInfo.IsEnabled = true;
         }
 
         private void btnStartWorking_Click(object sender, RoutedEventArgs e)
@@ -352,7 +337,6 @@ namespace POS.EmployeeWorkSpace
                     bntTable.IsEnabled = false;
                     bntDash.IsEnabled = true;
                     bntEntry.IsEnabled = true;
-                    bntInfo.IsEnabled = true;
                 }
             }
 

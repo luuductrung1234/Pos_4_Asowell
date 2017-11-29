@@ -55,8 +55,8 @@ namespace POS.EmployeeWorkSpace
             ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
             orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
 
-            loadTableChairData();
-            loadCustomerOwner();
+            LoadTableChairData();
+            LoadCustomerOwner();
             RefreshControlAllChair();
         }
 
@@ -143,7 +143,7 @@ namespace POS.EmployeeWorkSpace
         }
 
         ToggleButton curChair;
-        private void loadTableChairData()
+        private void LoadTableChairData()
         {
             if (currentTable == null)
             {
@@ -176,14 +176,14 @@ namespace POS.EmployeeWorkSpace
                 m.Top = 5;
                 button.Margin = m;
                 button.SetValue(StyleProperty, FindResource("MaterialDesignActionToggleButton"));
-                button.Checked += buttonChair_Checked;
-                button.Unchecked += buttonChair_Unchecked;
+                button.Checked += ButtonChair_Checked;
+                button.Unchecked += ButtonChair_Unchecked;
 
                 wp.Children.Add(button);
             }
         }
 
-        private void loadCustomerOwner()
+        private void LoadCustomerOwner()
         {
             cboCustomers.ItemsSource = _cloudUnitofwork.CustomerRepository.Get();
             cboCustomers.SelectedValuePath = "CusId";
@@ -200,16 +200,16 @@ namespace POS.EmployeeWorkSpace
             if (((MainWindow)Window.GetWindow(this)).currentTable != null
                 && ordertemptable.CusId != null)
             {
-                initCus_raiseEvent = true;
+                InitCus_raiseEvent = true;
                 cboCustomers.SelectedValue = ordertemptable.CusId;
             }
-            initCus_raiseEvent = false;
+            InitCus_raiseEvent = false;
         }
 
-        private bool initCus_raiseEvent = false;
-        private void cboCustomers_SeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private bool InitCus_raiseEvent = false;
+        private void CboCustomers_SeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!initCus_raiseEvent)
+            if (!InitCus_raiseEvent)
             {
                 if (App.Current.Properties["CurrentEmpWorking"] == null)
                 {
@@ -229,7 +229,7 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
-        private void buttonChair_Checked(object sender, RoutedEventArgs e)
+        private void ButtonChair_Checked(object sender, RoutedEventArgs e)
         {
             //int ii = 0;
             curChair = sender as ToggleButton;
@@ -276,7 +276,7 @@ namespace POS.EmployeeWorkSpace
             RefreshControl(_unitofwork, currentTable);
         }
 
-        private void buttonChair_Unchecked(object sender, RoutedEventArgs e)
+        private void ButtonChair_Unchecked(object sender, RoutedEventArgs e)
         {
             RefreshControlAllChair();
         }
@@ -1129,7 +1129,7 @@ namespace POS.EmployeeWorkSpace
             curTable.IsPrinted = 0;
 
             ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
-            loadCustomerOwner();
+            LoadCustomerOwner();
             RefreshControlAllChair();
             _unitofwork.OrderTempRepository.Update(ordertemptable);
             _unitofwork.Save();
@@ -1195,6 +1195,7 @@ namespace POS.EmployeeWorkSpace
 
         private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
         {
+            ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
             if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
             {
                 return;
@@ -1226,6 +1227,7 @@ namespace POS.EmployeeWorkSpace
             ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
             _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
             _unitofwork.Save();
+            
         }
 
     }
