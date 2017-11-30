@@ -21,7 +21,7 @@ namespace POS.Entities
     {
         public string RnId { get; set; } // rn_id (Primary key) (length: 10)
         public string IgdId { get; set; } // igd_id (Primary key) (length: 10)
-        public int Quan { get; set; } // quan
+        public double Quan { get; set; } // quan
         public decimal ItemPrice { get; set; } // item_price
         public string Note { get; set; } // note (length: 500)
 

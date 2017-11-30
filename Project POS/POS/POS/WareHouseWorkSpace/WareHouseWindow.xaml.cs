@@ -23,7 +23,7 @@ namespace POS.WareHouseWorkSpace
     
     public partial class WareHouseWindow : Window
     {
-        AdminwsOfAsowell _unitofwork;
+        AdminwsOfCloud _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
         private Login login;
@@ -34,7 +34,7 @@ namespace POS.WareHouseWorkSpace
         public WareHouseWindow()
         {
             InitializeComponent();
-            _unitofwork = new AdminwsOfAsowell();
+            _unitofwork = new AdminwsOfCloud();
             _innIngredientPage=new IngredientPage(_unitofwork);
             _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
 

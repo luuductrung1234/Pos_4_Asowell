@@ -21,8 +21,8 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class ProductCreatorPage : Page
     {
-        private AdminwsOfAsowell _unitofwork;
-        public ProductCreatorPage(AdminwsOfAsowell unitofwork)
+        private AdminwsOfCloud _unitofwork;
+        public ProductCreatorPage(AdminwsOfCloud unitofwork)
         {
             _unitofwork = unitofwork;
             

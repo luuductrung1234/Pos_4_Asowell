@@ -112,18 +112,7 @@ values
 ('WAH0000027',	4000, 5000),		--N'g',	   
 ('WAH0000025',	5000, 4000),		--N'g',	   
 ('WAH0000026',	1000, 10000),		--N'g',	   
-('WAH0000034',	2000, 2000),		--N'g',	   
-('WAH0000035',	10, 10),			--N'pack',	
-('WAH0000036',	5, 10),				--N'pack',	
-('WAH0000037',	5, 10),				--N'pack',	
-('WAH0000038',	4, 10),				--N'pack',	
-('WAH0000039',	6, 10),				--N'pack',	
-('WAH0000040',	5, 5),				--N'pack',	
-('WAH0000041',	20, 20),			--N'pack',	
-('WAH0000042',	200, 1000),			--N'ml',	   
-('WAH0000043',	9, 10),				--N'pack',	
-('WAH0000044',	4, 5),				--N'pack',	
-('WAH0000045',	4, 10),				--N'pack',	
+('WAH0000034',	2000, 2000),		--N'g',	   	
 ('WAH0000046',	6000, 5000),		--N'g',		
 ('WAH0000047',	0, 0)				--N'time',   
 go
@@ -163,17 +152,6 @@ insert into Ingredient values
 ('IGD0000025',	'WAH0000025',	N'Yellow orange', 			N'',		2,	N'vegetable',	N'g',	    0,	0),
 ('IGD0000026',	'WAH0000026',	N'Green orange', 			N'',		2,	N'vegetable',	N'g',	    0,	0),
 ('IGD0000034',	'WAH0000034',	N'ice', 					N'',		3,	N'dry',			N'g',	    0,	0),
-('IGD0000035',	'WAH0000035',	N'Plastic cup', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000036',	'WAH0000036',	N'Plastic cover', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000037',	'WAH0000037',	N'Paper cup', 				N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000038',	'WAH0000038',	N'Black cover', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000039',	'WAH0000039',	N'Straw', 					N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000040',	'WAH0000040',	N'Toilet paper', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000041',	'WAH0000041',	N'Napkin', 					N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000042',	'WAH0000042',	N'Aroma', 					N'',		3,	N'utilities',	N'ml',	    0,	0),
-('IGD0000043',	'WAH0000043',	N'Trash bag', 				N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000044',	'WAH0000044',	N'Print paper', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000045',	'WAH0000045',	N'Bag T', 					N'',		3,	N'utilities',	N'pack',	0,	0),
 ('IGD0000046',	'WAH0000046',	N'Chocalate bar',			N'',		0,	N'dry',			N'g',		0,	0),
 ('IGD0000047',	'WAH0000047',	N'Other purchase',			N'',		3,	N'fee',		    N'time',    0,	0)
 go
@@ -239,7 +217,6 @@ values		-- đồ uống
 ('P000000080',	N'Whiskey Sour',			N'',		50,		7, 0, 0, 'Drink')
 
 
-
 insert into Product 
 	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])
 values		-- thức ăn
@@ -293,8 +270,6 @@ values		-- thức ăn
 ('P000000124',	N'Rib Eye',					N'',		150,	1, 0, 0, 'Main')
 
 
-
-
 insert into Product 
 	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])
 values		-- thức ăn
@@ -327,6 +302,7 @@ values		-- thức ăn
 ('P000000027',	N'comma pizza',				N'',		60,		1, 0, 0, 'Main'),
 ('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0, 0, 'Main'),
 ('P000000029',	N'bibimbob',				N'',		60,		1, 0, 0, 'Main')	
+
 
 insert into ProductDetails values
 ('PD00000001','P000000031',	'IGD0000002',	1,		N'chai'			),
@@ -858,14 +834,14 @@ values
 ('RN00000001', 'EMP0000001', '2017-10-08 17:57:28.533', 200),
 ('RN00000002', 'EMP0000002', '2017-10-08 17:57:28.533', 1200),
 ('RN00000003', 'EMP0000001', '2017-10-09 17:57:28.533', 400),
-('RN00000004', 'EMP0000002', '2017-10-09 17:57:28.533', 800),
+('RN00000004', 'EMP0000002', '2017-10-09 17:57:28.533', 600),
 ('RN00000005', 'EMP0000002', '2017-10-09 17:57:28.533', 100),
-('RN00000006', 'EMP0000003', '2017-10-10 17:57:28.533', 2000),
-('RN00000007', 'EMP0000004', '2017-10-12 17:57:28.533', 700),
+('RN00000006', 'EMP0000003', '2017-10-10 17:57:28.533', 1960),
+('RN00000007', 'EMP0000004', '2017-10-12 17:57:28.533', 400),
 ('RN00000008', 'EMP0000005', '2017-10-13 17:57:28.533', 600),
 ('RN00000009', 'EMP0000003', '2017-10-16 17:57:28.533', 120),
-('RN00000010', 'EMP0000003', '2017-10-20 17:57:28.533', 220),
-('RN00000011', 'EMP0000002', '2017-11-08 17:57:28.533', 500),
+('RN00000010', 'EMP0000003', '2017-10-20 17:57:28.533', 200),
+('RN00000011', 'EMP0000002', '2017-11-08 17:57:28.533', 200),
 ('RN00000012', 'EMP0000002', '2017-11-09 17:57:28.533', 600),
 ('RN00000013', 'EMP0000003', '2017-11-10 17:57:28.533', 1100),
 ('RN00000014', 'EMP0000001', '2017-11-10 17:57:28.533', 3000),
@@ -891,15 +867,11 @@ values
 ('RN00000003', 'IGD0000025', 8, 25, ''),
 ('RN00000003', 'IGD0000027', 10, 20, ''),
 ('RN00000004', 'IGD0000020', 2, 100, ''),
-('RN00000004', 'IGD0000035', 4, 25, ''),
-('RN00000004', 'IGD0000037', 5, 20, ''),
 ('RN00000004', 'IGD0000046', 8, 50, ''),
 ('RN00000005', 'IGD0000012', 2, 50, ''),
 ('RN00000006', 'IGD0000047', 1, 1800, 'Tien dien, tien rua may lanh'),
 ('RN00000006', 'IGD0000033', 5, 20, ''),
-('RN00000006', 'IGD0000039', 2, 20, ''),
 ('RN00000006', 'IGD0000021', 3, 20, ''),
-('RN00000007', 'IGD0000044', 60, 5, ''),
 ('RN00000007', 'IGD0000011', 8, 50, ''),
 ('RN00000008', 'IGD0000028', 10, 5, ''),
 ('RN00000008', 'IGD0000031', 5, 40, ''),
@@ -908,10 +880,7 @@ values
 ('RN00000009', 'IGD0000034', 1, 20, ''),
 ('RN00000009', 'IGD0000002', 1, 100, ''),
 ('RN00000010', 'IGD0000003', 2, 100, ''),
-('RN00000010', 'IGD0000045', 1, 20, ''),
-('RN00000011', 'IGD0000040', 2, 50, ''),
 ('RN00000011', 'IGD0000024', 5, 40, ''),
-('RN00000011', 'IGD0000042', 10, 20, ''),
 ('RN00000012', 'IGD0000008', 6, 50, ''),
 ('RN00000012', 'IGD0000007', 6, 50, ''),
 ('RN00000013', 'IGD0000047', 1, 1100, 'Tien gas'),
@@ -936,73 +905,6 @@ values
 ('RN00000025', 'IGD0000002', 2, 100, ''),
 ('RN00000025', 'IGD0000033', 3, 20, '')
 
-
---SET IDENTITY_INSERT [Table] ON
---SET IDENTITY_INSERT [Chair] ON
---SET IDENTITY_INSERT [OrderTemp] ON
---SET IDENTITY_INSERT [OrderDetailsTemp] ON
-
-insert into [Table]
-	([table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned], [is_Printed])
-values
-(1, 6, 200, 200, 0, 1, 1, 0),
-(2, 4, 300, 300, 0, 1, 1, 0)
-
-
-insert into [Chair]
-	([chair_number], [table_owned])
-values
-(1, 1),
-(2, 1),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1),
-(1, 2),
-(2, 2),
-(3, 2),
-(4, 2)
-
-insert into [OrderTemp]
-	( [cus_id], [emp_id], [table_owned], [ordertime], [totalPrice_nonDisc], [total_price], [customer_pay], [pay_back], [discount])
-values
-( 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', 1317,	1317,	1500, 183, 0),
-( 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', 635.5,	635.5,	635.5, 0, 0)
-
-
-insert into [OrderDetailsTemp]
-	([ordertemp_id], [product_id], [chair_id], [SelectedStats], [note], [is_printed], [quan], [discount])
-values
-('1', 'P000000030', 1, 'Drink',     ''              ,	0,	 1,	0),
-('1', 'P000000030', 1, 'Drink',     'more ice'      ,	0,	 2,	0),
-('1', 'P000000030', 2, 'Drink',     ''              ,	0,	 1,	0),
-('1', 'P000000001', 2, 'Dessert',   ''              ,	0,	 1,	0),
-('1', 'P000000002', 2, 'Dessert',   ''              ,	0,	 3,	0),
-('1', 'P000000003', 2, 'Main',		''              ,	0,	 2,	0),
-('1', 'P000000003', 3, 'Dessert',   'no hanigue'    ,	0,	 2,	0),
-('1', 'P000000003', 3, 'Starter',   ''              ,	0,	 2,	0),
-('1', 'P000000020', 3, 'Main',		''              ,	0,	 1,	0),
-('1', 'P000000075', 3, 'Drink',		''              ,	0,	 1,	0),
-('1', 'P000000001', 4, 'Dessert',   ''              ,	0,	 1,	0),
-('1', 'P000000032', 4, 'Drink',		'lavie not aqua',	0,	 3,	0),
-('1', 'P000000061', 4, 'Drink',		''              ,	0,	 1,	0),
-('1', 'P000000021', 5, 'Main',		''              ,	0,	 1,	0),
-('1', 'P000000020', 5, 'Main',		'no peper'      ,	0,	 1,	0),
-('1', 'P000000001', 5, 'Dessert',   ''              ,	0,	 1,	0),
-('1', 'P000000040', 5, 'Drink',		''              ,	0,	 1,	0),
-('1', 'P000000068', 6, 'Drink',		''              ,	0,	 2,	0),
-
-('2', 'P000000001', 7, 'Dessert',   ''              ,	0,	 1,	0),
-('2', 'P000000001', 7, 'Starter',   ''              ,	0,	 1,	0),
-('2', 'P000000045', 7, 'Drink',     'less sugar'    ,	0,	 1,	0),
-('2', 'P000000044', 8, 'Drink',     ''              ,	0,	 1,	0),
-('2', 'P000000019', 8, 'Main',		''              ,	0,	 1,	0),
-('2', 'P000000019', 8, 'Main',		'more salad'    ,	0,	 1,	0),
-('2', 'P000000022', 9, 'Main',		''              ,	0,	 2,	0),
-('2', 'P000000029', 10, 'Main',		''              ,	0,	 1,	0),
-('2', 'P000000040', 10, 'Drink',    ''              ,	0,	 1,	0),
-('2', 'P000000005', 10, 'Dessert',  ''              ,	0,	 2,	0),
-('2', 'P000000004', 10, 'Dessert',  ''              ,	0,	 1,	0)
 
 
 
@@ -1032,24 +934,12 @@ select * from WorkingHistory
 select * from OrderNote
 select * from OrderNoteDetails
 
-select * from [Table]
-select * from [Chair]
-select * from [OrderTemp]
-select * from [OrderDetailsTemp]
 
+--delete [ReceiptNoteDetails]
+--delete [ReceiptNote]
 
 --delete [OrderNoteDetails]
 --delete [OrderNote]
-
---delete [OrderDetailsTemp]
---delete [Chair]
---delete [OrderTemp]
---delete [Table]
-
---drop table [OrderDetailsTemp]
---drop table [Chair]
---drop table [OrderTemp]
---drop table [Table]
 
 --delete [ProductDetails]
 --delete [Product]

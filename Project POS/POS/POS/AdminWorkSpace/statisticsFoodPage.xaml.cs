@@ -24,7 +24,7 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class statisticsFoodPage : Page
     {
-        AdminwsOfAsowell _unitofwork;
+        AdminwsOfCloud _unitofwork;
 
         private ChartValues<int> Values;
         public SeriesCollection SeriesCollection { get; set; }
@@ -35,7 +35,7 @@ namespace POS.AdminWorkSpace
        
 
         
-        public statisticsFoodPage(AdminwsOfAsowell unitofwork)
+        public statisticsFoodPage(AdminwsOfCloud unitofwork)
         {
             // init data
             _unitofwork = unitofwork;

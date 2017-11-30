@@ -21,10 +21,10 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class AdminChangePass : Window
     {
-        private AdminwsOfAsowell _unitofwork;
+        private AdminwsOfCloud _unitofwork;
         private AdminRe _admin;
 
-        public AdminChangePass(AdminwsOfAsowell unitofwork, AdminRe admin)
+        public AdminChangePass(AdminwsOfCloud unitofwork, AdminRe admin)
         {
             _unitofwork = unitofwork;
             InitializeComponent();

@@ -28,11 +28,11 @@ namespace POS.AdminWorkSpace
         
         public SeriesCollection SeriesCollection { get; set; }
         private ChartValues<double> Values;
-        private AdminwsOfAsowell _unitofwork;
+        private AdminwsOfCloud _unitofwork;
         public Func<double, string> Formatter { get; set; }
         public Dictionary<string, double> WHList;
         public List<string> Labels { get; set; }
-        public StatisticsWorkingHourPage(AdminwsOfAsowell unitofwork)
+        public StatisticsWorkingHourPage(AdminwsOfCloud unitofwork)
         {
             _unitofwork =unitofwork ;
             InitializeComponent();

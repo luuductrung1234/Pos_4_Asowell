@@ -84,12 +84,18 @@
                         <GridViewColumn Header="Item"
                                         Width="90"
                                         DisplayMemberBinding="{Binding IgdId}" />
-                        <GridViewColumn Header="Amt"
-                                        Width="70"
-                                        DisplayMemberBinding="{Binding Quan}" />
+                        <GridViewColumn Header="Qty"
+                                        Width="70" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="txtQuan"
+                                             Text="{Binding Quan}"
+                                             TextChanged="TxtQuan_OnTextChanged" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="Price"
-                                        Width="90"
-                                        >
+                                        Width="90">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="txtItemPrice"

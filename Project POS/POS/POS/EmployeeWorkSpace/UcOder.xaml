@@ -59,7 +59,7 @@
                                       x:Name="cboCustomers"
                                       Width="130"
                                       Margin="5,0,0,0"
-                                      SelectionChanged="cboCustomers_SeSelectionChanged">
+                                      SelectionChanged="CboCustomers_SeSelectionChanged">
                                 <ComboBox.Background>
                                     <SolidColorBrush Color="White"
                                                      Opacity="0" />

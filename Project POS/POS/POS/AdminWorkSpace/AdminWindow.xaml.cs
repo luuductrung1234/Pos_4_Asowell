@@ -24,7 +24,7 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class AdminWindow : Window
     {
-        private AdminwsOfAsowell _unitowork;
+        private AdminwsOfCloud _unitowork;
         EmployeeListPage empListPage;
         OrderNotePage ordernotepage;
         SalaryPage salarypage;
@@ -40,7 +40,7 @@ namespace POS.AdminWorkSpace
         public AdminWindow()
         {
             InitializeComponent();
-            _unitowork = new AdminwsOfAsowell();
+            _unitowork = new AdminwsOfCloud();
 
             AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
             curAdmin = _unitowork.AdminreRepository
@@ -65,6 +65,7 @@ namespace POS.AdminWorkSpace
             RefreshTimer.Start();
 
             Closing += AdminWindow_Closing;
+            
         }
 
         private void Refresh_Tick(object sender, EventArgs e)

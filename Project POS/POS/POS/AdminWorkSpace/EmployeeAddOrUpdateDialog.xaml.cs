@@ -22,10 +22,10 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class EmployeeAddOrUpdateDialog : Window
     {
-        private AdminwsOfAsowell _unitofork;
+        private AdminwsOfCloud _unitofork;
         private Employee _emp;
 
-        public EmployeeAddOrUpdateDialog(AdminwsOfAsowell unitofork)
+        public EmployeeAddOrUpdateDialog(AdminwsOfCloud unitofork)
         {
             _unitofork = unitofork;
             _emp = new Employee();
@@ -35,7 +35,7 @@ namespace POS.AdminWorkSpace
             this.ResizeMode = ResizeMode.NoResize;
         }
 
-        public EmployeeAddOrUpdateDialog(AdminwsOfAsowell unitofork, Employee emp)
+        public EmployeeAddOrUpdateDialog(AdminwsOfCloud unitofork, Employee emp)
         {
             _unitofork = unitofork;
             _emp = emp;

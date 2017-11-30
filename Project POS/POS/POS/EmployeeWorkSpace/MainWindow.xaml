@@ -116,7 +116,7 @@
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="36"
-                                   FontWeight="Bold">ASOWEL POS</TextBlock>
+                                   FontWeight="Bold">POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>
@@ -165,17 +165,6 @@
 
                                 Entry
 
-                            </Button>
-                            <Button x:Name="bntInfo"
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    Height="42"
-                                    Foreground="DeepSkyBlue"
-                                    Width="98"
-                                    Click="bntDash_Click"
-                                    FontSize="18"
-                                    ToolTip="Info Page">
-
-                                Info
                             </Button>
 
 

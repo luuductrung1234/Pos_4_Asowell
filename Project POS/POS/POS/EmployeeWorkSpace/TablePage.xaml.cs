@@ -58,6 +58,8 @@ namespace POS.EmployeeWorkSpace
             Loaded += TablePage_loaded;
         }
 
+
+        internal bool isTablesDataChange = true;
         public void TablePage_loaded(Object sender, EventArgs args)
         {
             ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
@@ -91,8 +93,10 @@ namespace POS.EmployeeWorkSpace
                     rec.Fill = Brushes.Red;
                 }
 
-                rec.ToolTip = SetTooltip(rec);
+                if(isTablesDataChange)
+                    rec.ToolTip = SetTooltip(rec);
             }
+            isTablesDataChange = false;
         }
 
         //load table data
@@ -1074,7 +1078,6 @@ namespace POS.EmployeeWorkSpace
             orderControl.ucOrder.RefreshControl(_unitofwork, founded);
             ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
             ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
-            ((MainWindow)Window.GetWindow(this)).bntInfo.IsEnabled = true;
             ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;
 
             _unitofwork.TableRepository.Update(founded);

@@ -23,9 +23,9 @@ namespace POS.AdminWorkSpace
     
     public partial class CustomerPage : Page
     {
-        private AdminwsOfAsowell _unitofwork;
+        private AdminwsOfCloud _unitofwork;
         Customer ctm;
-        public CustomerPage(AdminwsOfAsowell unitofwork)
+        public CustomerPage(AdminwsOfCloud unitofwork)
         {
             
             _unitofwork = unitofwork;
