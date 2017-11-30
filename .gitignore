@@ -13,7 +13,7 @@
 *.userprefs
 
 #Runtime results
-
+SerializedData/
 ../POS.Context/Migrations/
 
 # Build results
