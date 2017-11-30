@@ -13,14 +13,8 @@ namespace POS.EmployeeWorkSpace
         public Entry()
         {
             InitializeComponent();
-
-            Unloaded += (sender, args) =>
-            {
-                ((MainWindow)Window.GetWindow(this)).currentTable = null;
-                ((MainWindow)Window.GetWindow(this)).currentChair = null;
-            };
         }
 
-       
+
     }
 }

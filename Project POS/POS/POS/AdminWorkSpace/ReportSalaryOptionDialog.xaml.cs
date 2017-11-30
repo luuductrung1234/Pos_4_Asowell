@@ -24,11 +24,11 @@ namespace POS.AdminWorkSpace
         private DateTime startTime;
         private DateTime endTime;
         private IListPdfReport _reportHelper;
-        private AdminwsOfAsowell _unitofwork;
+        private AdminwsOfCloud _unitofwork;
         private static string folderPath = AppPath.ApplicationPath + "\\SerializedData";
 
 
-        public ReportSalaryOptionDialog(IListPdfReport reportHelper, AdminwsOfAsowell unitofwork)
+        public ReportSalaryOptionDialog(IListPdfReport reportHelper, AdminwsOfCloud unitofwork)
         {
             InitializeComponent();
 

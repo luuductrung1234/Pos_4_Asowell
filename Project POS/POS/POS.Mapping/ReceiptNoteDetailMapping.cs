@@ -32,7 +32,7 @@ namespace POS.Mapping
 
             Property(x => x.RnId).HasColumnName(@"rn_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.IgdId).HasColumnName(@"igd_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Quan).HasColumnName(@"quan").HasColumnType("int").IsRequired();
+            Property(x => x.Quan).HasColumnName(@"quan").HasColumnType("float").IsRequired();
             Property(x => x.ItemPrice).HasColumnName(@"item_price").HasColumnType("money").IsRequired().HasPrecision(19,4);
             Property(x => x.Note).HasColumnName(@"note").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(500);
 

@@ -32,16 +32,6 @@ namespace POS.WPFMaterialDesign
             Process.Start("https://github.com/luuductrung1234/Pos_4_Asowell");
         }
 
-        //private void TwitterButton_OnClick(object sender, RoutedEventArgs e)
-        //{
-        //    Process.Start("https://twitter.com/James_Willock");
-        //}
-
-        //private void ChatButton_OnClick(object sender, RoutedEventArgs e)
-        //{
-        //    Process.Start("https://gitter.im/ButchersBoy/MaterialDesignInXamlToolkit");
-        //}
-
         private void EmailButton_OnClick(object sender, RoutedEventArgs e)
         {
             Process.Start("mailto://luuductrung@itcomma.com");

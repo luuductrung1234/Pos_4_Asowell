@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\AdminwsOfAsowell.cs" />
+    <Compile Include="DAL\AdminwsOfCloud.cs" />
     <Compile Include="DAL\EmployeewsOfCloud.cs" />
     <Compile Include="DAL\EmployeewsOfAsowell.cs" />
     <Compile Include="Generic\GenericRepository.cs" />

@@ -15,7 +15,7 @@ namespace POS.Helper.PrintHelper.Report
     /// </summary>
     public class SalaryNoteReport : IListPdfReport
     {
-        public IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
+        public IPdfReportData CreatePdfReport(AdminwsOfCloud unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -256,7 +256,7 @@ namespace POS.Helper.PrintHelper.Report
         }
 
 
-        public IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
+        public IPdfReportData CreateDetailsPdfReport(AdminwsOfCloud unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -430,7 +430,7 @@ namespace POS.Helper.PrintHelper.Report
         }
 
 
-        public IPdfReportData CreateEntityPdfReport(AdminwsOfAsowell unitofwork, DateTime startTime, DateTime endTime, string folderName)
+        public IPdfReportData CreateEntityPdfReport(AdminwsOfCloud unitofwork, DateTime startTime, DateTime endTime, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -627,7 +627,7 @@ namespace POS.Helper.PrintHelper.Report
         }
 
 
-        public IPdfReportData CreateMonthPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        public IPdfReportData CreateMonthPdfReport(AdminwsOfCloud unitofwork, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {
@@ -860,13 +860,13 @@ namespace POS.Helper.PrintHelper.Report
         }
 
 
-        public IPdfReportData CreateDayPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        public IPdfReportData CreateDayPdfReport(AdminwsOfCloud unitofwork, string folderName)
         {
             throw new NotImplementedException();
         }
 
 
-        public IPdfReportData CreateYearPdfReport(AdminwsOfAsowell unitofwork, string folderName)
+        public IPdfReportData CreateYearPdfReport(AdminwsOfCloud unitofwork, string folderName)
         {
             return new PdfReport().DocumentPreferences(doc =>
             {

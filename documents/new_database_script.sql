@@ -152,7 +152,7 @@ CREATE INDEX [IX_warehouse_id] ON [dbo].[Ingredient]([warehouse_id])
 CREATE TABLE [dbo].[ReceiptNoteDetails] (
     [rn_id] [varchar](10) NOT NULL,
     [igd_id] [varchar](10) NOT NULL,
-    [quan] [int] NOT NULL,
+    [quan] [float] NOT NULL,
     [item_price] [money] NOT NULL,
     [note] [varchar](500),
     CONSTRAINT [PK_dbo.ReceiptNoteDetails] PRIMARY KEY ([rn_id], [igd_id])

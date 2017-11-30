@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using POS.Entities;
 using POS.Repository.DAL;
 
@@ -23,17 +15,19 @@ namespace POS.WareHouseWorkSpace
     /// </summary>
     public partial class InputReceiptNote : Page
     {
-        private AdminwsOfAsowell _unitofork;
+        private AdminwsOfCloud _unitofwork;
         private static ReceiptNote CurrentReceipt;
         private List<ReceiptNoteDetail> ReceiptDetailsList;
 
+        private static readonly string ORTHER_PERCHAGSE_ID = "IGD0000047";
 
-        public InputReceiptNote(AdminwsOfAsowell unitofork)
+
+        public InputReceiptNote(AdminwsOfCloud unitofwork)
         {
-            _unitofork = unitofork;
+            _unitofwork = unitofwork;
             InitializeComponent();
 
-            lvDataIngredient.ItemsSource = _unitofork.IngredientRepository.Get(c => c.Deleted.Equals(0));
+            lvDataIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(c => c.Deleted.Equals(0));
 
             ReceiptDetailsList = new List<ReceiptNoteDetail>();
             lvDataReceipt.ItemsSource = ReceiptDetailsList;
@@ -81,6 +75,9 @@ namespace POS.WareHouseWorkSpace
         {
             
             Ingredient ingredient=(Ingredient)lvDataIngredient.SelectedItem;
+            if (ingredient == null)
+                return;
+
             ReceiptNoteDetail r=new ReceiptNoteDetail();
 
             var foundIteminReceipt = ReceiptDetailsList.Where(c => c.IgdId.Equals(ingredient.IgdId)).FirstOrDefault();
@@ -93,18 +90,28 @@ namespace POS.WareHouseWorkSpace
             }
             else
             {
+                if (ingredient.IgdId.Equals(ORTHER_PERCHAGSE_ID))   // only allow input the Orther Perchagse once per Receipt Note
+                    return;
                 foundIteminReceipt.Quan++;
             }
             //lvDataReceipt.ItemsSource = ReceiptDetailsList;
             lvDataReceipt.Items.Refresh();
-            LoadReceiptData();
         }
 
         private void BntAdd_OnClick(object sender, RoutedEventArgs e)
         {
+            foreach (var details in CurrentReceipt.ReceiptNoteDetails)
+            {
+                if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID) && details.Note.Trim().Length == 0)
+                {
+                    MessageBox.Show("You have inputed the \"Orther Purchase\" in your Receipt. Please input the detail description in note before save data!");
+                    return;
+                }
+            }
+
             CurrentReceipt.Inday = DateTime.Now;
-            _unitofork.ReceiptNoteRepository.Insert(CurrentReceipt);
-            _unitofork.Save();
+            _unitofwork.ReceiptNoteRepository.Insert(CurrentReceipt);
+            _unitofwork.Save();
 
 
             //ToDo: Update the contain value in Warehouse database
@@ -166,7 +173,7 @@ namespace POS.WareHouseWorkSpace
             CurrentReceipt.TotalAmount = 0;
             foreach (var details in ReceiptDetailsList)
             {
-                CurrentReceipt.TotalAmount += details.ItemPrice * details.Quan;
+                CurrentReceipt.TotalAmount += details.ItemPrice * (decimal)details.Quan;
             }
             txtTotalPrice.Text = string.Format("{0:0.000}", CurrentReceipt.TotalAmount);
         }
@@ -186,6 +193,26 @@ namespace POS.WareHouseWorkSpace
                 return;
             index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
             ReceiptDetailsList[index].ItemPrice = decimal.Parse((sender as TextBox).Text);
+
+            LoadReceiptData();
+        }
+
+        private void TxtQuan_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            int index;
+            ReceiptNoteDetail r = new ReceiptNoteDetail();
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
+                return;
+            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
+            ReceiptDetailsList[index].Quan = float.Parse((sender as TextBox).Text);
+
 
             LoadReceiptData();
         }

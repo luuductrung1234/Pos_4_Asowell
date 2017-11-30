@@ -30,7 +30,7 @@ namespace POS.AdminWorkSpace
         private static int FILL_BY_MONTH = 2;
 
 
-        private AdminwsOfAsowell _unitofwork;
+        private AdminwsOfCloud _unitofwork;
 
         public Func<ChartPoint, string> PointLabel { get; set; }
         public List<decimal> PriceList;
@@ -51,7 +51,7 @@ namespace POS.AdminWorkSpace
 
 
 
-        public HomePage(AdminwsOfAsowell unitofwork)
+        public HomePage(AdminwsOfCloud unitofwork)
         {
             InitializeComponent();
             _unitofwork = unitofwork;

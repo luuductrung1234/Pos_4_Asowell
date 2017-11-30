@@ -112,18 +112,7 @@ values
 ('WAH0000027',	4000, 5000),		--N'g',	   
 ('WAH0000025',	5000, 4000),		--N'g',	   
 ('WAH0000026',	1000, 10000),		--N'g',	   
-('WAH0000034',	2000, 2000),		--N'g',	   
-('WAH0000035',	10, 10),			--N'pack',	
-('WAH0000036',	5, 10),				--N'pack',	
-('WAH0000037',	5, 10),				--N'pack',	
-('WAH0000038',	4, 10),				--N'pack',	
-('WAH0000039',	6, 10),				--N'pack',	
-('WAH0000040',	5, 5),				--N'pack',	
-('WAH0000041',	20, 20),			--N'pack',	
-('WAH0000042',	200, 1000),			--N'ml',	   
-('WAH0000043',	9, 10),				--N'pack',	
-('WAH0000044',	4, 5),				--N'pack',	
-('WAH0000045',	4, 10),				--N'pack',	
+('WAH0000034',	2000, 2000),		--N'g',	   	
 ('WAH0000046',	6000, 5000),		--N'g',		
 ('WAH0000047',	0, 0)				--N'time',   
 go
@@ -163,17 +152,6 @@ insert into Ingredient values
 ('IGD0000025',	'WAH0000025',	N'Yellow orange', 			N'',		2,	N'vegetable',	N'g',	    0,	0),
 ('IGD0000026',	'WAH0000026',	N'Green orange', 			N'',		2,	N'vegetable',	N'g',	    0,	0),
 ('IGD0000034',	'WAH0000034',	N'ice', 					N'',		3,	N'dry',			N'g',	    0,	0),
-('IGD0000035',	'WAH0000035',	N'Plastic cup', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000036',	'WAH0000036',	N'Plastic cover', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000037',	'WAH0000037',	N'Paper cup', 				N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000038',	'WAH0000038',	N'Black cover', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000039',	'WAH0000039',	N'Straw', 					N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000040',	'WAH0000040',	N'Toilet paper', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000041',	'WAH0000041',	N'Napkin', 					N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000042',	'WAH0000042',	N'Aroma', 					N'',		3,	N'utilities',	N'ml',	    0,	0),
-('IGD0000043',	'WAH0000043',	N'Trash bag', 				N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000044',	'WAH0000044',	N'Print paper', 			N'',		3,	N'utilities',	N'pack',	0,	0),
-('IGD0000045',	'WAH0000045',	N'Bag T', 					N'',		3,	N'utilities',	N'pack',	0,	0),
 ('IGD0000046',	'WAH0000046',	N'Chocalate bar',			N'',		0,	N'dry',			N'g',		0,	0),
 ('IGD0000047',	'WAH0000047',	N'Other purchase',			N'',		3,	N'fee',		    N'time',    0,	0)
 go
@@ -239,7 +217,6 @@ values		-- đồ uống
 ('P000000080',	N'Whiskey Sour',			N'',		50,		7, 0, 0, 'Drink')
 
 
-
 insert into Product 
 	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])
 values		-- thức ăn
@@ -293,8 +270,6 @@ values		-- thức ăn
 ('P000000124',	N'Rib Eye',					N'',		150,	1, 0, 0, 'Main')
 
 
-
-
 insert into Product 
 	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats])
 values		-- thức ăn
@@ -327,6 +302,7 @@ values		-- thức ăn
 ('P000000027',	N'comma pizza',				N'',		60,		1, 0, 0, 'Main'),
 ('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0, 0, 'Main'),
 ('P000000029',	N'bibimbob',				N'',		60,		1, 0, 0, 'Main')	
+
 
 insert into ProductDetails values
 ('PD00000001','P000000031',	'IGD0000002',	1,		N'chai'			),
@@ -937,73 +913,6 @@ values
 ('RN00000025', 'IGD0000033', 3, 20, '')
 
 
---SET IDENTITY_INSERT [Table] ON
---SET IDENTITY_INSERT [Chair] ON
---SET IDENTITY_INSERT [OrderTemp] ON
---SET IDENTITY_INSERT [OrderDetailsTemp] ON
-
-insert into [Table]
-	([table_number], [chair_amount], [pos_X], [pos_Y], [is_Locked], [is_Ordered], [is_Pinned], [is_Printed])
-values
-(1, 6, 200, 200, 0, 1, 1, 0),
-(2, 4, 300, 300, 0, 1, 1, 0)
-
-
-insert into [Chair]
-	([chair_number], [table_owned])
-values
-(1, 1),
-(2, 1),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1),
-(1, 2),
-(2, 2),
-(3, 2),
-(4, 2)
-
-insert into [OrderTemp]
-	( [cus_id], [emp_id], [table_owned], [ordertime], [totalPrice_nonDisc], [total_price], [customer_pay], [pay_back], [discount])
-values
-( 'CUS0000001', 'EMP0000001', 1, '2017-10-08 17:57:28.533', 1317,	1317,	1500, 183, 0),
-( 'CUS0000001', 'EMP0000001', 2, '2017-10-08 20:00:45.533', 635.5,	635.5,	635.5, 0, 0)
-
-
-insert into [OrderDetailsTemp]
-	([ordertemp_id], [product_id], [chair_id], [SelectedStats], [note], [is_printed], [quan], [discount])
-values
-('1', 'P000000030', 1, 'Drink',     ''              ,	0,	 1,	0),
-('1', 'P000000030', 1, 'Drink',     'more ice'      ,	0,	 2,	0),
-('1', 'P000000030', 2, 'Drink',     ''              ,	0,	 1,	0),
-('1', 'P000000001', 2, 'Dessert',   ''              ,	0,	 1,	0),
-('1', 'P000000002', 2, 'Dessert',   ''              ,	0,	 3,	0),
-('1', 'P000000003', 2, 'Main',		''              ,	0,	 2,	0),
-('1', 'P000000003', 3, 'Dessert',   'no hanigue'    ,	0,	 2,	0),
-('1', 'P000000003', 3, 'Starter',   ''              ,	0,	 2,	0),
-('1', 'P000000020', 3, 'Main',		''              ,	0,	 1,	0),
-('1', 'P000000075', 3, 'Drink',		''              ,	0,	 1,	0),
-('1', 'P000000001', 4, 'Dessert',   ''              ,	0,	 1,	0),
-('1', 'P000000032', 4, 'Drink',		'lavie not aqua',	0,	 3,	0),
-('1', 'P000000061', 4, 'Drink',		''              ,	0,	 1,	0),
-('1', 'P000000021', 5, 'Main',		''              ,	0,	 1,	0),
-('1', 'P000000020', 5, 'Main',		'no peper'      ,	0,	 1,	0),
-('1', 'P000000001', 5, 'Dessert',   ''              ,	0,	 1,	0),
-('1', 'P000000040', 5, 'Drink',		''              ,	0,	 1,	0),
-('1', 'P000000068', 6, 'Drink',		''              ,	0,	 2,	0),
-
-('2', 'P000000001', 7, 'Dessert',   ''              ,	0,	 1,	0),
-('2', 'P000000001', 7, 'Starter',   ''              ,	0,	 1,	0),
-('2', 'P000000045', 7, 'Drink',     'less sugar'    ,	0,	 1,	0),
-('2', 'P000000044', 8, 'Drink',     ''              ,	0,	 1,	0),
-('2', 'P000000019', 8, 'Main',		''              ,	0,	 1,	0),
-('2', 'P000000019', 8, 'Main',		'more salad'    ,	0,	 1,	0),
-('2', 'P000000022', 9, 'Main',		''              ,	0,	 2,	0),
-('2', 'P000000029', 10, 'Main',		''              ,	0,	 1,	0),
-('2', 'P000000040', 10, 'Drink',    ''              ,	0,	 1,	0),
-('2', 'P000000005', 10, 'Dessert',  ''              ,	0,	 2,	0),
-('2', 'P000000004', 10, 'Dessert',  ''              ,	0,	 1,	0)
-
 
 
 
@@ -1032,24 +941,10 @@ select * from WorkingHistory
 select * from OrderNote
 select * from OrderNoteDetails
 
-select * from [Table]
-select * from [Chair]
-select * from [OrderTemp]
-select * from [OrderDetailsTemp]
 
 
 --delete [OrderNoteDetails]
 --delete [OrderNote]
-
---delete [OrderDetailsTemp]
---delete [Chair]
---delete [OrderTemp]
---delete [Table]
-
---drop table [OrderDetailsTemp]
---drop table [Chair]
---drop table [OrderTemp]
---drop table [Table]
 
 --delete [ProductDetails]
 --delete [Product]

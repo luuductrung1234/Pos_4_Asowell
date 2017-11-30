@@ -18,16 +18,16 @@ namespace POS.Helper.PrintHelper.Report
 
     public interface IListPdfReport
     {
-        IPdfReportData CreatePdfReport(AdminwsOfAsowell unitofwork, DateTime startime, DateTime endTime, string folderName);
+        IPdfReportData CreatePdfReport(AdminwsOfCloud unitofwork, DateTime startime, DateTime endTime, string folderName);
 
-        IPdfReportData CreateDetailsPdfReport(AdminwsOfAsowell unitofwork, DateTime startime, DateTime endTime, string folderName);
+        IPdfReportData CreateDetailsPdfReport(AdminwsOfCloud unitofwork, DateTime startime, DateTime endTime, string folderName);
 
-        IPdfReportData CreateEntityPdfReport(AdminwsOfAsowell unitofwork, DateTime startime, DateTime endTime, string folderName);
+        IPdfReportData CreateEntityPdfReport(AdminwsOfCloud unitofwork, DateTime startime, DateTime endTime, string folderName);
 
-        IPdfReportData CreateMonthPdfReport(AdminwsOfAsowell unitofwork, string folderName);
+        IPdfReportData CreateMonthPdfReport(AdminwsOfCloud unitofwork, string folderName);
 
-        IPdfReportData CreateDayPdfReport(AdminwsOfAsowell unitofwork, string folderName);
+        IPdfReportData CreateDayPdfReport(AdminwsOfCloud unitofwork, string folderName);
 
-        IPdfReportData CreateYearPdfReport(AdminwsOfAsowell unitofwork, string folderName);
+        IPdfReportData CreateYearPdfReport(AdminwsOfCloud unitofwork, string folderName);
     }
 }

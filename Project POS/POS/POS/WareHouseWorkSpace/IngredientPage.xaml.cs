@@ -21,8 +21,8 @@ namespace POS.WareHouseWorkSpace
     /// </summary>
     public partial class IngredientPage : Page
     {
-        AdminwsOfAsowell _unitofwork;
-        public IngredientPage(AdminwsOfAsowell unitofwork)
+        AdminwsOfCloud _unitofwork;
+        public IngredientPage(AdminwsOfCloud unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
