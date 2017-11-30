@@ -65,6 +65,7 @@ namespace POS.AdminWorkSpace
             RefreshTimer.Start();
 
             Closing += AdminWindow_Closing;
+            
         }
 
         private void Refresh_Tick(object sender, EventArgs e)
