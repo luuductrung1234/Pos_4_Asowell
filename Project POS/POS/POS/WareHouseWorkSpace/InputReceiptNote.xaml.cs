@@ -51,12 +51,13 @@ namespace POS.WareHouseWorkSpace
             {
                 dep = VisualTreeHelper.GetParent(dep);
             }
-
             if (dep == null)
                 return;
-
             index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
-            if (ReceiptDetailsList[index].Quan > 1)
+
+
+
+            if (ReceiptDetailsList[index].Quan > 1 && !ErrorDetailsItem.Contains(index))
             {
                 r.Quan = ReceiptDetailsList[index].Quan-1;
                 r.IgdId = ReceiptDetailsList[index].IgdId;
@@ -66,6 +67,8 @@ namespace POS.WareHouseWorkSpace
             else
             {
                 ReceiptDetailsList.RemoveAt(index);
+                if (ErrorDetailsItem.Contains(index))
+                    ErrorDetailsItem.Remove(index);
             }
             lvDataReceipt.Items.Refresh();
             
@@ -96,13 +99,23 @@ namespace POS.WareHouseWorkSpace
             }
             //lvDataReceipt.ItemsSource = ReceiptDetailsList;
             lvDataReceipt.Items.Refresh();
+            LoadReceiptData();
         }
 
+        private List<int> ErrorDetailsItem = new List<int>();
         private void BntAdd_OnClick(object sender, RoutedEventArgs e)
         {
+            if (ErrorDetailsItem.Count != 0)
+            {
+                MessageBox.Show("Something is not correct. Please check all your input again!");
+                return;
+            }
+               
+
+            // check if the Receipt Note have input Other Perchagse, must require the Note
             foreach (var details in CurrentReceipt.ReceiptNoteDetails)
             {
-                if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID) && details.Note.Trim().Length == 0)
+                if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID) && string.IsNullOrEmpty(details.Note))
                 {
                     MessageBox.Show("You have inputed the \"Orther Purchase\" in your Receipt. Please input the detail description in note before save data!");
                     return;
@@ -130,6 +143,7 @@ namespace POS.WareHouseWorkSpace
 
         private void BntDelAll_OnClick(object sender, RoutedEventArgs e)
         {
+            ErrorDetailsItem.Clear();
             ReceiptDetailsList.Clear();
             lvDataReceipt.Items.Refresh();
             LoadReceiptData();
@@ -180,41 +194,82 @@ namespace POS.WareHouseWorkSpace
 
         private void TxtItemPrice_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBox textboxItemPrice = sender as TextBox;
+
+
             int index;
             ReceiptNoteDetail r = new ReceiptNoteDetail();
             DependencyObject dep = (DependencyObject)e.OriginalSource;
-
             while ((dep != null) && !(dep is ListViewItem))
             {
                 dep = VisualTreeHelper.GetParent(dep);
             }
-
             if (dep == null)
                 return;
             index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
-            ReceiptDetailsList[index].ItemPrice = decimal.Parse((sender as TextBox).Text);
 
-            LoadReceiptData();
+
+            try
+            {
+                if (textboxItemPrice.Text == null || textboxItemPrice.Text.Length == 0)
+                {
+                    MessageBox.Show("The Price of Input Ingredients can not be blank!");
+                    if (!ErrorDetailsItem.Contains(index))
+                        ErrorDetailsItem.Add(index);
+                    return;
+                }
+                ReceiptDetailsList[index].ItemPrice = decimal.Parse(textboxItemPrice.Text);
+
+                LoadReceiptData();
+                if (ErrorDetailsItem.Contains(index))
+                    ErrorDetailsItem.Remove(index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something went wrong when try to calculate the input data. Please check your input");
+                if (!ErrorDetailsItem.Contains(index))
+                    ErrorDetailsItem.Add(index);
+            }
         }
 
         private void TxtQuan_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBox textboxQuan = sender as TextBox;
+
+
             int index;
             ReceiptNoteDetail r = new ReceiptNoteDetail();
             DependencyObject dep = (DependencyObject)e.OriginalSource;
-
             while ((dep != null) && !(dep is ListViewItem))
             {
                 dep = VisualTreeHelper.GetParent(dep);
             }
-
             if (dep == null)
                 return;
             index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
-            ReceiptDetailsList[index].Quan = float.Parse((sender as TextBox).Text);
 
 
-            LoadReceiptData();
+            try
+            {
+                if (textboxQuan.Text == null || textboxQuan.Text.Length == 0)
+                {
+                    MessageBox.Show("The quantity of Input Ingredients can not be blank!");
+                    if(!ErrorDetailsItem.Contains(index))
+                        ErrorDetailsItem.Add(index);
+                    return;
+                }
+                ReceiptDetailsList[index].Quan = float.Parse(textboxQuan.Text);
+
+                LoadReceiptData();
+                if (ErrorDetailsItem.Contains(index))
+                    ErrorDetailsItem.Remove(index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something went wrong when try to calculate the input data. Please check your input");
+                if (!ErrorDetailsItem.Contains(index))
+                    ErrorDetailsItem.Add(index);
+            }
         }
     }
 }

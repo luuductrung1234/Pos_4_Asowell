@@ -25,59 +25,21 @@ namespace POS.WareHouseWorkSpace
     public partial class LiveChartReceiptPage : Page
     {
         AdminwsOfCloud _unitofwork;
-        public ChartValues<decimal> Average1 { get; set; }
-        public ChartValues<decimal> Average2 { get; set; }
+        private ChartValues<decimal> Average1;
+        private ChartValues<decimal> Average2;
+        private ChartValues<decimal> ValueExpense;
+        private ChartValues<decimal> ValueRevenue;
         public LiveChartReceiptPage(AdminwsOfCloud unitofwork)
         {
             _unitofwork = unitofwork;
-            decimal totalReceipt=0;
-            decimal totalOrder = 0;
-            
-            
-            
-            var receiptList = unitofwork.ReceiptNoteRepository.Get();
-            var OrderList = unitofwork.OrderRepository.Get();
-            foreach (var n in receiptList)
-            {
-                totalReceipt += n.TotalAmount;
-            }
-            foreach (var n in OrderList)
-            {
-                totalOrder += n.TotalPrice;
-            }
-            decimal AverageReceipt = totalReceipt / (receiptList.Count());
-            decimal AveragOrder = totalOrder / (OrderList.Count());
-            Average1 = new ChartValues<decimal>();
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
-            Average1.Add(AverageReceipt);
+            InitializeComponent();
+            Loaded += LiveChartReceiptPage_Load;
+
+
             Average2 = new ChartValues<decimal>();
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            Average2.Add(AveragOrder);
-            ChartValues<decimal> ValueExpense = new ChartValues<decimal>();
-            ChartValues<decimal> ValueRevenue = new ChartValues<decimal>();
-           
-            loadDataExpense(unitofwork, ValueExpense);
-            loadDataRevenue(unitofwork,ValueRevenue);
+            Average1 = new ChartValues<decimal>();
+            ValueExpense = new ChartValues<decimal>();
+            ValueRevenue = new ChartValues<decimal>();
 
             SeriesCollection = new SeriesCollection
             {
@@ -92,18 +54,77 @@ namespace POS.WareHouseWorkSpace
                 },new LineSeries
                 {
                     Title = "Average Revenue",
-                    Values = Average1
+                    Values = Average2
                  },new LineSeries
                 {
                     Title = "Average Expense",
-                    Values = Average2
+                    Values = Average1
                  }
 
             };
             Formatter = value => value.ToString();
-            InitializeComponent();
+
             DataContext = this;
             Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May ", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+        }
+
+        private void LiveChartReceiptPage_Load(object sender, RoutedEventArgs e)
+        {
+            decimal totalReceipt = 0;
+            decimal totalOrder = 0;
+            var receiptList = _unitofwork.ReceiptNoteRepository.Get();
+            decimal AverageReceipt = 0;
+            if (receiptList != null && receiptList.Any())
+            {
+                foreach (var n in receiptList)
+                {
+                    totalReceipt += n.TotalAmount;
+                }
+                AverageReceipt = totalReceipt / (receiptList.Count());
+            }
+
+            var OrderList = _unitofwork.OrderRepository.Get();
+            decimal AveragOrder = 0;
+            if (OrderList != null && OrderList.Any())
+            {
+                foreach (var n in OrderList)
+                {
+                    totalOrder += n.TotalPrice;
+                }
+                AveragOrder = totalOrder / (OrderList.Count());
+            }
+
+
+
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+
+
+            loadDataExpense(_unitofwork, ValueExpense);
+            loadDataRevenue(_unitofwork, ValueRevenue);
         }
 
         private void loadDataExpense(AdminwsOfCloud unitofwork, ChartValues<decimal> ValueExpense)
@@ -120,7 +141,7 @@ namespace POS.WareHouseWorkSpace
             decimal totalMonthAmount10 = 0;
             decimal totalMonthAmount11 = 0;
             decimal totalMonthAmount12 = 0;
-            
+
             var valueM1 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 1);
             var valueM2 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 2);
             var valueM3 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 3);

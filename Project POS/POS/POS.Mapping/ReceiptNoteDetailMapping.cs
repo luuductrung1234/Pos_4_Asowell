@@ -34,7 +34,7 @@ namespace POS.Mapping
             Property(x => x.IgdId).HasColumnName(@"igd_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.Quan).HasColumnName(@"quan").HasColumnType("float").IsRequired();
             Property(x => x.ItemPrice).HasColumnName(@"item_price").HasColumnType("money").IsRequired().HasPrecision(19,4);
-            Property(x => x.Note).HasColumnName(@"note").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(500);
+            Property(x => x.Note).HasColumnName(@"note").HasColumnType("nvarchar").IsOptional().IsUnicode(false).HasMaxLength(1000);
 
             // Foreign keys
             HasRequired(a => a.Ingredient).WithMany(b => b.ReceiptNoteDetails).HasForeignKey(c => c.IgdId).WillCascadeOnDelete(false); // FK_dbo.ReceiptNoteDetails_dbo.Ingredient_igd_id
