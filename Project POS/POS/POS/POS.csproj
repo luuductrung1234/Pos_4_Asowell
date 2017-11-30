@@ -209,6 +209,9 @@
     <Compile Include="EmployeeWorkSpace\ChangeThemePage.xaml.cs">
       <DependentUpon>ChangeThemePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeWorkSpace\ConfirmMergeDialog.xaml.cs">
+      <DependentUpon>ConfirmMergeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeWorkSpace\DashPage.xaml.cs">
       <DependentUpon>DashPage.xaml</DependentUpon>
     </Compile>
@@ -407,6 +410,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\ChangeThemePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\ConfirmMergeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

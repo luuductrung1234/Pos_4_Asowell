@@ -248,7 +248,8 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            MessageBox.Show("Please choose a table want to merge. Table " + first.TableNumber + " or " + second.TableNumber + "?");
+            ConfirmMergeDialog cmd = new ConfirmMergeDialog(_unitofwork, first, second);
+            cmd.Show();
 
             loadData();
 
