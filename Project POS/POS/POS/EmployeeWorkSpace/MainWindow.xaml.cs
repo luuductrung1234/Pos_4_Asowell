@@ -89,7 +89,7 @@ namespace POS.EmployeeWorkSpace
                 RefreshTimer.Start();
 
                 initProgressTableChair();
-
+                checkLocalData();
 
                 this.Loaded += (sender, args) =>
                 {
@@ -111,7 +111,21 @@ namespace POS.EmployeeWorkSpace
                 Console.WriteLine(ex);
             }
         }
-        
+
+        private void checkLocalData()
+        {
+            int adCount = _unitofwork.AdminreRepository.Get().ToList().Count();
+            int empCount = _unitofwork.EmployeeRepository.Get().ToList().Count();
+            int cusCount = _unitofwork.CustomerRepository.Get().ToList().Count();
+            int prodCount = _unitofwork.ProductRepository.Get().ToList().Count();
+            int ingdCount = _unitofwork.IngredientRepository.Get().ToList().Count();
+
+            if (adCount == 0 || empCount == 0 || cusCount == 0 || prodCount == 0 || ingdCount == 0)
+            {
+                MessageBox.Show("The data that need to ordering is missing. Please check database, input the needed data or call for support!", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
 
         public void initProgressTableChair()
         {

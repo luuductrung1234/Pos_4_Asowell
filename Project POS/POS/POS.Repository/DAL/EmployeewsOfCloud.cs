@@ -23,10 +23,10 @@ namespace POS.Repository.DAL
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
         private GenericRepository<Employee> _employeeRepository;
-        private GenericRepository<SalaryNote> _salarynoteRepository;
-        private GenericRepository<WorkingHistory> _workinghistoryRepository;
         private GenericRepository<Ingredient> _ingredientRepository;
         private GenericRepository<Product> _productRepository;
+        private GenericRepository<SalaryNote> _salarynoteRepository;
+        private GenericRepository<WorkingHistory> _workinghistoryRepository;
         private GenericRepository<OrderNote> _orderRepository;
         private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
         private GenericRepository<ReceiptNote> _receiptNoteRepository;
