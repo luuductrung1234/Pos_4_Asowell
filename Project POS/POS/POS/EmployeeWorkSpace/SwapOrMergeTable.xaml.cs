@@ -23,7 +23,7 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class SwapOrMergeTable : Window
     {
-        EmployeewsOfAsowell _unitofwork;
+        EmployeewsOfLocalAsowell _unitofwork;
         List<Entities.Table> _currentTableList;
         List<Entities.Chair> _currentChairList;
         List<OrderTemp> _orderTempList;
@@ -38,7 +38,7 @@ namespace POS.EmployeeWorkSpace
         List<OrderDetailsTemp> orderDetailsOfSecond;
         List<List<OrderDetailsTemp>> chairOrderDetailsOfSecond;
 
-        public SwapOrMergeTable(EmployeewsOfAsowell unitofwork, List<Entities.Table> currentTableList)
+        public SwapOrMergeTable(EmployeewsOfLocalAsowell unitofwork, List<Entities.Table> currentTableList)
         {
             _unitofwork = unitofwork;
             _currentTableList = currentTableList;

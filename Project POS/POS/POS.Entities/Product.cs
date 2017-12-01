@@ -34,11 +34,7 @@ namespace POS.Entities
         public string StandardStats { get; set; } //length(50)
 
         // Reverse navigation
-
-        /// <summary>
-        /// Child OrderDetailsTemps where [OrderDetailsTemp].[product_id] point to this entity (fk_product_id_orderdetailtemp)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp.fk_product_id_orderdetailtemp
+        
         /// <summary>
         /// Child OrderNoteDetails where [OrderNoteDetails].[product_id] point to this entity (FK_dbo.OrderNoteDetails_dbo.Product_product_id)
         /// </summary>
@@ -50,7 +46,6 @@ namespace POS.Entities
 
         public Product()
         {
-            OrderDetailsTemps = new System.Collections.Generic.List<OrderDetailsTemp>();
             OrderNoteDetails = new System.Collections.Generic.List<OrderNoteDetail>();
             ProductDetails = new System.Collections.Generic.List<ProductDetail>();
             InitializePartial();

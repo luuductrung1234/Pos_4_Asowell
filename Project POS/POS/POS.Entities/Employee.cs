@@ -44,7 +44,6 @@ namespace POS.Entities
         /// </summary>
         public virtual System.Collections.Generic.ICollection<OrderNote> OrderNotes { get; set; } // OrderNote.FK_dbo.OrderNote_dbo.Employee_emp_id
 
-        public virtual System.Collections.Generic.ICollection<OrderTemp> OrderTemps { get; set; }
 
         /// <summary>
         /// Child ReceiptNotes where [ReceiptNote].[emp_id] point to this entity (FK_dbo.ReceiptNote_dbo.Employee_emp_id)
@@ -69,7 +68,6 @@ namespace POS.Entities
         public Employee()
         {
             OrderNotes = new System.Collections.Generic.List<OrderNote>();
-            OrderTemps = new System.Collections.Generic.List<OrderTemp>();
             ReceiptNotes = new System.Collections.Generic.List<ReceiptNote>();
             SalaryNotes = new System.Collections.Generic.List<SalaryNote>();
             WorkingHistories = new System.Collections.Generic.List<WorkingHistory>();

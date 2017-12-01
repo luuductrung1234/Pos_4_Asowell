@@ -24,10 +24,10 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class SalaryPage : Page
     {
-        AdminwsOfCloud _unitofwork;
+        AdminwsOfCloudAsowell _unitofwork;
         IEnumerable<SalaryNote> SalList;
         IEnumerable<WorkingHistory> WhList;
-        public SalaryPage(AdminwsOfCloud unitofwork)
+        public SalaryPage(AdminwsOfCloudAsowell unitofwork)
         {
             InitializeComponent();
             _unitofwork = unitofwork;

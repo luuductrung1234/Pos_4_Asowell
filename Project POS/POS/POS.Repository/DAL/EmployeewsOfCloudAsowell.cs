@@ -9,17 +9,11 @@ using POS.Repository.Generic;
 
 namespace POS.Repository.DAL
 {
-    public class EmployeewsOfCloud : IDisposable
+    public class EmployeewsOfCloudAsowell : IDisposable
     {
-        private string cloudConnectString =
-                "Server=tcp:commasv.database.windows.net,1433;" +
-                "Initial Catalog=DBAsowell;" +
-                "Persist Security Info=False;" +
-                "User ID=sampleuser;Password=Trung1997;" +
-                "MultipleActiveResultSets=False;Encrypt=True;" +
-                "TrustServerCertificate=False;Connection Timeout=30;";
 
         private AsowellContext context;
+        private GenericRepository<ApplicationLog> _appLogRepository;
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
         private GenericRepository<Employee> _employeeRepository;
@@ -32,18 +26,29 @@ namespace POS.Repository.DAL
         private GenericRepository<ReceiptNote> _receiptNoteRepository;
 
 
-        public EmployeewsOfCloud()
+        public EmployeewsOfCloudAsowell()
         {
-            context = new AsowellContext(cloudConnectString);
+            context = new AsowellContext();
         }
 
-        public EmployeewsOfCloud(string connectionString)
+        public EmployeewsOfCloudAsowell(string connectionString)
         {
-            cloudConnectString = connectionString;
-            context = new AsowellContext(cloudConnectString);
+            context = new AsowellContext(connectionString);
         }
 
 
+
+        public GenericRepository<ApplicationLog> AppLogRepository
+        {
+            get
+            {
+                if (_appLogRepository == null)
+                {
+                    _appLogRepository = new GenericRepository<ApplicationLog>(context);
+                }
+                return _appLogRepository;
+            }
+        }
 
         public GenericRepository<ReceiptNote> ReceiptNoteRepository
         {
@@ -195,7 +200,7 @@ namespace POS.Repository.DAL
         {
             this.Save();
             this.Dispose();
-            this.context = new AsowellContext(cloudConnectString);
+            this.context = new AsowellContext();
         }
     }
 }

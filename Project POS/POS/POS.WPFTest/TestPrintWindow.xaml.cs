@@ -20,7 +20,7 @@ namespace POS.WPFTest
     /// </summary>
     public partial class TestPrintWindow : Window
     {
-        private EmployeewsOfAsowell _unitofwork;
+        private EmployeewsOfLocalAsowell _unitofwork;
         private Table curTable;
         private IPrintHelper ph;
 
@@ -28,7 +28,7 @@ namespace POS.WPFTest
         {
             InitializeComponent();
 
-            _unitofwork = new EmployeewsOfAsowell();
+            _unitofwork = new EmployeewsOfLocalAsowell();
             curTable = _unitofwork.TableRepository.Get(x => x.TableId == 1).First();
         }
 

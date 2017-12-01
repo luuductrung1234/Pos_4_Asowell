@@ -47,11 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\AdminwsOfAsowell.cs" />
-    <Compile Include="DAL\AdminwsOfCloud.cs" />
-    <Compile Include="DAL\EmployeewsOfCloud.cs" />
-    <Compile Include="DAL\EmployeewsOfAsowell.cs" />
+    <Compile Include="DAL\AdminwsOfCloudAsowell.cs" />
+    <Compile Include="DAL\EmployeewsOfCloudAsowell.cs" />
+    <Compile Include="DAL\EmployeewsOfLocalAsowell.cs" />
     <Compile Include="Generic\GenericRepository.cs" />
+    <Compile Include="Generic\GenericRepositoryForLocal.cs" />
     <Compile Include="Seperate Repo\AdminReRepository.cs" />
     <Compile Include="Seperate Repo\CustomerRepository.cs" />
     <Compile Include="Seperate Repo\EmployeeRepository.cs" />
@@ -69,6 +69,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\POS.Business\POS.BusinessContext.csproj">
+      <Project>{550F0920-C28B-4A76-A056-DC81666A5AD4}</Project>
+      <Name>POS.BusinessContext</Name>
+    </ProjectReference>
     <ProjectReference Include="..\POS.Context\POS.Context.csproj">
       <Project>{92783F25-A5DA-49C9-B3A4-474BB4648EB3}</Project>
       <Name>POS.Context</Name>

@@ -24,8 +24,8 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class ProductDetailPage : Page
     {
-        private AdminwsOfCloud _unitofwork;
-        public ProductDetailPage(AdminwsOfCloud unitofwork)
+        private AdminwsOfCloudAsowell _unitofwork;
+        public ProductDetailPage(AdminwsOfCloudAsowell unitofwork)
         {
             InitializeComponent();
             _unitofwork = unitofwork;

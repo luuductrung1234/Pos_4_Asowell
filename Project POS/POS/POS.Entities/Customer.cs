@@ -37,12 +37,10 @@ namespace POS.Entities
         /// </summary>
         public virtual System.Collections.Generic.ICollection<OrderNote> OrderNotes { get; set; } // OrderNote.FK_dbo.OrderNote_dbo.Customer_cus_id
 
-        public virtual System.Collections.Generic.ICollection<OrderTemp> OrderTemps { get; set; }
 
         public Customer()
         {
             OrderNotes = new System.Collections.Generic.List<OrderNote>();
-            OrderTemps = new System.Collections.Generic.List<OrderTemp>();
             InitializePartial();
         }
 

@@ -45,16 +45,6 @@ namespace POS.Entities
 
 
         /// <summary>
-        /// Parent Customer pointed by [OrderNote].([CusId]) (fk_customerowner)
-        /// </summary>
-        public virtual Customer Customer { get; set; } // fk_customerowner
-
-        /// <summary>
-        /// Parent Employee pointed by [OrderNote].([EmpId]) (fk_employeerespond)
-        /// </summary>
-        public virtual Employee Employee { get; set; } // fk_employeerespond
-
-        /// <summary>
         /// Parent Table pointed by [OrderTemp].([TableOwned]) (fk_table_owned_order)
         /// </summary>
         public virtual Table Table { get; set; } // fk_table_owned_order

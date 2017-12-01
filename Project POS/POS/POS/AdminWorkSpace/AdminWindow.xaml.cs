@@ -24,7 +24,7 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class AdminWindow : Window
     {
-        private AdminwsOfCloud _unitowork;
+        private AdminwsOfCloudAsowell _unitowork;
         EmployeeListPage empListPage;
         OrderNotePage ordernotepage;
         SalaryPage salarypage;
@@ -40,7 +40,7 @@ namespace POS.AdminWorkSpace
         public AdminWindow()
         {
             InitializeComponent();
-            _unitowork = new AdminwsOfCloud();
+            _unitowork = new AdminwsOfCloudAsowell();
 
             AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
             curAdmin = _unitowork.AdminreRepository
@@ -147,7 +147,7 @@ namespace POS.AdminWorkSpace
         private void EODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             //ToDo: May be shoud close the repository after print
-            var printer = new DoPrintHelper(new EmployeewsOfAsowell(), new EmployeewsOfCloud(), DoPrintHelper.Eod_Printing);
+            var printer = new DoPrintHelper(new EmployeewsOfLocalAsowell(), new EmployeewsOfCloudAsowell(), DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
 

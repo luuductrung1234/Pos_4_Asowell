@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{92783F25-A5DA-49C9-B3A4-474BB4648EB3}</ProjectGuid>
+    <ProjectGuid>{550F0920-C28B-4A76-A056-DC81666A5AD4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>POS.Context</RootNamespace>
-    <AssemblyName>POS.Context</AssemblyName>
+    <RootNamespace>POS.Business</RootNamespace>
+    <AssemblyName>POS.Business</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -38,7 +38,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,45 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsowellContext.cs">
-      <DependentUpon>AsowellModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AsowellContextFactory.cs">
-      <DependentUpon>AsowellModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AsowellInterceptorLogging.cs" />
-    <Compile Include="AsowellModel.cs">
-      <DependentUpon>AsowellModel.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Configuration\AsowellConfiguration.cs" />
-    <Compile Include="Extensions\ConnectWithExtension.cs" />
-    <Compile Include="FakeAsowellContext.cs">
-      <DependentUpon>AsowellModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FakeDbSet.cs">
-      <DependentUpon>AsowellModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\Logger.cs" />
-    <Compile Include="MigrationConfiguration.cs">
-      <DependentUpon>AsowellModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712010323511_initdatabase.cs" />
-    <Compile Include="Migrations\201712010323511_initdatabase.Designer.cs">
-      <DependentUpon>201712010323511_initdatabase.cs</DependentUpon>
+    <Compile Include="LocalContext.cs" />
+    <Compile Include="MigrationConfiguration.cs" />
+    <Compile Include="Migrations\201712010315183_initdatabase.cs" />
+    <Compile Include="Migrations\201712010315183_initdatabase.Designer.cs">
+      <DependentUpon>201712010315183_initdatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AsowellModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AsowellModel.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -94,22 +61,21 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\POS.Entities\POS.Entities.csproj">
-      <Project>{4b925329-f8c2-4546-968b-4d9e010ec56d}</Project>
+      <Project>{4B925329-F8C2-4546-968B-4D9E010EC56D}</Project>
       <Name>POS.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\POS.Interfaces\POS.Interfaces.csproj">
-      <Project>{c25a12ef-ed7d-4e22-bf20-183b1a7040d4}</Project>
+      <Project>{C25A12EF-ED7D-4E22-BF20-183B1A7040D4}</Project>
       <Name>POS.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\POS.Mapping\POS.Mapping.csproj">
-      <Project>{f3ac2858-0745-4a74-8b80-e09c32b48ba4}</Project>
+      <Project>{F3AC2858-0745-4A74-8B80-E09C32B48BA4}</Project>
       <Name>POS.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712010323511_initdatabase.resx">
-      <DependentUpon>201712010323511_initdatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712010315183_initdatabase.resx">
+      <DependentUpon>201712010315183_initdatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
