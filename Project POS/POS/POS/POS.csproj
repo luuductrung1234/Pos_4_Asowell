@@ -173,6 +173,9 @@
     <Compile Include="AdminWorkSpace\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\LiveChartReceiptPage.xaml.cs">
+      <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\OrderNotePage.xaml.cs">
       <DependentUpon>OrderNotePage.xaml</DependentUpon>
     </Compile>
@@ -362,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\LiveChartReceiptPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

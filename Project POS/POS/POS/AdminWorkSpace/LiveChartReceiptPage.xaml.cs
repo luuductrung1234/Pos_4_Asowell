@@ -17,7 +17,7 @@ using LiveCharts.Wpf;
 using POS.Entities;
 using POS.Repository.DAL;
 
-namespace POS.WareHouseWorkSpace
+namespace POS.AdminWorkSpace
 {
     /// <summary>
     /// Interaction logic for LiveChartReceiptPage.xaml
@@ -45,10 +45,21 @@ namespace POS.WareHouseWorkSpace
             {
                 new ColumnSeries
                 {
+                    Title = "Revenue",
+                    Values = ValueRevenue
+                },new ColumnSeries
+                {
                     Title = "Expense",
                     Values = ValueExpense
-                }
-               
+                },new LineSeries
+                {
+                    Title = "Average Revenue",
+                    Values = Average2
+                 },new LineSeries
+                {
+                    Title = "Average Expense",
+                    Values = Average1
+                 }
 
             };
             Formatter = value => value.ToString();
@@ -59,6 +70,10 @@ namespace POS.WareHouseWorkSpace
 
         private void LiveChartReceiptPage_Load(object sender, RoutedEventArgs e)
         {
+            ValueRevenue.Clear();
+            ValueExpense.Clear();
+            Average1.Clear();
+            Average2.Clear();
             decimal totalReceipt = 0;
             decimal totalOrder = 0;
             var receiptList = _unitofwork.ReceiptNoteRepository.Get();
@@ -118,10 +133,6 @@ namespace POS.WareHouseWorkSpace
 
         private void loadDataExpense(AdminwsOfCloudAsowell unitofwork, ChartValues<decimal> ValueExpense)
         {
-            ValueRevenue.Clear();
-            ValueExpense.Clear();
-            Average1.Clear();
-            Average2.Clear();
             decimal totalMonthAmount1 = 0;
             decimal totalMonthAmount2 = 0;
             decimal totalMonthAmount3 = 0;
@@ -505,3 +516,4 @@ namespace POS.WareHouseWorkSpace
         }
     }
 }
+

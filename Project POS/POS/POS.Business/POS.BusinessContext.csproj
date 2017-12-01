@@ -49,10 +49,6 @@
   <ItemGroup>
     <Compile Include="LocalContext.cs" />
     <Compile Include="MigrationConfiguration.cs" />
-    <Compile Include="Migrations\201712010315183_initdatabase.cs" />
-    <Compile Include="Migrations\201712010315183_initdatabase.Designer.cs">
-      <DependentUpon>201712010315183_initdatabase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +70,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712010315183_initdatabase.resx">
-      <DependentUpon>201712010315183_initdatabase.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
