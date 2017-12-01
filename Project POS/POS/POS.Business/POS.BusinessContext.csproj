@@ -49,10 +49,6 @@
   <ItemGroup>
     <Compile Include="LocalContext.cs" />
     <Compile Include="MigrationConfiguration.cs" />
-    <Compile Include="Migrations\201712010412025_changedatabase.cs" />
-    <Compile Include="Migrations\201712010412025_changedatabase.Designer.cs">
-      <DependentUpon>201712010412025_changedatabase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -73,11 +69,8 @@
       <Name>POS.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712010412025_changedatabase.resx">
-      <DependentUpon>201712010412025_changedatabase.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
