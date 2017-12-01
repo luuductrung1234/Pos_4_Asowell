@@ -122,16 +122,16 @@ namespace POS.AdminWorkSpace
             List<OrderNote> orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day).ToList();
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
             else if (filter == FILL_BY_MONTH)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Month == DateTime.Now.Month)
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year)
                     .ToList();
             }
             else
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get().ToList();
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
             decimal count = 0;
             Values.Clear();
@@ -140,14 +140,14 @@ namespace POS.AdminWorkSpace
             var RevenueList = new Dictionary<string, decimal>();
             foreach (var item in orderNoteWithTime)
             {
-                if (RevenueList.ContainsKey(item.Ordertime.ToShortDateString()))
+                if (RevenueList.ContainsKey(item.Ordertime.ToString("dd/MM/yyyy")))
                 {
-                    RevenueList[item.Ordertime.ToShortDateString()] =
-                        RevenueList[item.Ordertime.ToShortDateString()] + item.TotalPrice;
+                    RevenueList[item.Ordertime.ToString("dd/MM/yyyy")] =
+                        RevenueList[item.Ordertime.ToString("dd/MM/yyyy")] + item.TotalPrice;
                 }
                 else
                 {
-                    RevenueList.Add(item.Ordertime.ToShortDateString(), item.TotalPrice);
+                    RevenueList.Add(item.Ordertime.ToString("dd/MM/yyyy"), item.TotalPrice);
                 }
             }
 
@@ -166,15 +166,15 @@ namespace POS.AdminWorkSpace
             List<OrderNote> orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day).ToList();
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
             else if (filter == FILL_BY_MONTH)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Month == DateTime.Now.Month).ToList();
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
             else
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get().ToList();
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
 
 
@@ -224,16 +224,16 @@ namespace POS.AdminWorkSpace
             List<OrderNote> orderNoteWithTime = new List<OrderNote>();
             if (filter == FILL_BY_DAY)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day).ToList();
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month==DateTime.Now.Month &&c.Ordertime.Year==DateTime.Now.Year).ToList();
             }
             else if (filter == FILL_BY_MONTH)
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Month == DateTime.Now.Month)
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Day == DateTime.Now.Day && c.Ordertime.Month == DateTime.Now.Month && c.Ordertime.Year == DateTime.Now.Year)
                     .ToList();
             }
             else
             {
-                orderNoteWithTime = _unitofwork.OrderRepository.Get().ToList();
+                orderNoteWithTime = _unitofwork.OrderRepository.Get(c => c.Ordertime.Year == DateTime.Now.Year).ToList();
             }
 
 
