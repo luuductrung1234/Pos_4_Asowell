@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.AzureWebService", "POS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.WPFTest", "POS.WPFTest\POS.WPFTest.csproj", "{DCC37425-1B0C-4B69-8686-F5581C6AB139}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.BusinessContext", "POS.Business\POS.BusinessContext.csproj", "{550F0920-C28B-4A76-A056-DC81666A5AD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{DCC37425-1B0C-4B69-8686-F5581C6AB139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCC37425-1B0C-4B69-8686-F5581C6AB139}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCC37425-1B0C-4B69-8686-F5581C6AB139}.Release|Any CPU.Build.0 = Release|Any CPU
+		{550F0920-C28B-4A76-A056-DC81666A5AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550F0920-C28B-4A76-A056-DC81666A5AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550F0920-C28B-4A76-A056-DC81666A5AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550F0920-C28B-4A76-A056-DC81666A5AD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

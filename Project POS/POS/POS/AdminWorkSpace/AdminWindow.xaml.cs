@@ -24,7 +24,7 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class AdminWindow : Window
     {
-        private AdminwsOfCloud _unitowork;
+        private AdminwsOfCloudAsowell _unitowork;
         EmployeeListPage empListPage;
         OrderNotePage ordernotepage;
         SalaryPage salarypage;
@@ -35,20 +35,22 @@ namespace POS.AdminWorkSpace
         ReceiptNotePage receiptnotepage;
         private statisticsFoodPage FoodPage;
         private StatisticsWorkingHourPage statisticsWorkingHourPage;
+        private LiveChartReceiptPage liveChartReceipt;
         private HomePage homePage;
         private ProductCreatorPage productCreator;
         public AdminWindow()
         {
             InitializeComponent();
-            _unitowork = new AdminwsOfCloud();
+            _unitowork = new AdminwsOfCloudAsowell();
 
             AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
             curAdmin = _unitowork.AdminreRepository
                 .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
             cUser.Content = curAdmin.Name;
-            
+                
             empListPage = new EmployeeListPage(_unitowork, curAdmin);
             salarypage = new SalaryPage(_unitowork);
+            liveChartReceipt = new LiveChartReceiptPage(_unitowork);
             productdetals = new ProductDetailPage( _unitowork);
             ctmP=new CustomerPage(_unitowork);
             ordernotepage = new OrderNotePage(_unitowork);
@@ -147,7 +149,7 @@ namespace POS.AdminWorkSpace
         private void EODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             //ToDo: May be shoud close the repository after print
-            var printer = new DoPrintHelper(new EmployeewsOfAsowell(), new EmployeewsOfCloud(), DoPrintHelper.Eod_Printing);
+            var printer = new DoPrintHelper(new EmployeewsOfLocalAsowell(), new EmployeewsOfCloudAsowell(), DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
 
@@ -155,6 +157,12 @@ namespace POS.AdminWorkSpace
         {
             MessageBox.Show("Create new product feature is now not working. We will update later!");
             myframe.Navigate(productCreator);
+        }
+
+        private void ViewstaticReAndEx_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            
+            myframe.Navigate(liveChartReceipt);
         }
     }
 }

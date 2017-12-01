@@ -18,7 +18,7 @@ namespace POS
     /// </summary>
     public partial class Login : Window
     {
-        internal EmployeewsOfCloud _unitofwork;
+        internal EmployeewsOfCloudAsowell _unitofwork;
         private DispatcherTimer LoadCodeLogin;
 
         public Login()
@@ -26,14 +26,14 @@ namespace POS
             //string[] config = ReadWriteData.ReadDBConfig();
             //if (config != null)
             //{
-            //    _unitofwork = new EmployeewsOfAsowell(config[0], config[1], config[2], config[3]);
+            //    _unitofwork = new EmployeewsOfLocalAsowell(config[0], config[1], config[2], config[3]);
             //}
             //else
             //{
-            //    _unitofwork = new EmployeewsOfAsowell();
+            //    _unitofwork = new EmployeewsOfLocalAsowell();
             //}
 
-            _unitofwork = new EmployeewsOfCloud();
+            _unitofwork = new EmployeewsOfCloudAsowell();
             InitializeComponent();
 
             txtUsername.Focus();

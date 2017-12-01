@@ -44,8 +44,6 @@ namespace POS.Mapping
 
             // Foreign keys
             HasOptional(a => a.Table).WithMany(b => b.OrderTemps).HasForeignKey(c => c.TableOwned).WillCascadeOnDelete(false); // fk_table_owned_order
-            HasOptional(a => a.Customer).WithMany(b => b.OrderTemps).HasForeignKey(c => c.CusId).WillCascadeOnDelete(false);
-            HasOptional(a => a.Employee).WithMany(b => b.OrderTemps).HasForeignKey(c => c.EmpId).WillCascadeOnDelete(false);
             InitializePartial();
         }
         partial void InitializePartial();

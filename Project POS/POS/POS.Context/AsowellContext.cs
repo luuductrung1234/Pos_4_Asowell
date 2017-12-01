@@ -25,20 +25,16 @@ namespace POS.Context
     {
         public System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes
         public System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; } // ApplicationLog
-        public System.Data.Entity.DbSet<Chair> Chairs { get; set; } // Chair
         public System.Data.Entity.DbSet<Customer> Customers { get; set; } // Customer
         public System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employee
         public System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; } // Ingredient
-        public System.Data.Entity.DbSet<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp
         public System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; } // OrderNote
         public System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails
-        public System.Data.Entity.DbSet<OrderTemp> OrderTemps { get; set; } // OrderTemp
         public System.Data.Entity.DbSet<Product> Products { get; set; } // Product
         public System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; } // ProductDetails
         public System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote
         public System.Data.Entity.DbSet<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails
         public System.Data.Entity.DbSet<SalaryNote> SalaryNotes { get; set; } // SalaryNote
-        public System.Data.Entity.DbSet<Table> Tables { get; set; } // Table
         public System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; } // WareHouse
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory
 
@@ -48,7 +44,7 @@ namespace POS.Context
         }
 
         public AsowellContext()
-            : base("Name=AsowellContext")
+            : base("Name=AsowellAzureContext")
         {
             InitializePartial();
         }
@@ -97,20 +93,16 @@ namespace POS.Context
 
             modelBuilder.Configurations.Add(new AdminReMapping());
             modelBuilder.Configurations.Add(new ApplicationLogMapping());
-            modelBuilder.Configurations.Add(new ChairMapping());
             modelBuilder.Configurations.Add(new CustomerMapping());
             modelBuilder.Configurations.Add(new EmployeeMapping());
             modelBuilder.Configurations.Add(new IngredientMapping());
-            modelBuilder.Configurations.Add(new OrderDetailsTempMapping());
             modelBuilder.Configurations.Add(new OrderNoteMapping());
             modelBuilder.Configurations.Add(new OrderNoteDetailMapping());
-            modelBuilder.Configurations.Add(new OrderTempMapping());
             modelBuilder.Configurations.Add(new ProductMapping());
             modelBuilder.Configurations.Add(new ProductDetailMapping());
             modelBuilder.Configurations.Add(new ReceiptNoteMapping());
             modelBuilder.Configurations.Add(new ReceiptNoteDetailMapping());
             modelBuilder.Configurations.Add(new SalaryNoteMapping());
-            modelBuilder.Configurations.Add(new TableMapping());
             modelBuilder.Configurations.Add(new WareHouseMapping());
             modelBuilder.Configurations.Add(new WorkingHistoryMapping());
 
@@ -121,20 +113,16 @@ namespace POS.Context
         {
             modelBuilder.Configurations.Add(new AdminReMapping(schema));
             modelBuilder.Configurations.Add(new ApplicationLogMapping(schema));
-            modelBuilder.Configurations.Add(new ChairMapping(schema));
             modelBuilder.Configurations.Add(new CustomerMapping(schema));
             modelBuilder.Configurations.Add(new EmployeeMapping(schema));
             modelBuilder.Configurations.Add(new IngredientMapping(schema));
-            modelBuilder.Configurations.Add(new OrderDetailsTempMapping(schema));
             modelBuilder.Configurations.Add(new OrderNoteMapping(schema));
             modelBuilder.Configurations.Add(new OrderNoteDetailMapping(schema));
-            modelBuilder.Configurations.Add(new OrderTempMapping(schema));
             modelBuilder.Configurations.Add(new ProductMapping(schema));
             modelBuilder.Configurations.Add(new ProductDetailMapping(schema));
             modelBuilder.Configurations.Add(new ReceiptNoteMapping(schema));
             modelBuilder.Configurations.Add(new ReceiptNoteDetailMapping(schema));
             modelBuilder.Configurations.Add(new SalaryNoteMapping(schema));
-            modelBuilder.Configurations.Add(new TableMapping(schema));
             modelBuilder.Configurations.Add(new WareHouseMapping(schema));
             modelBuilder.Configurations.Add(new WorkingHistoryMapping(schema));
             return modelBuilder;

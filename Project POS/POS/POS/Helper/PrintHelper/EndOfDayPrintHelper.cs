@@ -17,14 +17,14 @@ namespace POS.Helper.PrintHelper
 {
     public class EndOfDayPrintHelper : IPrintHelper
     {
-        private EmployeewsOfCloud _cloudUnitofwork;
+        private EmployeewsOfCloudAsowell _cloudAsowellUnitofwork;
         private static string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         public DateTime From { get; set; }
         public DateTime To { get; set; }
 
-        public EndOfDayPrintHelper(EmployeewsOfCloud cloudUnitofwork)
+        public EndOfDayPrintHelper(EmployeewsOfCloudAsowell cloudAsowellUnitofwork)
         {
-            _cloudUnitofwork = cloudUnitofwork;
+            _cloudAsowellUnitofwork = cloudAsowellUnitofwork;
             From = DateTime.Now.Date;
             To = DateTime.Now.Date;
             To = To.AddDays(1);
@@ -561,10 +561,10 @@ namespace POS.Helper.PrintHelper
         {
             var result = new Dictionary<string, List<MyPairValue>>();
             var orderDetailsQuery =
-                _cloudUnitofwork.OrderDetailsRepository.Get(x => x.OrderNote.Ordertime.CompareTo(From) >= 0
+                _cloudAsowellUnitofwork.OrderDetailsRepository.Get(x => x.OrderNote.Ordertime.CompareTo(From) >= 0
                                                             && x.OrderNote.Ordertime.CompareTo(To) <= 0);
             var orderQuery =
-                _cloudUnitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
+                _cloudAsowellUnitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
                                                      && x.Ordertime.CompareTo(To) <= 0);
 
 
@@ -750,7 +750,7 @@ namespace POS.Helper.PrintHelper
         {
             var result = new Dictionary<string, List<MyPairValue>>();
             var orderQuery =
-                _cloudUnitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
+                _cloudAsowellUnitofwork.OrderRepository.Get(x => x.Ordertime.CompareTo(From) >= 0
                                                      && x.Ordertime.CompareTo(To) <= 0);
 
             //Total Cash
@@ -875,7 +875,7 @@ namespace POS.Helper.PrintHelper
             var result = new Dictionary<string, List<MyPairValue>>();
 
             var receiptQuery =
-                _cloudUnitofwork.ReceiptNoteRepository.Get(x => x.Inday.CompareTo(From) >= 0
+                _cloudAsowellUnitofwork.ReceiptNoteRepository.Get(x => x.Inday.CompareTo(From) >= 0
                                                      && x.Inday.CompareTo(To) <= 0);
 
             //Total Receipt

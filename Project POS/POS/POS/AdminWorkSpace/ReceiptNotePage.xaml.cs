@@ -23,8 +23,8 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class ReceiptNotePage : Page
     {
-        AdminwsOfCloud _unitofwork;
-        public ReceiptNotePage(AdminwsOfCloud unitofwork)
+        AdminwsOfCloudAsowell _unitofwork;
+        public ReceiptNotePage(AdminwsOfCloudAsowell unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();

@@ -118,10 +118,6 @@ namespace POS.Entities
         /// </summary>
         public virtual OrderTemp OrderTemp { get; set; } // fk_ordertemp_id_orderdetailtemp
 
-        /// <summary>
-        /// Parent Product pointed by [OrderDetailsTemp].([ProductId]) (fk_product_id_orderdetailtemp)
-        /// </summary>
-        public virtual Product Product { get; set; } // fk_product_id_orderdetailtemp
 
         public OrderDetailsTemp()
         {

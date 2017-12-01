@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{81743988-1EBF-42EC-812F-2574A4F0F3A3}</ProjectGuid>
+    <ProjectGuid>{550F0920-C28B-4A76-A056-DC81666A5AD4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>POS.Repository</RootNamespace>
-    <AssemblyName>POS.Repository</AssemblyName>
+    <RootNamespace>POS.Business</RootNamespace>
+    <AssemblyName>POS.Business</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -47,21 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\AdminwsOfCloudAsowell.cs" />
-    <Compile Include="DAL\EmployeewsOfCloudAsowell.cs" />
-    <Compile Include="DAL\EmployeewsOfLocalAsowell.cs" />
-    <Compile Include="Generic\GenericRepository.cs" />
-    <Compile Include="Generic\GenericRepositoryForLocal.cs" />
-    <Compile Include="Seperate Repo\AdminReRepository.cs" />
-    <Compile Include="Seperate Repo\CustomerRepository.cs" />
-    <Compile Include="Seperate Repo\EmployeeRepository.cs" />
-    <Compile Include="Seperate Repo\IngredientRepository.cs" />
-    <Compile Include="Seperate Repo\ProductRepository.cs" />
-    <Compile Include="Interfaces\IAdminRepository.cs" />
-    <Compile Include="Interfaces\ICustomerRepository.cs" />
-    <Compile Include="Interfaces\IEmployeeRepository.cs" />
-    <Compile Include="Interfaces\IIngredientRepository.cs" />
-    <Compile Include="Interfaces\IProductRepository.cs" />
+    <Compile Include="LocalContext.cs" />
+    <Compile Include="MigrationConfiguration.cs" />
+    <Compile Include="Migrations\201712010412025_changedatabase.cs" />
+    <Compile Include="Migrations\201712010412025_changedatabase.Designer.cs">
+      <DependentUpon>201712010412025_changedatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,19 +60,24 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\POS.Business\POS.BusinessContext.csproj">
-      <Project>{550F0920-C28B-4A76-A056-DC81666A5AD4}</Project>
-      <Name>POS.BusinessContext</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\POS.Context\POS.Context.csproj">
-      <Project>{92783F25-A5DA-49C9-B3A4-474BB4648EB3}</Project>
-      <Name>POS.Context</Name>
-    </ProjectReference>
     <ProjectReference Include="..\POS.Entities\POS.Entities.csproj">
       <Project>{4B925329-F8C2-4546-968B-4D9E010EC56D}</Project>
       <Name>POS.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\POS.Interfaces\POS.Interfaces.csproj">
+      <Project>{C25A12EF-ED7D-4E22-BF20-183B1A7040D4}</Project>
+      <Name>POS.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS.Mapping\POS.Mapping.csproj">
+      <Project>{F3AC2858-0745-4A74-8B80-E09C32B48BA4}</Project>
+      <Name>POS.Mapping</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201712010412025_changedatabase.resx">
+      <DependentUpon>201712010412025_changedatabase.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -18,22 +18,18 @@ namespace POS.Interfaces
 
     public interface IAsowellContext : System.IDisposable
     {
-        System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes
         System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; } // ApplicationLog
-        System.Data.Entity.DbSet<Chair> Chairs { get; set; } // Chair
+        System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes
         System.Data.Entity.DbSet<Customer> Customers { get; set; } // Customer
         System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employee
         System.Data.Entity.DbSet<Ingredient> Ingredients { get; set; } // Ingredient
-        System.Data.Entity.DbSet<OrderDetailsTemp> OrderDetailsTemps { get; set; } // OrderDetailsTemp
         System.Data.Entity.DbSet<OrderNote> OrderNotes { get; set; } // OrderNote
         System.Data.Entity.DbSet<OrderNoteDetail> OrderNoteDetails { get; set; } // OrderNoteDetails
-        System.Data.Entity.DbSet<OrderTemp> OrderTemps { get; set; } // OrderTemp
         System.Data.Entity.DbSet<Product> Products { get; set; } // Product
         System.Data.Entity.DbSet<ProductDetail> ProductDetails { get; set; } // ProductDetails
         System.Data.Entity.DbSet<ReceiptNote> ReceiptNotes { get; set; } // ReceiptNote
         System.Data.Entity.DbSet<ReceiptNoteDetail> ReceiptNoteDetails { get; set; } // ReceiptNoteDetails
         System.Data.Entity.DbSet<SalaryNote> SalaryNotes { get; set; } // SalaryNote
-        System.Data.Entity.DbSet<Table> Tables { get; set; } // Table
         System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; } // WareHouse
         System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory
 

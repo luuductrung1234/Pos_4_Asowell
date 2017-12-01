@@ -22,10 +22,10 @@ namespace POS.AdminWorkSpace
     
     public partial class AdminDetailWindow : Window
     {
-        private AdminwsOfCloud _unitofwork;
+        private AdminwsOfCloudAsowell _unitofwork;
         private AdminRe admin;
         private List<Employee> empwithad;
-        public AdminDetailWindow(AdminwsOfCloud unitofwork, AdminRe ad)
+        public AdminDetailWindow(AdminwsOfCloudAsowell unitofwork, AdminRe ad)
         {
             _unitofwork = unitofwork;
             InitializeComponent();

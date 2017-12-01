@@ -15,14 +15,14 @@ namespace POS.WareHouseWorkSpace
     /// </summary>
     public partial class InputReceiptNote : Page
     {
-        private AdminwsOfCloud _unitofwork;
+        private AdminwsOfCloudAsowell _unitofwork;
         private static ReceiptNote CurrentReceipt;
         private List<ReceiptNoteDetail> ReceiptDetailsList;
 
         private static readonly string ORTHER_PERCHAGSE_ID = "IGD0000047";
 
 
-        public InputReceiptNote(AdminwsOfCloud unitofwork)
+        public InputReceiptNote(AdminwsOfCloudAsowell unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();

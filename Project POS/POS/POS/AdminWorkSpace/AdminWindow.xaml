@@ -46,6 +46,11 @@
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="HomePage_OnPreviewMouseLeftButtonUp"
                                      Foreground="White"/>
+                        <ListBoxItem x:Name="ViewstaticReAndEx"
+                                     Content="Revenue and Expenditure"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="ViewstaticReAndEx_OnPreviewMouseLeftButtonUp"
+                                     Foreground="White" />
                         <ListBoxItem x:Name="EODReport"
                                      Content="End Of Day Report"
                                      Style="{StaticResource {x:Type ListBoxItem}}"

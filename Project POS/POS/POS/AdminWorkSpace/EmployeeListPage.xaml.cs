@@ -23,13 +23,13 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class EmployeeListPage : Page
     {
-        private AdminwsOfCloud _unitofork;
+        private AdminwsOfCloudAsowell _unitofork;
         private AdminRe admin;
         private Employee emp;
         private List<Employee> empwithad;
         internal EmployeeAddOrUpdateDialog empAddUptDialog;
 
-        public EmployeeListPage(AdminwsOfCloud unitofork, AdminRe ad)
+        public EmployeeListPage(AdminwsOfCloudAsowell unitofork, AdminRe ad)
         {
             _unitofork = unitofork;
             InitializeComponent();

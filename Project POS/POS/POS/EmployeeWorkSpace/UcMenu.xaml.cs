@@ -15,8 +15,8 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class UcMenu : UserControl
     {
-        private EmployeewsOfAsowell _unitofwork;
-        private EmployeewsOfCloud _cloudUnitofwork;
+        private EmployeewsOfLocalAsowell _unitofwork;
+        private EmployeewsOfCloudAsowell _cloudAsowellUnitofwork;
         private Entities.Table orderingTable;
         private Entities.Chair orderingChair;
         private OrderTemp orderTempCurrentTable;
@@ -37,21 +37,21 @@ namespace POS.EmployeeWorkSpace
                 try
                 {
                     _unitofwork = ((MainWindow) Window.GetWindow(this))._unitofwork;
-                    _cloudUnitofwork = ((MainWindow) Window.GetWindow(this))._cloudUnitofwork;
+                    _cloudAsowellUnitofwork = ((MainWindow) Window.GetWindow(this)).CloudAsowellUnitofwork;
                     lvCategoryStarter.ItemsSource =
-                        _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
                     lvCategoryMain.ItemsSource =
-                        _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main"));
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main"));
                     lvCategoryDessert.ItemsSource =
-                        _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
                     lvCategoryBeverages.ItemsSource =
-                        _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Beverage);
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Beverage);
                     lvCategoryBeer.ItemsSource =
-                        _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Beer);
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Beer);
                     lvCategoryWine.ItemsSource =
-                        _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Wine);
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Wine);
                     lvCategoryOther.ItemsSource =
-                        _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Other);
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Other);
 
 
                     IsRefreshMenu = false;
@@ -205,13 +205,13 @@ namespace POS.EmployeeWorkSpace
 
             if (filter.Length == 0)
             {
-                lvCategoryStarter.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
-                lvCategoryMain.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main"));
-                lvCategoryDessert.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
-                lvCategoryBeverages.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage);
-                lvCategoryBeer.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
-                lvCategoryWine.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine);
-                lvCategoryOther.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other);
+                lvCategoryStarter.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
+                lvCategoryMain.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main"));
+                lvCategoryDessert.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
+                lvCategoryBeverages.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage);
+                lvCategoryBeer.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
+                lvCategoryWine.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine);
+                lvCategoryOther.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other);
                 return;
             }
 
@@ -223,49 +223,49 @@ namespace POS.EmployeeWorkSpace
         {
             if (ItemStarter.IsSelected == true)
             {
-                lvCategoryStarter.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter") && p.Name.Contains(filter));
+                lvCategoryStarter.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter") && p.Name.Contains(filter));
                 lvCategoryStarter.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemStarter;
             }
 
             if (ItemMain.IsSelected == true)
             {
-                lvCategoryMain.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main") && p.Name.Contains(filter));
+                lvCategoryMain.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main") && p.Name.Contains(filter));
                 lvCategoryMain.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemMain;
             }
 
             if (ItemDessert.IsSelected == true)
             {
-                lvCategoryDessert.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert") && p.Name.Contains(filter));
+                lvCategoryDessert.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert") && p.Name.Contains(filter));
                 lvCategoryDessert.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemDessert;
             }
 
             if (ItemBeverages.IsSelected == true)
             {
-                lvCategoryBeverages.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage && p.Name.Contains(filter));
+                lvCategoryBeverages.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage && p.Name.Contains(filter));
                 lvCategoryBeverages.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemBeverages;
             }
 
             if (ItemBeer.IsSelected == true)
             {
-                lvCategoryBeer.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer && p.Name.Contains(filter));
+                lvCategoryBeer.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer && p.Name.Contains(filter));
                 lvCategoryBeer.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemBeer;
             }
 
             if (ItemWine.IsSelected == true)
             {
-                lvCategoryWine.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine && p.Name.Contains(filter));
+                lvCategoryWine.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine && p.Name.Contains(filter));
                 lvCategoryWine.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemWine;
             }
 
             if (ItemOther.IsSelected == true)
             {
-                lvCategoryOther.ItemsSource = _cloudUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other && p.Name.Contains(filter));
+                lvCategoryOther.ItemsSource = _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other && p.Name.Contains(filter));
                 lvCategoryOther.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
                 curItem = ItemOther;
             }

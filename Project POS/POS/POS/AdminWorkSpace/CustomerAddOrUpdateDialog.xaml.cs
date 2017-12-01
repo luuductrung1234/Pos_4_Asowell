@@ -22,10 +22,10 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class CustomerAddOrUpdateDialog : Window
     {
-        AdminwsOfCloud _unitofwork;
+        AdminwsOfCloudAsowell _unitofwork;
         Customer _cus;
 
-        public CustomerAddOrUpdateDialog(AdminwsOfCloud unitofwork, Customer cus)
+        public CustomerAddOrUpdateDialog(AdminwsOfCloudAsowell unitofwork, Customer cus)
         {
             _unitofwork = unitofwork;
             _cus = new Customer();

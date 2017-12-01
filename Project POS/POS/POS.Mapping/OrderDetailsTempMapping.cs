@@ -45,7 +45,7 @@ namespace POS.Mapping
             // Foreign keys
             HasRequired(a => a.Chair).WithMany(b => b.OrderDetailsTemps).HasForeignKey(c => c.ChairId).WillCascadeOnDelete(false); // fk_chair_id_orderdetailtemp
             HasRequired(a => a.OrderTemp).WithMany(b => b.OrderDetailsTemps).HasForeignKey(c => c.OrdertempId).WillCascadeOnDelete(false); // fk_ordertemp_id_orderdetailtemp
-            HasRequired(a => a.Product).WithMany(b => b.OrderDetailsTemps).HasForeignKey(c => c.ProductId).WillCascadeOnDelete(false); // fk_product_id_orderdetailtemp
+          
             InitializePartial();
         }
         partial void InitializePartial();

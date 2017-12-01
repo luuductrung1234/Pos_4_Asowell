@@ -9,18 +9,11 @@ using System.Threading.Tasks;
 
 namespace POS.Repository.DAL
 {
-    public class AdminwsOfCloud : IDisposable
+    public class AdminwsOfCloudAsowell : IDisposable
     {
-        private string cloudConnectString =
-            "Server=tcp:commasv.database.windows.net,1433;" +
-            "Initial Catalog=DBAsowell;" +
-            "Persist Security Info=False;" +
-            "User ID=sampleuser;Password=Trung1997;" +
-            "MultipleActiveResultSets=False;Encrypt=True;" +
-            "TrustServerCertificate=False;Connection Timeout=30;";
 
-        private AsowellContext cloudContext;    
-
+        private AsowellContext cloudContext;
+        private GenericRepository<ApplicationLog> _appLogRepository;
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
         private GenericRepository<Employee> _employeeRepository;
@@ -36,20 +29,29 @@ namespace POS.Repository.DAL
         private GenericRepository<WareHouse> _wareHouseRepository;
 
 
-        public AdminwsOfCloud()
+        public AdminwsOfCloudAsowell()
         {
-            cloudContext = new AsowellContext(cloudConnectString);
+            cloudContext = new AsowellContext();
         }
 
-        public AdminwsOfCloud(string connectionString)
+        public AdminwsOfCloudAsowell(string connectionString)
         {
-            cloudConnectString = connectionString;
-            cloudContext = new AsowellContext(cloudConnectString);
+            cloudContext = new AsowellContext(connectionString);
         }
 
 
 
-
+        public GenericRepository<ApplicationLog> AppLogRepository
+        {
+            get
+            {
+                if (_appLogRepository == null)
+                {
+                    _appLogRepository = new GenericRepository<ApplicationLog>(cloudContext);
+                }
+                return _appLogRepository;
+            }
+        }
 
         public GenericRepository<WareHouse> WareHouseRepository
         {
@@ -236,7 +238,7 @@ namespace POS.Repository.DAL
         {
             this.Save();
             this.Dispose();
-            this.cloudContext = new AsowellContext(cloudConnectString);
+            this.cloudContext = new AsowellContext();
         }
     }
 }
