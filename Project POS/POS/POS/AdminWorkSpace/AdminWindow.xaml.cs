@@ -35,6 +35,7 @@ namespace POS.AdminWorkSpace
         ReceiptNotePage receiptnotepage;
         private statisticsFoodPage FoodPage;
         private StatisticsWorkingHourPage statisticsWorkingHourPage;
+        private LiveChartReceiptPage liveChartReceipt;
         private HomePage homePage;
         private ProductCreatorPage productCreator;
         public AdminWindow()
@@ -46,9 +47,10 @@ namespace POS.AdminWorkSpace
             curAdmin = _unitowork.AdminreRepository
                 .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
             cUser.Content = curAdmin.Name;
-            
+                
             empListPage = new EmployeeListPage(_unitowork, curAdmin);
             salarypage = new SalaryPage(_unitowork);
+            liveChartReceipt = new LiveChartReceiptPage(_unitowork);
             productdetals = new ProductDetailPage( _unitowork);
             ctmP=new CustomerPage(_unitowork);
             ordernotepage = new OrderNotePage(_unitowork);
@@ -155,6 +157,12 @@ namespace POS.AdminWorkSpace
         {
             MessageBox.Show("Create new product feature is now not working. We will update later!");
             myframe.Navigate(productCreator);
+        }
+
+        private void ViewstaticReAndEx_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            
+            myframe.Navigate(liveChartReceipt);
         }
     }
 }
