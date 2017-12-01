@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using LiveCharts;
 using LiveCharts.Wpf;
 using POS.Entities;
@@ -33,6 +34,11 @@ namespace POS.WareHouseWorkSpace
         {
             _unitofwork = unitofwork;
             InitializeComponent();
+
+            DispatcherTimer RefreshTimer = new DispatcherTimer();
+            RefreshTimer.Tick += Refresh_Tick;
+            RefreshTimer.Interval = new TimeSpan(0, 5, 0);
+            RefreshTimer.Start();
             Loaded += LiveChartReceiptPage_Load;
 
 
@@ -55,6 +61,68 @@ namespace POS.WareHouseWorkSpace
 
             DataContext = this;
             Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May ", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+        }
+
+        private void Refresh_Tick(object sender, EventArgs e)
+        {
+            decimal totalReceipt = 0;
+            decimal totalOrder = 0;
+            var receiptList = _unitofwork.ReceiptNoteRepository.Get();
+            decimal AverageReceipt = 0;
+            if (receiptList != null && receiptList.Any())
+            {
+                foreach (var n in receiptList)
+                {
+                    totalReceipt += n.TotalAmount;
+                }
+                AverageReceipt = totalReceipt / (receiptList.Count());
+            }
+
+            var OrderList = _unitofwork.OrderRepository.Get();
+            decimal AveragOrder = 0;
+            if (OrderList != null && OrderList.Any())
+            {
+                foreach (var n in OrderList)
+                {
+                    totalOrder += n.TotalPrice;
+                }
+                AveragOrder = totalOrder / (OrderList.Count());
+            }
+
+            ValueRevenue.Clear();
+            ValueExpense.Clear();
+            Average1.Clear();
+            Average2.Clear();
+
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+            Average1.Add(AverageReceipt);
+
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+            Average2.Add(AveragOrder);
+
+
+            loadDataExpense(_unitofwork, ValueExpense);
+            loadDataRevenue(_unitofwork, ValueRevenue);
         }
 
         private void LiveChartReceiptPage_Load(object sender, RoutedEventArgs e)
@@ -83,7 +151,10 @@ namespace POS.WareHouseWorkSpace
                 AveragOrder = totalOrder / (OrderList.Count());
             }
 
-
+            ValueRevenue.Clear();
+            ValueExpense.Clear();
+            Average1.Clear();
+            Average2.Clear();
 
             Average1.Add(AverageReceipt);
             Average1.Add(AverageReceipt);
@@ -118,10 +189,7 @@ namespace POS.WareHouseWorkSpace
 
         private void loadDataExpense(AdminwsOfCloudAsowell unitofwork, ChartValues<decimal> ValueExpense)
         {
-            ValueRevenue.Clear();
-            ValueExpense.Clear();
-            Average1.Clear();
-            Average2.Clear();
+            
             decimal totalMonthAmount1 = 0;
             decimal totalMonthAmount2 = 0;
             decimal totalMonthAmount3 = 0;

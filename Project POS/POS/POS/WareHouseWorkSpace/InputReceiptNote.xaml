@@ -52,7 +52,7 @@
                     <GridViewColumn Header="Unit buy"
                                     Width="150"
                                     DisplayMemberBinding="{Binding UnitBuy}" />
-                    <GridViewColumn Header="Standard Price"
+                    <GridViewColumn Header="Std.Price/Unit Buy"
                                     Width="150"
                                     DisplayMemberBinding="{Binding StandardPrice, StringFormat=0.000}" />
                 </GridView>
@@ -94,8 +94,8 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Price"
-                                        Width="90">
+                        <GridViewColumn Header="Cur.Price/Unit Buy"
+                                        Width="150">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="txtItemPrice"

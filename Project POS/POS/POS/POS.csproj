@@ -274,6 +274,7 @@
     <Compile Include="Support\PassKeyboardControl.xaml.cs">
       <DependentUpon>PassKeyboardControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WareHouseWorkSpace\Helper\UnitBuyTrans.cs" />
     <Compile Include="WareHouseWorkSpace\IngredientPage.xaml.cs">
       <DependentUpon>IngredientPage.xaml</DependentUpon>
     </Compile>

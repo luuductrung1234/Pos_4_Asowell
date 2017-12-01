@@ -90,7 +90,8 @@
                                    FontSize="36"
                                    FontWeight="Bold"
                                    Margin="0,-3"
-                                   Width="239">ASOWEL POS</TextBlock>
+                                   TextAlignment="Center"
+                                   Width="239">POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
 
