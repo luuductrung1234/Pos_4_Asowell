@@ -218,6 +218,7 @@ namespace POS.AdminWorkSpace
                     Email = email,
                     Startday = start,
                     HourWage = hourwage,
+                    Deleted = 0,
                     Manager = (App.Current.Properties["AdLogin"] as AdminRe).AdId
                 };
 

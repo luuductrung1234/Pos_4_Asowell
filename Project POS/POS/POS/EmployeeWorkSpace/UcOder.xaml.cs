@@ -89,7 +89,7 @@ namespace POS.EmployeeWorkSpace
 
                 // lay ordernotedetails cua ban thu nhat
                 var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
-                var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber) && x.TableOwned.Equals(currentChair.TableOwned));
+                var foundchair = chairoftable.SingleOrDefault(x => x.ChairId.Equals(currentChair.ChairId) && x.TableOwned.Equals(currentChair.TableOwned));
                 var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(foundchair.ChairId)).ToList();
 
                 // chuyen product_id thanh product name

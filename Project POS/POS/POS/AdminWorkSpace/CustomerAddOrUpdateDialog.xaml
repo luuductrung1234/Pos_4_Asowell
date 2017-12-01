@@ -1,0 +1,148 @@
+﻿<Window x:Class="POS.AdminWorkSpace.CustomerAddOrUpdateDialog"
+        Background="{DynamicResource MaterialDesignPaper}"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:POS.AdminWorkSpace"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        d:DesignHeight="300"
+        d:DesignWidth="300"
+        Title="CustomerPage"
+        Height="400"
+        Width="500">
+    <Grid x:Name="CustomerInfo">
+
+        <materialDesign:ColorZone Height="44"
+                                  Mode="PrimaryDark">
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,0,0,0">
+                <TextBlock VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           FontSize="18">Personal Infomation</TextBlock>
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <StackPanel Orientation="Vertical"
+                    Margin="0,49,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock"
+                       x:Key="TextBlockLabel">
+                    <Setter Property="FontSize"
+                            Value="18" />
+                    <Setter Property="Foreground"
+                            Value="#FFFFEDBC" />
+                    <Setter Property="FontWeight"
+                            Value="Bold" />
+                    <Setter Property="Width"
+                            Value="120" />
+                    <Setter Property="HorizontalAlignment"
+                            Value="Center" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Center" />
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal"
+                        Margin="15,20,0,0"
+                        Visibility="Collapsed">
+                <TextBlock Text="ID:"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <TextBlock x:Name="txtID"
+                           FontSize="18"
+                           Foreground="White"
+                           Width="215" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="15,20,0,0">
+                <TextBlock Text="Name: "
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <TextBox x:Name="txtName"
+                         FontSize="18"
+                         Foreground="White"
+                         Width="215"
+                         Margin="0,0,100,0" />
+                <StackPanel  Orientation="Horizontal">
+
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="15,20,0,0">
+
+                <StackPanel VerticalAlignment="Center">
+                    <StackPanel  Orientation="Horizontal">
+                        <materialDesign:PackIcon Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}"
+                                                 Kind="Phone"
+                                                 Width="30"
+                                                 Height="30" />
+                        <TextBox x:Name="txtPhone"
+                                 Text="{Binding Phone}"
+                                 Width="215"
+                                 Foreground="White"
+                                 FontSize="18"
+                                 Margin="90,0,0,0"
+                                 materialDesign:TransitionAssist.DisableTransitions="True"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal">
+                        <materialDesign:PackIcon Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"
+                                                 Kind="MailRu"
+                                                 Width="30"
+                                                 Height="30" />
+                        <TextBox x:Name="txtMail"
+                                 Text="{Binding Email}"
+                                 Width="215"
+                                 FontSize="18"
+                                 Margin="90,0,0,0"
+                                 Foreground="White" />
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="15,20,0,0">
+                <TextBlock Text="Discount"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <ComboBox Foreground="White"
+                          x:Name="cbodiscount"
+                          IsEditable="False"
+                          IsEnabled="False"
+                          Width="60">
+                </ComboBox>
+                <TextBlock x:Name="textBlock"
+                           HorizontalAlignment="Stretch"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           Text="%"
+                           VerticalAlignment="Stretch"
+                           Width="19"
+                           Height="24"
+                           Margin="0,0,0,0" />
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    Height="40"
+                    Margin="72,308,78,21"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Button x:Name="bntAddnew"
+                    Content="Save"
+                    Width="121"
+                    Height="Auto"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Margin="0,0,0,0"
+                    Click="bntAddnew_Click" />
+            <Button x:Name="bntCancel"
+                    Content="Cancel"
+                    Height="Auto"
+                    Margin="100,0,0,0"
+                    Width="121"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Click="bntCancel_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

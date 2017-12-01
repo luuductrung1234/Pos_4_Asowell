@@ -1027,7 +1027,7 @@ namespace POS.EmployeeWorkSpace
             //    return;
             //}
 
-            SwapOrMergeTable smt = new SwapOrMergeTable(_unitofwork, currentTableList);
+            SwapOrMergeTable smt = new SwapOrMergeTable(_unitofwork, currentTableList, 1);
             smt.ShowDialog();
 
             //foreach(var rec in currentTableList)
@@ -1056,7 +1056,14 @@ namespace POS.EmployeeWorkSpace
 
         private void btnTableButtonMerge_Click(object sender, RoutedEventArgs e)
         {
+            SwapOrMergeTable smt = new SwapOrMergeTable(_unitofwork, currentTableList, 2);
+            smt.ShowDialog();
 
+            isTablesDataChange = true;
+            var en = (Entry)((MainWindow)Window.GetWindow(this)).en;
+            var tab = (Table)((MainWindow)Window.GetWindow(this)).b;
+            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(en);
+            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(tab);
         }
 
         //method navigate to entry page
