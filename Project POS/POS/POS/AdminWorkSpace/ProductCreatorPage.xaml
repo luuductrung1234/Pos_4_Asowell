@@ -13,8 +13,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.98*" />
-            <ColumnDefinition Width="1.02*" />
+            <ColumnDefinition Width="1.3*" />
+            <ColumnDefinition Width="0.7*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -43,7 +43,7 @@
                           FontWeight="Bold"
                           Margin="0,50,0,-336"
                           SelectionChanged="LvAvaibleIngredient_OnSelectionChanged"
-                          Width="669"
+                          Width="888"
                           Height="334">
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
@@ -51,16 +51,16 @@
                                             Width="100"
                                             DisplayMemberBinding="{Binding IgdId}" />
                             <GridViewColumn Header="Name"
-                                            Width="150"
+                                            Width="200"
                                             DisplayMemberBinding="{Binding Name}" />
                             <GridViewColumn Header="Info"
-                                            Width="100"
+                                            Width="150"
                                             DisplayMemberBinding="{Binding Info}" />
                             <GridViewColumn Header="User for"
                                             Width="100"
                                             DisplayMemberBinding="{Binding Usefor}" />
                             <GridViewColumn Header="Type"
-                                            Width="80"
+                                            Width="100"
                                             DisplayMemberBinding="{Binding IgdType}" />
                             <GridViewColumn Header="UnitBuy"
                                             Width="100"
@@ -89,56 +89,69 @@
                           Background="#FFED5C5C"
                           Foreground="White"
                           FontWeight="Bold"
-                          Margin="0,50,0,0">
+                          Margin="0,50,0,0"
+                          Height="222"
+                          Width="888">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding PdetailId}" />
+                                            Width="120"
+                                            DisplayMemberBinding="{Binding ProDe.PdetailId}" />
                             <GridViewColumn Header="Product ID"
                                             Width="0"
-                                            DisplayMemberBinding="{Binding ProductId}" />
+                                            DisplayMemberBinding="{Binding ProDe.ProductId}" />
                             <GridViewColumn Header="Name"
                                             Width="200"
-                                            DisplayMemberBinding="{Binding Product.Name}" />
+                                            DisplayMemberBinding="{Binding Ingre.Name}" />
                             <GridViewColumn Header="IgdId"
-                                            Width="130"
-                                            DisplayMemberBinding="{Binding IgdId}" />
-                            <GridViewColumn Header="Quantity"
-                                            Width="100"
-                                            DisplayMemberBinding="{Binding Quan}" />
-                            <GridViewColumn Header="UnitUse"
                                             Width="120"
-                                            DisplayMemberBinding="{Binding UnitUse}" >
+                                            DisplayMemberBinding="{Binding ProDe.IgdId}" />
+                            <GridViewColumn Header="Quantity"
+                                            Width="120">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox x:Name="txtQuantity"
+                                                 Text="{Binding ProDe.Quan}"
+                                                 Width="100"
+                                                 PreviewTextInput="NumberOnly_PreviewTextInput"
+                                                 TextChanged="txtQuantity_TextChanged"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="UnitUse"
+                                            Width="170">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <ComboBox x:Name="cboUnitUse"                                               
-                                                    Width="50"                                                
-                                                    Margin="0 0 0 0" />
+                                            <ComboBox x:Name="cboUnitUse"
+                                                      Background="White"
+                                                      Width="80"
+                                                      Foreground="Black"
+                                                      IsReadOnly="True"
+                                                      ItemsSource="{Binding UnitUseT}"
+                                                      SelectedItem="{Binding ProDe.UnitUse}"
+                                                      SelectionChanged="cboUnitUse_SelectionChanged"
+                                                      Margin="0,0,10,0"/>
                                             <Button x:Name="bntDeleteItem"
                                                     Width="45"
                                                     BorderBrush="DarkGray"
                                                     Background="DarkGray"
                                                     Margin="0 0 0 0"
                                                     Content="x"
-                                                    Click="BntDeleteItem_OnClick"/>
-                                            </StackPanel>
+                                                    Click="BntDeleteItem_OnClick" />
+                                        </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-
-
                         </GridView>
                     </ListView.View>
                 </ListView>
             </Grid>
         </Grid>
         <Grid Grid.Column="1">
-          
-            
-        <Grid
-            Margin="10,0,0,0">
+
+
+            <Grid Margin="10,0,0,0">
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
@@ -163,7 +176,7 @@
                             <Setter Property="FontWeight"
                                     Value="Bold" />
                             <Setter Property="Width"
-                                    Value="120" />
+                                    Value="150" />
                             <Setter Property="HorizontalAlignment"
                                     Value="Center" />
                             <Setter Property="VerticalAlignment"
@@ -174,7 +187,7 @@
                                 Margin="0,20,0,0">
                         <TextBlock Text="Name: "
                                    Style="{StaticResource ResourceKey=TextBlockLabel}"
-                                   Margin="0,0,20,0"/>
+                                   Margin="0,0,20,0" />
                         <TextBox x:Name="txtName"
                                  FontSize="18"
                                  Foreground="White"
@@ -207,10 +220,10 @@
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <ComboBox x:Name="cboType"
-                                 FontSize="18"
-                                 Foreground="White"
-                                 Width="215"
-                                 Margin="0,0,100,0" />
+                                  FontSize="18"
+                                  Foreground="White"
+                                  Width="215"
+                                  Margin="0,0,100,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
@@ -218,10 +231,11 @@
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <Button x:Name="bntLinkImg"
-                                  FontSize="18"
-                                  Foreground="White"                                  
-                                  Margin="0,0,100,0" >
-                            <materialDesign:PackIcon Kind="FolderImage" Foreground="Black" />
+                                FontSize="18"
+                                Foreground="White"
+                                Margin="0,0,100,0">
+                            <materialDesign:PackIcon Kind="FolderImage"
+                                                     Foreground="Black" />
                         </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
@@ -230,15 +244,15 @@
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtDiscount"
-                                   FontSize="18"
-                                   Foreground="White"
-                                   Width="215"
-                                   Margin="0,0,100,0" />
+                                 FontSize="18"
+                                 Foreground="White"
+                                 Width="215"
+                                 Margin="0,0,100,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="StandardStatus: "
-                                    Margin="0,0,20,0"
+                        <TextBlock Text="Standard Status: "
+                                   Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <ComboBox x:Name="cboStatus"
                                   FontSize="18"
@@ -270,7 +284,8 @@
                                  Margin="0,0,100,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0" HorizontalAlignment="Center">
+                                Margin="0,20,0,0"
+                                HorizontalAlignment="Center">
                         <Button x:Name="bntAdd"
                                 Content="Add"
                                 Height="46"
@@ -285,7 +300,7 @@
                                 Height="46"
                                 Width="106" />
                     </StackPanel>
-                   
+
                 </StackPanel>
             </Grid>
         </Grid>

@@ -36,8 +36,8 @@ namespace POS.EmployeeWorkSpace
             {
                 try
                 {
-                    _unitofwork = ((MainWindow) Window.GetWindow(this))._unitofwork;
-                    _cloudAsowellUnitofwork = ((MainWindow) Window.GetWindow(this)).CloudAsowellUnitofwork;
+                    _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
+                    _cloudAsowellUnitofwork = ((MainWindow)Window.GetWindow(this)).CloudAsowellUnitofwork;
                     lvCategoryStarter.ItemsSource =
                         _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
                     lvCategoryMain.ItemsSource =
@@ -45,13 +45,13 @@ namespace POS.EmployeeWorkSpace
                     lvCategoryDessert.ItemsSource =
                         _cloudAsowellUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
                     lvCategoryBeverages.ItemsSource =
-                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Beverage);
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage);
                     lvCategoryBeer.ItemsSource =
-                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Beer);
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
                     lvCategoryWine.ItemsSource =
-                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Wine);
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Wine);
                     lvCategoryOther.ItemsSource =
-                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int) ProductType.Other);
+                        _cloudAsowellUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Other);
 
 
                     IsRefreshMenu = false;
@@ -88,7 +88,7 @@ namespace POS.EmployeeWorkSpace
         //ToDo: Need to update the contain in Warehouse database when new order occur
         private void lvCategory_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if(App.Current.Properties["CurrentEmpWorking"] == null)
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
             {
                 return;
             }
@@ -104,7 +104,7 @@ namespace POS.EmployeeWorkSpace
             }
 
             orderTempCurrentTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(orderingTable.TableId)).First();
-            if(orderTempCurrentTable == null)
+            if (orderTempCurrentTable == null)
             {
                 return;
             }
@@ -178,7 +178,7 @@ namespace POS.EmployeeWorkSpace
                     }
                 }
 
-                
+
                 lbSelected.UnselectAll();
 
                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempCurrentTable);
@@ -294,7 +294,7 @@ namespace POS.EmployeeWorkSpace
         private void checkWorkingAction(EmpLoginList currentEmp, OrderTemp ordertempcurrenttable)
         {
             ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
-            if(currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
+            if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
             {
                 return;
             }
@@ -325,7 +325,7 @@ namespace POS.EmployeeWorkSpace
             ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
             _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
             _unitofwork.Save();
-            
+
         }
 
     }
