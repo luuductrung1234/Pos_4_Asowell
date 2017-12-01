@@ -38,13 +38,16 @@ namespace POS.EmployeeWorkSpace
         List<OrderDetailsTemp> orderDetailsOfSecond;
         List<List<OrderDetailsTemp>> chairOrderDetailsOfSecond;
 
-        public SwapOrMergeTable(EmployeewsOfAsowell unitofwork, List<Entities.Table> currentTableList)
+        int _type = 0;
+
+        public SwapOrMergeTable(EmployeewsOfAsowell unitofwork, List<Entities.Table> currentTableList, int type) //1: swap, 2: merge
         {
             _unitofwork = unitofwork;
             _currentTableList = currentTableList;
             _currentChairList = _unitofwork.ChairRepository.Get().ToList();
             _orderTempList = _unitofwork.OrderTempRepository.Get().ToList();
             _orderDetailsTempList = _unitofwork.OrderDetailsTempRepository.Get().ToList();
+            _type = type;
             InitializeComponent();
 
             initTableData();
@@ -55,9 +58,22 @@ namespace POS.EmployeeWorkSpace
 
         private void initTableData()
         {
+            if(_type == 1)
+            {
+                btnSwap.Visibility = Visibility.Visible;
+                btnMerge.Visibility = Visibility.Collapsed;
+                btnCancel.Visibility = Visibility.Visible;
+            }
+            else if(_type == 2)
+            {
+                btnSwap.Visibility = Visibility.Collapsed;
+                btnMerge.Visibility = Visibility.Visible;
+                btnCancel.Visibility = Visibility.Visible;
+            }
+
             foreach (var t in _currentTableList)
             {
-                if(t.IsPinned == 0)
+                if (t.IsPinned == 0)
                 {
                     continue;
                 }
@@ -83,7 +99,7 @@ namespace POS.EmployeeWorkSpace
                 {
                     button.Background = Brushes.DarkCyan;
                 }
-                
+
                 wpTableContainer.Children.Add(button);
             }
         }
@@ -181,13 +197,13 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.TableRepository.Update(first);
             _unitofwork.TableRepository.Update(second);
 
-            foreach(var ch in chairOfFirst)
+            foreach (var ch in chairOfFirst)
             {
                 ch.TableOwned = second.TableId;
                 _unitofwork.ChairRepository.Update(ch);
             }
 
-            foreach(var ch in chairOfSecond)
+            foreach (var ch in chairOfSecond)
             {
                 ch.TableOwned = first.TableId;
                 _unitofwork.ChairRepository.Update(ch);
@@ -220,7 +236,7 @@ namespace POS.EmployeeWorkSpace
                 IsOrdered = second.IsOrdered,
                 IsLocked = second.IsLocked,
                 IsPrinted = second.IsPrinted,
-                TableRec = second.TableRec,                
+                TableRec = second.TableRec,
             };
 
             //setting new first table
@@ -248,12 +264,227 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            ConfirmMergeDialog cmd = new ConfirmMergeDialog(_unitofwork, first, second);
-            cmd.Show();
-
             loadData();
 
-            OrderTemp mergeOrder = new OrderTemp();
+            ConfirmMergeDialog cmd = new ConfirmMergeDialog(_unitofwork, first, second);
+            cmd.ShowDialog();
+
+            if (App.Current.Properties["TableMerged"] == null)
+            {
+                this.Close();
+                return;
+            }
+
+            var merged = App.Current.Properties["TableMerged"] as Entities.Table;
+            if(merged.ChairAmount < (first.ChairAmount + second.ChairAmount))
+            {
+                //MessageBoxResult mess = MessageBox.Show("Table " + merged.TableNumber + " didn't have enough chair to merge! Do you want to add chair automatically?", "Warning!", MessageBoxButton.YesNo);
+                //if(mess == MessageBoxResult.Yes)
+                //{
+                //    for(int i = merged.ChairAmount; i < (first.ChairAmount + second.ChairAmount); i++)
+                //    {
+                //        Entities.Chair newch = new Entities.Chair();
+                //        newch.ChairNumber = i++;
+                //        newch.TableOwned = merged.TableId;
+                //        _unitofwork.ChairRepository.Insert(newch);
+                //        _unitofwork.Save();
+                //    }
+                //}
+                //else
+                //{
+                //    this.Close();
+                //    return;
+                //}
+            }
+
+            if (merged.TableId == first.TableId)
+            {
+                orderOfFirst.CusId = App.Current.Properties["TableOwner"] as string;
+                orderOfFirst.TableOwned = first.TableId;
+                _unitofwork.OrderTempRepository.Update(orderOfFirst);
+
+                checkEmpId(1);
+
+                loadData();
+
+                checkChair(1);
+
+                _unitofwork.Save();
+            }
+            else
+            {
+                orderOfSecond.CusId = App.Current.Properties["TableOwner"] as string;
+                orderOfSecond.TableOwned = second.TableId;
+                _unitofwork.OrderTempRepository.Update(orderOfSecond);
+
+                checkEmpId(2);
+
+                loadData();
+
+                checkChair(2);
+
+                _unitofwork.Save();
+            }
+        }
+
+        private void checkEmpId(int tab)
+        {
+            if (tab == 1)
+            {
+                if (orderOfFirst.SubEmpId != null)
+                {
+                    string[] subemplistfirst = orderOfFirst.SubEmpId.Split(',');
+                    if (orderOfSecond.SubEmpId != null)
+                    {
+                        string[] subemplistsecond = orderOfSecond.SubEmpId.Split(',');
+
+                        orderOfFirst.SubEmpId += orderOfSecond.SubEmpId;
+
+                        if (!orderOfSecond.EmpId.Equals(orderOfFirst.EmpId))
+                        {
+                            orderOfFirst.SubEmpId += orderOfSecond.EmpId;
+                        }
+                    }
+                }
+                else
+                {
+                    if (orderOfSecond.SubEmpId != null)
+                    {
+                        orderOfFirst.SubEmpId = orderOfSecond.SubEmpId;
+
+                        if (!orderOfSecond.EmpId.Equals(orderOfFirst.EmpId))
+                        {
+                            orderOfFirst.SubEmpId += orderOfSecond.EmpId;
+                        }
+                    }
+                }
+
+                setToOriData(tab);
+            }
+
+            if (tab == 2)
+            {
+                if (orderOfSecond.SubEmpId != null)
+                {
+                    string[] subemplistsecond = orderOfSecond.SubEmpId.Split(',');
+                    if (orderOfFirst.SubEmpId != null)
+                    {
+                        string[] subemplistfirst = orderOfFirst.SubEmpId.Split(',');
+
+                        orderOfSecond.SubEmpId += orderOfFirst.SubEmpId;
+
+                        if (!orderOfFirst.EmpId.Equals(orderOfSecond.EmpId))
+                        {
+                            orderOfSecond.SubEmpId += orderOfFirst.EmpId;
+                        }
+                    }
+                }
+                else
+                {
+                    if (orderOfFirst.SubEmpId != null)
+                    {
+                        orderOfSecond.SubEmpId = orderOfFirst.SubEmpId;
+
+                        if (!orderOfFirst.EmpId.Equals(orderOfSecond.EmpId))
+                        {
+                            orderOfSecond.SubEmpId += orderOfFirst.EmpId;
+                        }
+                    }
+                }
+                
+                setToOriData(tab);
+            }
+        }
+
+        private void checkChair(int tab)
+        {
+            var chairOfFirst = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(first.TableId)).ToList();
+            var chairOfSecond = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(second.TableId)).ToList();
+
+            if (tab == 1)
+            {
+                int count = 0;
+                foreach(var ch in chairOfFirst)
+                {
+                    var chair = orderDetailsOfFirst.Where(x => x.ChairId.Equals(ch.ChairId)).ToList();
+                    if(chair == null)
+                    {
+                        continue;
+                    }
+
+                    count++;
+                }
+
+                foreach(var ch in chairOfSecond)
+                {
+                    Entities.Chair newch = new Entities.Chair();
+                    newch.ChairNumber = ch.ChairNumber;
+                    newch.TableOwned = second.TableId;
+                    _unitofwork.ChairRepository.Insert(newch);
+
+                    var chair = orderDetailsOfSecond.Where(x => x.ChairId.Equals(ch.ChairId)).ToList();
+                    if (chair == null)
+                    {
+                        continue;
+                    }
+
+                    foreach(var chod in chair)
+                    {
+                        _unitofwork.OrderDetailsTempRepository.Delete(chod);
+                        _unitofwork.Save();
+                        chod.OrdertempId = orderOfFirst.OrdertempId;
+                        _unitofwork.OrderDetailsTempRepository.Insert(chod);
+                    }
+
+                    _unitofwork.Save();
+
+                    ch.ChairNumber = ++count;
+                    ch.TableOwned = first.TableId;
+                    _unitofwork.ChairRepository.Update(ch);
+                }
+            }
+
+            if (tab == 2)
+            {
+                int count = 0;
+                foreach (var ch in chairOfSecond)
+                {
+                    var chair = orderDetailsOfSecond.Where(x => x.ChairId.Equals(ch.ChairId)).ToList();
+                    if (chair == null)
+                    {
+                        continue;
+                    }
+
+                    count++;
+                }
+
+                foreach (var ch in chairOfFirst)
+                {
+                    Entities.Chair newch = new Entities.Chair();
+                    newch.ChairNumber = ch.ChairNumber;
+                    newch.TableOwned = second.TableId;
+                    _unitofwork.ChairRepository.Insert(newch);
+
+                    var chair = orderDetailsOfSecond.Where(x => x.ChairId.Equals(ch.ChairId)).ToList();
+                    if (chair == null)
+                    {
+                        continue;
+                    }
+
+                    foreach (var chod in chair)
+                    {
+                        _unitofwork.OrderDetailsTempRepository.Delete(chod);
+                        chod.OrdertempId = orderOfSecond.OrdertempId;
+                        _unitofwork.OrderDetailsTempRepository.Insert(chod);
+                    }
+
+                    _unitofwork.Save();
+
+                    ch.ChairNumber = count++;
+                    ch.TableOwned = second.TableId;
+                    _unitofwork.ChairRepository.Update(ch);
+                }
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -271,6 +502,49 @@ namespace POS.EmployeeWorkSpace
 
             chairOrderDetailsOfFirst = orderDetailsOfFirst.GroupBy(x => x.ChairId).Select(a => a.ToList()).ToList();
             chairOrderDetailsOfSecond = orderDetailsOfSecond.GroupBy(x => x.ChairId).Select(x => x.ToList()).ToList();
+        }
+
+        private void setToOriData(int tab)
+        {
+            if (tab == 1)
+            {
+                second.IsOrdered = 0;
+                second.IsPrinted = 0;
+
+                orderOfSecond.CusId = "CUS0000001";
+                orderOfSecond.Discount = 0;
+                orderOfSecond.TableOwned = second.TableId;
+                orderOfSecond.Ordertime = DateTime.Now;
+                orderOfSecond.TotalPriceNonDisc = 0;
+                orderOfSecond.TotalPrice = 0;
+                orderOfSecond.CustomerPay = 0;
+                orderOfSecond.PayBack = 0;
+                orderOfSecond.SubEmpId = "";
+
+                _unitofwork.TableRepository.Update(second);
+                _unitofwork.OrderTempRepository.Update(orderOfFirst);
+                _unitofwork.OrderTempRepository.Update(orderOfSecond);
+            }
+
+            if (tab == 2)
+            {
+                first.IsOrdered = 0;
+                first.IsPrinted = 0;
+
+                orderOfFirst.CusId = "CUS0000001";
+                orderOfFirst.Discount = 0;
+                orderOfFirst.TableOwned = first.TableId;
+                orderOfFirst.Ordertime = DateTime.Now;
+                orderOfFirst.TotalPriceNonDisc = 0;
+                orderOfFirst.TotalPrice = 0;
+                orderOfFirst.CustomerPay = 0;
+                orderOfFirst.PayBack = 0;
+                orderOfFirst.SubEmpId = "";
+
+                _unitofwork.TableRepository.Update(first);
+                _unitofwork.OrderTempRepository.Update(orderOfFirst);
+                _unitofwork.OrderTempRepository.Update(orderOfSecond);
+            }
         }
     }
 
@@ -313,4 +587,29 @@ namespace POS.EmployeeWorkSpace
     //        this.Controls.Add(message);
     //    }
     //}
+
+    //for (int i = 0; i < subemplistfirst.Count(); i++)
+    //{
+    //    for (int j = 0; j < subemplistsecond.Count(); j++)
+    //    {
+    //        if (subemplistsecond[j].Equals(""))
+    //        {
+    //            continue;
+    //        }
+
+    //        if(subemplistfirst[i].Equals(subemplistsecond[j]))
+    //        {
+    //            continue;
+    //        }
+    //        else
+    //        {
+
+    //        }
+    //    }
+    //}
+
+    //ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
+    //_unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
+    //_unitofwork.Save();
+    //return;
 }

@@ -31,20 +31,44 @@
                    Text="Please choose a table want to merge. Table first.TableNumber or second.TableNumber ?"
                    Margin="10,10,10,111"
                    Width="472" />
-        <Button x:Name="btnFirst"
-                Content=""
-                HorizontalAlignment="Left"
-                Margin="151,107,0,0"
-                VerticalAlignment="Top"
-                Width="75"
-                Click="btnFirst_Click"/>
-        <Button x:Name="btnSecond"
-                Content=""
-                HorizontalAlignment="Left"
-                Margin="241,107,0,0"
-                VerticalAlignment="Top"
-                Width="75"
-                Click="btnSecond_Click"/>
+
+
+        <StackPanel Orientation="Horizontal"
+                    Height="50"
+                    Margin="0,109,0,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Button x:Name="btnFirst"
+                    Content=""
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="75"
+                    Click="btnFirst_Click" />
+            <Button x:Name="btnSecond"
+                    Content=""
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="75"
+                    Click="btnSecond_Click" />
+            <Button x:Name="btnFirstCus"
+                    Content=""
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="75"
+                    Click="btnFirstCus_Click" />
+            <Button x:Name="btnSecondCus"
+                    Content=""
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="75"
+                    Click="btnSecondCus_Click" />
+            <Button x:Name="btnCancel"
+                    Content="Cancel"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="75"
+                    Click="btnCancel_Click" />
+        </StackPanel>
 
     </Grid>
 </Window>

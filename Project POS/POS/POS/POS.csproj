@@ -161,6 +161,9 @@
     <Compile Include="AdminWorkSpace\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\CustomerAddOrUpdateDialog.xaml.cs">
+      <DependentUpon>CustomerAddOrUpdateDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\CustomerPage.xaml.cs">
       <DependentUpon>CustomerPage.xaml</DependentUpon>
     </Compile>
@@ -346,6 +349,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\CustomerAddOrUpdateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
