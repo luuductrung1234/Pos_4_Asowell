@@ -22,8 +22,8 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class AllEmployeeLogin : Window
     {
-        private EmployeewsOfLocalAsowell _unitofwork;
-        private EmployeewsOfCloudAsowell _cloudAsowellUnitofwork;
+        private EmployeewsOfLocalPOS _unitofwork;
+        private EmployeewsOfCloudPOS _cloudPosUnitofwork;
         private List<Employee> _employee;
         private EmpLoginList _emplog;
         MaterialDesignThemes.Wpf.Chip _cUser;
@@ -32,11 +32,11 @@ namespace POS.EmployeeWorkSpace
         private int _typeshow = 0; //1: login, 2: details, 3: logout, 4: start working
         private Window _main;
 
-        public AllEmployeeLogin(Window main, EmployeewsOfLocalAsowell unitofwork, EmployeewsOfCloudAsowell cloudAsowellUnitofwork, MaterialDesignThemes.Wpf.Chip cUser, int typeshow)
+        public AllEmployeeLogin(Window main, EmployeewsOfLocalPOS unitofwork, EmployeewsOfCloudPOS cloudPosUnitofwork, MaterialDesignThemes.Wpf.Chip cUser, int typeshow)
         {
             _unitofwork = unitofwork;
-            _cloudAsowellUnitofwork = cloudAsowellUnitofwork;
-            _employee = _cloudAsowellUnitofwork.EmployeeRepository.Get(x => x.Deleted == 0).ToList();
+            _cloudPosUnitofwork = cloudPosUnitofwork;
+            _employee = _cloudPosUnitofwork.EmployeeRepository.Get(x => x.Deleted == 0).ToList();
             _main = main;
 
             _cUser = cUser;
@@ -218,7 +218,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 else if (_typeshow == 2)//view
                 {
-                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _cloudAsowellUnitofwork);
+                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _cloudPosUnitofwork);
                     ed.ShowDialog();
                     setControl(true);
                 }
@@ -386,7 +386,7 @@ namespace POS.EmployeeWorkSpace
                         return;
                     }
 
-                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _cloudAsowellUnitofwork);
+                    EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _cloudPosUnitofwork);
                     ed.ShowDialog();
 
                     setControl(true);
@@ -527,7 +527,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _cloudAsowellUnitofwork);
+            EmployeeDetail ed = new EmployeeDetail(_emplog.Emp.Username, _cloudPosUnitofwork);
             ed.ShowDialog();
 
             setControl(true);
@@ -559,14 +559,14 @@ namespace POS.EmployeeWorkSpace
                         if((empout.Emp.Username.Equals(username) && empout.Emp.Pass.Equals(pass)) || empout.Emp.empCode.Equals(code))
                         {
                             empout.EmpWH.EndTime = DateTime.Now;
-                            _cloudAsowellUnitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);
-                            _cloudAsowellUnitofwork.Save();
+                            _cloudPosUnitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);
+                            _cloudPosUnitofwork.Save();
 
                             var workH = empout.EmpWH.EndTime - empout.EmpWH.StartTime;
-                            empout.EmpSal = _cloudAsowellUnitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(empout.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
+                            empout.EmpSal = _cloudPosUnitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(empout.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
                             empout.EmpSal.WorkHour += workH.Hours + workH.Minutes / 60 + workH.Seconds / 3600;
-                            _cloudAsowellUnitofwork.SalaryNoteRepository.Update(empout.EmpSal);
-                            _cloudAsowellUnitofwork.Save();
+                            _cloudPosUnitofwork.SalaryNoteRepository.Update(empout.EmpSal);
+                            _cloudPosUnitofwork.Save();
 
                             EmpLoginListData.emploglist.Remove(empout);
 
@@ -598,7 +598,7 @@ namespace POS.EmployeeWorkSpace
 
                             try
                             {
-                                SalaryNote empSalaryNote = _cloudAsowellUnitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
+                                SalaryNote empSalaryNote = _cloudPosUnitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
 
                                 App.Current.Properties["EmpSN"] = empSalaryNote;
                                 WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalaryNote.SnId, EmpId = empSalaryNote.EmpId };
@@ -607,8 +607,8 @@ namespace POS.EmployeeWorkSpace
                             catch (Exception ex)
                             {
                                 SalaryNote empSalary = new SalaryNote { EmpId = emp.EmpId, SalaryValue = 0, WorkHour = 0, ForMonth = DateTime.Now.Month, ForYear = DateTime.Now.Year, IsPaid = 0 };
-                                _cloudAsowellUnitofwork.SalaryNoteRepository.Insert(empSalary);
-                                _cloudAsowellUnitofwork.Save();
+                                _cloudPosUnitofwork.SalaryNoteRepository.Insert(empSalary);
+                                _cloudPosUnitofwork.Save();
                                 WorkingHistory empWorkHistory = new WorkingHistory { ResultSalary = empSalary.SnId, EmpId = empSalary.EmpId };
                                 App.Current.Properties["EmpWH"] = empWorkHistory;
                                 App.Current.Properties["EmpSN"] = empSalary;

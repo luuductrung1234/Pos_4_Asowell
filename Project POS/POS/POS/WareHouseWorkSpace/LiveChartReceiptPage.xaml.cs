@@ -25,12 +25,12 @@ namespace POS.WareHouseWorkSpace
     /// </summary>
     public partial class LiveChartReceiptPage : Page
     {
-        AdminwsOfCloudAsowell _unitofwork;
+        AdminwsOfCloudPOS _unitofwork;
         private ChartValues<decimal> Average1;
         private ChartValues<decimal> Average2;
         private ChartValues<decimal> ValueExpense;
         private ChartValues<decimal> ValueRevenue;
-        public LiveChartReceiptPage(AdminwsOfCloudAsowell unitofwork)
+        public LiveChartReceiptPage(AdminwsOfCloudPOS unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
@@ -187,7 +187,7 @@ namespace POS.WareHouseWorkSpace
             loadDataRevenue(_unitofwork, ValueRevenue);
         }
 
-        private void loadDataExpense(AdminwsOfCloudAsowell unitofwork, ChartValues<decimal> ValueExpense)
+        private void loadDataExpense(AdminwsOfCloudPOS unitofwork, ChartValues<decimal> ValueExpense)
         {
             
             decimal totalMonthAmount1 = 0;
@@ -217,7 +217,7 @@ namespace POS.WareHouseWorkSpace
             var valueM12 = unitofwork.ReceiptNoteRepository.Get(c => c.Inday.Month == 12);
             FindValueInMonthReceiptNote(ValueExpense, valueM1, totalMonthAmount1, valueM2, totalMonthAmount2, valueM3, totalMonthAmount3, valueM4, totalMonthAmount4, valueM5, totalMonthAmount5, valueM6, totalMonthAmount6, valueM7, totalMonthAmount7, valueM8, totalMonthAmount8, valueM9, totalMonthAmount9, valueM10, totalMonthAmount10, valueM11, totalMonthAmount11, valueM12, totalMonthAmount12);
         }
-        private void loadDataRevenue(AdminwsOfCloudAsowell unitofwork, ChartValues<decimal> ValueExpense)
+        private void loadDataRevenue(AdminwsOfCloudPOS unitofwork, ChartValues<decimal> ValueExpense)
         {
             decimal totalMonthAmount1 = 0;
             decimal totalMonthAmount2 = 0;

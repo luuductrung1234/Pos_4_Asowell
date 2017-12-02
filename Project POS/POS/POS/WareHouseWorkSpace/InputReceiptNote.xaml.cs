@@ -17,7 +17,7 @@ namespace POS.WareHouseWorkSpace
     /// </summary>
     public partial class InputReceiptNote : Page
     {
-        private AdminwsOfCloudAsowell _unitofwork;
+        private AdminwsOfCloudPOS _unitofwork;
         private List<Ingredient> IngdList;
         internal ReceiptNote CurrentReceipt;
         internal List<ReceiptNoteDetail> ReceiptDetailsList;
@@ -25,7 +25,7 @@ namespace POS.WareHouseWorkSpace
         private static readonly string ORTHER_PERCHAGSE_ID = "IGD0000047";
 
 
-        public InputReceiptNote(AdminwsOfCloudAsowell unitofwork, List<Ingredient> ingdList)
+        public InputReceiptNote(AdminwsOfCloudPOS unitofwork, List<Ingredient> ingdList)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
@@ -100,7 +100,6 @@ namespace POS.WareHouseWorkSpace
                     return;
                 foundIteminReceipt.Quan++;
             }
-            //lvDataReceipt.ItemsSource = ReceiptDetailsList;
             lvDataReceipt.Items.Refresh();
             LoadReceiptData();
         }

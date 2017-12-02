@@ -21,7 +21,7 @@ namespace POS.Context
     using System.Linq;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class AsowellContext : System.Data.Entity.DbContext, IAsowellContext
+    public partial class CloudContext : System.Data.Entity.DbContext, ICloudContext
     {
         public System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes
         public System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; } // ApplicationLog
@@ -38,36 +38,36 @@ namespace POS.Context
         public System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; } // WareHouse
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; } // WorkingHistory
 
-        static AsowellContext()
+        static CloudContext()
         {
-            System.Data.Entity.Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<AsowellContext, MigrationConfiguration>());
+            System.Data.Entity.Database.SetInitializer(new System.Data.Entity.MigrateDatabaseToLatestVersion<CloudContext, MigrationConfiguration>());
         }
 
-        public AsowellContext()
-            : base("Name=AsowellAzureContext")
+        public CloudContext()
+            : base("Name=POSAzureConns")
         {
             InitializePartial();
         }
 
-        public AsowellContext(string connectionString)
+        public CloudContext(string connectionString)
             : base(connectionString)
         {
             InitializePartial();
         }
 
-        public AsowellContext(string connectionString, System.Data.Entity.Infrastructure.DbCompiledModel model)
+        public CloudContext(string connectionString, System.Data.Entity.Infrastructure.DbCompiledModel model)
             : base(connectionString, model)
         {
             InitializePartial();
         }
 
-        public AsowellContext(System.Data.Common.DbConnection existingConnection, bool contextOwnsConnection)
+        public CloudContext(System.Data.Common.DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
         {
             InitializePartial();
         }
 
-        public AsowellContext(System.Data.Common.DbConnection existingConnection, System.Data.Entity.Infrastructure.DbCompiledModel model, bool contextOwnsConnection)
+        public CloudContext(System.Data.Common.DbConnection existingConnection, System.Data.Entity.Infrastructure.DbCompiledModel model, bool contextOwnsConnection)
             : base(existingConnection, model, contextOwnsConnection)
         {
             InitializePartial();

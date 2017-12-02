@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using LiveCharts;
 using POS.Entities;
 using POS.Repository.DAL;
 
@@ -21,10 +12,10 @@ namespace POS.WareHouseWorkSpace
     /// <summary>
     /// Interaction logic for WareHouseWindow.xaml
     /// </summary>
-    
+
     public partial class WareHouseWindow : Window
     {
-        AdminwsOfCloudAsowell _unitofwork;
+        AdminwsOfCloudPOS _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
         private InputReceiptNote _inputReceipt;
@@ -39,13 +30,11 @@ namespace POS.WareHouseWorkSpace
         {
             InitializeComponent();
 
-            _unitofwork = new AdminwsOfCloudAsowell();
+            _unitofwork = new AdminwsOfCloudPOS();
             IngdList = _unitofwork.IngredientRepository.Get(c => c.Deleted.Equals(0), includeProperties: "WareHouse").ToList();
 
             _innIngredientPage =new IngredientPage(_unitofwork, IngdList);
             _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
-
-            
             _inputReceipt = new InputReceiptNote(_unitofwork, IngdList);
 
 
@@ -67,7 +56,7 @@ namespace POS.WareHouseWorkSpace
 
             DispatcherTimer RefreshTimer = new DispatcherTimer();
             RefreshTimer.Tick += Refresh_Tick;
-            RefreshTimer.Interval = new TimeSpan(0, 0, 20);
+            RefreshTimer.Interval = new TimeSpan(0, 1, 0);
             RefreshTimer.Start();
         }
 
@@ -108,7 +97,6 @@ namespace POS.WareHouseWorkSpace
 
             _innIngredientPage.lvItem.Items.Refresh();
             _inputReceipt.lvDataIngredient.Items.Refresh();
-            //_innIngredientPage = new IngredientPage(_unitofwork, IngdList);
         }
 
 

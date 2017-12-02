@@ -26,7 +26,7 @@ namespace POS.Context
         /// <param name="configConnectionStringName">Name of this new connection string</param>
         /// <param name="applicationName">Name of the application do the connections</param>
         public static void ChangeDatabase(
-            this AsowellContext source,
+            this CloudContext source,
             string initialCatalog = "",
             string dataSource = "",
             string userId = "",

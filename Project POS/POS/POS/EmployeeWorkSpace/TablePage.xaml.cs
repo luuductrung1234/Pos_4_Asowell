@@ -24,15 +24,15 @@ namespace POS.EmployeeWorkSpace
     public partial class Table : Page
     {
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        private EmployeewsOfLocalAsowell _unitofwork;
-        private EmployeewsOfCloudAsowell _cloudAsowellUnitofwork;
+        private EmployeewsOfLocalPOS _unitofwork;
+        private EmployeewsOfCloudPOS _cloudPosUnitofwork;
         private List<Entities.Table> currentTableList;
         private DropShadowBitmapEffect recShadow, recShadowOrdered;
 
-        public Table(EmployeewsOfLocalAsowell unitofwork, EmployeewsOfCloudAsowell cloudAsowellUnitofwork)
+        public Table(EmployeewsOfLocalPOS unitofwork, EmployeewsOfCloudPOS cloudPosUnitofwork)
         {
             _unitofwork = unitofwork;
-            _cloudAsowellUnitofwork = cloudAsowellUnitofwork;
+            _cloudPosUnitofwork = cloudPosUnitofwork;
             InitializeComponent();
 
             recShadow = new DropShadowBitmapEffect
@@ -541,7 +541,7 @@ namespace POS.EmployeeWorkSpace
                             return;
                         }
 
-                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudAsowellUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
@@ -573,7 +573,7 @@ namespace POS.EmployeeWorkSpace
                             }
                         }
 
-                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudAsowellUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
@@ -595,7 +595,7 @@ namespace POS.EmployeeWorkSpace
                             return;
                         }
 
-                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudAsowellUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
+                        ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
                         checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
@@ -663,7 +663,7 @@ namespace POS.EmployeeWorkSpace
                     MessageBoxResult mess = MessageBox.Show("You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                     if (mess == MessageBoxResult.Yes)
                     {
-                        PermissionRequired pr = new PermissionRequired(_cloudAsowellUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
                         pr.ShowDialog();
 
                         if (App.Current.Properties["AdLogin"] != null)
@@ -726,7 +726,7 @@ namespace POS.EmployeeWorkSpace
                 MessageBoxResult mess = MessageBox.Show("You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                 if (mess == MessageBoxResult.Yes)
                 {
-                    PermissionRequired pr = new PermissionRequired(_cloudAsowellUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                    PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
                     pr.ShowDialog();
 
                     if (App.Current.Properties["AdLogin"] != null)
@@ -958,7 +958,7 @@ namespace POS.EmployeeWorkSpace
                     if (table.IsOrdered == 1)
                     {
                         Customer cus = null;
-                        if ((cus = _cloudAsowellUnitofwork.CustomerRepository.Get(x => x.CusId.Equals(ordertemptable.CusId)).FirstOrDefault()) != null)
+                        if ((cus = _cloudPosUnitofwork.CustomerRepository.Get(x => x.CusId.Equals(ordertemptable.CusId)).FirstOrDefault()) != null)
                         {
                             tt += "\nOrder Customer: " + cus.Name;
                         }
@@ -969,7 +969,7 @@ namespace POS.EmployeeWorkSpace
                             foreach (var tableOD in orderdetailstemptable)
                             {
                                 Product prod = null;
-                                if ((prod = _cloudAsowellUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(tableOD.ProductId)).FirstOrDefault()) != null)
+                                if ((prod = _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(tableOD.ProductId)).FirstOrDefault()) != null)
                                 {
                                     tt += "\nProduct Name: " + prod.Name;
                                 }

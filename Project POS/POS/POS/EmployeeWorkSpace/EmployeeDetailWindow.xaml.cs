@@ -16,12 +16,12 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class EmployeeDetail : Window
     {
-        private EmployeewsOfCloudAsowell _cloudAsowellUnitofwork;
+        private EmployeewsOfCloudPOS _cloudPosUnitofwork;
         Employee em;
 
-        public EmployeeDetail(string UserName,  EmployeewsOfCloudAsowell cloudAsowellUnitofwork)
+        public EmployeeDetail(string UserName,  EmployeewsOfCloudPOS cloudPosUnitofwork)
         {
-            _cloudAsowellUnitofwork = cloudAsowellUnitofwork;
+            _cloudPosUnitofwork = cloudPosUnitofwork;
             InitializeComponent();
             loadData(UserName);
             InitlsWh();
@@ -29,7 +29,7 @@ namespace POS.EmployeeWorkSpace
 
         private void loadData(string UserName)
         {
-            em = _cloudAsowellUnitofwork.EmployeeRepository.Get(e => e.Username.Equals(UserName)).First();
+            em = _cloudPosUnitofwork.EmployeeRepository.Get(e => e.Username.Equals(UserName)).First();
 
             this.EmployeeInfo.DataContext = em;
         }
@@ -37,7 +37,7 @@ namespace POS.EmployeeWorkSpace
         private void InitlsWh()
         {
             ShowWHData.showWHList.Clear();
-            var whListAll = _cloudAsowellUnitofwork.WorkingHistoryRepository.Get(w => w.EmpId.Equals(em.EmpId) && w.StartTime.Month.Equals(DateTime.Now.Month) && w.StartTime.Year.Equals(DateTime.Now.Year)).ToList();
+            var whListAll = _cloudPosUnitofwork.WorkingHistoryRepository.Get(w => w.EmpId.Equals(em.EmpId) && w.StartTime.Month.Equals(DateTime.Now.Month) && w.StartTime.Year.Equals(DateTime.Now.Year)).ToList();
             foreach (var i in whListAll)
             {
                 ShowWH newWH = new ShowWH();
@@ -81,7 +81,7 @@ namespace POS.EmployeeWorkSpace
 
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeChangePass empPass = new EmployeeChangePass(_cloudAsowellUnitofwork, em);
+            EmployeeChangePass empPass = new EmployeeChangePass(_cloudPosUnitofwork, em);
             empPass.ShowDialog();
         }
     }

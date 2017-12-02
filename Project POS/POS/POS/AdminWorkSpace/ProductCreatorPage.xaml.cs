@@ -22,10 +22,10 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class ProductCreatorPage : Page
     {
-        private AdminwsOfCloudAsowell _unitofwork;
+        private AdminwsOfCloudPOS _unitofwork;
         List<Ingredient> _igreList;
         Product _currentProduct = new Product();
-        public ProductCreatorPage(AdminwsOfCloudAsowell unitofwork)
+        public ProductCreatorPage(AdminwsOfCloudPOS unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();

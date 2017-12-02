@@ -21,7 +21,7 @@ namespace POS.Context
     using System.Linq;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class FakeAsowellContext : IAsowellContext
+    public partial class FakeCloudContext : ICloudContext
     {
         public System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; }
         public System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; }
@@ -42,7 +42,7 @@ namespace POS.Context
         public System.Data.Entity.DbSet<WareHouse> WareHouses { get; set; }
         public System.Data.Entity.DbSet<WorkingHistory> WorkingHistories { get; set; }
 
-        public FakeAsowellContext()
+        public FakeCloudContext()
         {
             AdminRes = new FakeDbSet<AdminRe>("AdId");
             ApplicationLogs = new FakeDbSet<ApplicationLog>("Id");

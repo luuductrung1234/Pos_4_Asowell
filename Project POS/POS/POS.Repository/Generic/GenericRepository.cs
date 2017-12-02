@@ -13,10 +13,10 @@ namespace POS.Repository.Generic
 {
     public class GenericRepository<TEntity> where TEntity: class
     {
-        internal AsowellContext context;
+        internal CloudContext context;
         internal DbSet dbSet;
 
-        public GenericRepository(AsowellContext context)
+        public GenericRepository(CloudContext context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();

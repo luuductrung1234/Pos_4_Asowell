@@ -9,9 +9,9 @@ namespace POS.Repository.SeperateRepo
 {
     public class CustomerRepository : Interfaces.ICustomerRepository
     {
-        private AsowellContext context;
+        private CloudContext context;
 
-        public CustomerRepository(AsowellContext context)
+        public CustomerRepository(CloudContext context)
         {
             this.context = context;
         }

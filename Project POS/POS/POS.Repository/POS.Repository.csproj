@@ -47,9 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\AdminwsOfCloudAsowell.cs" />
-    <Compile Include="DAL\EmployeewsOfCloudAsowell.cs" />
-    <Compile Include="DAL\EmployeewsOfLocalAsowell.cs" />
+    <Compile Include="DAL\AdminwsOfCloudPOS.cs" />
+    <Compile Include="DAL\EmployeewsOfCloudPOS.cs" />
+    <Compile Include="DAL\EmployeewsOfLocalPOS.cs" />
     <Compile Include="Generic\GenericRepository.cs" />
     <Compile Include="Generic\GenericRepositoryForLocal.cs" />
     <Compile Include="Seperate Repo\AdminReRepository.cs" />

@@ -37,9 +37,10 @@ GO
 
 
 insert into AdminRes values
-('AD00000001', 'admin_username1', 'password2', N'Ton That Vinh'),
-('AD00000002', 'admin_username2', 'password3', N'Luu Duc Trung')
+('AD00000001', 'admin_username1', 'password1', N'Ton That Vinh'),
+('AD00000002', 'admin_username2', 'Trung1997', N'Luu Duc Trung')
 go
+
 
 
 insert into Employee 

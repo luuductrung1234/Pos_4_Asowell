@@ -11,7 +11,7 @@ namespace POS.Repository.DAL
     /// All that the class needs is a Save method and a property for each repository. 
     /// Each repository property returns a repository instance that has been instantiated using the same database context instance as the other repository instances.
     /// </summary>
-    public class EmployeewsOfLocalAsowell : IDisposable
+    public class EmployeewsOfLocalPOS : IDisposable
     {
         private LocalContext context;
 
@@ -22,12 +22,12 @@ namespace POS.Repository.DAL
         private GenericRepositoryForLocal<Chair> _chairRepository;
         private GenericRepositoryForLocal<Table> _tableRepository;
 
-        public EmployeewsOfLocalAsowell()
+        public EmployeewsOfLocalPOS()
         {
             context = new LocalContext();
         }
 
-        public EmployeewsOfLocalAsowell(string connectionString)
+        public EmployeewsOfLocalPOS(string connectionString)
         {
             context = new LocalContext(connectionString);
         }

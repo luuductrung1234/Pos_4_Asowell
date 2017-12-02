@@ -27,8 +27,8 @@ namespace POS.EmployeeWorkSpace
         /// the object that store all repository you want to get data DBAsowell
         /// in Employee WorkSpace
         /// </summary>
-        internal EmployeewsOfLocalAsowell _unitofwork;
-        internal EmployeewsOfCloudAsowell CloudAsowellUnitofwork;
+        internal EmployeewsOfLocalPOS _unitofwork;
+        internal EmployeewsOfCloudPOS CloudPosUnitofwork;
 
         Employee emp;
         SalaryNote empSln;
@@ -60,22 +60,22 @@ namespace POS.EmployeeWorkSpace
             //string[] config = ReadWriteData.ReadDBConfig();
             //if (config != null)
             //{
-            //    _unitofwork = new EmployeewsOfLocalAsowell(config[0], config[1], config[2], config[3]);
+            //    _unitofwork = new EmployeewsOfLocalPOS(config[0], config[1], config[2], config[3]);
             //}
             //else
             //{
-            //    _unitofwork = new EmployeewsOfLocalAsowell();
+            //    _unitofwork = new EmployeewsOfLocalPOS();
             //}
 
-            _unitofwork = new EmployeewsOfLocalAsowell();
-            CloudAsowellUnitofwork = new EmployeewsOfCloudAsowell();
+            _unitofwork = new EmployeewsOfLocalPOS();
+            CloudPosUnitofwork = new EmployeewsOfCloudPOS();
             try
             {
-                b = new Table(_unitofwork, CloudAsowellUnitofwork);
+                b = new Table(_unitofwork, CloudPosUnitofwork);
                 d = new Dash();
                 en = new Entry();
                 info = new Info();
-                st = new SettingFoodPage(CloudAsowellUnitofwork);
+                st = new SettingFoodPage(CloudPosUnitofwork);
                 stts = new SettingTableSize();
 
                 DispatcherTimer workTimer = new DispatcherTimer();
@@ -260,7 +260,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudAsowellUnitofwork, cUser, 4);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudPosUnitofwork, cUser, 4);
             ael.ShowDialog();
         }
 
@@ -303,7 +303,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudAsowellUnitofwork, cUser, 1);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudPosUnitofwork, cUser, 1);
             ael.ShowDialog();
         }
 
@@ -314,7 +314,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudAsowellUnitofwork, cUser, 2);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudPosUnitofwork, cUser, 2);
             ael.ShowDialog();
         }
 
@@ -325,7 +325,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudAsowellUnitofwork, cUser, 3);
+            AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudPosUnitofwork, cUser, 3);
             ael.ShowDialog();
 
             if(App.Current.Properties["CurrentEmpWorking"] == null)
@@ -384,7 +384,7 @@ namespace POS.EmployeeWorkSpace
 
         private void LbiEODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var printer = new DoPrintHelper(_unitofwork, CloudAsowellUnitofwork, DoPrintHelper.Eod_Printing);
+            var printer = new DoPrintHelper(_unitofwork, CloudPosUnitofwork, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
         

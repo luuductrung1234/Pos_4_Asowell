@@ -1,39 +1,42 @@
-﻿using System;
+﻿using POS.Context;
+using POS.Entities;
+using POS.Repository.Generic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using POS.Context;
-using POS.Entities;
-using POS.Repository.Generic;
 
 namespace POS.Repository.DAL
 {
-    public class EmployeewsOfCloudAsowell : IDisposable
+    public class AdminwsOfCloudPOS : IDisposable
     {
 
-        private AsowellContext context;
+        private CloudContext _cloudContext;
         private GenericRepository<ApplicationLog> _appLogRepository;
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
         private GenericRepository<Employee> _employeeRepository;
-        private GenericRepository<Ingredient> _ingredientRepository;
-        private GenericRepository<Product> _productRepository;
         private GenericRepository<SalaryNote> _salarynoteRepository;
         private GenericRepository<WorkingHistory> _workinghistoryRepository;
+        private GenericRepository<Ingredient> _ingredientRepository;
+        private GenericRepository<Product> _productRepository;
+        private GenericRepository<ProductDetail> _productdetailsRepository;
         private GenericRepository<OrderNote> _orderRepository;
-        private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
-        private GenericRepository<ReceiptNote> _receiptNoteRepository;
+        private GenericRepository<OrderNoteDetail> _ordernotedetailsRepository;
+        private GenericRepository<ReceiptNote> _receiptnoteRepository;
+        private GenericRepository<ReceiptNoteDetail> _receiptnotedetailsRepository;
+        private GenericRepository<WareHouse> _wareHouseRepository;
 
 
-        public EmployeewsOfCloudAsowell()
+        public AdminwsOfCloudPOS()
         {
-            context = new AsowellContext();
+            _cloudContext = new CloudContext();
         }
 
-        public EmployeewsOfCloudAsowell(string connectionString)
+        public AdminwsOfCloudPOS(string connectionString)
         {
-            context = new AsowellContext(connectionString);
+            _cloudContext = new CloudContext(connectionString);
         }
 
 
@@ -44,9 +47,33 @@ namespace POS.Repository.DAL
             {
                 if (_appLogRepository == null)
                 {
-                    _appLogRepository = new GenericRepository<ApplicationLog>(context);
+                    _appLogRepository = new GenericRepository<ApplicationLog>(_cloudContext);
                 }
                 return _appLogRepository;
+            }
+        }
+
+        public GenericRepository<WareHouse> WareHouseRepository
+        {
+            get
+            {
+                if (_wareHouseRepository == null)
+                {
+                    _wareHouseRepository = new GenericRepository<WareHouse>(_cloudContext);
+                }
+                return _wareHouseRepository;
+            }
+        }
+
+        public GenericRepository<ReceiptNoteDetail> ReceiptNoteDsetailsRepository
+        {
+            get
+            {
+                if (_receiptnotedetailsRepository == null)
+                {
+                    _receiptnotedetailsRepository = new GenericRepository<ReceiptNoteDetail>(_cloudContext);
+                }
+                return _receiptnotedetailsRepository;
             }
         }
 
@@ -54,26 +81,37 @@ namespace POS.Repository.DAL
         {
             get
             {
-                if (_receiptNoteRepository == null)
+                if (_receiptnoteRepository == null)
                 {
-                    _receiptNoteRepository = new GenericRepository<ReceiptNote>(context);
+                    _receiptnoteRepository = new GenericRepository<ReceiptNote>(_cloudContext);
                 }
-                return _receiptNoteRepository;
+                return _receiptnoteRepository;
             }
         }
 
-        public GenericRepository<OrderNoteDetail> OrderDetailsRepository
+        public GenericRepository<OrderNoteDetail> OrderNoteDetailsRepository
         {
             get
             {
-                if (_orderDetailsRepository == null)
+                if (_ordernotedetailsRepository == null)
                 {
-                    _orderDetailsRepository = new GenericRepository<OrderNoteDetail>(context);
+                    _ordernotedetailsRepository = new GenericRepository<OrderNoteDetail>(_cloudContext);
                 }
-                return _orderDetailsRepository;
+                return _ordernotedetailsRepository;
             }
         }
-        
+
+        public GenericRepository<ProductDetail> ProductDetailsRepository
+        {
+            get
+            {
+                if (_productdetailsRepository == null)
+                {
+                    _productdetailsRepository = new GenericRepository<ProductDetail>(_cloudContext);
+                }
+                return _productdetailsRepository;
+            }
+        }
 
         public GenericRepository<AdminRe> AdminreRepository
         {
@@ -81,7 +119,7 @@ namespace POS.Repository.DAL
             {
                 if (_adminreRepository == null)
                 {
-                    _adminreRepository = new GenericRepository<AdminRe>(context);
+                    _adminreRepository = new GenericRepository<AdminRe>(_cloudContext);
                 }
                 return _adminreRepository;
             }
@@ -93,7 +131,7 @@ namespace POS.Repository.DAL
             {
                 if (_customerRepository == null)
                 {
-                    _customerRepository = new GenericRepository<Customer>(context);
+                    _customerRepository = new GenericRepository<Customer>(_cloudContext);
                 }
                 return _customerRepository;
             }
@@ -105,7 +143,7 @@ namespace POS.Repository.DAL
             {
                 if (_employeeRepository == null)
                 {
-                    _employeeRepository = new GenericRepository<Employee>(context);
+                    _employeeRepository = new GenericRepository<Employee>(_cloudContext);
                 }
                 return _employeeRepository;
             }
@@ -117,7 +155,7 @@ namespace POS.Repository.DAL
             {
                 if (_ingredientRepository == null)
                 {
-                    _ingredientRepository = new GenericRepository<Ingredient>(context);
+                    _ingredientRepository = new GenericRepository<Ingredient>(_cloudContext);
                 }
                 return _ingredientRepository;
             }
@@ -129,7 +167,7 @@ namespace POS.Repository.DAL
             {
                 if (_productRepository == null)
                 {
-                    _productRepository = new GenericRepository<Product>(context);
+                    _productRepository = new GenericRepository<Product>(_cloudContext);
                 }
                 return _productRepository;
             }
@@ -141,7 +179,7 @@ namespace POS.Repository.DAL
             {
                 if (_orderRepository == null)
                 {
-                    _orderRepository = new GenericRepository<OrderNote>(context);
+                    _orderRepository = new GenericRepository<OrderNote>(_cloudContext);
                 }
                 return _orderRepository;
             }
@@ -153,7 +191,7 @@ namespace POS.Repository.DAL
             {
                 if (_salarynoteRepository == null)
                 {
-                    _salarynoteRepository = new GenericRepository<SalaryNote>(context);
+                    _salarynoteRepository = new GenericRepository<SalaryNote>(_cloudContext);
                 }
                 return _salarynoteRepository;
             }
@@ -165,7 +203,7 @@ namespace POS.Repository.DAL
             {
                 if (_workinghistoryRepository == null)
                 {
-                    _workinghistoryRepository = new GenericRepository<WorkingHistory>(context);
+                    _workinghistoryRepository = new GenericRepository<WorkingHistory>(_cloudContext);
                 }
                 return _workinghistoryRepository;
             }
@@ -173,7 +211,7 @@ namespace POS.Repository.DAL
 
         public void Save()
         {
-            context.SaveChanges();
+            _cloudContext.SaveChanges();
         }
 
         private bool _disposed = false;
@@ -184,7 +222,7 @@ namespace POS.Repository.DAL
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _cloudContext.Dispose();
                 }
             }
             _disposed = true;
@@ -199,8 +237,9 @@ namespace POS.Repository.DAL
         public void Refresh()
         {
             this.Save();
-            this.Dispose();
-            this.context = new AsowellContext();
+            var context = this._cloudContext;
+            this._cloudContext = new CloudContext();
+            context.Dispose();
         }
     }
 }

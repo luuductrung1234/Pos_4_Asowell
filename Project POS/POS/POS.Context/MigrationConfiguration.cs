@@ -19,7 +19,7 @@ namespace POS.Context
     using POS.Mapping;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    internal sealed partial class MigrationConfiguration : System.Data.Entity.Migrations.DbMigrationsConfiguration<AsowellContext>
+    internal sealed partial class MigrationConfiguration : System.Data.Entity.Migrations.DbMigrationsConfiguration<CloudContext>
     {
         public MigrationConfiguration()
         {
@@ -27,7 +27,7 @@ namespace POS.Context
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        //protected override void Seed(AsowellContext context)
+        //protected override void Seed(CloudContext context)
         //{
 
             // This method will be called after migrating to the latest version.

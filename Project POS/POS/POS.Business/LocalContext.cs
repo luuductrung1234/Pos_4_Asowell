@@ -24,7 +24,7 @@ namespace POS.BusinessContext
         }
 
         public LocalContext()
-            : base("Name=AsowellContext")
+            : base("Name=POSLocalConns")
         {
             InitializePartial();
         }
