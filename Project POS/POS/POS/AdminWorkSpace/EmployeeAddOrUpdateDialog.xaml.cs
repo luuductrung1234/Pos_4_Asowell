@@ -22,12 +22,12 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class EmployeeAddOrUpdateDialog : Window
     {
-        private AdminwsOfCloudAsowell _unitofork;
+        private readonly AdminwsOfCloudPOS _unitofwork;
         private Employee _emp;
 
-        public EmployeeAddOrUpdateDialog(AdminwsOfCloudAsowell unitofork)
+        public EmployeeAddOrUpdateDialog(AdminwsOfCloudPOS unitofwork)
         {
-            _unitofork = unitofork;
+            _unitofwork = unitofwork;
             _emp = new Employee();
             InitializeComponent();
             initControlAdd();
@@ -35,9 +35,9 @@ namespace POS.AdminWorkSpace
             this.ResizeMode = ResizeMode.NoResize;
         }
 
-        public EmployeeAddOrUpdateDialog(AdminwsOfCloudAsowell unitofork, Employee emp)
+        public EmployeeAddOrUpdateDialog(AdminwsOfCloudPOS unitofwork, Employee emp)
         {
-            _unitofork = unitofork;
+            _unitofwork = unitofwork;
             _emp = emp;
             InitializeComponent();
             txbCon.Visibility = Visibility.Collapsed;
@@ -55,8 +55,10 @@ namespace POS.AdminWorkSpace
 
             List<dynamic> roleList = new List<dynamic>
             {
+                new { role = 0, roleDisplay = "Ministering"},
                 new { role = 1, roleDisplay = "Bar"},
-                new { role = 2, roleDisplay = "Kitchen"}
+                new { role = 2, roleDisplay = "Kitchen"},
+                new { role = 3, roleDisplay = "Stock"},
             };
             cboRole.ItemsSource = roleList;
             cboRole.SelectedValuePath = "role";
@@ -67,7 +69,6 @@ namespace POS.AdminWorkSpace
         {
             if (_emp != null)
             {
-                loadControl(false);
                 txtUsername.Text = _emp.Username;
                 txtPass.Password = _emp.Pass;
                 txtCon.Password = _emp.Pass;
@@ -79,185 +80,201 @@ namespace POS.AdminWorkSpace
                 txtMail.Text = _emp.Email;
                 txtStartDay.SelectedDate = _emp.Startday;
                 txtHour_wage.Text = _emp.HourWage.ToString();
+                txtCode.Password = _emp.EmpCode.ToString();
                 return;
             }
         }
 
         private void btnAddNew_Click(object sender, RoutedEventArgs e)
         {
-            string username = txtUsername.Text.Trim();
-            string pass = txtPass.Password.Trim();
-            if (_emp.EmpId == null)
+            try
             {
-                //check username
-                if (username.Length == 0 || username.Length > 50)
+                string username = txtUsername.Text.Trim();
+                string pass = txtPass.Password.Trim();
+                if (_emp.EmpId == null)
                 {
-                    MessageBox.Show("Username is not valid!");
-                    txtUsername.Focus();
+                    //check username
+                    if (username.Length == 0 || username.Length > 50)
+                    {
+                        MessageBox.Show("Username is not valid!");
+                        txtUsername.Focus();
+                        return;
+                    }
+
+                    var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
+
+                    if (newemp.Count != 0)
+                    {
+                        MessageBox.Show("Username is already exist! Please try again!");
+                        txtUsername.Focus();
+                        return;
+                    }
+
+                    //check pass
+                    if (pass.Length == 0 || pass.Length > 50)
+                    {
+                        MessageBox.Show("Password is not valid!");
+                        txtPass.Focus();
+                        return;
+                    }
+
+                    string passcon = txtCon.Password.Trim();
+                    if (!passcon.Equals(pass))
+                    {
+                        MessageBox.Show("Confirm password is not match!");
+                        txtCon.Focus();
+                        return;
+                    }
+                }
+
+                //check name
+                string namee = txtName.Text.Trim();
+                if (namee.Length == 0 || namee.Length > 50)
+                {
+                    MessageBox.Show("Name is not valid!");
+                    txtName.Focus();
                     return;
                 }
 
-                var newemp = _unitofork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
+                //check role
+                int role = 0;
 
-                if (newemp.Count != 0)
+                if (cboRole.SelectedValue == null)
                 {
-                    MessageBox.Show("Username is already exist! Please try again!");
-                    txtUsername.Focus();
+                    MessageBox.Show("Role must be selected!");
                     return;
                 }
 
-                //check pass
-                if (pass.Length == 0 || pass.Length > 50)
+                role = (int) cboRole.SelectedValue;
+
+
+
+                //check birth
+                if (txtBirth.SelectedDate == null)
                 {
-                    MessageBox.Show("Password is not valid!");
-                    txtPass.Focus();
+                    MessageBox.Show("Birth must be selected!");
+                    return;
+                }
+                DateTime birth = txtBirth.SelectedDate.Value;
+                if (DateTime.Now.Year - birth.Year < 17)
+                {
+                    MessageBox.Show("Employee's age must higher than 17!");
+                    return;
+                }
+                
+
+                //check address
+                string addr = txtAddress.Text;
+                if ( addr.Length > 200)
+                {
+                    MessageBox.Show("Address is not valid!");
+                    txtAddress.Focus();
                     return;
                 }
 
-                string passcon = txtCon.Password.Trim();
-                if (!passcon.Equals(pass))
+                //check phone
+                string phone = txtPhone.Text;
+                if ( phone.Length > 20)
                 {
-                    MessageBox.Show("Confirm password is not match!");
-                    txtCon.Focus();
+                    MessageBox.Show("Phone is not valid!");
+                    txtPhone.Focus();
                     return;
                 }
-            }
 
-            //check name
-            string namee = txtName.Text.Trim();
-            if (namee.Length == 0 || namee.Length > 50)
-            {
-                MessageBox.Show("Name is not valid!");
-                txtName.Focus();
-                return;
-            }
-
-            //check role
-            int role = 0;
-
-            if(cboRole.SelectedValue == null)
-            {
-                MessageBox.Show("Role must be selected!");
-                return;
-            }
-
-            role = (int)cboRole.SelectedValue;
-
-            if (role ==  0)
-            {
-                MessageBox.Show("Role must be selected!");
-                return;
-            }
-
-            //check birth
-            if(txtBirth.SelectedDate == null)
-            {
-                MessageBox.Show("Birth must be selected!");
-                return;
-            }
-
-            DateTime birth = txtBirth.SelectedDate.Value;
-
-            //check address
-            string addr = txtAddress.Text.Trim();
-            if (addr.Length == 0 || addr.Length > 200)
-            {
-                MessageBox.Show("Address is not valid!");
-                txtAddress.Focus();
-                return;
-            }
-
-            //check phone
-            string phone = txtPhone.Text.Trim();
-            if (phone.Length == 0 || phone.Length > 20)
-            {
-                MessageBox.Show("Phone is not valid!");
-                txtPhone.Focus();
-                return;
-            }
-
-            //check email
-            string email = txtMail.Text.Trim();
-            if(!Regex.IsMatch(email, "[\\w\\d]+[@][\\w]+[.][\\w]+"))
-            {
-                MessageBox.Show("Email is not valid!");
-                txtMail.Focus();
-                return;
-            }
-
-            //check start day
-            if (txtStartDay.SelectedDate == null)
-            {
-                MessageBox.Show("Start Day must be selected!");
-                return;
-            }
-
-            DateTime start = txtStartDay.SelectedDate.Value;
-
-            //check hour wage
-            int hourwage = int.Parse(txtHour_wage.Text.Trim());
-            if(hourwage <= 0 || hourwage >= int.MaxValue)
-            {
-                MessageBox.Show("Hour wage is not valid! Hour wage must be greater than 0 and lesser than " + int.MaxValue);
-                txtHour_wage.Focus();
-                return;
-            }
-
-            if(_emp.EmpId == null)
-            {
-                Employee checkemp = new Employee()
+                //check email
+                string email = txtMail.Text;
+                if (!Regex.IsMatch(email, "[\\w\\d]+[@][\\w]+[.][\\w]+"))
                 {
-                    EmpId = "",
-                    Username = username,
-                    Pass = pass,
-                    Name = namee,
-                    EmpRole = role,
-                    Birth = birth,
-                    Addr = addr,
-                    Phone = phone,
-                    Email = email,
-                    Startday = start,
-                    HourWage = hourwage,
-                    Deleted = 0,
-                    Manager = (App.Current.Properties["AdLogin"] as AdminRe).AdId
-                };
+                    MessageBox.Show("Email is not valid!");
+                    txtMail.Focus();
+                    return;
+                }
 
-                _unitofork.EmployeeRepository.Insert(checkemp);
-                _unitofork.Save();
+                //check start day
+                if (txtStartDay.SelectedDate == null)
+                {
+                    MessageBox.Show("Start Day must be selected!");
+                    return;
+                }
 
-                MessageBox.Show("Insert " + checkemp.Name + "(" + checkemp.EmpId + ") successful!");
-                this.Close();
+                DateTime start = txtStartDay.SelectedDate.Value;
+
+                //check hour wage
+                int hourwage = int.Parse(txtHour_wage.Text.Trim());
+                if (hourwage <= 0 || hourwage >= int.MaxValue)
+                {
+                    MessageBox.Show("Hour wage is not valid! Hour wage must be greater than 0 and lesser than " +
+                                    int.MaxValue);
+                    txtHour_wage.Focus();
+                    return;
+                }
+
+                //check code
+                int code = int.Parse(txtCode.Password.Trim());
+                if (code < 1000)
+                {
+                    MessageBox.Show("Employee code should be stronger!");
+                    txtCode.Focus();
+                    return;
+                }
+
+                // Adding
+                if (_emp.EmpId == null)
+                {
+                    Employee checkemp = new Employee()
+                    {
+                        EmpId = "",
+                        Username = username,
+                        Pass = pass,
+                        Name = namee,
+                        EmpRole = role,
+                        Birth = birth,
+                        Addr = addr,
+                        Phone = phone,
+                        Email = email,
+                        Startday = start,
+                        HourWage = hourwage,
+                        EmpCode = code,
+                        Deleted = 0,
+                        Manager = (App.Current.Properties["AdLogin"] as AdminRe).AdId
+                    };
+
+                    _unitofwork.EmployeeRepository.Insert(checkemp);
+                    _unitofwork.Save();
+
+                    MessageBox.Show("Insert " + checkemp.Name + "(" + checkemp.EmpId + ") successful!");
+                    this.Close();
+                }
+                else
+                {
+                    _emp.Username = username;
+                    _emp.Pass = pass;
+                    _emp.Name = namee;
+                    _emp.EmpRole = role;
+                    _emp.Birth = birth;
+                    _emp.Addr = addr;
+                    _emp.Phone = phone;
+                    _emp.Email = email;
+                    _emp.Startday = start;
+                    _emp.HourWage = hourwage;
+                    _emp.EmpCode = code;
+
+                    _unitofwork.EmployeeRepository.Update(_emp);
+                    _unitofwork.Save();
+
+                    MessageBox.Show("Update " + _emp.Name + "(" + _emp.EmpId + ") successful!");
+                    this.Close();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _emp.Name = namee;
-                _emp.EmpRole = role;
-                _emp.Birth = birth;
-                _emp.Addr = addr;
-                _emp.Phone = phone;
-                _emp.Email = email;
-                _emp.Startday = start;
-                _emp.HourWage = hourwage;
-
-                _unitofork.EmployeeRepository.Update(_emp);
-                _unitofork.Save();
-
-                MessageBox.Show("Update " + _emp.Name + "(" + _emp.EmpId + ") successful!");
-                this.Close();
+                MessageBox.Show("Something went wrong. Can not add or update employee info. Please check the details again!");
             }
-
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void loadControl(bool b)
-        {
-            txtUsername.IsEnabled = b;
-            txtPass.IsEnabled = b;
-            txtCon.IsEnabled = b;
         }
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -267,5 +284,139 @@ namespace POS.AdminWorkSpace
                 e.Handled = !Char.IsNumber(e.Text[0]);
             }
         }
+
+
+        private void TxtUsername_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            //check username
+            if (string.IsNullOrEmpty(txtUsername.Text) || txtUsername.Text.Trim().Length > 50)
+            {
+                IcUserNameValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcUserNameValid.Visibility = Visibility.Hidden;
+            }
+
+        }
+
+        private void TxtPass_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            //check pass
+            if (string.IsNullOrEmpty(txtPass.Password) || txtPass.Password.Trim().Length > 50)
+            {
+                IcPassValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcPassValid.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void TxtCon_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtCon.Password))
+            {
+                IcConfirmValid.Visibility = Visibility.Visible;
+                return;
+            }
+
+            string passcon = txtCon.Password.Trim();
+            if (!passcon.Equals(txtPass.Password.Trim()))
+            {
+                IcConfirmValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcConfirmValid.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void TxtName_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            //check name
+            if (string.IsNullOrEmpty(txtName.Text) || txtName.Text.Length > 50)
+            {
+                IcNameValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcNameValid.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void TxtBirth_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var birth = ((DatePicker) sender).SelectedDate.Value.Date;
+            if (DateTime.Now.Year - birth.Year < 17)
+            {
+                IcBirthValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcBirthValid.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void TxtAddress_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            //check address
+            if (txtAddress.Text.Length > 200)
+            {
+                IcAddrValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcAddrValid.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void TxtPhone_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            //check phone
+            if ( txtPhone.Text.Length > 20)
+            {
+                IcPhoneValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcPhoneValid.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void TxtMail_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            //check email
+            if (!Regex.IsMatch(txtMail.Text, "[\\w\\d]+[@][\\w]+[.][\\w]+"))
+            {
+                IcMailValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcMailValid.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void TxtCode_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtCode.Password))
+            {
+                IcCodeValid.Visibility = Visibility.Visible;
+                return;
+            }
+
+            //check code
+            int code = int.Parse(txtCode.Password.Trim());
+            if (code < 1000)
+            {
+                IcCodeValid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IcCodeValid.Visibility = Visibility.Hidden;
+            }
+        }
+
+        
     }
 }

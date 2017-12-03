@@ -9,8 +9,8 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Employee Add Or Update"
-        Height="467.769"
-        Width="894.667">
+        Height="513.769"
+        Width="956.667">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}"
                x:Key="TextBlockLabel">
@@ -66,16 +66,30 @@
                          FontSize="18"
                          Foreground="White"
                          Width="215"
-                         Text=""/>
-                <StackPanel  Orientation="Horizontal"
-                             Margin="90,0,0,0">
-                    <TextBlock Text="Password: "
-                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                </StackPanel>
+                         Text="" 
+                         TextChanged="TxtUsername_OnTextChanged"/>
+                <materialDesign:PackIcon Margin="10,0,0,0"
+                                         x:Name="IcUserNameValid"
+                                         Width="30"
+                                         Height="30"
+                                         Kind="Alert"
+                                         Foreground="#FFC13E17"
+                                         Visibility="Hidden" />
+                <TextBlock Text="Password: "
+                           Margin="90,0,0,0"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <PasswordBox x:Name="txtPass"
                              Width="215"
                              FontSize="18"
-                             Foreground="White" />
+                             Foreground="White"
+                             PasswordChanged="TxtPass_OnPasswordChanged"/>
+                <materialDesign:PackIcon Margin="10,0,0,0"
+                                         x:Name="IcPassValid"
+                                         Width="30"
+                                         Height="30"
+                                         Kind="Alert"
+                                         Foreground="#FFC13E17"
+                                         Visibility="Hidden" />
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
                          Margin="15,20,0,0">
@@ -84,15 +98,32 @@
                 <TextBox x:Name="txtName"
                          FontSize="18"
                          Foreground="White"
-                         Width="215" />
+                         Width="215"
+                         TextChanged="TxtName_OnTextChanged"/>
+                <materialDesign:PackIcon Margin="10,0,0,0"
+                                         x:Name="IcNameValid"
+                                         Width="30"
+                                         Height="30"
+                                         Kind="Alert"
+                                         Foreground="#FFC13E17"
+                                         Visibility="Hidden" />
                 <StackPanel  Orientation="Horizontal"
                              Margin="90,0,0,0">
-                    <TextBlock x:Name="txbCon" Text="Confirm Password:"
+                    <TextBlock x:Name="txbCon"
+                               Text="Confirm Password:"
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <PasswordBox x:Name="txtCon"
                                  Width="215"
                                  FontSize="18"
-                                 Foreground="White" />
+                                 Foreground="White"
+                                 PasswordChanged="TxtCon_OnPasswordChanged"/>
+                    <materialDesign:PackIcon Margin="10,0,0,0"
+                                             x:Name="IcConfirmValid"
+                                             Width="30"
+                                             Height="30"
+                                             Kind="Alert"
+                                             Foreground="#FFC13E17"
+                                             Visibility="Hidden" />
                 </StackPanel>
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
@@ -104,7 +135,7 @@
                           FontSize="18"
                           Foreground="White" />
                 <StackPanel  Orientation="Horizontal"
-                             Margin="90,0,0,0">
+                             Margin="130,0,0,0">
                     <TextBlock Text="Birth: "
                                Style="{StaticResource ResourceKey=TextBlockLabel}" />
                     <DatePicker x:Name="txtBirth"
@@ -112,7 +143,15 @@
                                 FontSize="18"
                                 Foreground="White"
                                 HorizontalAlignment="Left"
-                                materialDesign:HintAssist.Hint="Pick Date" />
+                                materialDesign:HintAssist.Hint="Pick Date" 
+                                SelectedDateChanged="TxtBirth_OnSelectedDateChanged"/>
+                    <materialDesign:PackIcon Margin="10,0,0,0"
+                                             x:Name="IcBirthValid"
+                                             Width="30"
+                                             Height="30"
+                                             Kind="Alert"
+                                             Foreground="#FFC13E17"
+                                             Visibility="Hidden" />
                 </StackPanel>
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
@@ -130,7 +169,15 @@
                          SpellCheck.IsEnabled="True"
                          TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Auto"
-                         Width="215" />
+                         Width="215"
+                         TextChanged="TxtAddress_OnTextChanged"/>
+                <materialDesign:PackIcon Margin="10,0,0,0"
+                                         x:Name="IcAddrValid"
+                                         Width="30"
+                                         Height="30"
+                                         Kind="Alert"
+                                         Foreground="#FFC13E17"
+                                         Visibility="Hidden" />
                 <StackPanel VerticalAlignment="Center"
                             Margin="90,0,0,0">
                     <StackPanel  Orientation="Horizontal">
@@ -144,7 +191,15 @@
                                  FontSize="18"
                                  Margin="130,0,0,0"
                                  PreviewTextInput="NumberOnly_PreviewTextInput"
-                                 materialDesign:TransitionAssist.DisableTransitions="True" />
+                                 materialDesign:TransitionAssist.DisableTransitions="True"
+                                 TextChanged="TxtPhone_OnTextChanged"/>
+                        <materialDesign:PackIcon Margin="10,0,0,0"
+                                                 x:Name="IcPhoneValid"
+                                                 Width="30"
+                                                 Height="30"
+                                                 Kind="Alert"
+                                                 Foreground="#FFC13E17"
+                                                 Visibility="Hidden" />
                     </StackPanel>
 
                     <StackPanel  Orientation="Horizontal">
@@ -156,7 +211,15 @@
                                  Width="215"
                                  FontSize="18"
                                  Foreground="White"
-                                 Margin="130,0,0,0" />
+                                 Margin="130,0,0,0"
+                                 TextChanged="TxtMail_OnTextChanged"/>
+                        <materialDesign:PackIcon Margin="10,0,0,0"
+                                                 x:Name="IcMailValid"
+                                                 Width="30"
+                                                 Height="30"
+                                                 Kind="Alert"
+                                                 Foreground="#FFC13E17"
+                                                 Visibility="Hidden" />
                     </StackPanel>
                 </StackPanel>
 
@@ -172,7 +235,7 @@
                             HorizontalAlignment="Left"
                             materialDesign:HintAssist.Hint="Pick Date" />
                 <TextBlock Text="Hour wage: "
-                           Margin="90,0,0,0"
+                           Margin="130,0,0,0"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtHour_wage"
                          Foreground="White"
@@ -183,7 +246,31 @@
                            FontSize="18"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
-                           Foreground="White"/>
+                           Foreground="White" />
+                <materialDesign:PackIcon Margin="10,0,0,0"
+                                         x:Name="IcHourWageValid"
+                                         Width="30"
+                                         Height="30"
+                                         Kind="Alert"
+                                         Foreground="#FFC13E17"
+                                         Visibility="Hidden" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="15,20,0,0">
+                <TextBlock Text="Code: "
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <PasswordBox x:Name="txtCode"
+                             Width="215"
+                             PreviewTextInput="NumberOnly_PreviewTextInput"
+                             PasswordChanged="TxtCode_OnPasswordChanged"
+                             Style="{StaticResource {x:Type PasswordBox}}" />
+                <materialDesign:PackIcon Margin="10,0,0,0"
+                                         x:Name="IcCodeValid"
+                                         Width="30"
+                                         Height="30"
+                                         Kind="Alert"
+                                         Foreground="#FFC13E17"
+                                         Visibility="Hidden" />
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
                          Margin="0,30,0,0"

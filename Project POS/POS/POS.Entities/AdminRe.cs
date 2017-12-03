@@ -15,13 +15,13 @@
 namespace POS.Entities
 {
 
-    // AdminRes
+    // AdminRe
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class AdminRe
     {
         public string AdId { get; set; } // ad_id (Primary key) (length: 10)
         public string Username { get; set; } // username (length: 50)
-        public string Pass { get; set; } // pass (length: 50)
+        public string Pass { get; set; } // pass (length: max)
         public string Name { get; set; } // name (length: 50)
 
         // Reverse navigation

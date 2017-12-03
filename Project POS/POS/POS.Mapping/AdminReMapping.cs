@@ -32,8 +32,9 @@ namespace POS.Mapping
 
             Property(x => x.AdId).HasColumnName(@"ad_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.Username).HasColumnName(@"username").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50);
-            Property(x => x.Pass).HasColumnName(@"pass").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.Pass).HasColumnName(@"pass").HasColumnType("varchar(max)").IsRequired().IsUnicode(false);
             Property(x => x.Name).HasColumnName(@"name").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.AdRole).HasColumnName(@"ad_role").HasColumnType("int").IsRequired();
             InitializePartial();
         }
         partial void InitializePartial();

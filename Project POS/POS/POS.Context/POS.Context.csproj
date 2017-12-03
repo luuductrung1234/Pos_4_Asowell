@@ -48,10 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsowellContext.cs">
+    <Compile Include="CloudContext.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="AsowellContextFactory.cs">
+    <Compile Include="CloudContextFactory.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AsowellInterceptorLogging.cs" />
@@ -62,7 +62,7 @@
     </Compile>
     <Compile Include="Configuration\AsowellConfiguration.cs" />
     <Compile Include="Extensions\ConnectWithExtension.cs" />
-    <Compile Include="FakeAsowellContext.cs">
+    <Compile Include="FakeCloudContext.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FakeDbSet.cs">

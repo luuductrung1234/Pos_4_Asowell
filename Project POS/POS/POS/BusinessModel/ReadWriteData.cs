@@ -150,7 +150,7 @@ namespace POS.BusinessModel
         //}
 
         //write khi add new
-        public static Entities.Table writeOnAddNew(EmployeewsOfLocalAsowell _unitofwork, Rectangle rec, Entities.Employee emp)
+        public static Entities.Table writeOnAddNew(EmployeewsOfLocalPOS _unitofwork, Rectangle rec, Entities.Employee emp)
         {
             Entities.Table newTable = new Entities.Table()
             {

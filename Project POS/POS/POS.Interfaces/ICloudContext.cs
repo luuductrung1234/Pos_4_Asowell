@@ -16,7 +16,7 @@ namespace POS.Interfaces
 {
     using POS.Entities;
 
-    public interface IAsowellContext : System.IDisposable
+    public interface ICloudContext : System.IDisposable
     {
         System.Data.Entity.DbSet<ApplicationLog> ApplicationLogs { get; set; } // ApplicationLog
         System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes

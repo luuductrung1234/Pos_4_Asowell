@@ -9,10 +9,10 @@ using POS.Repository.Generic;
 
 namespace POS.Repository.DAL
 {
-    public class EmployeewsOfCloudAsowell : IDisposable
+    public class EmployeewsOfCloudPOS : IDisposable
     {
 
-        private AsowellContext context;
+        private CloudContext context;
         private GenericRepository<ApplicationLog> _appLogRepository;
         private GenericRepository<AdminRe> _adminreRepository;
         private GenericRepository<Customer> _customerRepository;
@@ -26,14 +26,14 @@ namespace POS.Repository.DAL
         private GenericRepository<ReceiptNote> _receiptNoteRepository;
 
 
-        public EmployeewsOfCloudAsowell()
+        public EmployeewsOfCloudPOS()
         {
-            context = new AsowellContext();
+            context = new CloudContext();
         }
 
-        public EmployeewsOfCloudAsowell(string connectionString)
+        public EmployeewsOfCloudPOS(string connectionString)
         {
-            context = new AsowellContext(connectionString);
+            context = new CloudContext(connectionString);
         }
 
 
@@ -200,7 +200,7 @@ namespace POS.Repository.DAL
         {
             this.Save();
             this.Dispose();
-            this.context = new AsowellContext();
+            this.context = new CloudContext();
         }
     }
 }

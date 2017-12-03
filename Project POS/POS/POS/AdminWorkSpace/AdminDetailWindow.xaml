@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AdminDetail"
+        Title="Admin Detail"
         Height="639.112"
         Width="894.667">
 

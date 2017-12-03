@@ -5,8 +5,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using POS.Entities;
 using POS.Repository.DAL;
+using POS.WareHouseWorkSpace.Helper;
 
 namespace POS.WareHouseWorkSpace
 {
@@ -15,29 +17,30 @@ namespace POS.WareHouseWorkSpace
     /// </summary>
     public partial class InputReceiptNote : Page
     {
-        private AdminwsOfCloudAsowell _unitofwork;
-        private static ReceiptNote CurrentReceipt;
-        private List<ReceiptNoteDetail> ReceiptDetailsList;
+        private AdminwsOfCloudPOS _unitofwork;
+        private List<Ingredient> IngdList;
+        internal ReceiptNote CurrentReceipt;
+        internal List<ReceiptNoteDetail> ReceiptDetailsList;
 
         private static readonly string ORTHER_PERCHAGSE_ID = "IGD0000047";
 
 
-        public InputReceiptNote(AdminwsOfCloudAsowell unitofwork)
+        public InputReceiptNote(AdminwsOfCloudPOS unitofwork, List<Ingredient> ingdList)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
 
-            lvDataIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(c => c.Deleted.Equals(0));
+            this.IngdList = ingdList;
+            lvDataIngredient.ItemsSource = IngdList;
 
             ReceiptDetailsList = new List<ReceiptNoteDetail>();
-            lvDataReceipt.ItemsSource = ReceiptDetailsList;
-
             CurrentReceipt = new ReceiptNote()
             {
-                
                 EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
                 ReceiptNoteDetails = ReceiptDetailsList
             };
+            lvDataReceipt.ItemsSource = ReceiptDetailsList;
+
             LoadReceiptData();
         }
 
@@ -71,7 +74,7 @@ namespace POS.WareHouseWorkSpace
                     ErrorDetailsItem.Remove(index);
             }
             lvDataReceipt.Items.Refresh();
-            
+            LoadReceiptData();
         }
     
         private void lvDataIngredient_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -83,7 +86,7 @@ namespace POS.WareHouseWorkSpace
 
             ReceiptNoteDetail r=new ReceiptNoteDetail();
 
-            var foundIteminReceipt = ReceiptDetailsList.Where(c => c.IgdId.Equals(ingredient.IgdId)).FirstOrDefault();
+            var foundIteminReceipt = ReceiptDetailsList.FirstOrDefault(c => c.IgdId.Equals(ingredient.IgdId));
             if (foundIteminReceipt==null)
             {
                 r.IgdId = ingredient.IgdId;
@@ -97,7 +100,6 @@ namespace POS.WareHouseWorkSpace
                     return;
                 foundIteminReceipt.Quan++;
             }
-            //lvDataReceipt.ItemsSource = ReceiptDetailsList;
             lvDataReceipt.Items.Refresh();
             LoadReceiptData();
         }
@@ -105,40 +107,76 @@ namespace POS.WareHouseWorkSpace
         private List<int> ErrorDetailsItem = new List<int>();
         private void BntAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            if (ErrorDetailsItem.Count != 0)
+            try
             {
-                MessageBox.Show("Something is not correct. Please check all your input again!");
-                return;
-            }
-               
-
-            // check if the Receipt Note have input Other Perchagse, must require the Note
-            foreach (var details in CurrentReceipt.ReceiptNoteDetails)
-            {
-                if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID) && string.IsNullOrEmpty(details.Note))
+                if (ErrorDetailsItem.Count != 0)
                 {
-                    MessageBox.Show("You have inputed the \"Orther Purchase\" in your Receipt. Please input the detail description in note before save data!");
+                    MessageBox.Show("Something is not correct. Please check all your input again!");
                     return;
                 }
+
+                if (CurrentReceipt.ReceiptNoteDetails.Count == 0)
+                {
+                    MessageBox.Show("You have to choose the ingredient you want to input before add");
+                    return;
+                }
+
+                // check if the Receipt Note have input Other Perchagse, must require the Note
+                foreach (var details in CurrentReceipt.ReceiptNoteDetails.ToList())
+                {
+                    if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID) && string.IsNullOrEmpty(details.Note))
+                    {
+                        MessageBox.Show(
+                            "You have inputed the \"Orther Purchase\" in your Receipt. Please input the detail description in note before save data!");
+                        return;
+                    }
+                }
+
+                CurrentReceipt.Inday = DateTime.Now;
+                _unitofwork.ReceiptNoteRepository.Insert(CurrentReceipt);
+                
+                //ToDo: Update the contain value in Warehouse database
+                UpdateWareHouseContain();
+
+                _unitofwork.Save();
+
+
+                ReceiptDetailsList = new List<ReceiptNoteDetail>();
+                lvDataReceipt.ItemsSource = ReceiptDetailsList;
+                lvDataReceipt.Items.Refresh();
+                CurrentReceipt = new ReceiptNote()
+                {
+                    EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
+                    ReceiptNoteDetails = ReceiptDetailsList
+                };
+                
+                LoadReceiptData();
             }
-
-            CurrentReceipt.Inday = DateTime.Now;
-            _unitofwork.ReceiptNoteRepository.Insert(CurrentReceipt);
-            _unitofwork.Save();
-
-
-            //ToDo: Update the contain value in Warehouse database
-
-
-            ReceiptDetailsList = new List<ReceiptNoteDetail>();
-            lvDataReceipt.ItemsSource = ReceiptDetailsList;
-            CurrentReceipt = new ReceiptNote()
+            catch (Exception ex)
             {
+                MessageBox.Show("Something went wrong when trying to input the new Receipt! May be you should reload this app or call for support!");
+            }
+        }
 
-                EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
-                ReceiptNoteDetails = ReceiptDetailsList
-            };
-            LoadReceiptData();
+        private void UpdateWareHouseContain()
+        {
+            foreach (var details in CurrentReceipt.ReceiptNoteDetails)
+            {
+                if(details.IgdId.Equals(ORTHER_PERCHAGSE_ID))
+                    continue;
+                
+
+                var ingd = IngdList.FirstOrDefault(x => x.IgdId.Equals(details.IgdId));
+                if (ingd != null)
+                {
+                    WareHouse wareHouse = _unitofwork.WareHouseRepository.GetById(ingd.WarehouseId);
+                    if (wareHouse != null)
+                    {
+                        wareHouse.Contain += details.Quan * UnitBuyTrans.ToUnitContain(ingd.UnitBuy);
+                        _unitofwork.WareHouseRepository.Update(wareHouse);
+                    }
+                }
+            }
         }
 
         private void BntDelAll_OnClick(object sender, RoutedEventArgs e)

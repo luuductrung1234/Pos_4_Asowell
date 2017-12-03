@@ -52,7 +52,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="IAsowellContext.cs">
+    <Compile Include="ICloudContext.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ILocalContext.cs" />

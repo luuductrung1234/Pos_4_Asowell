@@ -23,13 +23,13 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class EmployeeListPage : Page
     {
-        private AdminwsOfCloudAsowell _unitofork;
+        private AdminwsOfCloudPOS _unitofork;
         private AdminRe admin;
         private Employee emp;
         private List<Employee> empwithad;
         internal EmployeeAddOrUpdateDialog empAddUptDialog;
 
-        public EmployeeListPage(AdminwsOfCloudAsowell unitofork, AdminRe ad)
+        public EmployeeListPage(AdminwsOfCloudPOS unitofork, AdminRe ad)
         {
             _unitofork = unitofork;
             InitializeComponent();
@@ -80,6 +80,9 @@ namespace POS.AdminWorkSpace
         {
             empAddUptDialog = new EmployeeAddOrUpdateDialog(_unitofork);
             empAddUptDialog.ShowDialog();
+
+            empwithad = _unitofork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
+            lvDataEmployee.ItemsSource = empwithad;
             lvDataEmployee.UnselectAll();
             lvDataEmployee.Items.Refresh();
         }

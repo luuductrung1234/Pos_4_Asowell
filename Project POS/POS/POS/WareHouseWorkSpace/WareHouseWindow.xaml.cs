@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using LiveCharts;
+using System.Windows.Threading;
 using POS.Entities;
 using POS.Repository.DAL;
 
@@ -20,40 +12,95 @@ namespace POS.WareHouseWorkSpace
     /// <summary>
     /// Interaction logic for WareHouseWindow.xaml
     /// </summary>
-    
+
     public partial class WareHouseWindow : Window
     {
-        AdminwsOfCloudAsowell _unitofwork;
+        AdminwsOfCloudPOS _unitofwork;
         private LiveChartReceiptPage _lvChartReceiptPage;
         private IngredientPage _innIngredientPage;
+        private InputReceiptNote _inputReceipt;
         private Login login;
         private AdminRe curAdmin;
         private Employee curEmp;
-        private InputReceiptNote inputReceipt;
         
+
+        private List<Ingredient> IngdList;
+
         public WareHouseWindow()
         {
             InitializeComponent();
-            _unitofwork = new AdminwsOfCloudAsowell();
-            _innIngredientPage=new IngredientPage(_unitofwork);
+
+            _unitofwork = new AdminwsOfCloudPOS();
+            IngdList = _unitofwork.IngredientRepository.Get(c => c.Deleted.Equals(0), includeProperties: "WareHouse").ToList();
+
+            _innIngredientPage =new IngredientPage(_unitofwork, IngdList);
             _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
+            
+
 
             if (App.Current.Properties["AdLogin"] != null)
             {
                 AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-                curAdmin = _unitofwork.AdminreRepository
-                    .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
+                List<AdminRe> adList = _unitofwork.AdminreRepository.Get().ToList();
+                curAdmin = adList.FirstOrDefault(x => x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
                 CUserChip.Content = curAdmin.Name;
             }
             else
             {
                 Employee getEmp = App.Current.Properties["EmpLogin"] as Employee;
-                curEmp = _unitofwork.EmployeeRepository
-                    .Get(emp => emp.Username.Equals(getEmp.Username) && emp.Pass.Equals(getEmp.Pass)).First();
+                List<Employee> empList = _unitofwork.EmployeeRepository.Get().ToList();
+                curEmp = empList.FirstOrDefault(x => x.Username.Equals(getEmp.Username) && x.DecryptedPass.Equals(getEmp.DecryptedPass));
                 CUserChip.Content = curEmp.Name;
+                _inputReceipt = new InputReceiptNote(_unitofwork, IngdList);
             }
             
+
+            DispatcherTimer RefreshTimer = new DispatcherTimer();
+            RefreshTimer.Tick += Refresh_Tick;
+            RefreshTimer.Interval = new TimeSpan(0, 1, 0);
+            RefreshTimer.Start();
         }
+
+
+
+        private void Refresh_Tick(object sender, EventArgs e)
+        {
+            foreach (var ingd in _unitofwork.IngredientRepository.Get(includeProperties: "WareHouse"))
+            {
+                if (ingd.Deleted == 1)
+                {
+                    var deletedIngd = IngdList.FirstOrDefault(x => x.IgdId.Equals(ingd.IgdId));
+                    if (deletedIngd != null)
+                    {
+                        IngdList.Remove(deletedIngd);
+                    }
+                    continue;
+                }
+
+                var curIngd = IngdList.FirstOrDefault(x => x.IgdId.Equals(ingd.IgdId));
+                if (curIngd == null)
+                {
+                    IngdList.Add(ingd);
+                }
+                else
+                {
+                    curIngd.Name = ingd.Name;
+                    curIngd.Info = ingd.Info;
+                    curIngd.Usefor = ingd.Usefor;
+                    curIngd.IgdType = ingd.IgdType;
+                    curIngd.UnitBuy = ingd.UnitBuy;
+                    curIngd.StandardPrice = ingd.StandardPrice;
+
+                    curIngd.WareHouse.Contain = ingd.WareHouse.Contain;
+                    curIngd.WareHouse.StandardContain = ingd.WareHouse.StandardContain;
+                }
+            }
+
+            _innIngredientPage.lvItem.Items.Refresh();
+            _inputReceipt.lvDataIngredient.Items.Refresh();
+        }
+
+
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
@@ -72,8 +119,8 @@ namespace POS.WareHouseWorkSpace
                 MessageBox.Show("Your role is not allowed to do this!");
                 return;
             }
-            inputReceipt=new InputReceiptNote(_unitofwork);
-            myFrame.Navigate(inputReceipt);
+            
+            myFrame.Navigate(_inputReceipt);
         }
 
         private void ViewReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

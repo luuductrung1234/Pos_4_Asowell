@@ -14,10 +14,10 @@ namespace POS.AdminWorkSpace
         private DateTime startTime;
         private DateTime endTime;
         private IListPdfReport _reportHelper;
-        private AdminwsOfCloudAsowell _unitofwork;
+        private AdminwsOfCloudPOS _unitofwork;
         private static string folderPath = AppPath.ApplicationPath + "\\SerializedData";
 
-        public ReportOptionDialog(IListPdfReport reportHelper, AdminwsOfCloudAsowell unitofwork)
+        public ReportOptionDialog(IListPdfReport reportHelper, AdminwsOfCloudPOS unitofwork)
         {
             InitializeComponent();
 

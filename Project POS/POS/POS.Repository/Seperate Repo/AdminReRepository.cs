@@ -10,9 +10,9 @@ namespace POS.Repository.SeperateRepo
 {
     public class AdminReRepository : IAdminRepository
     {
-        private AsowellContext context;
+        private CloudContext context;
 
-        public AdminReRepository(AsowellContext context)
+        public AdminReRepository(CloudContext context)
         {
             this.context = context;
         }

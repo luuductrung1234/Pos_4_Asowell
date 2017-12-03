@@ -24,7 +24,7 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class AdminWindow : Window
     {
-        private AdminwsOfCloudAsowell _unitowork;
+        private AdminwsOfCloudPOS _unitofwork;
         EmployeeListPage empListPage;
         OrderNotePage ordernotepage;
         SalaryPage salarypage;
@@ -41,24 +41,29 @@ namespace POS.AdminWorkSpace
         public AdminWindow()
         {
             InitializeComponent();
-            _unitowork = new AdminwsOfCloudAsowell();
+            _unitofwork = new AdminwsOfCloudPOS();
 
             AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-            curAdmin = _unitowork.AdminreRepository
-                .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
+            curAdmin = _unitofwork.AdminreRepository
+                .Get(ad => ad.AdId.Equals(getAdmin.AdId)).First();
             cUser.Content = curAdmin.Name;
-                
-            empListPage = new EmployeeListPage(_unitowork, curAdmin);
-            salarypage = new SalaryPage(_unitowork);
-            liveChartReceipt = new LiveChartReceiptPage(_unitowork);
-            productdetals = new ProductDetailPage( _unitowork);
-            ctmP=new CustomerPage(_unitowork);
-            ordernotepage = new OrderNotePage(_unitowork);
-            receiptnotepage = new ReceiptNotePage(_unitowork);
-            FoodPage=new statisticsFoodPage(_unitowork);
-            statisticsWorkingHourPage=new StatisticsWorkingHourPage(_unitowork);
-            homePage = new HomePage(_unitowork);
-            productCreator = new ProductCreatorPage(_unitowork);
+
+            if (curAdmin.AdRole == (int)AdminReRole.SoftwareAd)
+            {
+                btnCreateAdmin.Visibility = Visibility.Visible;
+            }
+
+            empListPage = new EmployeeListPage(_unitofwork, curAdmin);
+            salarypage = new SalaryPage(_unitofwork, curAdmin);
+            liveChartReceipt = new LiveChartReceiptPage(_unitofwork);
+            productdetals = new ProductDetailPage( _unitofwork);
+            ctmP=new CustomerPage(_unitofwork);
+            ordernotepage = new OrderNotePage(_unitofwork);
+            receiptnotepage = new ReceiptNotePage(_unitofwork);
+            FoodPage=new statisticsFoodPage(_unitofwork);
+            statisticsWorkingHourPage=new StatisticsWorkingHourPage(_unitofwork);
+            homePage = new HomePage(_unitofwork);
+            productCreator = new ProductCreatorPage(_unitofwork);
             myframe.Navigate(homePage);
 
             DispatcherTimer RefreshTimer = new DispatcherTimer();
@@ -78,7 +83,7 @@ namespace POS.AdminWorkSpace
 
         private void AdminWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _unitowork.Dispose();
+            _unitofwork.Dispose();
         }
 
         private void bntLogout_Click(object sender, RoutedEventArgs e)
@@ -110,7 +115,7 @@ namespace POS.AdminWorkSpace
 
         private void BtnDetails_OnClick(object sender, RoutedEventArgs e)
         {
-            AdminDetailWindow adw = new AdminDetailWindow(_unitowork, curAdmin);
+            AdminDetailWindow adw = new AdminDetailWindow(_unitofwork, curAdmin);
             adw.Show();
         }
 
@@ -149,7 +154,7 @@ namespace POS.AdminWorkSpace
         private void EODReport_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             //ToDo: May be shoud close the repository after print
-            var printer = new DoPrintHelper(new EmployeewsOfLocalAsowell(), new EmployeewsOfCloudAsowell(), DoPrintHelper.Eod_Printing);
+            var printer = new DoPrintHelper(new EmployeewsOfLocalPOS(), new EmployeewsOfCloudPOS(), DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
 
@@ -163,6 +168,12 @@ namespace POS.AdminWorkSpace
         {
             
             myframe.Navigate(liveChartReceipt);
+        }
+
+        private void BtnCreateAdmin_OnClick(object sender, RoutedEventArgs e)
+        {
+            AddNewAdminDialog newAdminDialog = new AddNewAdminDialog(_unitofwork);
+            newAdminDialog.Show();
         }
     }
 }

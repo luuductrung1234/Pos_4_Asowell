@@ -8,18 +8,42 @@ using System.Text;
 using System.Threading.Tasks;
 using POS.Context;
 using POS.Entities;
+using POS.Repository.Security;
 
 namespace POS.Repository.Generic
 {
-    public class GenericRepository<TEntity> where TEntity: class
+    public class GenericRepository<TEntity> where TEntity : class
     {
-        internal AsowellContext context;
+        internal CloudContext context;
         internal DbSet dbSet;
 
-        public GenericRepository(AsowellContext context)
+        public GenericRepository(CloudContext context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();
+
+
+            if (typeof(TEntity) == typeof(AdminRe))
+            {
+                foreach (var entity in dbSet)
+                {
+                    var admin = entity as AdminRe;
+                    string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(admin.Pass, "itcomma_luuductrung");
+                    admin.DecryptedPass = decryptPass;
+                }
+            }
+            else
+            {
+                if (typeof(TEntity) == typeof(Employee))
+                {
+                    foreach (var entity in dbSet)
+                    {
+                        var emp = entity as Employee;
+                        string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                        emp.DecryptedPass = decryptPass;
+                    }
+                }
+            }
         }
 
 
@@ -36,15 +60,18 @@ namespace POS.Repository.Generic
             string includeProperties = "")
         {
             // Apply the filter expression
-            IQueryable<TEntity> query = (IQueryable<TEntity>) dbSet;
+            IQueryable<TEntity> query = (IQueryable<TEntity>)dbSet;
+
+
             if (filter != null)
             {
                 query = query.Where(filter);
             }
+            
 
             // Loading related data (using eager-loading)
             foreach (var includeProperty in includeProperties.Split(
-                new char[]{','}, StringSplitOptions.RemoveEmptyEntries))
+                new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
@@ -54,23 +81,42 @@ namespace POS.Repository.Generic
             {
                 return orderBy(query).ToList();
             }
+
+            
+
             return query.ToList();
         }
 
         public virtual TEntity GetById(object id)
         {
-            return (TEntity) dbSet.Find(id);
+            return (TEntity)dbSet.Find(id);
         }
 
         public virtual void Insert(TEntity entity)
         {
+            if (typeof(TEntity) == typeof(AdminRe))
+            {
+                var admin = entity as AdminRe;
+                string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(admin.Pass, "itcomma_luuductrung");
+                admin.Pass = encryptPass;
+            }
+            else
+            {
+                if (typeof(TEntity) == typeof(Employee))
+                {
+                    var emp = entity as Employee;
+                    string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                    emp.Pass = encryptPass;
+                }
+            }
+
+
             dbSet.Add(AutoGeneteId_DBAsowell(entity));
-            //dbSet.Add(entity);
         }
 
         public virtual void Delete(object id)
         {
-            TEntity entityToDelete = (TEntity) dbSet.Find(id);
+            TEntity entityToDelete = (TEntity)dbSet.Find(id);
             dbSet.Remove(entityToDelete);
         }
 
@@ -85,7 +131,23 @@ namespace POS.Repository.Generic
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            //var state = context.Entry(entityToUpdate);
+            if (typeof(TEntity) == typeof(AdminRe))
+            {
+                var admin = entityToUpdate as AdminRe;
+                string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(admin.Pass, "itcomma_luuductrung");
+                admin.Pass = encryptPass;
+            }
+            else
+            {
+                if (typeof(TEntity) == typeof(Employee))
+                {
+                    var emp = entityToUpdate as Employee;
+                    string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                    emp.Pass = encryptPass;
+                }
+            }
+
+
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
@@ -288,7 +350,7 @@ namespace POS.Repository.Generic
                 WorkingHistory wh = entity as WorkingHistory;
                 wh.WhId = result;
             }
-            
+
 
             return entity;
         }

@@ -45,7 +45,7 @@
                                      Content="Home"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="HomePage_OnPreviewMouseLeftButtonUp"
-                                     Foreground="White"/>
+                                     Foreground="White" />
                         <ListBoxItem x:Name="ViewstaticReAndEx"
                                      Content="Revenue and Expenditure"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
@@ -99,6 +99,10 @@
                             </materialDesign:PopupBox.ToggleContent>
 
                             <StackPanel>
+                                <Button x:Name="btnCreateAdmin"
+                                        Content="Create Admin"
+                                        Click="BtnCreateAdmin_OnClick"
+                                        Visibility="Collapsed"/>
                                 <Button x:Name="btnDetails"
                                         Content="Details"
                                         Click="BtnDetails_OnClick" />
@@ -113,7 +117,8 @@
                                    FontSize="36"
                                    FontWeight="Bold"
                                    Margin="0,-3"
-                                   Width="239">ASOWEL POS</TextBlock>
+                                   TextAlignment="Center"
+                                   Width="239">POS</TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
 
@@ -167,7 +172,7 @@
                                 <materialDesign:PackIcon Kind="History" />
                             </Button>
                             <Button x:Name="bntCreateNewProduct"
-                                Background="DarkSlateGray"
+                                    Background="DarkSlateGray"
                                     ToolTip="Create new Product"
                                     Click="BntCreateNewProduct_OnClick">
                                 <materialDesign:PackIcon Kind="Creation" />

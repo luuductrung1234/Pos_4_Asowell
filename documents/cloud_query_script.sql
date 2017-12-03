@@ -1,4 +1,4 @@
-USE DBAsowell
+USE DBpos
 GO
 
 -- auto execute trigger
@@ -36,10 +36,14 @@ GO
 -- end auto execute trigger
 
 
-insert into AdminRes values
-('AD00000001', 'admin_username1', 'password2', N'Ton That Vinh'),
-('AD00000002', 'admin_username2', 'password3', N'Luu Duc Trung')
+insert into AdminRes 
+	([ad_id], [username], [pass], [name], [ad_role])
+values
+		-- 1:software admin		2:user admin
+('AD00000001', 'luuductrung1234', 'Trung1997', N'Luu Duc Trung', 1),
+('AD00000002', 'vinhtonthat8', 'password1', N'Ton That Vinh', 2)
 go
+
 
 
 insert into Employee 

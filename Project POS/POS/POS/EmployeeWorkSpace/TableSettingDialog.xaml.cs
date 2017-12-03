@@ -12,10 +12,10 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class TableSettingDialog : Window
     {
-        EmployeewsOfLocalAsowell _uniofwork;
+        EmployeewsOfLocalPOS _uniofwork;
         Entities.Table curTable = new Entities.Table();
 
-        public TableSettingDialog(EmployeewsOfLocalAsowell unitofwork, Entities.Table table)
+        public TableSettingDialog(EmployeewsOfLocalPOS unitofwork, Entities.Table table)
         {
             InitializeComponent();
 

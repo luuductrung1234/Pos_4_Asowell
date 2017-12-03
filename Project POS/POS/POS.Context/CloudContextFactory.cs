@@ -18,11 +18,11 @@ namespace POS.Context
     using POS.Interfaces;
     using POS.Mapping;
 
-    public class AsowellContextFactory : System.Data.Entity.Infrastructure.IDbContextFactory<AsowellContext>
+    public class CloudContextFactory : System.Data.Entity.Infrastructure.IDbContextFactory<CloudContext>
     {
-        public AsowellContext Create()
+        public CloudContext Create()
         {
-            return new AsowellContext();
+            return new CloudContext();
         }
     }
 }

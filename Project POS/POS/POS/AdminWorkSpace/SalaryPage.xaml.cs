@@ -24,15 +24,24 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class SalaryPage : Page
     {
-        AdminwsOfCloudAsowell _unitofwork;
+        AdminwsOfCloudPOS _unitofwork;
         IEnumerable<SalaryNote> SalList;
         IEnumerable<WorkingHistory> WhList;
-        public SalaryPage(AdminwsOfCloudAsowell unitofwork)
+        private AdminRe admin;
+
+        public SalaryPage(AdminwsOfCloudPOS unitofwork, AdminRe curAdmin)
         {
             InitializeComponent();
             _unitofwork = unitofwork;
-            SalList = unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories");
-            WhList = unitofwork.WorkingHistoryRepository.Get(includeProperties: "Employee");
+            admin = curAdmin;
+
+            Loaded += SalaryPage_Loaded;
+        }
+
+        private void SalaryPage_Loaded(object sender, RoutedEventArgs args)
+        {
+            SalList = _unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
+            WhList = _unitofwork.WorkingHistoryRepository.Get(includeProperties: "Employee").Where(x => x.Employee.Manager.Equals(admin.AdId));
             lvSalary.ItemsSource = SalList;
             lvWokingHistory.ItemsSource = WhList;
             initMonthYear();
@@ -75,6 +84,8 @@ namespace POS.AdminWorkSpace
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SalaryNote sln = lvSalary.SelectedItem as SalaryNote;
+            if (sln == null)
+                return;
             lvWokingHistory.ItemsSource = WhList.Where(c => c.ResultSalary.Equals(sln.SnId));
         }
 
@@ -84,12 +95,12 @@ namespace POS.AdminWorkSpace
 
             if (filter.Length != 0)
             {
-                SalList = SalList.Where(x => Regex.IsMatch(x.Employee.Name, filter, RegexOptions.IgnoreCase));
+                SalList = SalList.Where(x => Regex.IsMatch(x.Employee.Name, filter, RegexOptions.IgnoreCase)).Where(x => x.Employee.Manager.Equals(admin.AdId));
                 lvSalary.ItemsSource = SalList;
             }
             else
             {
-                SalList = _unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories");
+                SalList = _unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
                 lvSalary.ItemsSource = SalList;
             }
         }
@@ -100,12 +111,12 @@ namespace POS.AdminWorkSpace
 
             if(filter.Length != 0)
             {
-                SalList = SalList.Where(x => x.Employee.Name.Contains(filter));
+                SalList = SalList.Where(x => x.Employee.Name.Contains(filter)).Where(x => x.Employee.Manager.Equals(admin.AdId));
                 lvSalary.ItemsSource = SalList;
             }
             else
             {
-                SalList = _unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories");
+                SalList = _unitofwork.SalaryNoteRepository.Get(includeProperties: "Employee,WorkingHistories").Where(x => x.Employee.Manager.Equals(admin.AdId));
                 lvSalary.ItemsSource = SalList;
             }
         }

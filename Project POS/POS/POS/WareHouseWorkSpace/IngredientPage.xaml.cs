@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using POS.Entities;
 using POS.Repository.DAL;
 
 namespace POS.WareHouseWorkSpace
@@ -21,13 +23,15 @@ namespace POS.WareHouseWorkSpace
     /// </summary>
     public partial class IngredientPage : Page
     {
-        AdminwsOfCloudAsowell _unitofwork;
-        public IngredientPage(AdminwsOfCloudAsowell unitofwork)
+        private AdminwsOfCloudPOS _unitofwork;
+        
+
+        public IngredientPage(AdminwsOfCloudPOS unitofwork, List<Ingredient> IngdList)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
-            
-            lvItem.ItemsSource = _unitofwork.IngredientRepository.Get(c=>c.Deleted.Equals(0) , includeProperties: "WareHouse");
+
+            lvItem.ItemsSource = IngdList;
         }
     }
 }

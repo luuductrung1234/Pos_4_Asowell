@@ -44,7 +44,6 @@
                             </Grid.RowDefinitions>
                             <Image Width="70"
                                    Height="90"
-                                   Source="C:\Users\Nam_Nguyen\Documents\Pos_4_Asowell\Project POS\POS\POS\Images\h1.jpg"
                                    Stretch="Fill" />
                             <StackPanel Grid.Row="2" Margin="10,10,10,10">
                             <StackPanel Grid.Row="1"
@@ -55,31 +54,31 @@
                             </StackPanel>
                             <StackPanel Grid.Row="2"
                                         Orientation="Horizontal">
-                                <TextBlock Foreground="White"
-                                           Margin="0,0,10,0">IgdType:</TextBlock>
+                                    <TextBlock Foreground="White"
+                                               Margin="0,0,10,0">Type:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding IgdType}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="3"
                                         Orientation="Horizontal" Margin="0,0,10,0">
                                 <TextBlock Foreground="White"
-                                           Margin="0,0,10,0">UnitBuy:</TextBlock>
+                                           Margin="0,0,10,0">Unit Buy:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding UnitBuy}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="4"
                                         Orientation="Horizontal">
                                 <TextBlock Foreground="White"
-                                           Margin="0,0,10,0">StandardPrice:</TextBlock>
+                                           Margin="0,0,10,0">Std.Price/Unit Buy:</TextBlock>
                                 <TextBlock Foreground="White"
                                            Text="{Binding StandardPrice}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="5"
                                         Orientation="Horizontal">
                                 <TextBlock Foreground="White"
-                                           Margin="0,0,10,0">Info:</TextBlock>
+                                           Margin="0,0,10,0">Contain:</TextBlock>
                                 <TextBlock Foreground="White"
-                                           Text="{Binding WareHouse.Contain}"></TextBlock>
+                                               Text="{Binding WareHouse.Contain}"></TextBlock>
                             </StackPanel>
                             </StackPanel>
                             <ProgressBar x:Name="prgcontent"
@@ -90,9 +89,6 @@
                                          Value="{Binding WareHouse.Contain}"
                                          Style="{StaticResource MyMaterialDesignLinearProgressBar}"
                                          Grid.Row="6">
-                               
-
-
                             </ProgressBar>
 
                         </Grid>

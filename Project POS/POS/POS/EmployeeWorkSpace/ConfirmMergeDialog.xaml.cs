@@ -21,14 +21,14 @@ namespace POS.EmployeeWorkSpace
     /// </summary>
     public partial class ConfirmMergeDialog : Window
     {
-        EmployeewsOfLocalAsowell _unitofwork;
+        EmployeewsOfLocalPOS _unitofwork;
         Entities.Table _first;
         Entities.Table _second;
         
         OrderTemp orderOfFirst;
         OrderTemp orderOfSecond;
 
-        public ConfirmMergeDialog(EmployeewsOfLocalAsowell unitofwork, Entities.Table first, Entities.Table second)
+        public ConfirmMergeDialog(EmployeewsOfLocalPOS unitofwork, Entities.Table first, Entities.Table second)
         {
             _unitofwork = unitofwork;
             _first = first;

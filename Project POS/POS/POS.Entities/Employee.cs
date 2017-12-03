@@ -26,7 +26,7 @@ namespace POS.Entities
         public string EmpId { get; set; } // emp_id (Primary key) (length: 10)
         public string Manager { get; set; } // manager (length: 10)
         public string Username { get; set; } // username (length: 50)
-        public string Pass { get; set; } // pass (length: 50)
+        public string Pass { get; set; } // pass (length: max)
         public string Name { get; set; } // name (length: 50)
         public System.DateTime Birth { get; set; } // birth
         public System.DateTime Startday { get; set; } // startday

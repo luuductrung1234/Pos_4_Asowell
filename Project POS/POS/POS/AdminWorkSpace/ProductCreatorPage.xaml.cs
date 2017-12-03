@@ -25,14 +25,14 @@ namespace POS.AdminWorkSpace
     /// </summary>
     public partial class ProductCreatorPage : Page
     {
-        private AdminwsOfCloudAsowell _unitofwork;
+        private AdminwsOfCloudPOS _unitofwork;
         List<Ingredient> _igreList;
-        Product _currentProduct;
         
         string browseImagePath = "";
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
-        public ProductCreatorPage(AdminwsOfCloudAsowell unitofwork)
+        Product _currentProduct = new Product();
+        public ProductCreatorPage(AdminwsOfCloudPOS unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
