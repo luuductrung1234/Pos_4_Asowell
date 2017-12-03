@@ -103,8 +103,8 @@ namespace POS
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string username = txtUsername.Text;
-            string pass = txtPass.Password;
+            string username = txtUsername.Text.Trim();
+            string pass = txtPass.Password.Trim();
             try
             {
                 btnLogin.IsEnabled = false;
@@ -126,7 +126,9 @@ namespace POS
             {
                 await Task.Run(() =>
                 {
-                    Employee emp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username) && x.Pass.Equals(pass)).FirstOrDefault();
+                    List<Employee> empList = _unitofwork.EmployeeRepository.Get().ToList();
+
+                    var emp = empList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                     if (emp != null)
                     {
                         App.Current.Properties["EmpLogin"] = emp;
@@ -195,7 +197,9 @@ namespace POS
                     else    
                     {
                         //Get Admin
-                        AdminRe ad = _unitofwork.AdminreRepository.Get(x => x.Username.Equals(username) && x.Pass.Equals(pass)).FirstOrDefault();
+                        List<AdminRe> adList = _unitofwork.AdminreRepository.Get().ToList();
+
+                        var ad = adList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                         if (ad != null)
                         {
                             App.Current.Properties["AdLogin"] = ad;
@@ -261,7 +265,7 @@ namespace POS
             {
                 await Task.Run(() =>
                 {
-                    Employee loginEmp = _unitofwork.EmployeeRepository.Get(x => x.empCode == code).FirstOrDefault();
+                    Employee loginEmp = _unitofwork.EmployeeRepository.Get(x => x.EmpCode == code).FirstOrDefault();
                     if (loginEmp != null)
                     {
                         App.Current.Properties["EmpLogin"] = loginEmp;

@@ -1,7 +1,7 @@
-﻿create database DBAsowell
+﻿create database DBpos
 go
 
-use DBAsowell
+use DBpos
 go
 
 CREATE TABLE [dbo].[ApplicationLog] (

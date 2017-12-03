@@ -36,6 +36,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -52,6 +55,8 @@
     <Compile Include="DAL\EmployeewsOfLocalPOS.cs" />
     <Compile Include="Generic\GenericRepository.cs" />
     <Compile Include="Generic\GenericRepositoryForLocal.cs" />
+    <Compile Include="Security\AESGCM.cs" />
+    <Compile Include="Security\AESThenHMAC.cs" />
     <Compile Include="Seperate Repo\AdminReRepository.cs" />
     <Compile Include="Seperate Repo\CustomerRepository.cs" />
     <Compile Include="Seperate Repo\EmployeeRepository.cs" />

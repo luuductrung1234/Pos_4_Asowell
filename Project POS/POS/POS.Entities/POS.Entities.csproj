@@ -63,6 +63,7 @@
     <Compile Include="Chair.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomEntities\AdminRe.cs" />
     <Compile Include="CustomEntities\Employee.cs" />
     <Compile Include="CustomEntities\OrderDetailsTemp.cs" />
     <Compile Include="CustomEntities\OrderNote.cs" />

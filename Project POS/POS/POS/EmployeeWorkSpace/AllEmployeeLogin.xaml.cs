@@ -229,7 +229,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 else if(_typeshow == 4)//start
                 {
-                    if (_emplog.Emp.empCode.Equals(code))
+                    if (_emplog.Emp.EmpCode.Equals(code))
                     {
                         App.Current.Properties["CurrentEmpWorking"] = _emplog;
                         _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
@@ -556,7 +556,7 @@ namespace POS.EmployeeWorkSpace
                 {
                     if (empout != null)
                     {
-                        if((empout.Emp.Username.Equals(username) && empout.Emp.Pass.Equals(pass)) || empout.Emp.empCode.Equals(code))
+                        if((empout.Emp.Username.Equals(username) && empout.Emp.Pass.Equals(pass)) || empout.Emp.EmpCode.Equals(code))
                         {
                             empout.EmpWH.EndTime = DateTime.Now;
                             _cloudPosUnitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);
@@ -587,7 +587,7 @@ namespace POS.EmployeeWorkSpace
                     bool isFound = false;
                     foreach (Employee emp in _employee)
                     {
-                        if ((emp.Username.Equals(username) && emp.Pass.Equals(pass)) || emp.empCode.Equals(code))
+                        if ((emp.Username.Equals(username) && emp.Pass.Equals(pass)) || emp.EmpCode.Equals(code))
                         {
                             var chemp = EmpLoginListData.emploglist.Where(x => x.Emp.EmpId.Equals(emp.EmpId)).ToList();
                             if(chemp.Count != 0)
@@ -664,14 +664,14 @@ namespace POS.EmployeeWorkSpace
                             _unitofwork.Save();
                         }
                     }
-
-                    App.Current.Properties["CurrentEmpWorking"] = null;
-                    _main.Close();
-                    Login login = new Login();
-                    this.Close();
-                    login.Show();
-                    return;
                 }
+
+                App.Current.Properties["CurrentEmpWorking"] = null;
+                _main.Close();
+                Login login = new Login();
+                this.Close();
+                login.Show();
+                return;
             }
             else
             {

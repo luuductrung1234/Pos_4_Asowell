@@ -152,6 +152,9 @@
     <Compile Include="AdminNavWindow.xaml.cs">
       <DependentUpon>AdminNavWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\AddNewAdminDialog.xaml.cs">
+      <DependentUpon>AddNewAdminDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\AdminChangePass.xaml.cs">
       <DependentUpon>AdminChangePass.xaml</DependentUpon>
     </Compile>
@@ -341,6 +344,10 @@
     <Compile Include="WPFMaterialDesign\Converters\ProgressBarConverter\StartPointConverter.cs" />
     <Compile Include="WPFMaterialDesign\Transitions\TransitionAssist.cs" />
     <Page Include="AdminNavWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\AddNewAdminDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -642,6 +649,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\ComHelper\" />
+    <Folder Include="Helper\Security\" />
     <Folder Include="SerializedData\" />
   </ItemGroup>
   <ItemGroup>

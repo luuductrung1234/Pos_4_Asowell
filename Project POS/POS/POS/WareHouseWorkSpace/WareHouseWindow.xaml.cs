@@ -35,22 +35,23 @@ namespace POS.WareHouseWorkSpace
 
             _innIngredientPage =new IngredientPage(_unitofwork, IngdList);
             _lvChartReceiptPage = new LiveChartReceiptPage(_unitofwork);
-            _inputReceipt = new InputReceiptNote(_unitofwork, IngdList);
+            
 
 
             if (App.Current.Properties["AdLogin"] != null)
             {
                 AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-                curAdmin = _unitofwork.AdminreRepository
-                    .Get(ad => ad.Username.Equals(getAdmin.Username) && ad.Pass.Equals(getAdmin.Pass)).First();
+                List<AdminRe> adList = _unitofwork.AdminreRepository.Get().ToList();
+                curAdmin = adList.FirstOrDefault(x => x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
                 CUserChip.Content = curAdmin.Name;
             }
             else
             {
                 Employee getEmp = App.Current.Properties["EmpLogin"] as Employee;
-                curEmp = _unitofwork.EmployeeRepository
-                    .Get(emp => emp.Username.Equals(getEmp.Username) && emp.Pass.Equals(getEmp.Pass)).First();
+                List<Employee> empList = _unitofwork.EmployeeRepository.Get().ToList();
+                curEmp = empList.FirstOrDefault(x => x.Username.Equals(getEmp.Username) && x.DecryptedPass.Equals(getEmp.DecryptedPass));
                 CUserChip.Content = curEmp.Name;
+                _inputReceipt = new InputReceiptNote(_unitofwork, IngdList);
             }
             
 

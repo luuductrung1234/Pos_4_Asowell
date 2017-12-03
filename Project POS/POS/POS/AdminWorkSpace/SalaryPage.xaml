@@ -69,7 +69,7 @@
                                         Width="135"
                                         Margin="0,0,20,0"></DatePicker>-->
                             <ComboBox x:Name="cboMonth"
-                                      Width="50"
+                                      Width="55"
                                       Margin="0,0,20,0" />
                             <ComboBox x:Name="cboYear"
                                       Width="100"

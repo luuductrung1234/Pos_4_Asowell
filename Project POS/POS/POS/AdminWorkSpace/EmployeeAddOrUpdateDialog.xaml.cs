@@ -55,8 +55,10 @@ namespace POS.AdminWorkSpace
 
             List<dynamic> roleList = new List<dynamic>
             {
+                new { role = 0, roleDisplay = "Ministering"},
                 new { role = 1, roleDisplay = "Bar"},
-                new { role = 2, roleDisplay = "Kitchen"}
+                new { role = 2, roleDisplay = "Kitchen"},
+                new { role = 3, roleDisplay = "Stock"},
             };
             cboRole.ItemsSource = roleList;
             cboRole.SelectedValuePath = "role";
@@ -67,7 +69,6 @@ namespace POS.AdminWorkSpace
         {
             if (_emp != null)
             {
-                loadControl(false);
                 txtUsername.Text = _emp.Username;
                 txtPass.Password = _emp.Pass;
                 txtCon.Password = _emp.Pass;
@@ -79,6 +80,7 @@ namespace POS.AdminWorkSpace
                 txtMail.Text = _emp.Email;
                 txtStartDay.SelectedDate = _emp.Startday;
                 txtHour_wage.Text = _emp.HourWage.ToString();
+                txtCode.Password = _emp.EmpCode.ToString();
                 return;
             }
         }
@@ -145,11 +147,7 @@ namespace POS.AdminWorkSpace
 
                 role = (int) cboRole.SelectedValue;
 
-                if (role == 0)
-                {
-                    MessageBox.Show("Role must be selected!");
-                    return;
-                }
+
 
                 //check birth
                 if (txtBirth.SelectedDate == null)
@@ -220,7 +218,7 @@ namespace POS.AdminWorkSpace
                     return;
                 }
 
-
+                // Adding
                 if (_emp.EmpId == null)
                 {
                     Employee checkemp = new Employee()
@@ -236,7 +234,7 @@ namespace POS.AdminWorkSpace
                         Email = email,
                         Startday = start,
                         HourWage = hourwage,
-                        empCode = code,
+                        EmpCode = code,
                         Deleted = 0,
                         Manager = (App.Current.Properties["AdLogin"] as AdminRe).AdId
                     };
@@ -249,6 +247,8 @@ namespace POS.AdminWorkSpace
                 }
                 else
                 {
+                    _emp.Username = username;
+                    _emp.Pass = pass;
                     _emp.Name = namee;
                     _emp.EmpRole = role;
                     _emp.Birth = birth;
@@ -257,6 +257,7 @@ namespace POS.AdminWorkSpace
                     _emp.Email = email;
                     _emp.Startday = start;
                     _emp.HourWage = hourwage;
+                    _emp.EmpCode = code;
 
                     _unitofwork.EmployeeRepository.Update(_emp);
                     _unitofwork.Save();
@@ -274,13 +275,6 @@ namespace POS.AdminWorkSpace
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void loadControl(bool b)
-        {
-            txtUsername.IsEnabled = b;
-            txtPass.IsEnabled = b;
-            txtCon.IsEnabled = b;
         }
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)

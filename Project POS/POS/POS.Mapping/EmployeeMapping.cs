@@ -33,7 +33,7 @@ namespace POS.Mapping
             Property(x => x.EmpId).HasColumnName(@"emp_id").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.Manager).HasColumnName(@"manager").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10);
             Property(x => x.Username).HasColumnName(@"username").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50);
-            Property(x => x.Pass).HasColumnName(@"pass").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50);
+            Property(x => x.Pass).HasColumnName(@"pass").HasColumnType("varchar(max)").IsRequired().IsUnicode(false);
             Property(x => x.Name).HasColumnName(@"name").HasColumnType("nvarchar").IsRequired().HasMaxLength(50);
             Property(x => x.Birth).HasColumnName(@"birth").HasColumnType("date").IsRequired();
             Property(x => x.Startday).HasColumnName(@"startday").HasColumnType("date").IsRequired();
@@ -43,7 +43,7 @@ namespace POS.Mapping
             Property(x => x.Phone).HasColumnName(@"phone").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(20);
             Property(x => x.EmpRole).HasColumnName(@"emp_role").HasColumnType("int").IsRequired();
             Property(x => x.Deleted).HasColumnName(@"deleted").HasColumnType("int").IsRequired();
-            Property(x => x.empCode).HasColumnName(@"emp_code").HasColumnType("int").IsOptional();
+            Property(x => x.EmpCode).HasColumnName(@"emp_code").HasColumnType("int").IsOptional();
 
             // Foreign keys
             HasRequired(a => a.AdminRe).WithMany(b => b.Employees).HasForeignKey(c => c.Manager).WillCascadeOnDelete(false); // FK_dbo.Employee_dbo.AdminRes_manager
