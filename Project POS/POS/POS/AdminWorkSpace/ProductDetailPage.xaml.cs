@@ -46,6 +46,8 @@ namespace POS.AdminWorkSpace
             cboType.Items.Add(ProductType.Wine);
             cboType.Items.Add(ProductType.Snack);
             cboType.Items.Add(ProductType.Other);
+            cboType.Items.Add(ProductType.Coffee);
+            cboType.Items.Add(ProductType.Cocktail);
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
