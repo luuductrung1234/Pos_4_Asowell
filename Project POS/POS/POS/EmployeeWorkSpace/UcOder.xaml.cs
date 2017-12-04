@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -480,7 +481,7 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
-        //ToDo: Set the contain back when the order didn't call any more
+        //ToDo: Set the WareHouse's contain back when the order didn't call any more
         private void bntDelete_Click(object sender, RoutedEventArgs e)
         {
             if (App.Current.Properties["CurrentEmpWorking"] == null)
@@ -748,17 +749,20 @@ namespace POS.EmployeeWorkSpace
                     return;
                 }
 
+
                 // save to database
                 _cloudPosUnitofwork.OrderRepository.Insert(newOrder);
                 _cloudPosUnitofwork.Save();
 
 
                 // printing
-                var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Receipt_Printing, newOrder);
+                var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Receipt_Printing,
+                    newOrder);
                 printer.DoPrint();
 
                 //// clean the old chair order data
                 DeleteChairOrderDetails();
+
             }
             else
             {
@@ -770,6 +774,8 @@ namespace POS.EmployeeWorkSpace
                 {
                     return;
                 }
+
+
 
                 // convert data and save to database
                 if (ConvertTableToOrder(newOrder))
@@ -783,7 +789,8 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 // printing
-                var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Receipt_Printing, newOrder);
+                var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Receipt_Printing,
+                    newOrder);
                 printer.DoPrint();
 
                 // clean the old table data
@@ -883,7 +890,7 @@ namespace POS.EmployeeWorkSpace
                         });
                         _unitofwork.OrderDetailsTempRepository.Delete(orderDetails);
                     }
-                }                
+                }
                 foreach (var newDetails in newOrderDetails)
                 {
                     bool isupdate = false;
@@ -902,7 +909,7 @@ namespace POS.EmployeeWorkSpace
                         }
                     }
 
-                    if(!isupdate)
+                    if (!isupdate)
                         _unitofwork.OrderDetailsTempRepository.Insert(newDetails);
                 }
                 _unitofwork.Save();
@@ -1199,7 +1206,7 @@ namespace POS.EmployeeWorkSpace
                 }
             }
 
-            if(currentTable.IsOrdered == 0)
+            if (currentTable.IsOrdered == 0)
             {
                 Table b = new Table(_unitofwork, _cloudPosUnitofwork);
 
@@ -1244,7 +1251,7 @@ namespace POS.EmployeeWorkSpace
             ordertempcurrenttable.SubEmpId += currentEmp.Emp.EmpId + ",";
             _unitofwork.OrderTempRepository.Update(ordertempcurrenttable);
             _unitofwork.Save();
-            
+
         }
 
     }
