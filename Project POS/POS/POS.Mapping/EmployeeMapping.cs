@@ -43,7 +43,9 @@ namespace POS.Mapping
             Property(x => x.Phone).HasColumnName(@"phone").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(20);
             Property(x => x.EmpRole).HasColumnName(@"emp_role").HasColumnType("int").IsRequired();
             Property(x => x.Deleted).HasColumnName(@"deleted").HasColumnType("int").IsRequired();
-            Property(x => x.EmpCode).HasColumnName(@"emp_code").HasColumnType("int").IsOptional();
+            Property(x => x.EmpCode).HasColumnName(@"emp_code").HasColumnType("varchar(max)").IsOptional();
+            Ignore(x => x.DecryptedPass);
+            Ignore(x => x.DecryptedCode);
 
             // Foreign keys
             HasRequired(a => a.AdminRe).WithMany(b => b.Employees).HasForeignKey(c => c.Manager).WillCascadeOnDelete(false); // FK_dbo.Employee_dbo.AdminRes_manager

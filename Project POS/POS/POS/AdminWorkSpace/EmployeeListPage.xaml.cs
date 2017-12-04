@@ -73,7 +73,30 @@ namespace POS.AdminWorkSpace
             txtPhone.Text = emp.Phone;
             txtStart.SelectedDate = emp.Startday;
             txtAcount.Text = emp.Username;
-            txtPass.Password = emp.Pass;
+            txtPass.Password = emp.DecryptedPass;
+            switch (emp.EmpRole)
+            {
+                case (int) EmployeeRole.Ministering:
+                {
+                    txtRole.Text = EmployeeRole.Ministering.ToString();
+                    break;
+                }
+                case (int)EmployeeRole.Bar:
+                {
+                    txtRole.Text = EmployeeRole.Bar.ToString();
+                    break;
+                }
+                case (int)EmployeeRole.Kitchen:
+                {
+                    txtRole.Text = EmployeeRole.Kitchen.ToString();
+                    break;
+                }
+                case (int)EmployeeRole.Stock:
+                {
+                    txtRole.Text = EmployeeRole.Stock.ToString();
+                    break;
+                }
+            }
         }
 
         private void bntAddnew_Click(object sender, RoutedEventArgs e)

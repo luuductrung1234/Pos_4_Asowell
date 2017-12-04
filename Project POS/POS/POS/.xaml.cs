@@ -236,10 +236,10 @@ namespace POS
 
         private async void btnLoginCode_Click(object sender, RoutedEventArgs e)
         {
-            int code;
+            string code;
             try
             {
-                code = int.Parse(KbEmpCodeLoginForm.InputValue);
+                code = KbEmpCodeLoginForm.InputValue;
             }
             catch (Exception ex)
             {
@@ -259,13 +259,14 @@ namespace POS
             }
         }
 
-        private async Task LoginByCodeAsync(int code)
+        private async Task LoginByCodeAsync(string code)
         {
             try
             {
                 await Task.Run(() =>
                 {
-                    Employee loginEmp = _unitofwork.EmployeeRepository.Get(x => x.EmpCode == code).FirstOrDefault();
+                    List<Employee> empList = _unitofwork.EmployeeRepository.Get().ToList();
+                    Employee loginEmp = empList.FirstOrDefault(x => x.DecryptedCode.Equals(code));
                     if (loginEmp != null)
                     {
                         App.Current.Properties["EmpLogin"] = loginEmp;

@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 
 namespace POS.Entities
 {
+    public enum EmployeeRole
+    {
+        Ministering = 0,
+        Bar = 1,
+        Kitchen = 2,
+        Stock = 3
+    }
+
     public partial class Employee
     {
-        public int? EmpCode { get; set; }    //emp_code
+        public string EmpCode { get; set; }    //emp_code
         public string DecryptedPass { get; set; }
+        public string DecryptedCode { get; set; }
     }
 }

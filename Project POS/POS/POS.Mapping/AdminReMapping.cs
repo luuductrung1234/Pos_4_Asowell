@@ -35,6 +35,7 @@ namespace POS.Mapping
             Property(x => x.Pass).HasColumnName(@"pass").HasColumnType("varchar(max)").IsRequired().IsUnicode(false);
             Property(x => x.Name).HasColumnName(@"name").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(50);
             Property(x => x.AdRole).HasColumnName(@"ad_role").HasColumnType("int").IsRequired();
+            Ignore(x => x.DecryptedPass);
             InitializePartial();
         }
         partial void InitializePartial();
