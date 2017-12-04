@@ -13,8 +13,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.3*" />
-            <ColumnDefinition Width="0.7*" />
+            <ColumnDefinition Width="1.23*" />
+            <ColumnDefinition Width="0.77*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -43,7 +43,7 @@
                           FontWeight="Bold"
                           Margin="0,50,0,-336"
                           SelectionChanged="LvAvaibleIngredient_OnSelectionChanged"
-                          Width="888"
+                          Width="840"
                           Height="334">
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
@@ -91,7 +91,7 @@
                           FontWeight="Bold"
                           Margin="0,50,0,0"
                           Height="222"
-                          Width="888">
+                          Width="840">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"
@@ -114,7 +114,7 @@
                                                  Text="{Binding ProDe.Quan}"
                                                  Width="100"
                                                  PreviewTextInput="NumberOnly_PreviewTextInput"
-                                                 TextChanged="txtQuantity_TextChanged"/>
+                                                 TextChanged="txtQuantity_TextChanged" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -131,7 +131,7 @@
                                                       ItemsSource="{Binding UnitUseT}"
                                                       SelectedItem="{Binding ProDe.UnitUse}"
                                                       SelectionChanged="cboUnitUse_SelectionChanged"
-                                                      Margin="0,0,10,0"/>
+                                                      Margin="0,0,10,0" />
                                             <Button x:Name="bntDeleteItem"
                                                     Width="45"
                                                     BorderBrush="DarkGray"
@@ -196,7 +196,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Info: "
+                        <TextBlock Text="Information: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox MaxWidth="300"
@@ -227,13 +227,19 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="ImageLink: "
+                        <TextBlock Text="Image Link: "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                        <Button x:Name="bntLinkImg"
+                        <TextBox x:Name="txtImageName"
+                                 FontSize="18"
+                                 Foreground="White"
+                                 Width="215"
+                                 IsEnabled="False"/>
+                        <Button x:Name="btnLinkImg"
                                 FontSize="18"
                                 Foreground="White"
-                                Margin="0,0,100,0">
+                                Margin="0,0,100,0"
+                                Click="btnLinkImg_Click">
                             <materialDesign:PackIcon Kind="FolderImage"
                                                      Foreground="Black" />
                         </Button>
@@ -247,7 +253,8 @@
                                  FontSize="18"
                                  Foreground="White"
                                  Width="215"
-                                 Margin="0,0,100,0" />
+                                 Margin="0,0,100,0"
+                                 IsEnabled="False"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
@@ -263,7 +270,7 @@
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
                         <TextBlock Text="Suggest Price: "
-                                   Margin="0,0,28,0"
+                                   Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtSusggestPrice"
                                  IsEnabled="False"
@@ -275,30 +282,33 @@
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
                         <TextBlock Text="Price: "
-                                   Margin="0,0,25,0"
+                                   Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtPrice"
                                  FontSize="18"
                                  Foreground="White"
                                  Width="220"
-                                 Margin="0,0,100,0" />
+                                 Margin="0,0,100,0"
+                                 PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0"
                                 HorizontalAlignment="Center">
-                        <Button x:Name="bntAdd"
+                        <Button x:Name="btnAdd"
                                 Content="Add"
                                 Height="46"
                                 FontWeight="Bold"
                                 FontSize="20"
-                                Margin="0,0,50.8,0"
-                                Width="104" />
-                        <Button x:Name="bntDelete"
-                                Content="Delete"
+                                Margin="0,0,50,0"
+                                Width="100"
+                                Click="btnAdd_Click"/>
+                        <Button x:Name="btnClear"
+                                Content="Clear"
                                 FontWeight="Bold"
                                 FontSize="20"
                                 Height="46"
-                                Width="106" />
+                                Width="100"
+                                Click="btnClear_Click"/>
                     </StackPanel>
 
                 </StackPanel>
