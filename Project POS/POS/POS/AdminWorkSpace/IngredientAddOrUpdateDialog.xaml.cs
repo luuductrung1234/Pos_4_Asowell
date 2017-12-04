@@ -58,10 +58,10 @@ namespace POS.AdminWorkSpace
             cboIngreType.SelectedItem = "Other";
 
             //init Unit Buy
-            cboUnitBuy.Items.Add("g");
-            cboUnitBuy.Items.Add("ml");
+            cboUnitBuy.Items.Add("kilogram");
+            cboUnitBuy.Items.Add("liter");
             cboUnitBuy.Items.Add("time");
-            cboUnitBuy.SelectedItem = "g";
+            cboUnitBuy.SelectedItem = "kilogram";
         }
 
         private void initUpdateData()
@@ -97,14 +97,21 @@ namespace POS.AdminWorkSpace
 
         private void txtStdPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            decimal price = decimal.Parse(txtStdPrice.Text.Trim());
-            if(price < 0 || price > decimal.MaxValue)
+            try
+            {
+                decimal price = decimal.Parse(txtStdPrice.Text.Trim());
+                if (price < 0 || price > decimal.MaxValue)
+                {
+                    IcPriceValid.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    IcPriceValid.Visibility = Visibility.Hidden;
+                }
+            }
+            catch(Exception ex)
             {
                 IcPriceValid.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                IcPriceValid.Visibility = Visibility.Hidden;
             }
         }
 
@@ -134,6 +141,12 @@ namespace POS.AdminWorkSpace
                 string unitbuy = cboUnitBuy.SelectedItem.ToString();
 
                 //check price
+                if(string.IsNullOrEmpty(txtStdPrice.Text.Trim()))
+                {
+                    MessageBox.Show("Standard price is not valid!");
+                    return;
+                }
+
                 decimal price = decimal.Parse(txtStdPrice.Text.Trim());
                 if(price < 0 || price > decimal.MaxValue)
                 {
@@ -177,11 +190,10 @@ namespace POS.AdminWorkSpace
                     _unitofwork.Save();
 
                     MessageBox.Show("Insert " + newingre.Name + "(" + newingre.IgdId + ") successful!");
-                    this.Close();
                 }
                 else //Updating
                 {
-                    _ingre.Name = Name;
+                    _ingre.Name = namee;
                     _ingre.Info = info;
                     _ingre.Usefor = byte.Parse(usefor + "");
                     _ingre.IgdType = ingretype;
@@ -192,8 +204,9 @@ namespace POS.AdminWorkSpace
                     _unitofwork.Save();
 
                     MessageBox.Show("Update " + _ingre.Name + "(" + _ingre.IgdId + ") successful!");
-                    this.Close();
                 }
+
+                this.Close();
             }
             catch(Exception ex)
             {

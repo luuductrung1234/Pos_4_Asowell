@@ -9,8 +9,8 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Ingredient Add Or Update"
-        Height="500"
-        Width="450">
+        Height="520"
+        Width="500">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}"
                x:Key="TextBlockLabel">
@@ -22,21 +22,6 @@
                     Value="Bold" />
             <Setter Property="Width"
                     Value="120" />
-            <Setter Property="HorizontalAlignment"
-                    Value="Center" />
-            <Setter Property="VerticalAlignment"
-                    Value="Center" />
-        </Style>
-        <Style TargetType="{x:Type TextBlock}"
-               x:Key="TextBlockLabel2">
-            <Setter Property="FontSize"
-                    Value="18" />
-            <Setter Property="Foreground"
-                    Value="#FFFFEDBC" />
-            <Setter Property="FontWeight"
-                    Value="Bold" />
-            <Setter Property="Width"
-                    Value="160" />
             <Setter Property="HorizontalAlignment"
                     Value="Center" />
             <Setter Property="VerticalAlignment"
@@ -66,7 +51,7 @@
                     <Setter Property="FontWeight"
                             Value="Bold" />
                     <Setter Property="Width"
-                            Value="160" />
+                            Value="220" />
                     <Setter Property="HorizontalAlignment"
                             Value="Center" />
                     <Setter Property="VerticalAlignment"
@@ -113,31 +98,37 @@
             <StackPanel  Orientation="Horizontal"
                          Margin="10,20,0,0">
                 <TextBlock Text="Use for:"
-                           Style="{StaticResource ResourceKey=TextBlockLabel2}" />
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <ComboBox x:Name="cboUsefor"
                           VerticalAlignment="Stretch"
-                          Width="215" />
+                          Width="215"
+                          FontSize="18"
+                          Foreground="White"/>
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
                          Margin="10,20,0,0">
                 <TextBlock Text="Ingredient Type:"
-                           Style="{StaticResource ResourceKey=TextBlockLabel2}" />
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <ComboBox x:Name="cboIngreType"
                           VerticalAlignment="Stretch"
-                          Width="215" />
+                          Width="215"
+                          FontSize="18"
+                          Foreground="White" />
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
                          Margin="10,20,0,0">
                 <TextBlock Text="Unit Buy:"
-                           Style="{StaticResource ResourceKey=TextBlockLabel2}" />
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <ComboBox x:Name="cboUnitBuy"
                           VerticalAlignment="Stretch"
-                          Width="215" />
+                          Width="215"
+                          FontSize="18"
+                          Foreground="White" />
             </StackPanel>
             <StackPanel  Orientation="Horizontal"
                          Margin="10,20,0,0">
-                <TextBlock Text="Standard Price:"
-                           Style="{StaticResource ResourceKey=TextBlockLabel2}" />
+                <TextBlock Text="Standard Price(kVND):"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtStdPrice"
                          FontSize="18"
                          Foreground="White"

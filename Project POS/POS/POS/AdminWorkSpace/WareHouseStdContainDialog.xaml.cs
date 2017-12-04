@@ -22,10 +22,18 @@ namespace POS.AdminWorkSpace
         public WareHouseStdContainDialog()
         {
             InitializeComponent();
+
+            this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrEmpty(txtStdContain.Text.Trim()))
+            {
+                MessageBox.Show("Standard Contain is not valid!");
+                return;
+            }
+
             int std = int.Parse(txtStdContain.Text.Trim());
             if(std < 1 || std > int.MaxValue)
             {

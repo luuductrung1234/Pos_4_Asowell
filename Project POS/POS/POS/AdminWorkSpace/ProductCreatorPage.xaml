@@ -176,7 +176,7 @@
                             <Setter Property="FontWeight"
                                     Value="Bold" />
                             <Setter Property="Width"
-                                    Value="150" />
+                                    Value="200" />
                             <Setter Property="HorizontalAlignment"
                                     Value="Center" />
                             <Setter Property="VerticalAlignment"
@@ -269,7 +269,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Suggest Price: "
+                        <TextBlock Text="Suggest Price(kVND): "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtSusggestPrice"
@@ -281,7 +281,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
-                        <TextBlock Text="Price: "
+                        <TextBlock Text="Price(kVND): "
                                    Margin="0,0,20,0"
                                    Style="{StaticResource ResourceKey=TextBlockLabel}" />
                         <TextBox x:Name="txtPrice"

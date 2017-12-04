@@ -100,6 +100,10 @@ namespace POS.AdminWorkSpace
                     delCus.Deleted = 1;
                     _unitofwork.CustomerRepository.Update(delCus);
                     _unitofwork.Save();
+                    allcus = _unitofwork.CustomerRepository.Get(x => x.Deleted.Equals(0)).ToList();
+                    lvDataCustomer.ItemsSource = allcus;
+                    lvDataCustomer.UnselectAll();
+                    lvDataCustomer.Items.Refresh();
                 }
             }
             else

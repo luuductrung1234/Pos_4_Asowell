@@ -141,6 +141,10 @@ namespace POS.AdminWorkSpace
                     delEmp.Deleted = 1;
                     _unitofork.EmployeeRepository.Update(delEmp);
                     _unitofork.Save();
+                    empwithad = _unitofork.EmployeeRepository.Get(x => x.Manager.Equals(admin.AdId) && x.Deleted.Equals(0)).ToList();
+                    lvDataEmployee.ItemsSource = empwithad;
+                    lvDataEmployee.UnselectAll();
+                    lvDataEmployee.Items.Refresh();
                 }
             }
             else

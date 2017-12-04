@@ -14,7 +14,7 @@
         <Style TargetType="{x:Type TextBlock}"
                x:Key="TextBlockLabel">
             <Setter Property="FontSize"
-                    Value="16" />
+                    Value="18" />
             <Setter Property="Foreground"
                     Value="White" />
             <Setter Property="Width"
@@ -31,7 +31,7 @@
                 <Style TargetType="TextBlock"
                        x:Key="TextBlockLabel">
                     <Setter Property="FontSize"
-                            Value="16" />
+                            Value="18" />
                     <Setter Property="Foreground"
                             Value="White" />
                     <Setter Property="Width"
@@ -48,6 +48,7 @@
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtStdContain"
                          Width="150"
+                         FontSize="18"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"
                          Foreground="White"

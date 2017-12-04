@@ -89,6 +89,8 @@ namespace POS.AdminWorkSpace
         private void bntLogout_Click(object sender, RoutedEventArgs e)
         {
             App.Current.Properties["AdLogin"] = null;
+            App.Current.Properties["CurrentEmpWorking"] = null;
+
             login = new Login();
             this.Close();
             login.Show();
