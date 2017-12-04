@@ -28,7 +28,6 @@ namespace POS.AdminWorkSpace
         public CustomerAddOrUpdateDialog(AdminwsOfCloudPOS unitofwork, Customer cus)
         {
             _unitofwork = unitofwork;
-            _cus = new Customer();
             if (cus != null)
             {
                 _cus = cus;
@@ -91,7 +90,7 @@ namespace POS.AdminWorkSpace
                 _unitofwork.CustomerRepository.Insert(checkcus);
                 _unitofwork.Save();
 
-                MessageBox.Show("Insert " + _cus.Name + "(" + _cus.CusId + ") successful!");
+                MessageBox.Show("Insert " + checkcus.Name + "(" + checkcus.CusId + ") successful!");
                 this.Close();
             }
             else //update

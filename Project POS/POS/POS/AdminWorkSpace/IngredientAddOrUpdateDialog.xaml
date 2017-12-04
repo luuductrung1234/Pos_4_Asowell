@@ -1,0 +1,170 @@
+﻿<Window x:Class="POS.AdminWorkSpace.IngredientAddOrUpdateDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Background="{DynamicResource MaterialDesignPaper}"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Ingredient Add Or Update"
+        Height="520"
+        Width="500">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}"
+               x:Key="TextBlockLabel">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="Foreground"
+                    Value="#FFFFEDBC" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="Width"
+                    Value="120" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="IngredientInfo">
+        <materialDesign:ColorZone Mode="PrimaryDark"
+                                  Height="44">
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,0,0,0">
+                <TextBlock VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           FontSize="18">Ingredient Infomation</TextBlock>
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <StackPanel Orientation="Vertical"
+                    Margin="0,49,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock"
+                       x:Key="TextBlockLabel">
+                    <Setter Property="FontSize"
+                            Value="18" />
+                    <Setter Property="Foreground"
+                            Value="#FFFFEDBC" />
+                    <Setter Property="FontWeight"
+                            Value="Bold" />
+                    <Setter Property="Width"
+                            Value="220" />
+                    <Setter Property="HorizontalAlignment"
+                            Value="Center" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Center" />
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="10,20,0,0">
+                <TextBlock Text="Name:"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <TextBox x:Name="txtName"
+                         FontSize="18"
+                         Foreground="White"
+                         Width="215"
+                         Text=""
+                         TextChanged="txtName_TextChanged" />
+                <materialDesign:PackIcon Margin="10,0,0,0"
+                                         x:Name="IcNameValid"
+                                         Width="30"
+                                         Height="30"
+                                         Kind="Alert"
+                                         Foreground="#FFC13E17"
+                                         Visibility="Hidden" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="10,20,0,0">
+                <TextBlock Text="Information:"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <TextBox MaxWidth="300"
+                         Foreground="White"
+                         x:Name="txtInfo"
+                         Height="70"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         materialDesign:HintAssist.Hint=""
+                         AcceptsReturn="True"
+                         FontSize="18"
+                         SpellCheck.IsEnabled="True"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"
+                         Width="215"
+                         Margin="0,0,100,0" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="10,20,0,0">
+                <TextBlock Text="Use for:"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <ComboBox x:Name="cboUsefor"
+                          VerticalAlignment="Stretch"
+                          Width="215"
+                          FontSize="18"
+                          Foreground="White"/>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="10,20,0,0">
+                <TextBlock Text="Ingredient Type:"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <ComboBox x:Name="cboIngreType"
+                          VerticalAlignment="Stretch"
+                          Width="215"
+                          FontSize="18"
+                          Foreground="White" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="10,20,0,0">
+                <TextBlock Text="Unit Buy:"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <ComboBox x:Name="cboUnitBuy"
+                          VerticalAlignment="Stretch"
+                          Width="215"
+                          FontSize="18"
+                          Foreground="White" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="10,20,0,0">
+                <TextBlock Text="Standard Price(kVND):"
+                           Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                <TextBox x:Name="txtStdPrice"
+                         FontSize="18"
+                         Foreground="White"
+                         Width="215"
+                         Text=""
+                         PreviewTextInput="NumberOnly_PreviewTextInput"
+                         TextChanged="txtStdPrice_TextChanged"/>
+                <materialDesign:PackIcon Margin="10,0,0,0"
+                                         x:Name="IcPriceValid"
+                                         Width="30"
+                                         Height="30"
+                                         Kind="Alert"
+                                         Foreground="#FFC13E17"
+                                         Visibility="Hidden" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal"
+                         Margin="20"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center">
+                <Button x:Name="btnAddNew"
+                        Content="Save"
+                        Width="121"
+                        Height="Auto"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Margin="0,0,0,0"
+                        Click="btnAddNew_Click" />
+                <Button x:Name="btnCancel"
+                        Content="Cancel"
+                        Width="121"
+                        Height="Auto"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Margin="100,0,0,0"
+                        Click="btnCancel_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

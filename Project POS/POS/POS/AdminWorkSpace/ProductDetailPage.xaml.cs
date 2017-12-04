@@ -25,19 +25,33 @@ namespace POS.AdminWorkSpace
     public partial class ProductDetailPage : Page
     {
         private AdminwsOfCloudPOS _unitofwork;
+        private List<Product> allProduct;
+        private List<ProductDetail> allProductDetails;
+        private List<Ingredient> allIngre;
+        private Ingredient _ingre;
+        private IngredientAddOrUpdateDialog _ingreAddOrUpdate;
+
         public ProductDetailPage(AdminwsOfCloudPOS unitofwork)
         {
             InitializeComponent();
             _unitofwork = unitofwork;
             InitializeComponent();
-            initPageData();
+            this.Loaded += ProductDetailPage_Loaded;
+        }
+        
+        private void ProductDetailPage_Loaded(object sender, RoutedEventArgs e)
+        {
+                initPageData();
         }
 
         private void initPageData()
         {
-            lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(c=>c.Deleted.Equals(0));
-            lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product");
-            lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(c => c.Deleted.Equals(0));
+            allProduct = _unitofwork.ProductRepository.Get(c => c.Deleted.Equals(0)).ToList();
+            lvProduct.ItemsSource = allProduct;
+            allProductDetails = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product").ToList();
+            lvDetails.ItemsSource = allProductDetails;
+            allIngre = _unitofwork.IngredientRepository.Get(c => c.Deleted.Equals(0)).ToList();
+            lvIngredient.ItemsSource = allIngre;
 
             cboType.Items.Add(ProductType.All);
             cboType.Items.Add(ProductType.Beverage);
@@ -210,8 +224,82 @@ namespace POS.AdminWorkSpace
 
         private void cboTypeI_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
         }
 
-        
+        private void bntAdd_Click(object sender, RoutedEventArgs e)
+        {
+            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_unitofwork, null);
+            _ingreAddOrUpdate.ShowDialog();
+            
+            lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(x => x.Deleted.Equals(0)).ToList();
+            lvIngredient.UnselectAll();
+            lvIngredient.Items.Refresh();
+        }
+
+        private void bntEdit_Click(object sender, RoutedEventArgs e)
+        {
+            _ingre = lvIngredient.SelectedItem as Ingredient;
+
+            if (lvIngredient.SelectedItem == null)
+            {
+                MessageBox.Show("Ingredient must be selected to update! Choose again!");
+                return;
+            }
+
+            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_unitofwork, _ingre);
+            _ingreAddOrUpdate.ShowDialog();
+
+            lvProduct.UnselectAll();
+            lvProduct.Items.Refresh();
+            lvDetails.UnselectAll();
+            lvDetails.Items.Refresh();
+            lvIngredient.UnselectAll();
+            lvIngredient.Items.Refresh();
+        }
+
+        private void bntDel_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvIngredient.SelectedItem == null)
+            {
+                MessageBox.Show("Ingredient must be selected to delete! Choose again!");
+                return;
+            }
+
+            var delIngre = lvIngredient.SelectedItem as Ingredient;
+            if (delIngre != null)
+            {
+                MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delIngre.Name + "(" + delIngre.IgdId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                if (delMess == MessageBoxResult.Yes)
+                {
+                    delIngre.Deleted = 1;
+                    var pdofingre = _unitofwork.ProductDetailsRepository.Get(x => x.IgdId.Equals(delIngre.IgdId)).ToList();
+                    if(pdofingre.Count != 0)
+                    {
+                        foreach(var pd in pdofingre)
+                        {
+                            _unitofwork.ProductDetailsRepository.Delete(pd);
+                        }
+                        _unitofwork.Save();
+                    }
+
+                    _unitofwork.IngredientRepository.Update(delIngre);
+                    _unitofwork.Save();
+                    lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(c => c.Deleted.Equals(0));
+                    lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product");
+                    lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(x => x.Deleted.Equals(0)).ToList();
+                    lvProduct.UnselectAll();
+                    lvProduct.Items.Refresh();
+                    lvDetails.UnselectAll();
+                    lvDetails.Items.Refresh();
+                    lvIngredient.UnselectAll();
+                    lvIngredient.Items.Refresh();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please choose ingredient you want to delete and try again!");
+            }
+        }
     }
 }

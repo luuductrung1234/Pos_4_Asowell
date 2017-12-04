@@ -241,7 +241,7 @@ namespace POS.AdminWorkSpace
                     MessageBox.Show("Insert " + checkemp.Name + "(" + checkemp.EmpId + ") successful!");
                     this.Close();
                 }
-                else
+                else //Updating
                 {
                     _emp.Username = username;
                     _emp.Pass = pass;
@@ -264,7 +264,7 @@ namespace POS.AdminWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong. Can not add or update employee info. Please check the details again!");
+                MessageBox.Show("Something went wrong. Can not add or update employee. Please check the details again!");
             }
         }
 
@@ -412,7 +412,6 @@ namespace POS.AdminWorkSpace
                 IcCodeValid.Visibility = Visibility.Hidden;
             }
         }
-
-
+        
     }
 }

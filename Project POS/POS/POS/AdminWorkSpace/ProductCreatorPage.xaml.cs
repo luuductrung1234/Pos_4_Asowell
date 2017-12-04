@@ -27,7 +27,7 @@ namespace POS.AdminWorkSpace
     {
         private AdminwsOfCloudPOS _unitofwork;
         List<Ingredient> _igreList;
-        
+
         string browseImagePath = "";
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
@@ -37,12 +37,18 @@ namespace POS.AdminWorkSpace
             _unitofwork = unitofwork;
             InitializeComponent();
 
-            _igreList = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
-            lvAvaibleIngredient.ItemsSource = _igreList;
+            this.Loaded += ProductCreatorPage_Loaded;
 
             _currentProduct = new Product();
 
             initComboBox();
+        }
+
+        public bool isRaiseIngreShowEvent = false;
+        private void ProductCreatorPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            _igreList = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
+            lvAvaibleIngredient.ItemsSource = _igreList;
         }
 
         private void initComboBox()
@@ -74,7 +80,7 @@ namespace POS.AdminWorkSpace
                 return;
             }
 
-            if(PDTempData.pdtList.Count != 0)
+            if (PDTempData.pdtList.Count != 0)
             {
                 var igre = PDTempData.pdtList.Where(x => x.ProDe.IgdId.Equals(ingre.IgdId)).FirstOrDefault();
                 if (igre != null)
@@ -120,6 +126,7 @@ namespace POS.AdminWorkSpace
             isRaiseEvent = true;
             //_currentProduct.ProductDetails.Remove(PDTempData.pdtList[index].ProDe);
             PDTempData.pdtList.RemoveAt(index);
+            CalSuggestPrice();
             lvDetails.ItemsSource = PDTempData.pdtList;
             lvDetails.Items.Refresh();
             isRaiseEvent = false;
@@ -152,7 +159,7 @@ namespace POS.AdminWorkSpace
                 }
 
                 isRaiseEvent = true;
-                if(cboStatus.SelectedItem.Equals("Time"))
+                if (cboStatus.SelectedItem.Equals("Time"))
                 {
                     _currentProduct.ProductDetails.ToList()[index].Quan = 1;
                     PDTempData.pdtList[index].ProDe.Quan = 1;
@@ -160,8 +167,7 @@ namespace POS.AdminWorkSpace
 
                 //_currentProduct.ProductDetails.ToList()[index].UnitUse = cbo.SelectedItem.ToString();
                 PDTempData.pdtList[index].ProDe.UnitUse = cbo.SelectedItem.ToString();
-                lvDetails.ItemsSource = PDTempData.pdtList;
-                lvDetails.Items.Refresh();
+                CalSuggestPrice();
                 isRaiseEvent = false;
             }
         }
@@ -185,7 +191,7 @@ namespace POS.AdminWorkSpace
                     return;
                 }
 
-                if((sender as TextBox).Text.Trim().Equals("") || (sender as TextBox).Text.Trim() == null)
+                if ((sender as TextBox).Text.Trim().Equals("") || (sender as TextBox).Text.Trim() == null)
                 {
                     return;
                 }
@@ -193,8 +199,7 @@ namespace POS.AdminWorkSpace
                 isRaiseEvent = true;
                 //_currentProduct.ProductDetails.ToList()[index].Quan = int.Parse((sender as TextBox).Text.Trim());
                 PDTempData.pdtList[index].ProDe.Quan = int.Parse((sender as TextBox).Text.Trim());
-                lvDetails.ItemsSource = PDTempData.pdtList;
-                lvDetails.Items.Refresh();
+                CalSuggestPrice();
                 isRaiseEvent = false;
             }
         }
@@ -209,88 +214,101 @@ namespace POS.AdminWorkSpace
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if(PDTempData.pdtList.Count == 0)
-            {
-                MessageBox.Show("You must be choose at least one ingredient! Please try again!");
-                return;
-            }
-
-            foreach(var pd in PDTempData.pdtList)
-            {
-                if(pd.ProDe.UnitUse.Equals("") || pd.ProDe.UnitUse == null || pd.ProDe.Quan < 1)
-                {
-                    MessageBox.Show("Please check information of " + pd.Ingre.Name + " again! Something is not valid!");
-                    return;
-                }
-            }
-
-            //check name
-            string name = txtName.Text.Trim();
-            if(name.Length == 0)
-            {
-                MessageBox.Show("Name is not valid!");
-                txtName.Focus();
-                return;
-            }
-
-            //check info
-            string info = txtInfo.Text.Trim();
-            //if (info.Length == 0)
-            //{
-            //    MessageBox.Show("Information is not valid!");
-            //    txtInfo.Focus();
-            //    return;
-            //}
-
-            //check type
-            int type = (int)cboType.SelectedItem;
-
-            //check imagename
-            string imgname = txtImageName.Text.Trim();
-            //if(imgname.Length == 0)
-            //{
-            //    MessageBox.Show("Please choose a image to continue!");
-            //    btnLinkImg.Focus();
-            //    return;
-            //}
-
-            //check discount
-            //
-
-            //check standard status
-            string stdstt = cboStatus.SelectedItem.ToString();
-
-            //check price
-            decimal price = decimal.Parse(txtPrice.Text.Trim());
-
-            _currentProduct.ProductId = "";
-            _currentProduct.Name = name;
-            _currentProduct.Info = info;
-            _currentProduct.Type = type;
-            _currentProduct.ImageLink = imgname;
-            _currentProduct.Discount = 0;
-            _currentProduct.StandardStats = stdstt;
-            _currentProduct.Price = price;
-
-            string destinationFile = startupProjectPath + "\\Images\\" + txtImageName.Text.Trim();
             try
             {
-                File.Delete(destinationFile);
-                File.Copy(browseImagePath, destinationFile);
+
+                if (PDTempData.pdtList.Count == 0)
+                {
+                    MessageBox.Show("You must be choose at least one ingredient! Please try again!");
+                    return;
+                }
+
+                foreach (var pd in PDTempData.pdtList)
+                {
+                    if (pd.ProDe.UnitUse.Equals("") || pd.ProDe.UnitUse == null || pd.ProDe.Quan < 1)
+                    {
+                        MessageBox.Show("Please check information of " + pd.Ingre.Name + " again! Something is not valid!");
+                        return;
+                    }
+                }
+
+                //check name
+                string name = txtName.Text.Trim();
+                if (name.Length == 0)
+                {
+                    MessageBox.Show("Name is not valid!");
+                    txtName.Focus();
+                    return;
+                }
+
+                //check info
+                string info = txtInfo.Text.Trim();
+
+                //check type
+                int type = (int)cboType.SelectedItem;
+
+                //check imagename
+                string imgname = txtImageName.Text.Trim();
+                if (imgname.Length == 0)
+                {
+                    MessageBox.Show("Please choose a image to continue!");
+                    btnLinkImg.Focus();
+                    return;
+                }
+
+                //check discount
+                //
+
+                //check standard status
+                string stdstt = cboStatus.SelectedItem.ToString();
+
+                //check price
+                decimal price = 0;
+                if (string.IsNullOrEmpty(txtPrice.Text.Trim()))
+                {
+                    price = decimal.Parse(txtSusggestPrice.Text.Trim());
+                }
+                else
+                {
+                    price = decimal.Parse(txtPrice.Text.Trim());
+                }
+
+                _currentProduct.ProductId = "";
+                _currentProduct.Name = name;
+                _currentProduct.Info = info;
+                _currentProduct.Type = type;
+                _currentProduct.ImageLink = imgname;
+                _currentProduct.Discount = 0;
+                _currentProduct.StandardStats = stdstt;
+                _currentProduct.Price = price;
+
+                string destinationFile = startupProjectPath + "\\Images\\Products" + txtImageName.Text.Trim();
+                try
+                {
+                    File.Delete(destinationFile);
+                    File.Copy(browseImagePath, destinationFile);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                _unitofwork.ProductRepository.Insert(_currentProduct);
+                _unitofwork.Save();
+
+                foreach (var pd in PDTempData.pdtList)
+                {
+                    pd.ProDe.ProductId = _currentProduct.ProductId;
+                    _unitofwork.ProductDetailsRepository.Insert(pd.ProDe);
+                    _unitofwork.Save();
+                }
+
+                MessageBox.Show("Add new product " + _currentProduct.Name + "(" + _currentProduct.ProductId + ") successful!");
+                ClearAllData();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-            }
-
-            _unitofwork.ProductRepository.Insert(_currentProduct);
-            _unitofwork.Save();
-
-            foreach(var pd in PDTempData.pdtList)
-            {
-                pd.ProDe.ProductId = _currentProduct.ProductId;
-                _unitofwork.ProductDetailsRepository.Insert(pd.ProDe);
-                _unitofwork.Save();
+                MessageBox.Show("Something went wrong. Can not add new product. Please check again!");
             }
         }
 
@@ -310,15 +328,40 @@ namespace POS.AdminWorkSpace
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
+            ClearAllData();
+        }
+
+        private void ClearAllData()
+        {
+            isRaiseEvent = true;
             txtName.Text = "";
             txtInfo.Text = "";
             cboType.SelectedItem = ProductType.Beverage;
             txtImageName.Text = "";
             txtDiscount.Text = "";
             cboStatus.SelectedItem = "Drink";
+            txtSusggestPrice.Text = "";
             txtPrice.Text = "";
+
+            lvDetails.ItemsSource = new List<ProductDetail>();
+            lvDetails.UnselectAll();
+            lvDetails.Items.Refresh();
+            lvAvaibleIngredient.UnselectAll();
+            lvAvaibleIngredient.Items.Refresh();
+            isRaiseEvent = false;
         }
-        
+
+        private void CalSuggestPrice()
+        {
+            decimal sugprice = 0;
+            foreach (var pd in PDTempData.pdtList)
+            {
+                sugprice += ((decimal)(pd.ProDe.Quan / 1000) * pd.Ingre.StandardPrice);
+            }
+
+            txtSusggestPrice.Text = sugprice + "";
+        }
+
     }
 
     public class PDTemp
@@ -348,7 +391,7 @@ namespace POS.AdminWorkSpace
         {
             get
             {
-                return new List<string> { "", "g", "ml", "time" };
+                return new List<string> { "", "g", "ml" };
             }
         }
     }

@@ -235,24 +235,27 @@
                                         Content="Add"
                                         Height="auto"
                                         Margin="0,0,20,0"
-                                        FontWeight="Bold" />
+                                        FontWeight="Bold"
+                                        Click="bntAdd_Click"/>
                                 <Button x:Name="bntEdit"
                                         Content="Edit"
                                         Height="auto"
                                         Margin="0,0,20,0"
-                                        FontWeight="Bold"/>
+                                        FontWeight="Bold"
+                                        Click="bntEdit_Click"/>
                                 <Button x:Name="bntDel"
                                         Content="Delete"
                                         Height="auto"
                                         Margin="0,0,50,0"
-                                        FontWeight="Bold" />
+                                        FontWeight="Bold"
+                                        Click="bntDel_Click"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
                 </materialDesign:ColorZone>
             </Grid>
             <Grid Grid.Row="1"
-                  Margin="10,0,0,0">
+                  Margin="5,0,0,0">
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"
                                           Mode="PrimaryDark"
@@ -272,8 +275,7 @@
                           Background="#FFED5C5C"
                           Foreground="White"
                           FontWeight="Bold"
-                          Margin="0,50,0,0"
-                          Width="auto">
+                          Margin="0,50,0,0">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"

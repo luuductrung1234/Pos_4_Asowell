@@ -12,7 +12,7 @@ namespace POS.Entities
 
         public static BitmapImage LoadImage(string filename)
         {
-            return new BitmapImage(new Uri(@"/Images/" + filename, UriKind.RelativeOrAbsolute));
+            return new BitmapImage(new Uri(@"/Images/Products" + filename, UriKind.RelativeOrAbsolute));
         }
     }
 }

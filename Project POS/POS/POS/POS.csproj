@@ -51,7 +51,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\asowell_icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
@@ -180,6 +181,9 @@
     <Compile Include="AdminWorkSpace\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\IngredientAddOrUpdateDialog.xaml.cs">
+      <DependentUpon>IngredientAddOrUpdateDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\LiveChartReceiptPage.xaml.cs">
       <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
     </Compile>
@@ -209,6 +213,9 @@
     </Compile>
     <Compile Include="AdminWorkSpace\StatisticsWorkingHourPage.xaml.cs">
       <DependentUpon>StatisticsWorkingHourPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWorkSpace\WareHouseStdContainDialog.xaml.cs">
+      <DependentUpon>WareHouseStdContainDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DatabaseConfigWindow.xaml.cs">
       <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
@@ -384,6 +391,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AdminWorkSpace\IngredientAddOrUpdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminWorkSpace\LiveChartReceiptPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -421,6 +432,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\StatisticsWorkingHourPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\WareHouseStdContainDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -620,14 +635,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\logo.png" />
-    <Resource Include="Images\softwarepdate.jpg" />
-    <Resource Include="Images\Search_50px.png" />
     <Resource Include="Icon\icons8_Unpin_32px.png" />
     <Resource Include="Icon\icons8_Pin_32px_9.png" />
     <Resource Include="Icon\Pencil Drawing_32px.png" />
     <Resource Include="Icon\Edit_52px.png" />
-    <Resource Include="Images\asowell_icon.ico" />
     <Resource Include="Icon\icons8_Resize_Horizontal_32px_1.png" />
     <Resource Include="Icon\icons8_Resize_Vertical_32px_3.png" />
     <Resource Include="Icon\icons8_Beer_32px.png" />
@@ -638,7 +649,6 @@
     <Resource Include="Icon\icons8_Employee_50px_2.png" />
     <Resource Include="Icon\Folder_30px.png" />
     <Resource Include="Icon\Report Card_32px.png" />
-    <Resource Include="Images\a86c410efa3e6b690d973f7c5b78444e--rocket-illustration-flat-design.jpg" />
     <Resource Include="Icon\FAQ_100px.png" />
     <Resource Include="Icon\Admin_96px.png" />
     <Resource Include="Icon\Box_104px.png" />
@@ -671,16 +681,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\3CheeseBoard.jpg" />
-    <Resource Include="Images\3DipsBoard.jpg" />
-    <Resource Include="Images\Boconccini_Bruschetta.jpg" />
-    <Resource Include="Images\Chorizo_sausage_rolls.jpg" />
-    <Resource Include="Images\Duck_liver_Pate.jpg" />
-    <Resource Include="Images\freshly-shucked-oysters.jpg" />
-    <Resource Include="Images\italian_Mix_Olives.jpg" />
-    <Resource Include="Images\roasted_garlic_bread.jpg" />
-    <Resource Include="Images\Sweet_Potatoes_fries.jpg" />
-    <Resource Include="Images\warm_Edamame.jpg" />
+    <Resource Include="Images\a86c410efa3e6b690d973f7c5b78444e--rocket-illustration-flat-design.jpg" />
+    <Resource Include="Images\asowell_icon.ico" />
+    <Resource Include="Images\Edit_52px.png" />
+    <Resource Include="Images\logo.png" />
+    <Resource Include="Images\map.png" />
+    <Resource Include="Images\muteki.png" />
+    <Resource Include="Images\Pencil Drawing_32px.png" />
+    <Resource Include="Images\Search_50px.png" />
+    <Resource Include="Images\softwarepdate.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Products\3CheeseBoard.jpg" />
+    <Resource Include="Images\Products\3DipsBoard.jpg" />
+    <Resource Include="Images\Products\Boconccini_Bruschetta.jpg" />
+    <Resource Include="Images\Products\Chorizo_sausage_rolls.jpg" />
+    <Resource Include="Images\Products\Duck_liver_Pate.jpg" />
+    <Resource Include="Images\Products\freshly-shucked-oysters.jpg" />
+    <Resource Include="Images\Products\italian_Mix_Olives.jpg" />
+    <Resource Include="Images\Products\roasted_garlic_bread.jpg" />
+    <Resource Include="Images\Products\Sweet_Potatoes_fries.jpg" />
+    <Resource Include="Images\Products\warm_Edamame.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
