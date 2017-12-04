@@ -25,6 +25,9 @@ namespace POS.AdminWorkSpace
     public partial class ProductDetailPage : Page
     {
         private AdminwsOfCloudPOS _unitofwork;
+        private Ingredient _ingre;
+        private IngredientAddOrUpdateDialog _ingreAddOrUpdate;
+
         public ProductDetailPage(AdminwsOfCloudPOS unitofwork)
         {
             InitializeComponent();
@@ -214,17 +217,58 @@ namespace POS.AdminWorkSpace
 
         private void bntAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_unitofwork, null);
+            _ingreAddOrUpdate.ShowDialog();
+            
+            lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(x => x.Deleted.Equals(0)).ToList();
+            lvIngredient.UnselectAll();
+            lvIngredient.Items.Refresh();
         }
 
         private void bntEdit_Click(object sender, RoutedEventArgs e)
         {
+            _ingre = lvIngredient.SelectedItem as Ingredient;
 
+            if (lvIngredient.SelectedItem == null)
+            {
+                MessageBox.Show("Ingredient must be selected to update! Choose again!");
+                return;
+            }
+
+            _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_unitofwork, _ingre);
+            _ingreAddOrUpdate.ShowDialog();
+
+            lvProduct.UnselectAll();
+            lvProduct.Items.Refresh();
+            lvDetails.UnselectAll();
+            lvDetails.Items.Refresh();
+            lvIngredient.UnselectAll();
+            lvIngredient.Items.Refresh();
         }
 
         private void bntDel_Click(object sender, RoutedEventArgs e)
         {
+            if (lvIngredient.SelectedItem == null)
+            {
+                MessageBox.Show("Ingredient must be selected to delete! Choose again!");
+                return;
+            }
 
+            var delIngre = lvIngredient.SelectedItem as Ingredient;
+            if (delIngre != null)
+            {
+                MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delIngre.Name + "(" + delIngre.IgdId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                if (delMess == MessageBoxResult.Yes)
+                {
+                    delIngre.Deleted = 1;
+                    _unitofwork.IngredientRepository.Update(delIngre);
+                    _unitofwork.Save();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please choose ingredient you want to delete and try again!");
+            }
         }
     }
 }

@@ -179,6 +179,9 @@
     <Compile Include="AdminWorkSpace\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminWorkSpace\IngredientAddOrUpdateDialog.xaml.cs">
+      <DependentUpon>IngredientAddOrUpdateDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminWorkSpace\LiveChartReceiptPage.xaml.cs">
       <DependentUpon>LiveChartReceiptPage.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,9 @@
     </Compile>
     <Compile Include="AdminWorkSpace\StatisticsWorkingHourPage.xaml.cs">
       <DependentUpon>StatisticsWorkingHourPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWorkSpace\WareHouseStdContainDialog.xaml.cs">
+      <DependentUpon>WareHouseStdContainDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="DatabaseConfigWindow.xaml.cs">
       <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
@@ -383,6 +389,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AdminWorkSpace\IngredientAddOrUpdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminWorkSpace\LiveChartReceiptPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -420,6 +430,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\StatisticsWorkingHourPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWorkSpace\WareHouseStdContainDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

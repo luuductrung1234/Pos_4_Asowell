@@ -412,10 +412,6 @@ namespace POS.AdminWorkSpace
                 IcCodeValid.Visibility = Visibility.Hidden;
             }
         }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 2b2751309f68105fc57f296fd2f6af19ed35e052
+        
     }
 }

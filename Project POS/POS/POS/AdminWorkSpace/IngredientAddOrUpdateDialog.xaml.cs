@@ -87,6 +87,14 @@ namespace POS.AdminWorkSpace
             }
         }
 
+        private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Text))
+            {
+                e.Handled = !Char.IsNumber(e.Text[0]);
+            }
+        }
+
         private void txtStdPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
             decimal price = decimal.Parse(txtStdPrice.Text.Trim());
@@ -134,15 +142,28 @@ namespace POS.AdminWorkSpace
 
                 if(_ingre == null) //Adding
                 {
+                    WareHouseStdContainDialog wahdia = new WareHouseStdContainDialog();
+                    wahdia.ShowDialog();
+
+                    if(App.Current.Properties["StdContain"] == null)
+                    {
+                        return;
+                    }
+
                     WareHouse newWare = new WareHouse
                     {
-
+                        WarehouseId = "",
+                        Contain = 0,
+                        StandardContain = (int)App.Current.Properties["StdContain"]
                     };
+
+                    _unitofwork.WareHouseRepository.Insert(newWare);
+                    _unitofwork.Save();
 
                     Ingredient newingre = new Ingredient
                     {
                         IgdId = "",
-                        WarehouseId = "",
+                        WarehouseId = newWare.WarehouseId,
                         Name = namee,
                         Info = info,
                         Usefor = byte.Parse(usefor + ""),
@@ -152,11 +173,26 @@ namespace POS.AdminWorkSpace
                         Deleted = 0
                     };
 
+                    _unitofwork.IngredientRepository.Insert(newingre);
+                    _unitofwork.Save();
 
+                    MessageBox.Show("Insert " + newingre.Name + "(" + newingre.IgdId + ") successful!");
+                    this.Close();
                 }
                 else //Updating
                 {
+                    _ingre.Name = Name;
+                    _ingre.Info = info;
+                    _ingre.Usefor = byte.Parse(usefor + "");
+                    _ingre.IgdType = ingretype;
+                    _ingre.UnitBuy = unitbuy;
+                    _ingre.StandardPrice = price;
 
+                    _unitofwork.IngredientRepository.Update(_ingre);
+                    _unitofwork.Save();
+
+                    MessageBox.Show("Update " + _ingre.Name + "(" + _ingre.IgdId + ") successful!");
+                    this.Close();
                 }
             }
             catch(Exception ex)
@@ -167,7 +203,7 @@ namespace POS.AdminWorkSpace
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
     }
