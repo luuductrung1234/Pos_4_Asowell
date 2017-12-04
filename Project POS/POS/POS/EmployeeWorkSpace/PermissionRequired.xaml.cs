@@ -65,7 +65,7 @@ namespace POS.EmployeeWorkSpace
                     bool isFoundAd = false;
                     foreach (var item in AdList)
                     {
-                        if (item.Username.Equals(username) && item.Pass.Equals(pass))
+                        if (item.Username.Equals(username) && item.DecryptedPass.Equals(pass))
                         {
                             App.Current.Properties["AdLogin"] = item;
 

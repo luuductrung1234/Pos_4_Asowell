@@ -184,6 +184,17 @@
                                VerticalAlignment="Center" />
                 </StackPanel>
 
+                <StackPanel  Orientation="Horizontal"
+                             Margin="15,20,0,0">
+                    <TextBlock Text="Role: "
+                               Style="{StaticResource ResourceKey=TextBlockLabel}" />
+                    <TextBlock x:Name="txtRole"
+                                Width="215"
+                                FontSize="18"
+                                Foreground="White"
+                                Margin="0,0,100,0"/>
+                </StackPanel>
+
             </StackPanel>
             <materialDesign:ColorZone Mode="PrimaryDark"
                                       Height="44"

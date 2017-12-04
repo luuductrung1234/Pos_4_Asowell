@@ -40,7 +40,9 @@ namespace POS.Repository.Generic
                     {
                         var emp = entity as Employee;
                         string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                        string decryptCode = AESThenHMAC.SimpleDecryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
                         emp.DecryptedPass = decryptPass;
+                        emp.DecryptedCode = decryptCode;
                     }
                 }
             }
@@ -106,7 +108,9 @@ namespace POS.Repository.Generic
                 {
                     var emp = entity as Employee;
                     string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                    string encryptCode = AESThenHMAC.SimpleEncryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
                     emp.Pass = encryptPass;
+                    emp.EmpCode = encryptCode;
                 }
             }
 
@@ -143,7 +147,9 @@ namespace POS.Repository.Generic
                 {
                     var emp = entityToUpdate as Employee;
                     string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                    string encryptCode = AESThenHMAC.SimpleEncryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
                     emp.Pass = encryptPass;
+                    emp.EmpCode = encryptCode;
                 }
             }
 

@@ -40,8 +40,6 @@ namespace POS.AdminWorkSpace
             _unitofwork = unitofwork;
             _emp = emp;
             InitializeComponent();
-            txbCon.Visibility = Visibility.Collapsed;
-            txtCon.Visibility = Visibility.Collapsed;
             initUptData();
             initControlAdd();
             this.WindowStyle = WindowStyle.SingleBorderWindow;
@@ -70,8 +68,8 @@ namespace POS.AdminWorkSpace
             if (_emp != null)
             {
                 txtUsername.Text = _emp.Username;
-                txtPass.Password = _emp.Pass;
-                txtCon.Password = _emp.Pass;
+                txtPass.Password = _emp.DecryptedPass;
+                txtCon.Password = _emp.DecryptedPass;
                 txtName.Text = _emp.Name;
                 cboRole.SelectedValue = _emp.EmpRole;
                 txtBirth.SelectedDate = _emp.Birth;
@@ -80,7 +78,7 @@ namespace POS.AdminWorkSpace
                 txtMail.Text = _emp.Email;
                 txtStartDay.SelectedDate = _emp.Startday;
                 txtHour_wage.Text = _emp.HourWage.ToString();
-                txtCode.Password = _emp.EmpCode.ToString();
+                txtCode.Password = _emp.DecryptedCode;
                 return;
             }
         }
@@ -91,41 +89,39 @@ namespace POS.AdminWorkSpace
             {
                 string username = txtUsername.Text.Trim();
                 string pass = txtPass.Password.Trim();
-                if (_emp.EmpId == null)
+                //check username
+                if (username.Length == 0 || username.Length > 50)
                 {
-                    //check username
-                    if (username.Length == 0 || username.Length > 50)
-                    {
-                        MessageBox.Show("Username is not valid!");
-                        txtUsername.Focus();
-                        return;
-                    }
-
-                    var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
-
-                    if (newemp.Count != 0)
-                    {
-                        MessageBox.Show("Username is already exist! Please try again!");
-                        txtUsername.Focus();
-                        return;
-                    }
-
-                    //check pass
-                    if (pass.Length == 0 || pass.Length > 50)
-                    {
-                        MessageBox.Show("Password is not valid!");
-                        txtPass.Focus();
-                        return;
-                    }
-
-                    string passcon = txtCon.Password.Trim();
-                    if (!passcon.Equals(pass))
-                    {
-                        MessageBox.Show("Confirm password is not match!");
-                        txtCon.Focus();
-                        return;
-                    }
+                    MessageBox.Show("Username is not valid!");
+                    txtUsername.Focus();
+                    return;
                 }
+
+                var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
+
+                if (newemp.Count != 0)
+                {
+                    MessageBox.Show("Username is already exist! Please try again!");
+                    txtUsername.Focus();
+                    return;
+                }
+
+                //check pass
+                if (pass.Length == 0 || pass.Length > 50)
+                {
+                    MessageBox.Show("Password is not valid!");
+                    txtPass.Focus();
+                    return;
+                }
+
+                string passcon = txtCon.Password.Trim();
+                if (!passcon.Equals(pass))
+                {
+                    MessageBox.Show("Confirm password is not match!");
+                    txtCon.Focus();
+                    return;
+                }
+
 
                 //check name
                 string namee = txtName.Text.Trim();
@@ -145,7 +141,7 @@ namespace POS.AdminWorkSpace
                     return;
                 }
 
-                role = (int) cboRole.SelectedValue;
+                role = (int)cboRole.SelectedValue;
 
 
 
@@ -161,11 +157,11 @@ namespace POS.AdminWorkSpace
                     MessageBox.Show("Employee's age must higher than 17!");
                     return;
                 }
-                
+
 
                 //check address
                 string addr = txtAddress.Text;
-                if ( addr.Length > 200)
+                if (addr.Length > 200)
                 {
                     MessageBox.Show("Address is not valid!");
                     txtAddress.Focus();
@@ -174,7 +170,7 @@ namespace POS.AdminWorkSpace
 
                 //check phone
                 string phone = txtPhone.Text;
-                if ( phone.Length > 20)
+                if (phone.Length > 20)
                 {
                     MessageBox.Show("Phone is not valid!");
                     txtPhone.Focus();
@@ -210,8 +206,8 @@ namespace POS.AdminWorkSpace
                 }
 
                 //check code
-                int code = int.Parse(txtCode.Password.Trim());
-                if (code < 1000)
+                string code = txtCode.Password.Trim();
+                if (code.Length < 4)
                 {
                     MessageBox.Show("Employee code should be stronger!");
                     txtCode.Focus();
@@ -347,7 +343,7 @@ namespace POS.AdminWorkSpace
 
         private void TxtBirth_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            var birth = ((DatePicker) sender).SelectedDate.Value.Date;
+            var birth = ((DatePicker)sender).SelectedDate.Value.Date;
             if (DateTime.Now.Year - birth.Year < 17)
             {
                 IcBirthValid.Visibility = Visibility.Visible;
@@ -374,7 +370,7 @@ namespace POS.AdminWorkSpace
         private void TxtPhone_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             //check phone
-            if ( txtPhone.Text.Length > 20)
+            if (txtPhone.Text.Length > 20)
             {
                 IcPhoneValid.Visibility = Visibility.Visible;
             }
@@ -406,8 +402,8 @@ namespace POS.AdminWorkSpace
             }
 
             //check code
-            int code = int.Parse(txtCode.Password.Trim());
-            if (code < 1000)
+            string code = txtCode.Password.Trim();
+            if (code.Length < 4)
             {
                 IcCodeValid.Visibility = Visibility.Visible;
             }
@@ -417,5 +413,9 @@ namespace POS.AdminWorkSpace
             }
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2b2751309f68105fc57f296fd2f6af19ed35e052
     }
 }

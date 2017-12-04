@@ -197,10 +197,10 @@ namespace POS.EmployeeWorkSpace
 
         private async void loginCode_GoClick(object sender, RoutedEventArgs e)
         {
-            int code;
+            string code;
             try
             {
-                code = int.Parse(loginCode.InputValue);
+                code = loginCode.InputValue;
             }
             catch (Exception ex)
             {
@@ -229,7 +229,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 else if(_typeshow == 4)//start
                 {
-                    if (_emplog.Emp.EmpCode.Equals(code))
+                    if (_emplog.Emp.DecryptedCode.Equals(code))
                     {
                         App.Current.Properties["CurrentEmpWorking"] = _emplog;
                         _cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
@@ -358,7 +358,7 @@ namespace POS.EmployeeWorkSpace
                     {
                         btnAcceptLogin.IsEnabled = false;
                         PgbLoginProcess.Visibility = Visibility.Visible;
-                        await Async(username, pass, 0, null);
+                        await Async(username, pass, "", null);
 
                         btnAcceptLogin.IsEnabled = true;
                         PgbLoginProcess.Visibility = Visibility.Collapsed;
@@ -380,7 +380,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 else if(_typeshow == 2)
                 {
-                    if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+                    if (!_emplog.Emp.DecryptedPass.Equals(txtPass.Password.Trim()))
                     {
                         MessageBox.Show("Login fail! Please try again!");
                         return;
@@ -393,7 +393,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 else if(_typeshow == 3)
                 {
-                    if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+                    if (!_emplog.Emp.DecryptedPass.Equals(txtPass.Password.Trim()))
                     {
                         MessageBox.Show("Fail! Please try again!");
                         return;
@@ -403,7 +403,7 @@ namespace POS.EmployeeWorkSpace
                     {
                         btnAcceptLogout.IsEnabled = false;
                         PgbLoginProcess.Visibility = Visibility.Visible;
-                        await Async("", "", 0, _emplog);
+                        await Async("", "", "", _emplog);
 
                         btnAcceptLogout.IsEnabled = true;
                         PgbLoginProcess.Visibility = Visibility.Collapsed;
@@ -425,7 +425,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 else if(_typeshow == 4)
                 {
-                    if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+                    if (!_emplog.Emp.DecryptedPass.Equals(txtPass.Password.Trim()))
                     {
                         MessageBox.Show("Login fail! Please try again!");
                         return;
@@ -448,7 +448,7 @@ namespace POS.EmployeeWorkSpace
             {
                 btnAcceptLogin.IsEnabled = false;
                 PgbLoginProcess.Visibility = Visibility.Visible;
-                await Async(username, pass, 0, null);
+                await Async(username, pass, "", null);
                 
                 btnAcceptLogin.IsEnabled = true;
                 PgbLoginProcess.Visibility = Visibility.Collapsed;
@@ -474,7 +474,7 @@ namespace POS.EmployeeWorkSpace
             string username = txtUsername.Text.Trim();
             string pass = txtPass.Password.Trim();
 
-            if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+            if (!_emplog.Emp.DecryptedPass.Equals(txtPass.Password.Trim()))
             {
                 MessageBox.Show("Fail! Please try again!");
                 return;
@@ -484,7 +484,7 @@ namespace POS.EmployeeWorkSpace
             {
                 btnAcceptLogout.IsEnabled = false;
                 PgbLoginProcess.Visibility = Visibility.Visible;
-                await Async(username, pass, 0, _emplog);
+                await Async(username, pass, "", _emplog);
 
                 btnAcceptLogout.IsEnabled = true;
                 PgbLoginProcess.Visibility = Visibility.Collapsed;
@@ -507,7 +507,7 @@ namespace POS.EmployeeWorkSpace
 
         private void btnAcceptStart_Click(object sender, RoutedEventArgs e)
         {
-            if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+            if (!_emplog.Emp.DecryptedPass.Equals(txtPass.Password.Trim()))
             {
                 MessageBox.Show("Login fail! Please try again!");
                 return;
@@ -521,7 +521,7 @@ namespace POS.EmployeeWorkSpace
 
         private void btnAcceptView_Click(object sender, RoutedEventArgs e)
         {
-            if (!_emplog.Emp.Pass.Equals(txtPass.Password.Trim()))
+            if (!_emplog.Emp.DecryptedPass.Equals(txtPass.Password.Trim()))
             {
                 MessageBox.Show("Login fail! Please try again!");
                 return;
@@ -548,7 +548,7 @@ namespace POS.EmployeeWorkSpace
             setControl(true);
         }
 
-        private async Task Async(string username, string pass, int code, EmpLoginList empout)
+        private async Task Async(string username, string pass, string code, EmpLoginList empout)
         {
             try
             {
@@ -556,7 +556,7 @@ namespace POS.EmployeeWorkSpace
                 {
                     if (empout != null)
                     {
-                        if((empout.Emp.Username.Equals(username) && empout.Emp.Pass.Equals(pass)) || empout.Emp.EmpCode.Equals(code))
+                        if((empout.Emp.Username.Equals(username) && (empout.Emp.DecryptedPass.Equals(pass)) || empout.Emp.DecryptedCode.Equals(code)))
                         {
                             empout.EmpWH.EndTime = DateTime.Now;
                             _cloudPosUnitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);
@@ -587,7 +587,7 @@ namespace POS.EmployeeWorkSpace
                     bool isFound = false;
                     foreach (Employee emp in _employee)
                     {
-                        if ((emp.Username.Equals(username) && emp.Pass.Equals(pass)) || emp.EmpCode.Equals(code))
+                        if ((emp.Username.Equals(username) && (emp.DecryptedPass.Equals(pass)) || emp.DecryptedCode.Equals(code)))
                         {
                             var chemp = EmpLoginListData.emploglist.Where(x => x.Emp.EmpId.Equals(emp.EmpId)).ToList();
                             if(chemp.Count != 0)
