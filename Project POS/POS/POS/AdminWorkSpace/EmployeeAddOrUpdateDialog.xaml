@@ -66,8 +66,8 @@
                          FontSize="18"
                          Foreground="White"
                          Width="215"
-                         Text="" 
-                         TextChanged="TxtUsername_OnTextChanged"/>
+                         Text=""
+                         TextChanged="TxtUsername_OnTextChanged" />
                 <materialDesign:PackIcon Margin="10,0,0,0"
                                          x:Name="IcUserNameValid"
                                          Width="30"
@@ -82,7 +82,7 @@
                              Width="215"
                              FontSize="18"
                              Foreground="White"
-                             PasswordChanged="TxtPass_OnPasswordChanged"/>
+                             PasswordChanged="TxtPass_OnPasswordChanged" />
                 <materialDesign:PackIcon Margin="10,0,0,0"
                                          x:Name="IcPassValid"
                                          Width="30"
@@ -99,7 +99,7 @@
                          FontSize="18"
                          Foreground="White"
                          Width="215"
-                         TextChanged="TxtName_OnTextChanged"/>
+                         TextChanged="TxtName_OnTextChanged" />
                 <materialDesign:PackIcon Margin="10,0,0,0"
                                          x:Name="IcNameValid"
                                          Width="30"
@@ -116,7 +116,7 @@
                                  Width="215"
                                  FontSize="18"
                                  Foreground="White"
-                                 PasswordChanged="TxtCon_OnPasswordChanged"/>
+                                 PasswordChanged="TxtCon_OnPasswordChanged" />
                     <materialDesign:PackIcon Margin="10,0,0,0"
                                              x:Name="IcConfirmValid"
                                              Width="30"
@@ -143,8 +143,8 @@
                                 FontSize="18"
                                 Foreground="White"
                                 HorizontalAlignment="Left"
-                                materialDesign:HintAssist.Hint="Pick Date" 
-                                SelectedDateChanged="TxtBirth_OnSelectedDateChanged"/>
+                                materialDesign:HintAssist.Hint="Pick Date"
+                                SelectedDateChanged="TxtBirth_OnSelectedDateChanged" />
                     <materialDesign:PackIcon Margin="10,0,0,0"
                                              x:Name="IcBirthValid"
                                              Width="30"
@@ -170,7 +170,7 @@
                          TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Auto"
                          Width="215"
-                         TextChanged="TxtAddress_OnTextChanged"/>
+                         TextChanged="TxtAddress_OnTextChanged" />
                 <materialDesign:PackIcon Margin="10,0,0,0"
                                          x:Name="IcAddrValid"
                                          Width="30"
@@ -192,7 +192,7 @@
                                  Margin="130,0,0,0"
                                  PreviewTextInput="NumberOnly_PreviewTextInput"
                                  materialDesign:TransitionAssist.DisableTransitions="True"
-                                 TextChanged="TxtPhone_OnTextChanged"/>
+                                 TextChanged="TxtPhone_OnTextChanged" />
                         <materialDesign:PackIcon Margin="10,0,0,0"
                                                  x:Name="IcPhoneValid"
                                                  Width="30"
@@ -212,7 +212,7 @@
                                  FontSize="18"
                                  Foreground="White"
                                  Margin="130,0,0,0"
-                                 TextChanged="TxtMail_OnTextChanged"/>
+                                 TextChanged="TxtMail_OnTextChanged" />
                         <materialDesign:PackIcon Margin="10,0,0,0"
                                                  x:Name="IcMailValid"
                                                  Width="30"

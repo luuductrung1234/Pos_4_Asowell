@@ -235,17 +235,20 @@
                                         Content="Add"
                                         Height="auto"
                                         Margin="0,0,20,0"
-                                        FontWeight="Bold" />
+                                        FontWeight="Bold"
+                                        Click="bntAdd_Click"/>
                                 <Button x:Name="bntEdit"
                                         Content="Edit"
                                         Height="auto"
                                         Margin="0,0,20,0"
-                                        FontWeight="Bold"/>
+                                        FontWeight="Bold"
+                                        Click="bntEdit_Click"/>
                                 <Button x:Name="bntDel"
                                         Content="Delete"
                                         Height="auto"
                                         Margin="0,0,50,0"
-                                        FontWeight="Bold" />
+                                        FontWeight="Bold"
+                                        Click="bntDel_Click"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>

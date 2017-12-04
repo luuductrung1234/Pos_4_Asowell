@@ -212,6 +212,19 @@ namespace POS.AdminWorkSpace
         {
         }
 
-        
+        private void bntAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void bntEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void bntDel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -122,7 +122,7 @@ namespace POS.AdminWorkSpace
             }
             else
             {
-                MessageBox.Show("Please choose which employee you want to delete and try again!");
+                MessageBox.Show("Please choose employee you want to delete and try again!");
             }
         }
     }

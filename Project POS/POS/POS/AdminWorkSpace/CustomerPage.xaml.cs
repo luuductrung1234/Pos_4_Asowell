@@ -25,12 +25,14 @@ namespace POS.AdminWorkSpace
     {
         private AdminwsOfCloudPOS _unitofwork;
         Customer ctm;
+        List<Customer> allcus;
+        CustomerAddOrUpdateDialog _cusAddOrUpdate;
         public CustomerPage(AdminwsOfCloudPOS unitofwork)
         {
-            
             _unitofwork = unitofwork;
             InitializeComponent();
-            lvDataCustomer.ItemsSource = _unitofwork.CustomerRepository.Get(x=>x.Deleted.Equals(0));
+            allcus = _unitofwork.CustomerRepository.Get(x => x.Deleted.Equals(0)).ToList();
+            lvDataCustomer.ItemsSource = allcus;
             for (int i = 0; i <= 100; i++)
             {
                 cbodiscount.Items.Add(i.ToString());
@@ -58,17 +60,52 @@ namespace POS.AdminWorkSpace
 
         private void bntAddnew_Click(object sender, RoutedEventArgs e)
         {
+            _cusAddOrUpdate = new CustomerAddOrUpdateDialog(_unitofwork, null);
+            _cusAddOrUpdate.ShowDialog();
 
+            allcus = _unitofwork.CustomerRepository.Get(x => x.Deleted.Equals(0)).ToList();
+            lvDataCustomer.ItemsSource = allcus;
+            lvDataCustomer.UnselectAll();
+            lvDataCustomer.Items.Refresh();
         }
 
         private void bntUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (lvDataCustomer.SelectedItem == null)
+            {
+                MessageBox.Show("Custoer must be selected to update! Choose again!");
+                return;
+            }
 
+            _cusAddOrUpdate = new CustomerAddOrUpdateDialog(_unitofwork, ctm);
+            _cusAddOrUpdate.ShowDialog();
+            lvDataCustomer.UnselectAll();
+            lvDataCustomer.Items.Refresh();
         }
 
         private void bntDel_Click(object sender, RoutedEventArgs e)
         {
+            if (lvDataCustomer.SelectedItem == null)
+            {
+                MessageBox.Show("Customer must be selected to delete! Choose again!");
+                return;
+            }
 
+            var delCus = lvDataCustomer.SelectedItem as Customer;
+            if (delCus != null)
+            {
+                MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delCus.Name + "(" + delCus.CusId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                if (delMess == MessageBoxResult.Yes)
+                {
+                    delCus.Deleted = 1;
+                    _unitofwork.CustomerRepository.Update(delCus);
+                    _unitofwork.Save();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please choose customer you want to delete and try again!");
+            }
         }
     }
 }
