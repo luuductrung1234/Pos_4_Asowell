@@ -916,12 +916,13 @@ values
 
 select * from AdminRes
 go
+select * from Employee
+go
 select *from ReceiptNote
 go
 select *from ReceiptNoteDetails
 go
-select * from Employee
-go
+
 select * from Customer
 go
 	
