@@ -9,10 +9,18 @@
              mc:Ignorable="d"
              d:DesignHeight="500"
              Width="450">
-    <GroupBox Header="Order Detail"
+    <GroupBox 
               materialDesign:ColorZoneAssist.Mode="PrimaryMid"
               FontWeight="Bold">
+        <GroupBox.Header>
+            <Grid>
+                <TextBlock FontSize="14"
+                           FontWeight="Bold"
+                           Margin="0,0,5,0"
+                           Text="Order Details"></TextBlock>
 
+            </Grid>
+        </GroupBox.Header>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -97,7 +105,7 @@
                       Margin="5,0,0,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
                                   VerticalAlignment="Stretch"
-                                  Margin="10,0,-10,0">
+                                  Margin="5,0,-10,0">
                         <WrapPanel x:Name="wp">
 
                         </WrapPanel>

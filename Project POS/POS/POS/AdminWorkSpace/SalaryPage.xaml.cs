@@ -5,16 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using POS.Helper.PrintHelper.Report;
 
 namespace POS.AdminWorkSpace
@@ -75,8 +68,8 @@ namespace POS.AdminWorkSpace
                 cboMonth.Items.Add(i + 1);
             }
 
-            cboYear.SelectedIndex = 0;
-            cboMonth.SelectedIndex = 0;
+            cboYear.SelectedItem = "--";
+            cboMonth.SelectedItem = "--";
             cboYear.SelectionChanged += cboYear_SelectionChanged;
             cboMonth.SelectionChanged += cboMonth_SelectionChanged;
         }
@@ -131,36 +124,39 @@ namespace POS.AdminWorkSpace
 
             ComboBox cboM = sender as ComboBox;
 
+            if (cboM.Items.Count == 0 || cboYear.Items.Count == 0)
+                return;
+
             int month = 0;
             int year = 0;
 
             try
             {
-                month = (int)(cboM.SelectedValue);
-                year = (int)(cboYear.SelectedValue);
+                month = (int)(cboM.SelectedItem);
+                year = (int)(cboYear.SelectedItem);
             }
             catch (Exception ex)
             {
-                if (cboMonth.SelectedValue.Equals("--"))
+                if (cboM.SelectedItem.Equals("--"))
                 {
-                    if (cboYear.SelectedValue.Equals("--"))
+                    if (cboYear.SelectedItem.Equals("--"))
                     {
                         lvSalary.ItemsSource = SalList;
                         return;
                     }
 
-                    lvSalary.ItemsSource = SalList.Where(x => x.ForYear.Equals((int)cboYear.SelectedValue));
+                    lvSalary.ItemsSource = SalList.Where(x => x.ForYear.Equals((int)cboYear.SelectedItem));
                     return;
                 }
 
-                if (cboYear.SelectedValue.Equals("--"))
+                if (cboYear.SelectedItem.Equals("--"))
                 {
-                    lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboM.SelectedValue));
+                    lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboM.SelectedItem));
                     return;
                 }
             }
 
-            lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboM.SelectedValue) && x.ForYear.Equals((int)cboYear.SelectedValue));
+            lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboM.SelectedItem) && x.ForYear.Equals((int)cboYear.SelectedItem));
         }
 
         private void cboYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -173,36 +169,41 @@ namespace POS.AdminWorkSpace
 
             ComboBox cboY = sender as ComboBox;
 
+            if (cboY.Items.Count == 0 || cboMonth.Items.Count == 0)
+            {
+                return;
+            }
+
             int month = 0;
             int year = 0;
 
             try
             {
-                year = (int)(cboY.SelectedValue);
-                month = (int)(cboMonth.SelectedValue);
+                year = (int)(cboY.SelectedItem);
+                month = (int)(cboMonth.SelectedItem);
             }
             catch (Exception ex)
             {
-                if (cboY.SelectedValue.Equals("--"))
+                if (cboY.SelectedItem.Equals("--"))
                 {
-                    if (cboMonth.SelectedValue.Equals("--"))
+                    if (cboMonth.SelectedItem.Equals("--"))
                     {
                         lvSalary.ItemsSource = SalList;
                         return;
                     }
 
-                    lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboMonth.SelectedValue));
+                    lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboMonth.SelectedItem));
                     return;
                 }
 
-                if (cboMonth.SelectedValue.Equals("--"))
+                if (cboMonth.SelectedItem.Equals("--"))
                 {
-                    lvSalary.ItemsSource = SalList.Where(x => x.ForYear.Equals((int)cboY.SelectedValue));
+                    lvSalary.ItemsSource = SalList.Where(x => x.ForYear.Equals((int)cboY.SelectedItem));
                     return;
                 }
             }
 
-            lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboMonth.SelectedValue) && x.ForYear.Equals((int)cboY.SelectedValue));
+            lvSalary.ItemsSource = SalList.Where(x => x.ForMonth.Equals((int)cboMonth.SelectedItem) && x.ForYear.Equals((int)cboY.SelectedItem));
         }
 
         //public string ConvertFrom(string str)

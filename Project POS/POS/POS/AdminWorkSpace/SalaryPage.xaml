@@ -171,6 +171,8 @@
             <materialDesign:ColorZone Padding="16"
                                       Mode="PrimaryDark"
                                       Height="44"
+                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                      CornerRadius="3"
                                       Margin="0,0,-0.2,0">
 
 

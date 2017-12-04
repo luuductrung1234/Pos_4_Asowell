@@ -59,6 +59,9 @@
               Grid.Column="1">
 
             <materialDesign:ColorZone Height="44"
+                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                      CornerRadius="3"
+                                      Margin="0,2,0,0"
                                       Mode="PrimaryDark">
                 <StackPanel Orientation="Horizontal"
                             Margin="20,0,0,0">
