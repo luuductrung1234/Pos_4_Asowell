@@ -43,7 +43,12 @@ namespace POS.AdminWorkSpace
             InitializeComponent();
             _unitofwork = new AdminwsOfCloudPOS();
 
-            curAdmin = App.Current.Properties["AdLogin"] as AdminRe;
+            var getLoginAdmin = App.Current.Properties["AdLogin"] as AdminRe;
+            curAdmin = _unitofwork.AdminreRepository.Get(x => x.AdId.Equals(getLoginAdmin.AdId)).FirstOrDefault();
+            if (curAdmin == null)
+            {
+                this.Close();
+            }
             cUser.Content = curAdmin.Name;
 
             if (curAdmin.AdRole == (int)AdminReRole.SoftwareAd)

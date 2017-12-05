@@ -918,14 +918,16 @@ select * from AdminRes
 go
 select * from Employee
 go
+select * from Customer
+go
+	
+
 select *from ReceiptNote
 go
 select *from ReceiptNoteDetails
 go
 
-select * from Customer
-go
-	
+
 select * from WareHouse
 go 
 select * from Product

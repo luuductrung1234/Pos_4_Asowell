@@ -112,13 +112,6 @@
                                                        VerticalAlignment="Center">GitHub</TextBlock>
                                         </StackPanel>
                                     </Button>
-                                </Grid>
-                            </Border>
-                            <Border Grid.Column="1"
-                                    Grid.Row="3"
-                                    BorderThickness="0 1 0 0"
-                                    BorderBrush="{DynamicResource MaterialDesignDivider}">
-                                <Grid Margin="8">
                                     <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                             HorizontalAlignment="Right"
                                             x:Name="EmailButton"
@@ -127,6 +120,22 @@
                                             <materialDesign:PackIcon Kind="Email" />
                                             <TextBlock Margin="8 0 0 0"
                                                        VerticalAlignment="Center">Email</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Column="1"
+                                    Grid.Row="3"
+                                    BorderThickness="0 1 0 0"
+                                    BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                <Grid Margin="8">
+                                    <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                            DockPanel.Dock="Right"
+                                            x:Name="ContactButton">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Phone" />
+                                            <TextBlock Margin="8 0 0 0"
+                                                       VerticalAlignment="Center">0927333668</TextBlock>
                                         </StackPanel>
                                     </Button>
                                 </Grid>
@@ -156,9 +165,7 @@
                                 <TextBlock TextWrapping="Wrap"
                                            Margin="16 0 16 8"
                                            Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                           VerticalAlignment="Top">This project is completely open source to contribute. If you like it and want to say thanks you could hit the GitHub Star button
-                                                Feel free to use it for your own non-commercial projects. 
-                                                ASOWELL POS belong to ASOWELL restaurant and COMMATECH team, if you want to use it for your business, please contact us</TextBlock>
+                                           VerticalAlignment="Top">This software belong to Asowel Restaurant and under the development by ITComma team</TextBlock>
                             </StackPanel>
                             <Border Grid.Row="1"
                                     Grid.ColumnSpan="2"
@@ -168,18 +175,19 @@
                                 <DockPanel>
                                     <Button Style="{DynamicResource MaterialDesignFlatButton}"
                                             DockPanel.Dock="Right"
-                                            x:Name="ContactButton">
+                                            x:Name="DetailsButton"
+                                            Click="DetailsButton_OnClick">
                                         <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon Kind="Phone" />
+                                            <materialDesign:PackIcon Kind="Facebook" />
                                             <TextBlock Margin="8 0 0 0"
-                                                       VerticalAlignment="Center">0927333668</TextBlock>
+                                                       VerticalAlignment="Center">Asowel</TextBlock>
                                         </StackPanel>
                                     </Button>
                                     <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
                                                TextWrapping="Wrap"
                                                Margin="16"
                                                VerticalAlignment="Center">
-                                        PM Contact:
+                                         Details:
                                     </TextBlock>
                                 </DockPanel>
                             </Border>

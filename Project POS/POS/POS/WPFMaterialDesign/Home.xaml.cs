@@ -46,5 +46,10 @@ namespace POS.WPFMaterialDesign
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void DetailsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://www.facebook.com/Asowel-Rooftop-Cafe-Dining-185441705356870/");
+        }
     }
 }

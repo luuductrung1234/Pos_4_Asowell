@@ -9,7 +9,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Ware House Standard Contain"
         Height="150"
-        Width="350">
+        Width="367">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}"
                x:Key="TextBlockLabel">
@@ -44,7 +44,8 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal"
                         Margin="10,20,0,0">
-                <TextBlock Text="Standard Contain"
+                <TextBlock Text="Standard Contain (g):"
+                           Width="170"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
                 <TextBox x:Name="txtStdContain"
                          Width="150"
@@ -52,6 +53,7 @@
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"
                          Foreground="White"
+                         Margin="10,0,0,0"
                          PreviewTextInput="NumberOnly_PreviewTextInput"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"

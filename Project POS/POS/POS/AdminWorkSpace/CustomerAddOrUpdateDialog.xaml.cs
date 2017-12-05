@@ -44,6 +44,7 @@ namespace POS.AdminWorkSpace
                 txtName.Text = _cus.Name;
                 txtPhone.Text = _cus.Phone;
                 txtMail.Text = _cus.Email;
+                txtDiscount.Text = _cus.Discount.ToString();
             }
         }
 
@@ -76,14 +77,24 @@ namespace POS.AdminWorkSpace
                 return;
             }
 
+            //check discount
+            int discount = int.Parse(txtDiscount.Text.Trim());
+            if (discount < 0 || discount > 100)
+            {
+                MessageBox.Show("Discount value is not valid!");
+                txtDiscount.Focus();
+                return;
+            }
+
             if (_cus == null) //insert
             {
                 Customer checkcus = new Customer
                 {
                     CusId = "",
                     Name = namee,
-                    Phone = email,
-                    Discount = 0,
+                    Email = email,
+                    Phone = phone,
+                    Discount = discount,
                     Deleted = 0
                 };
 
@@ -96,8 +107,9 @@ namespace POS.AdminWorkSpace
             else //update
             {
                 _cus.Name = namee;
-                _cus.Phone = email;
-                _cus.Discount = 0;
+                _cus.Email = email;
+                _cus.Phone = phone;
+                _cus.Discount = discount;
                 _cus.Deleted = 0;
 
                 _unitofwork.CustomerRepository.Update(_cus);

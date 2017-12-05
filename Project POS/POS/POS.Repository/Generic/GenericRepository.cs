@@ -138,6 +138,21 @@ namespace POS.Repository.Generic
             if (typeof(TEntity) == typeof(AdminRe))
             {
                 var admin = entityToUpdate as AdminRe;
+
+                //check the password change
+                try
+                {
+                    string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(admin.Pass, "itcomma_luuductrung");
+                    if (decryptPass.Equals(admin.DecryptedPass))
+                    {
+                        admin.Pass = admin.DecryptedPass;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //occur when the admin.Pass is not a encrypt password
+                }
+
                 string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(admin.Pass, "itcomma_luuductrung");
                 admin.Pass = encryptPass;
             }
@@ -146,6 +161,27 @@ namespace POS.Repository.Generic
                 if (typeof(TEntity) == typeof(Employee))
                 {
                     var emp = entityToUpdate as Employee;
+
+                    //check the password change
+                    try
+                    {
+                        string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                        string decryptCode = AESThenHMAC.SimpleDecryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
+                        if (decryptPass.Equals(emp.DecryptedPass))
+                        {
+                            emp.Pass = emp.DecryptedPass;
+                        }
+                        if (decryptCode.Equals(emp.EmpCode))
+                        {
+                            emp.EmpCode = emp.DecryptedCode;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //occur when the emp.Pass is not a encrypt password
+                    }
+
+
                     string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
                     string encryptCode = AESThenHMAC.SimpleEncryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
                     emp.Pass = encryptPass;

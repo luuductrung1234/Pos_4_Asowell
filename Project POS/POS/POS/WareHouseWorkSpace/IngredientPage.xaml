@@ -71,7 +71,7 @@
                                 <TextBlock Foreground="White"
                                            Margin="0,0,10,0">Std.Price/Unit Buy:</TextBlock>
                                 <TextBlock Foreground="White"
-                                           Text="{Binding StandardPrice}"></TextBlock>
+                                               Text="{Binding StandardPrice, StringFormat=0.000}"></TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="5"
                                         Orientation="Horizontal">

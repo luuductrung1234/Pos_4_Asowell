@@ -82,7 +82,7 @@
                                  FontSize="18"
                                  Margin="90,0,0,0"
                                  materialDesign:TransitionAssist.DisableTransitions="True"
-                                 PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                                 PreviewTextInput="NumberOnly_PreviewTextInput" />
                     </StackPanel>
                     <StackPanel  Orientation="Horizontal">
                         <materialDesign:PackIcon Foreground="{Binding BorderBrush, ElementName=PhoneTextBox}"
@@ -103,12 +103,12 @@
                          Margin="15,20,0,0">
                 <TextBlock Text="Discount"
                            Style="{StaticResource ResourceKey=TextBlockLabel}" />
-                <ComboBox Foreground="White"
-                          x:Name="cbodiscount"
-                          IsEditable="False"
-                          IsEnabled="False"
-                          Width="60">
-                </ComboBox>
+                <TextBox Foreground="White"
+                         x:Name="txtDiscount"
+                         Width="60"
+                         Style="{StaticResource ResourceKey={x:Type TextBox}}"
+                         PreviewTextInput="NumberOnly_PreviewTextInput">
+                </TextBox>
                 <TextBlock x:Name="textBlock"
                            HorizontalAlignment="Stretch"
                            TextWrapping="Wrap"

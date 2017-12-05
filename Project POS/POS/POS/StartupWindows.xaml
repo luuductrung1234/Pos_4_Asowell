@@ -33,7 +33,7 @@
         </LinearGradientBrush>
     </Window.Background>
     <Grid Margin="0,0,2,2">
-        <Label Content="COMMA POS"
+        <Label Content="ASOWEL POS"
                Margin="102,0,93,110"
                Height="56"
                VerticalAlignment="Bottom"
