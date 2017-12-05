@@ -9,6 +9,9 @@
 // ReSharper disable RedundantOverridenMember
 // ReSharper disable UseNameofExpression
 // TargetFrameworkVersion = 4.6
+
+using System.Data.Entity;
+
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
 
@@ -21,6 +24,7 @@ namespace POS.Context
     using System.Linq;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
+    [DbConfigurationType(typeof(AsowellConfiguration))]
     public partial class CloudContext : System.Data.Entity.DbContext, ICloudContext
     {
         public System.Data.Entity.DbSet<AdminRe> AdminRes { get; set; } // AdminRes
