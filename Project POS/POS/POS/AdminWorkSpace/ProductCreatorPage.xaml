@@ -13,8 +13,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.23*" />
-            <ColumnDefinition Width="0.77*" />
+            <ColumnDefinition Width="1.16*" />
+            <ColumnDefinition Width="0.84*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -149,8 +149,6 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="1">
-
-
             <Grid Margin="10,0,0,0">
                 <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                           CornerRadius="3"

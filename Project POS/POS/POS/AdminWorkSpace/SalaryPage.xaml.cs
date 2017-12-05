@@ -124,8 +124,10 @@ namespace POS.AdminWorkSpace
 
             ComboBox cboM = sender as ComboBox;
 
-            if (cboM.Items.Count == 0 || cboYear.Items.Count == 0)
+            if (cboM.Items.Count == 0 || cboYear.Items.Count == 0 || cboM.SelectedItem == null || cboYear.SelectedItem == null)
+            {
                 return;
+            }
 
             int month = 0;
             int year = 0;
@@ -169,7 +171,7 @@ namespace POS.AdminWorkSpace
 
             ComboBox cboY = sender as ComboBox;
 
-            if (cboY.Items.Count == 0 || cboMonth.Items.Count == 0)
+            if (cboY.Items.Count == 0 || cboMonth.Items.Count == 0 || cboY.SelectedItem == null || cboMonth.SelectedItem == null)
             {
                 return;
             }

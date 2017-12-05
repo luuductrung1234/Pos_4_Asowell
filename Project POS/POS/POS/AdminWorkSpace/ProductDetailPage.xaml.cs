@@ -38,10 +38,10 @@ namespace POS.AdminWorkSpace
             InitializeComponent();
             this.Loaded += ProductDetailPage_Loaded;
         }
-        
+
         private void ProductDetailPage_Loaded(object sender, RoutedEventArgs e)
         {
-                initPageData();
+            initPageData();
         }
 
         private void initPageData()
@@ -62,13 +62,22 @@ namespace POS.AdminWorkSpace
             cboType.Items.Add(ProductType.Other);
             cboType.Items.Add(ProductType.Coffee);
             cboType.Items.Add(ProductType.Cocktail);
+
+            //init Ingredient Type
+            cboTypeI.Items.Add("All");
+            cboTypeI.Items.Add("Other");
+            cboTypeI.Items.Add("Dry");
+            cboTypeI.Items.Add("Dairy");
+            cboTypeI.Items.Add("Vegetable");
+            cboTypeI.Items.Add("Fee");
+            cboTypeI.SelectedItem = "All";
         }
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             Product pro = lvProduct.SelectedItem as Product;
-            lvDetails.ItemsSource=_unitofwork.ProductDetailsRepository.Get(c=>c.ProductId.Equals(pro.ProductId));
+            lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(c => c.ProductId.Equals(pro.ProductId));
 
         }
 
@@ -117,7 +126,7 @@ namespace POS.AdminWorkSpace
 
                 lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(p => p.Type.Equals((int)cboType.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (filter.Length == 0)
                 {
@@ -132,7 +141,7 @@ namespace POS.AdminWorkSpace
         private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //var allProduct = _unitofwork.ProductRepository.Get(p => p.Deleted.Equals(0)).ToList();
-            
+
             //if(SearchBox.Text.Trim().Equals(""))
             //{
             //    try
@@ -155,9 +164,8 @@ namespace POS.AdminWorkSpace
             //        lvProduct.ItemsSource = allProduct.Where(p => p.Name.Contains(SearchBox.Text.Trim()));
             //    }
             //}
-
-            var allProduct = _unitofwork.ProductRepository.Get().ToList();
-            int selectedVal = ((int) (sender as ComboBox).SelectedValue);
+            
+            int selectedVal = ((int)(sender as ComboBox).SelectedValue);
             if (selectedVal == -1)
             {
                 lvProduct.ItemsSource = allProduct;
@@ -177,61 +185,95 @@ namespace POS.AdminWorkSpace
         private void SearchIBox_KeyDown(object sender, KeyEventArgs e)
         {
             string filter = SearchIBox.Text.Trim();
+            int selectedI = cboTypeI.SelectedIndex;
 
-            try
+            if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
             {
                 if (filter.Length == 0)
                 {
-                    lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.IgdType.Equals((int)cboTypeI.SelectedItem) && p.Deleted.Equals(0));
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
                 }
-
-                lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.IgdType.Equals((int)cboTypeI.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
+                else
+                {
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
+                }
             }
-            catch (Exception ex)
+            else
             {
                 if (filter.Length == 0)
                 {
-                    lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.Deleted.Equals(0));
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.IgdType.Equals(cboTypeI.SelectedItem.ToString()) && p.Deleted.Equals(0));
                 }
-
-                lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
+                else
+                {
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.IgdType.Equals(cboTypeI.SelectedItem.ToString()) && p.Name.Contains(filter) && p.Deleted.Equals(0));
+                }
             }
         }
 
         private void SearchIBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string filter = SearchIBox.Text.Trim();
+            int selectedI = cboTypeI.SelectedIndex;
 
-            try
+            if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
             {
                 if (filter.Length == 0)
                 {
-                    lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.IgdType.Equals((int)cboTypeI.SelectedItem) && p.Deleted.Equals(0));
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.Deleted.Equals(0));
                 }
-
-                lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.IgdType.Equals((int)cboTypeI.SelectedItem) && p.Name.Contains(filter) && p.Deleted.Equals(0));
+                else
+                {
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
+                }
             }
-            catch (Exception ex)
+            else
             {
                 if (filter.Length == 0)
                 {
-                    lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.Deleted.Equals(0));
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.IgdType.Equals(cboTypeI.SelectedItem.ToString()) && p.Deleted.Equals(0));
                 }
-
-                lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(p => p.Name.Contains(filter) && p.Deleted.Equals(0));
+                else
+                {
+                    lvIngredient.ItemsSource = allIngre.Where(p => p.IgdType.Equals(cboTypeI.SelectedItem.ToString()) && p.Name.Contains(filter) && p.Deleted.Equals(0));
+                }
             }
         }
 
         private void cboTypeI_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            string filter = SearchIBox.Text.Trim();
+            int selectedI = (sender as ComboBox).SelectedIndex;
 
+            if (filter.Length == 0)
+            {
+                if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
+                {
+                    lvIngredient.ItemsSource = allIngre;
+                }
+                else
+                {
+                    lvIngredient.ItemsSource = allIngre.Where(x => x.IgdType.Equals((sender as ComboBox).SelectedItem.ToString()));
+                }
+            }
+            else
+            {
+                if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
+                {
+                    lvIngredient.ItemsSource = allIngre.Where(x => x.Name.Contains(filter));
+                }
+                else
+                {
+                    lvIngredient.ItemsSource = allIngre.Where(x => x.IgdType.Equals((sender as ComboBox).SelectedItem.ToString()) && x.Name.Contains(filter));
+                }
+            }            
         }
 
         private void bntAdd_Click(object sender, RoutedEventArgs e)
         {
             _ingreAddOrUpdate = new IngredientAddOrUpdateDialog(_unitofwork, null);
             _ingreAddOrUpdate.ShowDialog();
-            
+
             lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(x => x.Deleted.Equals(0)).ToList();
             lvIngredient.UnselectAll();
             lvIngredient.Items.Refresh();
@@ -274,9 +316,9 @@ namespace POS.AdminWorkSpace
                 {
                     delIngre.Deleted = 1;
                     var pdofingre = _unitofwork.ProductDetailsRepository.Get(x => x.IgdId.Equals(delIngre.IgdId)).ToList();
-                    if(pdofingre.Count != 0)
+                    if (pdofingre.Count != 0)
                     {
-                        foreach(var pd in pdofingre)
+                        foreach (var pd in pdofingre)
                         {
                             _unitofwork.ProductDetailsRepository.Delete(pd);
                         }
