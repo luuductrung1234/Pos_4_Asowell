@@ -166,7 +166,6 @@ namespace POS.AdminWorkSpace
 
         private void BntCreateNewProduct_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Create new product feature is now not working. We will update later!");
             myframe.Navigate(productCreator);
         }
 

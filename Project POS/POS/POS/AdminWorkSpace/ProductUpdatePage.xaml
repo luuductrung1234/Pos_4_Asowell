@@ -1,4 +1,4 @@
-﻿<Page x:Class="POS.AdminWorkSpace.ProductCreatorPage"
+﻿<Page x:Class="POS.AdminWorkSpace.ProductUpdatePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,7 +7,7 @@
       xmlns:local="clr-namespace:POS.EmployeeWorkSpace"
       mc:Ignorable="d"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="ProductPage"
+      Title="ProductUpdatePage"
       Height="660"
       Width="1366">
 
@@ -43,7 +43,7 @@
                           FontWeight="Bold"
                           Margin="0,50,0,-336"
                           SelectionChanged="LvAvaibleIngredient_OnSelectionChanged"
-                          Width="840"
+                          Width="792"
                           Height="334">
                     <ListView.View>
                         <GridView x:Name="gvShowDetails">
@@ -91,7 +91,7 @@
                           FontWeight="Bold"
                           Margin="0,50,0,0"
                           Height="222"
-                          Width="840">
+                          Width="792">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID"
@@ -233,7 +233,7 @@
                                  FontSize="18"
                                  Foreground="White"
                                  Width="215"
-                                 IsEnabled="False"/>
+                                 IsEnabled="False" />
                         <Button x:Name="btnLinkImg"
                                 FontSize="18"
                                 Foreground="White"
@@ -253,7 +253,7 @@
                                  Foreground="White"
                                  Width="215"
                                  Margin="0,0,100,0"
-                                 IsEnabled="False"/>
+                                 IsEnabled="False" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0">
@@ -288,26 +288,26 @@
                                  Foreground="White"
                                  Width="220"
                                  Margin="0,0,100,0"
-                                 PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                                 PreviewTextInput="NumberOnly_PreviewTextInput" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,20,0,0"
                                 HorizontalAlignment="Center">
-                        <Button x:Name="btnAdd"
-                                Content="Add"
+                        <Button x:Name="btnUpdate"
+                                Content="Update"
                                 Height="46"
                                 FontWeight="Bold"
                                 FontSize="20"
                                 Margin="0,0,50,0"
                                 Width="100"
-                                Click="btnAdd_Click"/>
+                                Click="btnUpdate_Click" />
                         <Button x:Name="btnClear"
                                 Content="Clear"
                                 FontWeight="Bold"
                                 FontSize="20"
                                 Height="46"
                                 Width="100"
-                                Click="btnClear_Click"/>
+                                Click="btnClear_Click" />
                     </StackPanel>
 
                 </StackPanel>

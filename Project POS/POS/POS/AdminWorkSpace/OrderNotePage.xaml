@@ -49,7 +49,7 @@
                                      Grid.Column="1"
                                      Margin="5 0 0 0"
                                      KeyDown="SearchBox_KeyDown"
-                                     materialDesign:HintAssist.Hint="Search"
+                                     materialDesign:HintAssist.Hint="Search by Name"
                                      x:Name="SearchBox"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                      BorderThickness="0"
@@ -58,7 +58,6 @@
                                      TextChanged="SearchBox_TextChanged" />
 
                         </Grid>
-
                     </Border>
                     <Border MaxHeight="30"
                             CornerRadius="3">
@@ -69,7 +68,8 @@
                                       Background="White"
                                       x:Name="cboProduct"
                                       Width="135"
-                                      Margin="0,0,20,0"></ComboBox>
+                                      Margin="0,0,20,0"
+                                      ToolTip="Product"></ComboBox>
                         </StackPanel>
                     </Border>
                     <Button x:Name="BtnOverViewReport"

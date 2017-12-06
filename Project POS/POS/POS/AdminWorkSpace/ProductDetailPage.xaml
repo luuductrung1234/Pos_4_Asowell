@@ -27,8 +27,7 @@
                                           Height="40"
                                           CornerRadius="2"
                                           materialDesign:ShadowAssist.ShadowDepth="Depth2">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="8">
+                    <StackPanel Orientation="Horizontal">
                         <Border Background="White"
                                 MaxHeight="30"
                                 CornerRadius="3"
@@ -52,23 +51,22 @@
                                          Grid.Column="1"
                                          Margin="5 0 0 0"
                                          KeyDown="SearchBox_KeyDown"
-                                         materialDesign:HintAssist.Hint="Search"
+                                         materialDesign:HintAssist.Hint="Search by Name"
                                          x:Name="SearchBox"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                          BorderThickness="0"
                                          MinWidth="200"
                                          VerticalAlignment="Center"
                                          TextChanged="SearchBox_TextChanged"
-                                         GotFocus="SearchBox_GotFocus"/>
+                                         GotFocus="SearchBox_GotFocus" />
 
                             </Grid>
 
                         </Border>
                         <Border MaxHeight="30"
                                 CornerRadius="3"
-                                Width="405">
+                                Width="234">
                             <StackPanel Orientation="Horizontal"
-                                        Width="415"
                                         Height="auto">
                                 <ComboBox x:Name="cboType"
                                           Foreground="Black"
@@ -78,6 +76,18 @@
                                           SelectionChanged="cboType_SelectionChanged"></ComboBox>
                             </StackPanel>
                         </Border>
+                        <Button x:Name="bntEditPro"
+                                Content="Edit"
+                                Height="auto"
+                                Margin="0,0,20,0"
+                                FontWeight="Bold"
+                                Click="bntEditPro_Click" />
+                        <Button x:Name="bntDelPro"
+                                Content="Delete"
+                                Height="auto"
+                                Margin="0,0,50,0"
+                                FontWeight="Bold"
+                                Click="bntDelPro_Click" />
                     </StackPanel>
                 </materialDesign:ColorZone>
             </Grid>
@@ -208,23 +218,20 @@
                                          Grid.Column="1"
                                          Margin="5 0 0 0"
                                          KeyDown="SearchIBox_KeyDown"
-                                         materialDesign:HintAssist.Hint="Search"
+                                         materialDesign:HintAssist.Hint="Search by Name"
                                          x:Name="SearchIBox"
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                          BorderThickness="0"
                                          MinWidth="200"
                                          VerticalAlignment="Center"
                                          TextChanged="SearchIBox_TextChanged"
-                                         GotFocus="SearchIBox_GotFocus"/>
+                                         GotFocus="SearchIBox_GotFocus" />
 
                             </Grid>
-
                         </Border>
-                        <Border MaxHeight="30"
-                                CornerRadius="3"
+                        <Border CornerRadius="3"
                                 Width="417">
-                            <StackPanel Orientation="Horizontal"
-                                        Height="auto">
+                            <StackPanel Orientation="Horizontal">
                                 <ComboBox x:Name="cboTypeI"
                                           Foreground="Black"
                                           Background="White"
@@ -236,19 +243,19 @@
                                         Height="auto"
                                         Margin="0,0,20,0"
                                         FontWeight="Bold"
-                                        Click="bntAdd_Click"/>
+                                        Click="bntAdd_Click" />
                                 <Button x:Name="bntEdit"
                                         Content="Edit"
                                         Height="auto"
                                         Margin="0,0,20,0"
                                         FontWeight="Bold"
-                                        Click="bntEdit_Click"/>
+                                        Click="bntEdit_Click" />
                                 <Button x:Name="bntDel"
                                         Content="Delete"
                                         Height="auto"
                                         Margin="0,0,50,0"
                                         FontWeight="Bold"
-                                        Click="bntDel_Click"/>
+                                        Click="bntDel_Click" />
                             </StackPanel>
                         </Border>
                     </StackPanel>

@@ -1,5 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using POS.Entities;
+using POS.Entities.CustomEntities;
+using POS.Repository.DAL;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,36 +17,61 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using POS.Repository.DAL;
-using POS.Entities;
-using POS.Entities.CustomEntities;
-using System.IO;
-using Microsoft.Win32;
 
 namespace POS.AdminWorkSpace
 {
     /// <summary>
-    /// Interaction logic for ProductCreatorPage.xaml
+    /// Interaction logic for ProductUpdatePage.xaml
     /// </summary>
-    public partial class ProductCreatorPage : Page
+    public partial class ProductUpdatePage : Page
     {
         private AdminwsOfCloudPOS _unitofwork;
         List<Ingredient> _igreList;
+        List<ProductDetail> _proDe;
 
         string browseImagePath = "";
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
         Product _currentProduct = new Product();
-        public ProductCreatorPage(AdminwsOfCloudPOS unitofwork)
+        public ProductUpdatePage(AdminwsOfCloudPOS unitofwork, Product pro)
         {
             _unitofwork = unitofwork;
+            _currentProduct = pro;
+            _proDe = _unitofwork.ProductDetailsRepository.Get(x => x.ProductId.Equals(_currentProduct.ProductId)).ToList();
             InitializeComponent();
 
             this.Loaded += ProductCreatorPage_Loaded;
 
-            _currentProduct = new Product();
+            PDTempData.pdtList.Clear();
 
             initComboBox();
+            initDataCurrentProduct();
+        }
+
+        private void initDataCurrentProduct()
+        {
+            txtName.Text = _currentProduct.Name;
+            txtInfo.Text = _currentProduct.Info;
+            cboType.SelectedItem = _currentProduct.Type;
+            txtImageName.Text = _currentProduct.ImageLink;
+            txtDiscount.Text = _currentProduct.Discount.ToString();
+            cboStatus.SelectedItem = _currentProduct.StandardStats;
+            txtSusggestPrice.Text = String.Format("{0:0.000}", 0);
+            txtPrice.Text = String.Format("{0:0.000}", _currentProduct.Price);
+
+            var ing = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
+
+            foreach (var pd in _proDe)
+            {
+                var curing = ing.Where(x => x.IgdId.Equals(pd.IgdId)).FirstOrDefault();
+                if (curing != null)
+                {
+                    PDTempData.pdtList.Add(new PDTemp { ProDe = pd, Ingre = curing });
+                }
+            }
+
+            lvDetails.ItemsSource = PDTempData.pdtList;
+            CalSuggestPrice();
         }
 
         public bool isRaiseIngreShowEvent = false;
@@ -49,8 +79,6 @@ namespace POS.AdminWorkSpace
         {
             _igreList = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
             lvAvaibleIngredient.ItemsSource = _igreList;
-
-            PDTempData.pdtList.Clear();
         }
 
         private void initComboBox()
@@ -97,7 +125,7 @@ namespace POS.AdminWorkSpace
             ProductDetail newPD = new ProductDetail
             {
                 PdetailId = "",
-                ProductId = "",
+                ProductId = _currentProduct.ProductId,
                 IgdId = ingre.IgdId,
                 Quan = 0,
                 UnitUse = ""
@@ -256,7 +284,7 @@ namespace POS.AdminWorkSpace
             }
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -312,8 +340,7 @@ namespace POS.AdminWorkSpace
                 {
                     price = decimal.Parse(txtPrice.Text.Trim());
                 }
-
-                _currentProduct.ProductId = "";
+                
                 _currentProduct.Name = name;
                 _currentProduct.Info = info;
                 _currentProduct.Type = type;
@@ -325,33 +352,43 @@ namespace POS.AdminWorkSpace
                 string destinationFile = startupProjectPath + "\\Images\\Products" + txtImageName.Text.Trim();
                 try
                 {
-                    File.Delete(destinationFile);
-                    File.Copy(browseImagePath, destinationFile);
+                    if(!string.IsNullOrEmpty(browseImagePath))
+                    {
+                        File.Delete(destinationFile);
+                        File.Copy(browseImagePath, destinationFile);
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
 
-                _unitofwork.ProductRepository.Insert(_currentProduct);
+                _unitofwork.ProductRepository.Update(_currentProduct);
                 _unitofwork.Save();
 
                 if (PDTempData.pdtList.Count() != 0)
                 {
+                    foreach (var pd in _proDe)
+                    {
+                        _unitofwork.ProductDetailsRepository.Delete(pd);
+                    }
+                    _unitofwork.Save();
+
                     foreach (var pd in PDTempData.pdtList)
                     {
                         pd.ProDe.ProductId = _currentProduct.ProductId;
+                        pd.ProDe.IgdId = pd.Ingre.IgdId;
                         _unitofwork.ProductDetailsRepository.Insert(pd.ProDe);
                         _unitofwork.Save();
                     }
                 }
 
-                MessageBox.Show("Add new product " + _currentProduct.Name + "(" + _currentProduct.ProductId + ") successful!");
+                MessageBox.Show("Update product " + _currentProduct.Name + "(" + _currentProduct.ProductId + ") successful!");
                 ClearAllData();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong. Can not add new product. Please check again!");
+                MessageBox.Show("Something went wrong. Can not update product. Please check again!");
             }
         }
 
@@ -403,46 +440,8 @@ namespace POS.AdminWorkSpace
                 sugprice += ((decimal)(pd.ProDe.Quan / 1000) * pd.Ingre.StandardPrice);
             }
 
-            txtSusggestPrice.Text = sugprice + "";
+            txtSusggestPrice.Text = String.Format("{0:0.000}", sugprice);
         }
-
+        
     }
-
-    public class PDTemp
-    {
-        private ProductDetail _pd;
-        private Ingredient _ingre;
-
-        public ProductDetail ProDe
-        {
-            get { return _pd; }
-            set
-            {
-                _pd = value;
-            }
-        }
-
-        public Ingredient Ingre
-        {
-            get { return _ingre; }
-            set
-            {
-                _ingre = value;
-            }
-        }
-
-        public List<string> UnitUseT
-        {
-            get
-            {
-                return new List<string> { "", "g", "ml" };
-            }
-        }
-    }
-
-    public class PDTempData
-    {
-        public static List<PDTemp> pdtList = new List<PDTemp>();
-    }
-
 }

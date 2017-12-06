@@ -75,10 +75,13 @@ namespace POS.AdminWorkSpace
 
         private void lvData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             Product pro = lvProduct.SelectedItem as Product;
-            lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(c => c.ProductId.Equals(pro.ProductId));
+            if(pro == null)
+            {
+                return;
+            }
 
+            lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(c => c.ProductId.Equals(pro.ProductId));
         }
 
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -164,7 +167,7 @@ namespace POS.AdminWorkSpace
             //        lvProduct.ItemsSource = allProduct.Where(p => p.Name.Contains(SearchBox.Text.Trim()));
             //    }
             //}
-            
+
             int selectedVal = ((int)(sender as ComboBox).SelectedValue);
             if (selectedVal == -1)
             {
@@ -177,6 +180,56 @@ namespace POS.AdminWorkSpace
 
         }
 
+        private void bntEditPro_Click(object sender, RoutedEventArgs e)
+        {
+            Product curPro = lvProduct.SelectedItem as Product;
+            if (curPro == null)
+            {
+                MessageBox.Show("Please choose exactly which product you want to update!");
+                return;
+            }
+
+            ProductUpdatePage pup = new ProductUpdatePage(_unitofwork, curPro);
+            ((AdminWindow)Window.GetWindow(this)).myframe.Navigate(pup);
+        }
+
+        private void bntDelPro_Click(object sender, RoutedEventArgs e)
+        {
+            Product delPro = lvProduct.SelectedItem as Product;
+            if (delPro == null)
+            {
+                MessageBox.Show("Please choose exactly which product you want to delete!");
+                return;
+            }
+
+            MessageBoxResult delMess = MessageBox.Show("This action will delete all following product details! Do you want to delete " + delPro.Name + "(" + delPro.ProductId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+            if (delMess == MessageBoxResult.Yes)
+            {
+                delPro.Deleted = 1;
+                var pdofingre = _unitofwork.ProductDetailsRepository.Get(x => x.ProductId.Equals(delPro.ProductId)).ToList();
+                if (pdofingre.Count != 0)
+                {
+                    foreach (var pd in pdofingre)
+                    {
+                        _unitofwork.ProductDetailsRepository.Delete(pd);
+                    }
+                    _unitofwork.Save();
+                }
+
+                _unitofwork.ProductRepository.Update(delPro);
+                _unitofwork.Save();
+                lvProduct.ItemsSource = _unitofwork.ProductRepository.Get(c => c.Deleted.Equals(0));
+                lvDetails.ItemsSource = _unitofwork.ProductDetailsRepository.Get(includeProperties: "Product");
+                lvIngredient.ItemsSource = _unitofwork.IngredientRepository.Get(x => x.Deleted.Equals(0)).ToList();
+                lvProduct.UnselectAll();
+                lvProduct.Items.Refresh();
+                lvDetails.UnselectAll();
+                lvDetails.Items.Refresh();
+                lvIngredient.UnselectAll();
+                lvIngredient.Items.Refresh();
+            }
+        }
+
         private void SearchIBox_GotFocus(object sender, RoutedEventArgs e)
         {
             SearchBox.Text = "";
@@ -187,7 +240,7 @@ namespace POS.AdminWorkSpace
             string filter = SearchIBox.Text.Trim();
             int selectedI = cboTypeI.SelectedIndex;
 
-            if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
+            if (selectedI < 0 || cboTypeI.SelectedValue.Equals("All"))
             {
                 if (filter.Length == 0)
                 {
@@ -216,7 +269,7 @@ namespace POS.AdminWorkSpace
             string filter = SearchIBox.Text.Trim();
             int selectedI = cboTypeI.SelectedIndex;
 
-            if (selectedI < 0 || (sender as ComboBox).SelectedValue.Equals("All"))
+            if (selectedI < 0 || cboTypeI.SelectedValue.Equals("All"))
             {
                 if (filter.Length == 0)
                 {
@@ -266,7 +319,7 @@ namespace POS.AdminWorkSpace
                 {
                     lvIngredient.ItemsSource = allIngre.Where(x => x.IgdType.Equals((sender as ComboBox).SelectedItem.ToString()) && x.Name.Contains(filter));
                 }
-            }            
+            }
         }
 
         private void bntAdd_Click(object sender, RoutedEventArgs e)
@@ -311,7 +364,7 @@ namespace POS.AdminWorkSpace
             var delIngre = lvIngredient.SelectedItem as Ingredient;
             if (delIngre != null)
             {
-                MessageBoxResult delMess = MessageBox.Show("Do you want to delete " + delIngre.Name + "(" + delIngre.IgdId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
+                MessageBoxResult delMess = MessageBox.Show("This action will delete all following product details! Do you want to delete " + delIngre.Name + "(" + delIngre.IgdId + ")?", "Warning! Are you sure?", MessageBoxButton.YesNo);
                 if (delMess == MessageBoxResult.Yes)
                 {
                     delIngre.Deleted = 1;
@@ -343,5 +396,6 @@ namespace POS.AdminWorkSpace
                 MessageBox.Show("Please choose ingredient you want to delete and try again!");
             }
         }
+
     }
 }
