@@ -51,8 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>asowell_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
@@ -693,7 +692,6 @@
     <Resource Include="Images\Edit_52px.png" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\map.png" />
-    <Resource Include="Images\muteki.png" />
     <Resource Include="Images\Pencil Drawing_32px.png" />
     <Resource Include="Images\Search_50px.png" />
     <Resource Include="Images\softwarepdate.jpg" />
@@ -709,6 +707,9 @@
     <Resource Include="Images\Products\roasted_garlic_bread.jpg" />
     <Resource Include="Images\Products\Sweet_Potatoes_fries.jpg" />
     <Resource Include="Images\Products\warm_Edamame.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="asowell_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
