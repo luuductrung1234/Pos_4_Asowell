@@ -24,6 +24,7 @@ namespace POS.Repository.DAL
         private GenericRepository<OrderNote> _orderRepository;
         private GenericRepository<OrderNoteDetail> _orderDetailsRepository;
         private GenericRepository<ReceiptNote> _receiptNoteRepository;
+        private GenericRepository<WareHouse> _wareHouseRepository;
 
 
         public EmployeewsOfCloudPOS()
@@ -37,6 +38,18 @@ namespace POS.Repository.DAL
         }
 
 
+
+        public GenericRepository<WareHouse> WareHouseRepository
+        {
+            get
+            {
+                if (_wareHouseRepository == null)
+                {
+                    _wareHouseRepository = new GenericRepository<WareHouse>(context);
+                }
+                return _wareHouseRepository;
+            }
+        }
 
         public GenericRepository<ApplicationLog> AppLogRepository
         {
