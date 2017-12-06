@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -117,13 +118,12 @@ namespace POS.EmployeeWorkSpace
                     orderTempCurrentTable.Ordertime = DateTime.Now;
                     orderingTable.IsOrdered = 1;
                     _unitofwork.TableRepository.Update(orderingTable);
-                    _unitofwork.Save();
                 }
 
                 OrderDetailsTemp o = new OrderDetailsTemp();
                 Product it = (Product)lbSelected.SelectedItem;
 
-                //order tung ghe
+                //order for each chair
                 var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(orderingTable.TableId));
 
                 if (orderingChair != null)
@@ -131,6 +131,14 @@ namespace POS.EmployeeWorkSpace
                     var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(orderingChair.ChairId)).ToList();
                     var foundinchairorderdetailstemp = chairorderdetailstemp.Where(x => x.ProductId.Equals(it.ProductId)).ToList();
 
+                    // go to warehouse, check and get the ingredient to make product
+                    if (!TakeFromWareHouseData(o))       
+                    {
+                        MessageBox.Show("This Product can not add to Order. Please check to WareHouse for Ingredient's stock!");
+                        return;
+                    }
+
+                    // add a product to order
                     if (foundinchairorderdetailstemp.Count == 0)
                     {
                         o.ChairId = orderingChair.ChairId;
@@ -141,6 +149,8 @@ namespace POS.EmployeeWorkSpace
                         o.Quan = 1;
                         o.IsPrinted = 0;
                         o.Discount = it.Discount;
+
+                        
                         _unitofwork.OrderDetailsTempRepository.Insert(o);
                         _unitofwork.Save();
                     }
@@ -158,6 +168,7 @@ namespace POS.EmployeeWorkSpace
                                 o.Quan = 1;
                                 o.IsPrinted = 0;
                                 o.Discount = it.Discount;
+
                                 _unitofwork.OrderDetailsTempRepository.Insert(o);
                                 _unitofwork.Save();
 
@@ -187,6 +198,52 @@ namespace POS.EmployeeWorkSpace
                 ((MainWindow)Window.GetWindow(this)).en.ucOrder.txtDay.Text = orderTempCurrentTable.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             }
 
+        }
+
+        private bool TakeFromWareHouseData(OrderDetailsTemp orderDetails)
+        {
+            var prodOfOrderDetails =
+                _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderDetails.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
+            if (prodOfOrderDetails != null)
+            {
+                var wareHouseDict = new Dictionary<WareHouse, double?>();
+
+                // going to warehouse and take the contain of each ingredient
+                foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
+                {
+                    var quan = prodDetails.Quan;
+                    var ingd =
+                        _cloudPosUnitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId)).FirstOrDefault();
+                    if (ingd == null)
+                        return false;
+                    var wareHouse =
+                        _cloudPosUnitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId)).FirstOrDefault();
+                    if (wareHouse == null)
+                        return false;
+
+                    var temple_Contain = wareHouse.Contain;
+
+                    if (temple_Contain < quan)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        temple_Contain -= quan;
+                    }
+
+                    wareHouseDict.Add(wareHouse, temple_Contain);
+                }
+
+                // when all ingredient are enough to make product
+                foreach (var item in wareHouseDict)
+                {
+                    item.Key.Contain = item.Value;
+                }
+                _cloudPosUnitofwork.Save();
+            }
+
+            return true;
         }
 
         private void Search_OnKeyDown(object sender, KeyEventArgs e)

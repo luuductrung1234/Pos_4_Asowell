@@ -17,6 +17,7 @@ using POS.Entities.CustomEntities;
 using POS.Helper.PrintHelper;
 using POS.Repository.DAL;
 using Chair = POS.BusinessModel.Chair;
+using Or = OfficeOpenXml.FormulaParsing.Excel.Functions.Logical.Or;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -522,7 +523,7 @@ namespace POS.EmployeeWorkSpace
                     var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
                     var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
                                             && x.TableOwned.Equals(currentChair.TableOwned));
-                    var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId == foundchair.ChairId).ToList();
+                    var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(foundchair.ChairId)).ToList();
 
                     while ((dep != null) && !(dep is ListViewItem))
                     {
@@ -536,19 +537,22 @@ namespace POS.EmployeeWorkSpace
 
                     if (chairordernotedetails[index].Quan > 1)
                     {
+                        GiveBackToWareHouseData(chairordernotedetails[index]);
                         chairordernotedetails[index].Quan--;
                         _unitofwork.OrderDetailsTempRepository.Update(chairordernotedetails[index]);
                         _unitofwork.Save();
+                        _cloudPosUnitofwork.Save();
                     }
                     else
                     {
                         var chairtemp = chairordernotedetails[index];
 
+                        GiveBackToWareHouseData(chairordernotedetails[index]);
                         orderdetailstempcurrenttablelist.Remove(chairordernotedetails[index]);
-
                         chairordernotedetails.RemoveAt(index);
                         _unitofwork.OrderDetailsTempRepository.Delete(chairtemp);
                         _unitofwork.Save();
+                        _cloudPosUnitofwork.Save();
                     }
 
                     currentTable.IsOrdered = 0;
@@ -959,10 +963,6 @@ namespace POS.EmployeeWorkSpace
                             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
                         }
                     }
-                    else
-                    {
-                        return;
-                    }
                 }
                 else
                 {
@@ -1106,20 +1106,24 @@ namespace POS.EmployeeWorkSpace
         private void ClearTheTable()
         {
             Entities.Table curTable = currentTable;
-            var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).ToList();
-            foreach (Entities.Chair chair in chairoftable)
+            var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).FirstOrDefault();
+            if (orderOfTable != null)
             {
-                var ordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
+                var ordernotedetails = orderdetailstempcurrenttablelist
+                    .Where(x => x.OrdertempId.Equals(orderOfTable.OrdertempId))
+                    .ToList();
                 if (ordernotedetails.Count != 0)
                 {
                     foreach (var ch in ordernotedetails)
                     {
+                        GiveBackToWareHouseData(ch);
                         orderdetailstempcurrenttablelist.Remove(ch);
                         _unitofwork.OrderDetailsTempRepository.Delete(ch);
                         _unitofwork.Save();
                     }
                 }
             }
+            _cloudPosUnitofwork.Save();
 
             ordertemptable.EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId;
             ordertemptable.CusId = "CUS0000001";
@@ -1147,6 +1151,29 @@ namespace POS.EmployeeWorkSpace
             ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
             ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
             ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
+        }
+
+        private void GiveBackToWareHouseData(OrderDetailsTemp orderDetails)
+        {
+            var prodOfOrderDetails =
+                _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderDetails.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
+            if (prodOfOrderDetails != null)
+            {
+                foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
+                {
+                    var quan = prodDetails.Quan;
+                    var ingd = 
+                        _cloudPosUnitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId)).FirstOrDefault();
+                    if (ingd == null)
+                        return;
+                    var wareHouse =
+                        _cloudPosUnitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId)).FirstOrDefault();
+                    if (wareHouse == null)
+                        return;
+                    wareHouse.Contain += quan;
+                }
+            }
+            
         }
 
         private void DeleteChairOrderDetails()

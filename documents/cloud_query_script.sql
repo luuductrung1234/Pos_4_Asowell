@@ -40,7 +40,7 @@ insert into AdminRes
 	([ad_id], [username], [pass], [name], [ad_role])
 values
 		-- 1:software admin		2:user admin
-('AD00000001', 'luuductrung1234', 'Trung1997', N'Luu Duc Trung', 1),
+('AD00000001', 'luuductrung1234', '8ZICVab+mWcy8267/ruOWo6ERgyWNJSdYi4RjpVqxzIsd5DN+IMHtAhAB0N5ld6zWEaK07QVeQaQlBlLwvlwRPD5dSFu8u9kjBL2HTfEB+Q=', N'Luu Duc Trung', 1),
 ('AD00000002', 'vinhtonthat8', 'password1', N'Ton That Vinh', 2)
 go
 
