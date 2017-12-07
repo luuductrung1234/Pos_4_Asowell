@@ -7,10 +7,9 @@
              Background="DarkGray"
              xmlns:local="clr-namespace:POS"
              mc:Ignorable="d"
-             d:DesignHeight="500"
-             Width="450">
-    <GroupBox 
-              materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+             d:DesignHeight="600"
+             d:DesignWidth="450">
+    <GroupBox materialDesign:ColorZoneAssist.Mode="PrimaryMid"
               FontWeight="Bold">
         <GroupBox.Header>
             <Grid>
@@ -28,7 +27,6 @@
                 <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
             <Grid VerticalAlignment="Top"
-                  Margin="0,0,0,0"
                   Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -43,8 +41,7 @@
                     </Grid.Resources>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal"
-                                    Background="Black"
-                                    Margin="0,0,3,5">
+                                    Background="Black">
                             <!--<TextBlock Text="Day"
                                        Foreground="Black"
                                        FontFamily="Segoe WP Black" />-->
@@ -53,7 +50,6 @@
                                        Width="210"
                                        Height="25"
                                        TextAlignment="Right"
-                                       Margin="0,0,0,0"
                                        Background="Black"
                                        Foreground="#FFF1AA2E"
                                        FontSize="18" />
@@ -105,7 +101,7 @@
                       Margin="5,0,0,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
                                   VerticalAlignment="Stretch"
-                                  Margin="5,0,-10,0">
+                                  Margin="0,0,25,0">
                         <WrapPanel x:Name="wp">
 
                         </WrapPanel>
@@ -128,10 +124,10 @@
                                             Width="70"
                                             DisplayMemberBinding="{Binding Quan}" />
                             <GridViewColumn Header="Price"
-                                            Width="90"
+                                            Width="80"
                                             DisplayMemberBinding="{Binding Price,StringFormat=0.000}" />
                             <GridViewColumn Header="Status"
-                                            Width="100">
+                                            Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox x:Name="cboStatus"
@@ -196,31 +192,31 @@
                             VerticalAlignment="Center">
                     <Button x:Name="bntPay"
                             Content="Pay"
-                            Margin="0,0,10,0"
+                            Margin="0,0,20,0"
                             VerticalAlignment="Top"
                             Click="bntPay_Click"
                             FontSize="18"
                             FontWeight="Bold"
-                            Width="100" 
-                            ToolTip="pay the order"/>
+                            Width="80"
+                            ToolTip="pay the order" />
                     <Button x:Name="bntGo"
                             Content="Go"
                             VerticalAlignment="Top"
                             FontSize="18"
                             FontWeight="Bold"
-                            Margin="0,0,10,0"
+                            Width="80"
+                            Margin="0,0,20,0"
                             Click="BtnGo_OnClick"
-                            Width="100" 
                             ToolTip="print bill for bar and kitchen"
-                            Background="Blue"/>
+                            Background="Blue" />
                     <Button x:Name="bntPrint"
                             Content="Buzz"
                             VerticalAlignment="Top"
                             FontSize="18"
                             FontWeight="Bold"
-                            Margin="0,0,10,0"
+                            Width="80"
+                            Margin="0,0,20,0"
                             Click="BntPrint_OnClick"
-                            Width="100" 
                             ToolTip="print temporary bill"
                             Background="Yellow" />
                     <Button x:Name="bntDelete"
@@ -229,11 +225,10 @@
                             RenderTransformOrigin="2.162,0.464"
                             FontSize="18"
                             FontWeight="Bold"
-                            Margin="0,0,10,0"
+                            Width="100"
                             Click="BntDelete_OnClick"
-                            Width="100" 
                             ToolTip="delete order"
-                            Background="Red"/>
+                            Background="Red" />
                 </StackPanel>
             </Grid>
         </Grid>

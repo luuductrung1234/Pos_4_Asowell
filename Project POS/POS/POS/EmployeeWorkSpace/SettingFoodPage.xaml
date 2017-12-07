@@ -8,11 +8,11 @@
       mc:Ignorable="d"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="SettingFood"
-      Height="660"
-      Width="1366">
+      Height="610"
+      Width="1024">
 
-    <Grid Margin="0,0,-9.4,0.4">
-        <materialDesign:ColorZone Margin="2,2,832.8,0"
+    <Grid>
+        <materialDesign:ColorZone Margin="0,0,500,0"
                                   Padding="16"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                   CornerRadius="3"
@@ -26,7 +26,7 @@
             </StackPanel>
         </materialDesign:ColorZone>
         <ListView Name="lvData"
-                  Width="533"
+                  Width="514"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
                   Background="#FFED5C5C"
@@ -45,11 +45,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <materialDesign:ColorZone Margin="635,0,9.8,0"
+        <materialDesign:ColorZone Margin="541,0,0,0"
                                   Padding="16"
                                   materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                   CornerRadius="3"
                                   Mode="PrimaryDark"
+                                  VerticalAlignment="Top"
+                                  HorizontalAlignment="Left"
+                                  Width="483"
                                   Height="46">
             <StackPanel  Orientation="Horizontal">
                 <TextBlock Margin="16,0,0,0"
@@ -58,7 +61,7 @@
         </materialDesign:ColorZone>
         <StackPanel HorizontalAlignment="Left"
                     Height="535"
-                    Margin="635,63,0,0"
+                    Margin="541,64,0,0"
                     DataContext="{Binding  SelectedItem,ElementName=lvData}"
                     VerticalAlignment="Top"
                     Width="483">
@@ -81,24 +84,33 @@
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="ID" />
-                <TextBlock x:Name="txtID" Width="200"/>
+                <TextBlock x:Name="txtID"
+                           Width="200" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Name" />
-                <TextBlock x:Name="txtName" IsEnabled="False"  Width="200" Foreground="White"/>
+                <TextBlock x:Name="txtName"
+                           IsEnabled="False"
+                           Width="200"
+                           Foreground="White" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Price" />
-                <TextBlock x:Name="txtPrice" Width="200" IsEnabled="False" Foreground="White"
-                         PreviewTextInput="txtPrice_PreviewTextInput"
-                         />
+                <TextBlock x:Name="txtPrice"
+                           Width="200"
+                           IsEnabled="False"
+                           Foreground="White"
+                           PreviewTextInput="txtPrice_PreviewTextInput" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Margin="10">
                 <TextBlock Text="Promotion" />
-                <ComboBox Foreground="White" x:Name="cbopromotion" IsEditable="False" IsEnabled="False"
+                <ComboBox Foreground="White"
+                          x:Name="cbopromotion"
+                          IsEditable="False"
+                          IsEnabled="False"
                           Width="60">
                 </ComboBox>
                 <TextBlock x:Name="textBlock"
@@ -108,19 +120,21 @@
                            VerticalAlignment="Stretch"
                            Width="19"
                            Height="24"
-                           Margin="10,0,0,0"/>
+                           Margin="10,0,0,0" />
             </StackPanel>
             <Button x:Name="bntUpdate"
                     Content="Update"
                     IsEnabled="False"
                     Height="44"
-                    Margin="0,0,375.2,0"
-                    Click="bntUpdate_Click" />
+                    Margin="10,0,0,0"
+                    Click="bntUpdate_Click"
+                    HorizontalAlignment="Left"
+                    Width="98" />
         </StackPanel>
         <Image x:Name="image"
                HorizontalAlignment="Left"
                Height="231"
-               Margin="1162,63,0,0"
+               Margin="832,64,0,0"
                VerticalAlignment="Top"
                Width="182" />
 

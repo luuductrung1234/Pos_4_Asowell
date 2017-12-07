@@ -8,15 +8,15 @@
       Background="{DynamicResource MaterialDesignPaper}"
       mc:Ignorable="d"
       Title="Table"
-      Height="660"
-      Width="1366">
+      Height="610"
+      Width="1024">
 
     <Grid x:Name="grTable"
           MouseMove="grTable_MouseMove"
-          Width="1366"
-          Height="660">
-        <Grid Width="1366"
-              Height="660">
+          Width="1024"
+          Height="610">
+        <Grid Width="1024"
+              Height="610">
             <Button x:Name="btnTableBrowseImage"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
@@ -75,10 +75,10 @@
                     BorderThickness="1"
                     HorizontalAlignment="Left"
                     Height="38"
-                    Margin="1185,612,0,0"
                     VerticalAlignment="Top"
                     Width="181"
-                    Panel.ZIndex="20">
+                    Panel.ZIndex="20"
+                    Margin="833,562,0,0">
                 <TextBlock x:Name="txbPointerPosition"
                            TextWrapping="Wrap"
                            Text="111:111"
@@ -89,8 +89,8 @@
             </Border>
             <Image x:Name="imgTable"
                    Source="..\Icon\icons8_Meal_32px.png"
-                   Width="1366"
-                   Height="660"
+                   Width="1024"
+                   Height="610"
                    Stretch="Fill"
                    AllowDrop="True"
                    Panel.ZIndex="0"
@@ -98,10 +98,6 @@
                    DragLeave="imgTable_DragLeave"
                    Drop="imgTable_Drop"
                    MouseRightButtonDown="imgTable_MouseRightContextMenu" />
-            <Rectangle x:Name="testrec" Width="100" Height="100">
-                
-            </Rectangle>
         </Grid>
-
     </Grid>
 </Page>

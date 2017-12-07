@@ -8,8 +8,8 @@
       Background="{DynamicResource MaterialDesignPaper}"
       mc:Ignorable="d"
       Title="Info"
-      Height="660"
-      Width="1366">
+      Height="610"
+      Width="1024">
 
     <Grid>
 
