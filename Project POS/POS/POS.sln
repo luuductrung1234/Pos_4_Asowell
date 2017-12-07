@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.WPFTest", "POS.WPFTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.BusinessContext", "POS.Business\POS.BusinessContext.csproj", "{550F0920-C28B-4A76-A056-DC81666A5AD4}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "POS.Installer", "POS.Installer\POS.Installer.vdproj", "{968418C6-132A-4C3B-9CD9-98F8F72316FB}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "POS.Installer", "POS.Installer\POS.Installer.vdproj", "{D6B30747-7448-4726-B669-364AB9B25EFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,17 +76,13 @@ Global
 		{550F0920-C28B-4A76-A056-DC81666A5AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{550F0920-C28B-4A76-A056-DC81666A5AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{550F0920-C28B-4A76-A056-DC81666A5AD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{968418C6-132A-4C3B-9CD9-98F8F72316FB}.Debug|Any CPU.ActiveCfg = Debug
-		{968418C6-132A-4C3B-9CD9-98F8F72316FB}.Release|Any CPU.ActiveCfg = Release
+		{D6B30747-7448-4726-B669-364AB9B25EFD}.Debug|Any CPU.ActiveCfg = Debug
+		{D6B30747-7448-4726-B669-364AB9B25EFD}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5AE59DA-19BB-432E-88B8-0F9906AD6AC9}
-	EndGlobalSection
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 EndGlobal
