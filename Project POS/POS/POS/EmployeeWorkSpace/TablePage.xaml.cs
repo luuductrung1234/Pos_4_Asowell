@@ -109,7 +109,7 @@ namespace POS.EmployeeWorkSpace
 
             if (!ReadWriteData.checkTableImagePathFileExist())
             {
-                ReadWriteData.writeTableImagePath(startupProjectPath + "\\Images\\map.png");
+                ReadWriteData.writeTableImagePath(startupProjectPath + "\\Images\\3dmap.png");
             }
 
             initBackgroundTable(ReadWriteData.readTableImagePath());
@@ -265,7 +265,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 if (mess == MessageBoxResult.No)
                 {
-                    ReadWriteData.writeTableImagePath(startupProjectPath + "\\Images\\map.png");
+                    ReadWriteData.writeTableImagePath("C:\\Program Files\\ITComma\\Asowel POS\\documents\\3dmap.jpg");
                     initBackgroundTable(ReadWriteData.readTableImagePath());
                 }
             }

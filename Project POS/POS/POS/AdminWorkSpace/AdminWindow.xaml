@@ -102,7 +102,7 @@
                                 <Button x:Name="btnCreateAdmin"
                                         Content="Create Admin"
                                         Click="BtnCreateAdmin_OnClick"
-                                        Visibility="Collapsed"/>
+                                        Visibility="Collapsed" />
                                 <Button x:Name="btnDetails"
                                         Content="Details"
                                         Click="BtnDetails_OnClick" />
@@ -135,8 +135,9 @@
                                              Background="Violet"
                                              Width="40"
                                              Panel.ZIndex="50"
-                                             Margin="0,578,29,31"
-                                             HorizontalAlignment="Right">
+                                             Margin="0,0,29,35.2"
+                                             HorizontalAlignment="Right"
+                                             VerticalAlignment="Bottom">
                         <StackPanel>
                             <Button Background="DarkGreen"
                                     ToolTip="Employee Infomation"
