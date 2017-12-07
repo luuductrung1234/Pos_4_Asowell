@@ -157,6 +157,85 @@ namespace POS.Helper.PrintHelper
             };
 
 
+            // Sale Value
+            StackPanel stpSaleValue = new StackPanel()
+            {
+                Orientation = Orientation.Horizontal
+            };
+            TextBlock tbSaleValueLable = new TextBlock()
+            {
+                Text = "Sale Value:",
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 12,
+                FontWeight = FontWeights.UltraBold,
+                Margin = new Thickness(90, 0, 0, 0),
+                Width = 120
+            };
+            TextBlock tbSaleValueValue = new TextBlock()
+            {
+                Text = String.Format("{0:0.000}", order.SaleValue),
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 11,
+                Width = 60,
+                TextAlignment = TextAlignment.Right
+            };
+            stpSaleValue.Children.Add(tbSaleValueLable);
+            stpSaleValue.Children.Add(tbSaleValueValue);
+
+
+            // Service Charge
+            StackPanel stpSVC = new StackPanel()
+            {
+                Orientation = Orientation.Horizontal
+            };
+            TextBlock tbSVCLable = new TextBlock()
+            {
+                Text = "SVC (5%):",
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 12,
+                FontWeight = FontWeights.UltraBold,
+                Margin = new Thickness(90, 0, 0, 0),
+                Width = 120
+            };
+            TextBlock tbSVCValue = new TextBlock()
+            {
+                Text = String.Format("{0:0.000}", order.Svc),
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 11,
+                Width = 60,
+                TextAlignment = TextAlignment.Right
+            };
+            stpSVC.Children.Add(tbSVCLable);
+            stpSVC.Children.Add(tbSVCValue);
+
+
+            // VAT
+            StackPanel stpVAT = new StackPanel()
+            {
+                Orientation = Orientation.Horizontal
+            };
+            TextBlock tbVATLable = new TextBlock()
+            {
+                Text = "VAT (10%):",
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 12,
+                FontWeight = FontWeights.UltraBold,
+                Margin = new Thickness(90, 0, 0, 0),
+                Width = 120
+            };
+            TextBlock tbVATValue = new TextBlock()
+            {
+                Text = String.Format("{0:0.000}", order.Vat),
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 11,
+                Width = 60,
+                TextAlignment = TextAlignment.Right
+            };
+            stpVAT.Children.Add(tbVATLable);
+            stpVAT.Children.Add(tbVATValue);
+            
+
+
             // Total Price
             StackPanel stpTotalPrice = new StackPanel()
             {
@@ -164,19 +243,19 @@ namespace POS.Helper.PrintHelper
             };
             TextBlock tbTotalPriceLable = new TextBlock()
             {
-                Text = "Total Amount:" + "(" + moneyUnit + ")",
+                Text = "Total Amount " + "(" + moneyUnit + "):",
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
-                Margin = new Thickness(95, 0, 10, 0),
-                Width = 110
+                Margin = new Thickness(90, 0, 0, 0),
+                Width = 120
             };
             TextBlock tbTotalPriceValue = new TextBlock()
             {
                 Text = String.Format("{0:0.000}", order.TotalPrice),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
-                Width = 70,
+                Width = 60,
                 TextAlignment = TextAlignment.Right
             };
             stpTotalPrice.Children.Add(tbTotalPriceLable);
@@ -193,15 +272,15 @@ namespace POS.Helper.PrintHelper
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
-                Margin = new Thickness(95, 0, 10, 0),
-                Width = 110
+                Margin = new Thickness(90, 0, 0, 0),
+                Width = 120
             };
             TextBlock tbCustomerPayValue = new TextBlock()
             {
                 Text = String.Format("{0:0.000}", order.CustomerPay),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
-                Width = 70,
+                Width = 60,
                 TextAlignment = TextAlignment.Right
             };
             stpCustomerPay.Children.Add(tbCustomerPayLable);
@@ -218,22 +297,24 @@ namespace POS.Helper.PrintHelper
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 12,
                 FontWeight = FontWeights.UltraBold,
-                Margin = new Thickness(95, 0, 10, 0),
-                Width = 110
+                Margin = new Thickness(90, 0, 0, 0),
+                Width = 120
             };
             TextBlock tbPayBackValue = new TextBlock()
             {
                 Text = String.Format("{0:0.000}", order.PayBack),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 11,
-                Width = 70,
+                Width = 60,
                 TextAlignment = TextAlignment.Right
             };
             stpPayBack.Children.Add(tbPayBackLable);
             stpPayBack.Children.Add(tbPayBackValue);
 
 
-
+            stpSummary.Children.Add(stpSaleValue);
+            stpSummary.Children.Add(stpSVC);
+            stpSummary.Children.Add(stpVAT);
             stpSummary.Children.Add(stpTotalPrice);
             stpSummary.Children.Add(stpCustomerPay);
             stpSummary.Children.Add(stpPayBack);
@@ -265,7 +346,7 @@ namespace POS.Helper.PrintHelper
                 if (i == 1)
                 {
                     ColumnDefinition secondCol = new ColumnDefinition();
-                    secondCol.Width = new GridLength(40);
+                    secondCol.Width = new GridLength(30);
                     dgDataTable.ColumnDefinitions.Add(secondCol);
                     continue;
                 }

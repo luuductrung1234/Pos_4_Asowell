@@ -22,11 +22,9 @@ namespace POS
     /// </summary>
     public partial class AdminNavWindow : Window
     {
-        private ILog AppLog;
 
-        public AdminNavWindow(ILog AppLog)
+        public AdminNavWindow()
         {
-            this.AppLog = AppLog;
             InitializeComponent();
         }
 
@@ -34,7 +32,7 @@ namespace POS
 
         private void GotoWareHouseWSButton_OnClick(object sender, RoutedEventArgs e)
         {
-            WareHouseWindow whWindow = new WareHouseWindow(AppLog);
+            WareHouseWindow whWindow = new WareHouseWindow();
             whWindow.Show();
 
             this.Close();
@@ -43,7 +41,7 @@ namespace POS
         private void GotoAdminWSButton_OnClick(object sender, RoutedEventArgs e)
         {
 
-            AdminWindow adminWindow = new AdminWindow(AppLog);
+            AdminWindow adminWindow = new AdminWindow();
             adminWindow.Show();
 
             this.Close();

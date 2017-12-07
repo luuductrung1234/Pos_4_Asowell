@@ -96,7 +96,7 @@ namespace POS.EmployeeWorkSpace
 
             try
             {
-                int cusPay = int.Parse(KbInput.InputValue);
+                decimal cusPay = decimal.Parse(KbInput.InputValue);
 
                 if (cusPay < currentOrder.TotalPrice)
                 {

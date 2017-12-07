@@ -27,11 +27,10 @@ namespace POS.WareHouseWorkSpace
 
         private List<Ingredient> IngdList;
 
-        private ILog Applog;
+        private static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public WareHouseWindow(ILog appLog)
+        public WareHouseWindow()
         {
-            this.Applog = appLog;
             InitializeComponent();
 
             try
@@ -72,7 +71,7 @@ namespace POS.WareHouseWorkSpace
             catch (Exception ex)
             {
                 MessageBox.Show("Something went wrong: \n" + ex.Message);
-                appLog.Error(ex);
+                AppLog.Error(ex);
             }
         }
 

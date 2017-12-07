@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NPOI.SS.Formula.Functions;
 using POS.Entities;
 using POS.Entities.CustomEntities;
 using POS.Repository.DAL;
@@ -16,9 +17,14 @@ namespace POS.Helper.PrintHelper.Model
         public string Customer { get; set; }
         public int Table { get; set; }
         public DateTime Date { get; set; }
+        public decimal TotalPriceNonDisc { get; set; }
         public decimal TotalPrice { get; set; }
+        public decimal Svc { get; set; }
+        public decimal Vat { get; set; }
+        public decimal SaleValue { get; set; }
         public decimal CustomerPay { get; set; }
         public decimal PayBack { get; set; }
+        
 
         public List<OrderDetailsForPrint> OrderDetails { get; set; }
 
@@ -43,7 +49,11 @@ namespace POS.Helper.PrintHelper.Model
             Customer = targetOrder.CusId;
             Table = targetTable.TableNumber;
             Date = targetOrder.Ordertime;
+            TotalPriceNonDisc = targetOrder.TotalPriceNonDisc;
             TotalPrice = targetOrder.TotalPrice;
+            Svc = targetOrder.Svc;
+            Vat = targetOrder.Vat;
+            SaleValue = targetOrder.SaleValue;
             CustomerPay = targetOrder.CustomerPay;
             PayBack = targetOrder.PayBack;
 
@@ -57,7 +67,11 @@ namespace POS.Helper.PrintHelper.Model
             Customer = targetOrder.CusId;
             Table = targetOrder.Ordertable;
             Date = targetOrder.Ordertime;
+            TotalPriceNonDisc = targetOrder.TotalPriceNonDisc;
             TotalPrice = targetOrder.TotalPrice;
+            Svc = targetOrder.Svc;
+            Vat = targetOrder.Vat;
+            SaleValue = targetOrder.SaleValue;
             CustomerPay = targetOrder.CustomerPay;
             PayBack = targetOrder.PayBack;
 

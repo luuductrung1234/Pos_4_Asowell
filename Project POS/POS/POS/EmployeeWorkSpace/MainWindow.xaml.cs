@@ -48,11 +48,10 @@ namespace POS.EmployeeWorkSpace
         internal ChangeThemePage chtm;
         internal AllEmployeeLogin ael;
 
-        private ILog AppLog;
+        internal static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public MainWindow(ILog appLog)
+        public MainWindow()
         {
-            this.AppLog = appLog;
             InitializeComponent();
             currentTable = null;
             emp = App.Current.Properties["EmpLogin"] as Employee;
@@ -113,11 +112,13 @@ namespace POS.EmployeeWorkSpace
             catch (Exception ex)
             {
                 MessageBox.Show("Something went wrong: \n" + ex.Message);
-                this.AppLog.Error(ex);
+                AppLog.Error(ex);
             }
         }
 
-
+        /// <summary>
+        /// Calculate served table and chair in present
+        /// </summary>
         public void initProgressTableChair()
         {
             proTable.Maximum = 0;

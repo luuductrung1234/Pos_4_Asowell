@@ -30,9 +30,9 @@ namespace POS.EmployeeWorkSpace
         private EmployeewsOfCloudPOS _cloudPosUnitofwork;
         private Entities.Table currentTable;
         private Entities.Chair currentChair;
-        private OrderTemp ordertemptable;
+        private OrderTemp orderTempTable;
         private List<Entities.Chair> chairlistcurrenttable;
-        private List<Entities.OrderDetailsTemp> orderdetailstempcurrenttablelist;
+        private List<Entities.OrderDetailsTemp> orderDetailsTempCurrentTableList;
 
         public UcOder()
         {
@@ -54,8 +54,8 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
-            orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
+            orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
+            orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
 
             LoadTableChairData();
             LoadCustomerOwner();
@@ -86,13 +86,13 @@ namespace POS.EmployeeWorkSpace
                     return;
                 }
 
-                ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned == currentTable.TableId).First();
-                orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
+                orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned == currentTable.TableId).First();
+                orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
 
                 // lay ordernotedetails cua ban thu nhat
-                var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
-                var foundchair = chairoftable.SingleOrDefault(x => x.ChairId.Equals(currentChair.ChairId) && x.TableOwned.Equals(currentChair.TableOwned));
-                var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(foundchair.ChairId)).ToList();
+                var chairOfTable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
+                var foundChair = chairOfTable.SingleOrDefault(x => x.ChairId.Equals(currentChair.ChairId) && x.TableOwned.Equals(currentChair.TableOwned));
+                var chairordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(foundChair.ChairId)).ToList();
 
                 // chuyen product_id thanh product name
                 var query = from orderdetails in chairordernotedetails
@@ -113,7 +113,7 @@ namespace POS.EmployeeWorkSpace
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MainWindow.AppLog.Error(ex);
             }
         }
 
@@ -129,7 +129,7 @@ namespace POS.EmployeeWorkSpace
             }
 
             // chuyen product_id thanh product name
-            var query = from orderdetails in orderdetailstempcurrenttablelist
+            var query = from orderdetails in orderDetailsTempCurrentTableList
                         join product in _cloudPosUnitofwork.ProductRepository.Get()
                         on orderdetails.ProductId equals product.ProductId
 
@@ -144,6 +144,43 @@ namespace POS.EmployeeWorkSpace
             loadTotalPrice();
         }
 
+        public void RefreshControlSelectChair()
+        {
+            try
+            {
+                initStatus_RaiseEvent = true;
+
+                if (currentTable == null || currentChair == null)
+                {
+                    initStatus_RaiseEvent = false;
+                    return;
+                }
+
+                // lay ordernotedetails cua ban thu nhat
+                var chairordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
+
+                // chuyen product_id thanh product name
+                var query = from orderdetails in chairordernotedetails
+                    join product in _cloudPosUnitofwork.ProductRepository.Get()
+                        on orderdetails.ProductId equals product.ProductId
+
+                    select new OrderDetails_Product_Joiner
+                    {
+                        OrderDetailsTemp = orderdetails,
+                        Product = product
+                    };
+
+                // binding
+                lvData.ItemsSource = query;
+
+                initStatus_RaiseEvent = false;
+            }
+            catch (Exception ex)
+            {
+                MainWindow.AppLog.Error(ex);
+            }
+        }
+
         ToggleButton curChair;
         private void LoadTableChairData()
         {
@@ -152,7 +189,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            txtDay.Text = ordertemptable.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
+            txtDay.Text = orderTempTable.Ordertime.ToString("dd/MM/yyyy H:mm:ss");
             txtTable.Text = currentTable.TableNumber.ToString();
             wp.Children.Clear();
 
@@ -160,7 +197,7 @@ namespace POS.EmployeeWorkSpace
 
             foreach (Entities.Chair ch in chairlistcurrenttable)
             {
-                var foundedchair = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(ch.ChairId)).ToList();
+                var foundedchair = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(ch.ChairId)).ToList();
                 if (foundedchair.Count != 0)
                 {
                     currentTable.IsOrdered = 1;
@@ -200,10 +237,10 @@ namespace POS.EmployeeWorkSpace
             };
 
             if (((MainWindow)Window.GetWindow(this)).currentTable != null
-                && ordertemptable.CusId != null)
+                && orderTempTable.CusId != null)
             {
                 InitCus_raiseEvent = true;
-                cboCustomers.SelectedValue = ordertemptable.CusId;
+                cboCustomers.SelectedValue = orderTempTable.CusId;
             }
             InitCus_raiseEvent = false;
         }
@@ -220,14 +257,14 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 //((MainWindow) Window.GetWindow(this)).currentTable.TableOrder.CusId = (string) ((sender as ComboBox).SelectedItem as Customer).CusId;
-                ordertemptable.CusId =
+                orderTempTable.CusId =
                     (string)(sender as ComboBox).SelectedValue;
-                ordertemptable.Discount = _cloudPosUnitofwork.CustomerRepository.Get(x => x.CusId.Equals(ordertemptable.CusId))
+                orderTempTable.Discount = _cloudPosUnitofwork.CustomerRepository.Get(x => x.CusId.Equals(orderTempTable.CusId))
                     .FirstOrDefault().Discount;
                 loadTotalPrice();
-                _unitofwork.OrderTempRepository.Update(ordertemptable);
+                _unitofwork.OrderTempRepository.Update(orderTempTable);
                 _unitofwork.Save();
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
             }
         }
 
@@ -275,7 +312,7 @@ namespace POS.EmployeeWorkSpace
                 }
             }
 
-            RefreshControl(_unitofwork, currentTable);
+            RefreshControlSelectChair();
         }
 
         private void ButtonChair_Unchecked(object sender, RoutedEventArgs e)
@@ -385,22 +422,30 @@ namespace POS.EmployeeWorkSpace
                                            };
 
             // calculate totalPriceNonDisc and TotalPrice
-            decimal Total = 0;
+            decimal Svc = 0;
+            decimal Vat = 0;
+            decimal SaleValue = 0;
             decimal TotalWithDiscount = 0;
+            decimal Total = 0;
             foreach (var item in query_item_in_ordertails)
             {
-                Total = (decimal)((float)Total + (float)(item.item_quan * (float)item.item_price));
-                TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
+                Total = (decimal)((float)Total + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
             }
 
-            // tính năng giảm giá cho món có gì đó không ổn nên tốt nhất không cho set discount cho món do đó => Tại vị trí này Total và TotalWithDiscount vẫn bằng nhau 
+            // tính năng giảm giá cho món có gì đó không ổn => hiện tại Total chính là SaleValue
+            SaleValue = Total;
+            Svc = (Total * 5) / 100;
+            Vat = ((Total + (Total * 5) / 100) * 10) / 100;
             Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
-            TotalWithDiscount = (decimal)(((float)Total * (100 - ordertemptable.Discount)) / 100.0);
+            TotalWithDiscount = (decimal)(((float)Total * (100 - orderTempTable.Discount)) / 100.0);
 
 
             txtTotal.Text = string.Format("{0:0.000}", TotalWithDiscount) + " VND";
-            ordertemptable.TotalPrice = (decimal)TotalWithDiscount;
-            ordertemptable.TotalPriceNonDisc = (decimal)Total;
+            orderTempTable.TotalPrice = (decimal)Math.Round(TotalWithDiscount,3);
+            orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total,3);
+            orderTempTable.Svc = Math.Round(Svc,3);
+            orderTempTable.Vat = Math.Round(Vat,3);
+            orderTempTable.SaleValue = Math.Round(SaleValue,3);
         }
 
 
@@ -420,8 +465,8 @@ namespace POS.EmployeeWorkSpace
                     return;
                 }
 
-                orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
-                var ordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
+                orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
+                var ordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
                 DependencyObject dep = (DependencyObject)e.OriginalSource;
 
                 while ((dep != null) && !(dep is ListViewItem))
@@ -466,7 +511,7 @@ namespace POS.EmployeeWorkSpace
 
                         RefreshControl(_unitofwork, currentTable);
 
-                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                         return;
                     }
                 }
@@ -478,7 +523,7 @@ namespace POS.EmployeeWorkSpace
 
                 RefreshControl(_unitofwork, currentTable);
 
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
             }
         }
 
@@ -523,7 +568,7 @@ namespace POS.EmployeeWorkSpace
                     var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
                     var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
                                             && x.TableOwned.Equals(currentChair.TableOwned));
-                    var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(foundchair.ChairId)).ToList();
+                    var chairordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(foundchair.ChairId)).ToList();
 
                     while ((dep != null) && !(dep is ListViewItem))
                     {
@@ -548,7 +593,7 @@ namespace POS.EmployeeWorkSpace
                         var chairtemp = chairordernotedetails[index];
 
                         GiveBackToWareHouseData(chairordernotedetails[index]);
-                        orderdetailstempcurrenttablelist.Remove(chairordernotedetails[index]);
+                        orderDetailsTempCurrentTableList.Remove(chairordernotedetails[index]);
                         chairordernotedetails.RemoveAt(index);
                         _unitofwork.OrderDetailsTempRepository.Delete(chairtemp);
                         _unitofwork.Save();
@@ -558,7 +603,7 @@ namespace POS.EmployeeWorkSpace
                     currentTable.IsOrdered = 0;
                     foreach (Entities.Chair chair in chairoftable)
                     {
-                        var chairorderdetailstemp = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
+                        var chairorderdetailstemp = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
                         if (chairorderdetailstemp.Count != 0)
                         {
                             currentTable.IsOrdered = 1;
@@ -571,7 +616,7 @@ namespace POS.EmployeeWorkSpace
 
                     ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
                     RefreshControl(_unitofwork, currentTable);
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                     break;
                 }
             }
@@ -596,8 +641,8 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
-            var ordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
+            orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
+            var ordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
             DependencyObject dep = (DependencyObject)e.OriginalSource;
 
             while ((dep != null) && !(dep is ListViewItem))
@@ -644,7 +689,7 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.OrderDetailsTempRepository.Update(cho);
                                 _unitofwork.Save();
                                 RefreshControl(_unitofwork, currentTable);
-                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                                 return;
                             }
                         }
@@ -654,7 +699,7 @@ namespace POS.EmployeeWorkSpace
                         _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                         _unitofwork.Save();
                         RefreshControl(_unitofwork, currentTable);
-                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                         return;
                     }
 
@@ -679,7 +724,7 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                                 _unitofwork.Save();
                                 RefreshControl(_unitofwork, currentTable);
-                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                                 return;
                             }
                         }
@@ -699,7 +744,7 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.OrderDetailsTempRepository.Insert(tempdata);
                                 _unitofwork.Save();
                                 RefreshControl(_unitofwork, currentTable);
-                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                                 return;
                             }
                         }
@@ -709,7 +754,7 @@ namespace POS.EmployeeWorkSpace
             else
             {
                 inputnote.ShowDialog();
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
             }
         }
 
@@ -772,7 +817,7 @@ namespace POS.EmployeeWorkSpace
             {
                 // input the rest data
                 OrderNote newOrder = new OrderNote();
-                newOrder.TotalPrice = ordertemptable.TotalPrice;
+                newOrder.TotalPrice = orderTempTable.TotalPrice;
                 InputTheRestOrderInfoDialog inputTheRest = new InputTheRestOrderInfoDialog(newOrder);
                 if (!inputTheRest.MyShowDialog())
                 {
@@ -823,7 +868,7 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.Save();
 
             // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
         }
 
         private void BtnGo_OnClick(object sender, RoutedEventArgs e)
@@ -875,9 +920,9 @@ namespace POS.EmployeeWorkSpace
 
                 List<OrderDetailsTemp> oldOrderDetails = new List<OrderDetailsTemp>();
                 List<OrderDetailsTemp> newOrderDetails = new List<OrderDetailsTemp>();
-                ordertemptable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
-                orderdetailstempcurrenttablelist = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(ordertemptable.OrdertempId)).ToList();
-                foreach (var orderDetails in orderdetailstempcurrenttablelist.ToList())
+                orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
+                orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
+                foreach (var orderDetails in orderDetailsTempCurrentTableList.ToList())
                 {
                     if (orderDetails.IsPrinted == 0)
                     {
@@ -898,7 +943,7 @@ namespace POS.EmployeeWorkSpace
                 foreach (var newDetails in newOrderDetails)
                 {
                     bool isupdate = false;
-                    foreach (var orderDetailsTemp in orderdetailstempcurrenttablelist.Where(x => x.IsPrinted == 1))
+                    foreach (var orderDetailsTemp in orderDetailsTempCurrentTableList.Where(x => x.IsPrinted == 1))
                     {
                         if (newDetails.OrdertempId.Equals(orderDetailsTemp.OrdertempId)
                             && newDetails.ChairId.Equals(orderDetailsTemp.ChairId)
@@ -918,7 +963,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 _unitofwork.Save();
                 RefreshControl(_unitofwork, currentTable);
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
             }
             catch (Exception ex)
             {
@@ -932,7 +977,7 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.Save();
 
             // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
         }
 
         //ToDo: Set the contain back when the order didn't call any more
@@ -960,7 +1005,7 @@ namespace POS.EmployeeWorkSpace
                             ClearTheTable();
 
                             // update employee ID that effect to the OrderNote
-                            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                         }
                     }
                 }
@@ -969,7 +1014,7 @@ namespace POS.EmployeeWorkSpace
                     ClearTheTable();
 
                     // update employee ID that effect to the OrderNote
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                 }
             }
             else
@@ -977,7 +1022,7 @@ namespace POS.EmployeeWorkSpace
                 ClearTheTable();
 
                 // update employee ID that effect to the OrderNote
-                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
             }
         }
 
@@ -993,6 +1038,9 @@ namespace POS.EmployeeWorkSpace
 
 
             // calculate totalPriceNonDisc and TotalPrice
+            decimal Svc = 0;
+            decimal Vat = 0;
+            decimal SaleValue = 0;
             decimal Total = 0;
             decimal TotalWithDiscount = 0;
             foreach (var item in currentChair.OrderDetailsTemps)
@@ -1000,12 +1048,14 @@ namespace POS.EmployeeWorkSpace
                 var prod = _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(item.ProductId)).FirstOrDefault();
                 if (prod == null)
                     return false;
-                Total = (decimal)((float)Total + (float)(item.Quan * (float)prod.Price));
-                TotalWithDiscount = (decimal)((float)TotalWithDiscount + (float)(item.Quan * ((float)prod.Price * ((100 - item.Discount) / 100.0))));
+                Total = (decimal)((float)Total + (float)(item.Quan * ((float)prod.Price * ((100 - item.Discount) / 100.0))));
             }
-            // tính năng giảm giá cho món có gì đó không ổn nên tốt nhất không cho set discount cho món do đó => Tại vị trí này Total và TotalWithDiscount vẫn bằng nhau 
+            // tính năng giảm giá cho món có gì đó không ổn => hiện tại Total chính là SaleValue
+            SaleValue = Total;
+            Svc = (Total * 5) / 100;
+            Vat = ((Total + (Total * 5) / 100) * 10) / 100;
             Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
-            TotalWithDiscount = (decimal)(((float)Total * (100 - ordertemptable.Discount)) / 100.0);
+            TotalWithDiscount = (decimal)(((float)Total * (100 - orderTempTable.Discount)) / 100.0);
 
 
             var currentOrderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId))
@@ -1016,8 +1066,11 @@ namespace POS.EmployeeWorkSpace
                 newOrder.EmpId = currentOrderTemp.EmpId;
                 newOrder.Ordertable = currentTable.TableNumber;
                 newOrder.Ordertime = currentOrderTemp.Ordertime;
-                newOrder.TotalPriceNonDisc = Total;
-                newOrder.TotalPrice = TotalWithDiscount;
+                newOrder.TotalPriceNonDisc = Math.Round(Total,3);
+                newOrder.TotalPrice = Math.Round(TotalWithDiscount,3);
+                newOrder.Svc = Math.Round(Svc,3);
+                newOrder.Vat = Math.Round(Vat,3);
+                newOrder.SaleValue = Math.Round(SaleValue,3);
                 newOrder.Discount = currentOrderTemp.Discount;
                 newOrder.SubEmpId = currentOrderTemp.SubEmpId;
             }
@@ -1069,6 +1122,9 @@ namespace POS.EmployeeWorkSpace
                 newOrder.Ordertime = currentOrderTemp.Ordertime;
                 newOrder.TotalPriceNonDisc = currentOrderTemp.TotalPriceNonDisc;
                 newOrder.TotalPrice = currentOrderTemp.TotalPrice;
+                newOrder.Svc = currentOrderTemp.Svc;
+                newOrder.Vat = currentOrderTemp.Vat;
+                newOrder.SaleValue = currentOrderTemp.SaleValue;
                 newOrder.Discount = currentOrderTemp.Discount;
                 newOrder.SubEmpId = currentOrderTemp.SubEmpId;
             }
@@ -1109,7 +1165,7 @@ namespace POS.EmployeeWorkSpace
             var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).FirstOrDefault();
             if (orderOfTable != null)
             {
-                var ordernotedetails = orderdetailstempcurrenttablelist
+                var ordernotedetails = orderDetailsTempCurrentTableList
                     .Where(x => x.OrdertempId.Equals(orderOfTable.OrdertempId))
                     .ToList();
                 if (ordernotedetails.Count != 0)
@@ -1117,7 +1173,7 @@ namespace POS.EmployeeWorkSpace
                     foreach (var ch in ordernotedetails)
                     {
                         GiveBackToWareHouseData(ch);
-                        orderdetailstempcurrenttablelist.Remove(ch);
+                        orderDetailsTempCurrentTableList.Remove(ch);
                         _unitofwork.OrderDetailsTempRepository.Delete(ch);
                         _unitofwork.Save();
                     }
@@ -1125,16 +1181,16 @@ namespace POS.EmployeeWorkSpace
             }
             _cloudPosUnitofwork.Save();
 
-            ordertemptable.EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId;
-            ordertemptable.CusId = "CUS0000001";
-            ordertemptable.Discount = 0;
-            ordertemptable.TableOwned = curTable.TableId;
-            ordertemptable.Ordertime = DateTime.Now;
-            ordertemptable.TotalPriceNonDisc = 0;
-            ordertemptable.TotalPrice = 0;
-            ordertemptable.CustomerPay = 0;
-            ordertemptable.PayBack = 0;
-            ordertemptable.SubEmpId = "";
+            orderTempTable.EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId;
+            orderTempTable.CusId = "CUS0000001";
+            orderTempTable.Discount = 0;
+            orderTempTable.TableOwned = curTable.TableId;
+            orderTempTable.Ordertime = DateTime.Now;
+            orderTempTable.TotalPriceNonDisc = 0;
+            orderTempTable.TotalPrice = 0;
+            orderTempTable.CustomerPay = 0;
+            orderTempTable.PayBack = 0;
+            orderTempTable.SubEmpId = "";
 
             curTable.IsOrdered = 0;
             curTable.IsPrinted = 0;
@@ -1142,7 +1198,7 @@ namespace POS.EmployeeWorkSpace
             ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
             LoadCustomerOwner();
             RefreshControlAllChair();
-            _unitofwork.OrderTempRepository.Update(ordertemptable);
+            _unitofwork.OrderTempRepository.Update(orderTempTable);
             _unitofwork.Save();
 
             Table b = new Table(_unitofwork, _cloudPosUnitofwork);
@@ -1200,7 +1256,7 @@ namespace POS.EmployeeWorkSpace
                     var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).ToList();
                     var foundchair = chairoftable.SingleOrDefault(x => x.ChairNumber.Equals(currentChair.ChairNumber)
                                             && x.TableOwned.Equals(currentChair.TableOwned));
-                    var chairordernotedetails = orderdetailstempcurrenttablelist.Where(x => x.ChairId == foundchair.ChairId).ToList();
+                    var chairordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId == foundchair.ChairId).ToList();
 
                     if (chairordernotedetails.Count != 0)
                     {
@@ -1215,7 +1271,7 @@ namespace POS.EmployeeWorkSpace
 
                     foreach (Entities.Chair chair in chairoftable)
                     {
-                        var chairorderdetailstemp = orderdetailstempcurrenttablelist.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
+                        var chairorderdetailstemp = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
                         if (chairorderdetailstemp.Count != 0)
                         {
                             currentTable.IsOrdered = 1;
@@ -1228,7 +1284,7 @@ namespace POS.EmployeeWorkSpace
 
                     ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
                     RefreshControl(_unitofwork, currentTable);
-                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, ordertemptable);
+                    checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                     break;
                 }
             }

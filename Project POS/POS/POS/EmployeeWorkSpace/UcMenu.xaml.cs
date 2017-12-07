@@ -124,7 +124,6 @@ namespace POS.EmployeeWorkSpace
                 Product it = (Product)lbSelected.SelectedItem;
 
                 //order for each chair
-                var chairoftable = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(orderingTable.TableId));
 
                 if (orderingChair != null)
                 {

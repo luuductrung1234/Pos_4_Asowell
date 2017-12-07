@@ -108,7 +108,7 @@
 
                     <StackPanel Orientation="Horizontal">
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                Width="70"
+                                Width="60"
                                 Margin="4"
                                 x:Name="BtnGo"
                                 Background="{DynamicResource MaterialDesignChipBackground}"
@@ -118,14 +118,22 @@
                                                      VerticalAlignment="Center" />
                         </Button>
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                Width="70"
-                                Margin="4"
-                                Content="0"
+                                Width="44"
+                                Margin="4,4,0,4"
+                                Content="."
                                 x:Name="BtnZero"
                                 Background="{DynamicResource MaterialDesignDarkBackground}"
                                 Click="ButtonKey_Click" />
                         <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                Width="70"
+                                Width="44"
+                                Margin="2,4,4,4"
+                                Content="0"
+                                x:Name="BtnDot"
+                                Background="{DynamicResource MaterialDesignDarkBackground}"
+                                Click="ButtonKey_Click" />
+                        
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                Width="60"
                                 Margin="4"
                                 x:Name="BtnBackSpace"
                                 Background="{DynamicResource MaterialDesignChipBackground}"

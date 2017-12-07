@@ -139,7 +139,7 @@ namespace POS
                         {
                             Dispatcher.Invoke(() =>
                             {
-                                WareHouseWindow wareHouse = new WareHouseWindow(AppLog);
+                                WareHouseWindow wareHouse = new WareHouseWindow();
                                 wareHouse.Show();
                             });
                         }
@@ -192,7 +192,7 @@ namespace POS
                                     TimePercent = 0
                                 });
 
-                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow(AppLog);
+                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
                                 main.Show();
                             });
                         }
@@ -209,7 +209,7 @@ namespace POS
 
                             Dispatcher.Invoke(() =>
                             {
-                                AdminNavWindow navwindow = new AdminNavWindow(AppLog);
+                                AdminNavWindow navwindow = new AdminNavWindow();
                                 navwindow.Show();
                             });
                         }
@@ -278,7 +278,7 @@ namespace POS
                         {
                             Dispatcher.Invoke(() =>
                             {
-                                WareHouseWindow wareHouse = new WareHouseWindow(AppLog);
+                                WareHouseWindow wareHouse = new WareHouseWindow();
                                 wareHouse.Show();
                             });
                         }
@@ -331,7 +331,7 @@ namespace POS
                                     TimePercent = 0
                                 });
 
-                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow(AppLog);
+                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
                                 main.Show();
                             });
                         }

@@ -40,11 +40,10 @@ namespace POS.AdminWorkSpace
         private HomePage homePage;
         private ProductCreatorPage productCreator;
 
-        private ILog AppLog;
+        private static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public AdminWindow(ILog appLog)
+        public AdminWindow()
         {
-            this.AppLog = appLog;
             InitializeComponent();
             _unitofwork = new AdminwsOfCloudPOS();
 
@@ -86,7 +85,7 @@ namespace POS.AdminWorkSpace
             catch (Exception ex)
             {
                 MessageBox.Show("Something went wrong: \n" + ex.Message);
-                this.AppLog.Error(ex);
+                AppLog.Error(ex);
             }
         }
 
