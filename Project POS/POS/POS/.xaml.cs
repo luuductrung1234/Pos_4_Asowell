@@ -8,6 +8,7 @@ using POS.Repository.DAL;
 using POS.EmployeeWorkSpace;
 using System.Windows.Input;
 using System.Windows.Threading;
+using log4net;
 using POS.BusinessModel;
 using POS.WareHouseWorkSpace;
 
@@ -20,6 +21,8 @@ namespace POS
     {
         internal EmployeewsOfCloudPOS _unitofwork;
         private DispatcherTimer LoadCodeLogin;
+
+        private static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public Login()
         {
@@ -136,7 +139,7 @@ namespace POS
                         {
                             Dispatcher.Invoke(() =>
                             {
-                                WareHouseWindow wareHouse = new WareHouseWindow();
+                                WareHouseWindow wareHouse = new WareHouseWindow(AppLog);
                                 wareHouse.Show();
                             });
                         }
@@ -189,7 +192,7 @@ namespace POS
                                     TimePercent = 0
                                 });
 
-                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
+                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow(AppLog);
                                 main.Show();
                             });
                         }
@@ -206,7 +209,7 @@ namespace POS
 
                             Dispatcher.Invoke(() =>
                             {
-                                AdminNavWindow navwindow = new AdminNavWindow();
+                                AdminNavWindow navwindow = new AdminNavWindow(AppLog);
                                 navwindow.Show();
                             });
                         }
@@ -227,10 +230,10 @@ namespace POS
                 });
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                MessageBox.Show("Something went wrong: \n" + ex.Message);
+                AppLog.Error(ex);
             }
         }
 
@@ -275,7 +278,7 @@ namespace POS
                         {
                             Dispatcher.Invoke(() =>
                             {
-                                WareHouseWindow wareHouse = new WareHouseWindow();
+                                WareHouseWindow wareHouse = new WareHouseWindow(AppLog);
                                 wareHouse.Show();
                             });
                         }
@@ -328,7 +331,7 @@ namespace POS
                                     TimePercent = 0
                                 });
 
-                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow();
+                                EmployeeWorkSpace.MainWindow main = new EmployeeWorkSpace.MainWindow(AppLog);
                                 main.Show();
                             });
                         }
@@ -347,10 +350,10 @@ namespace POS
                 });
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                MessageBox.Show("Something went wrong: \n" + ex.Message);
+                AppLog.Error(ex);
             }
         }
 

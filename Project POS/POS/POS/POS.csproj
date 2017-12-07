@@ -85,6 +85,9 @@
     <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -609,6 +612,9 @@
     </EmbeddedResource>
     <None Include="EF.Reverse.POCO.Core.ttinclude" />
     <None Include="EF.Reverse.POCO.ttinclude" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -623,10 +629,14 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon\icons8_Table_52px.png" />
+    <Resource Include="Icon\icons8_Table_52px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon\icons8_Info_52px.png" />
+    <Resource Include="Icon\icons8_Info_52px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -641,28 +651,72 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon\icons8_Unpin_32px.png" />
-    <Resource Include="Icon\icons8_Pin_32px_9.png" />
-    <Resource Include="Icon\Pencil Drawing_32px.png" />
-    <Resource Include="Icon\Edit_52px.png" />
-    <Resource Include="Icon\icons8_Resize_Horizontal_32px_1.png" />
-    <Resource Include="Icon\icons8_Resize_Vertical_32px_3.png" />
-    <Resource Include="Icon\icons8_Beer_32px.png" />
-    <Resource Include="Icon\icons8_Cocktail_32px_2.png" />
-    <Resource Include="Icon\icons8_Hashtag_32px.png" />
-    <Resource Include="Icon\icons8_Sweet_Potato_32px.png" />
-    <Resource Include="Icon\icons8_Wine_Glass_32px.png" />
-    <Resource Include="Icon\icons8_Employee_50px_2.png" />
-    <Resource Include="Icon\Folder_30px.png" />
-    <Resource Include="Icon\Report Card_32px.png" />
-    <Resource Include="Icon\FAQ_100px.png" />
-    <Resource Include="Icon\Admin_96px.png" />
-    <Resource Include="Icon\Box_104px.png" />
-    <Resource Include="Icon\icons8_French_Fries_32px.png" />
-    <Resource Include="Icon\icons8_Meal_32px.png" />
-    <Resource Include="Icon\icons8_Quesadilla_32px.png" />
-    <Resource Include="Icon\icons8_Checked_Checkbox_32px.png" />
-    <Resource Include="Icon\icons8_Unchecked_Checkbox_32px.png" />
+    <Resource Include="Icon\icons8_Unpin_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Pin_32px_9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\Pencil Drawing_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\Edit_52px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Resize_Horizontal_32px_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Resize_Vertical_32px_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Beer_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Cocktail_32px_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Hashtag_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Sweet_Potato_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Wine_Glass_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Employee_50px_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\Folder_30px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\Report Card_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\FAQ_100px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\Admin_96px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\Box_104px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_French_Fries_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Meal_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Quesadilla_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Checked_Checkbox_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\icons8_Unchecked_Checkbox_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\ComHelper\" />
@@ -687,26 +741,60 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\a86c410efa3e6b690d973f7c5b78444e--rocket-illustration-flat-design.jpg" />
-    <Resource Include="Images\asowell_icon.ico" />
-    <Resource Include="Images\Edit_52px.png" />
-    <Resource Include="Images\logo.png" />
-    <Resource Include="Images\map.png" />
-    <Resource Include="Images\Pencil Drawing_32px.png" />
-    <Resource Include="Images\Search_50px.png" />
-    <Resource Include="Images\softwarepdate.jpg" />
+    <Resource Include="Images\a86c410efa3e6b690d973f7c5b78444e--rocket-illustration-flat-design.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\asowell_icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Edit_52px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\map.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Pencil Drawing_32px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Search_50px.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\softwarepdate.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Products\3CheeseBoard.jpg" />
-    <Resource Include="Images\Products\3DipsBoard.jpg" />
-    <Resource Include="Images\Products\Boconccini_Bruschetta.jpg" />
-    <Resource Include="Images\Products\Chorizo_sausage_rolls.jpg" />
-    <Resource Include="Images\Products\Duck_liver_Pate.jpg" />
-    <Resource Include="Images\Products\freshly-shucked-oysters.jpg" />
-    <Resource Include="Images\Products\italian_Mix_Olives.jpg" />
-    <Resource Include="Images\Products\roasted_garlic_bread.jpg" />
-    <Resource Include="Images\Products\Sweet_Potatoes_fries.jpg" />
-    <Resource Include="Images\Products\warm_Edamame.jpg" />
+    <Resource Include="Images\Products\3DipsBoard.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Products\Boconccini_Bruschetta.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Products\Chorizo_sausage_rolls.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Products\Duck_liver_Pate.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Products\freshly-shucked-oysters.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Products\italian_Mix_Olives.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Products\roasted_garlic_bread.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Products\Sweet_Potatoes_fries.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Products\warm_Edamame.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="asowell_icon.ico" />

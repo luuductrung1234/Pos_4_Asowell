@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using log4net;
 using POS.AdminWorkSpace;
 using POS.WareHouseWorkSpace;
 
@@ -21,8 +22,11 @@ namespace POS
     /// </summary>
     public partial class AdminNavWindow : Window
     {
-        public AdminNavWindow()
+        private ILog AppLog;
+
+        public AdminNavWindow(ILog AppLog)
         {
+            this.AppLog = AppLog;
             InitializeComponent();
         }
 
@@ -30,7 +34,7 @@ namespace POS
 
         private void GotoWareHouseWSButton_OnClick(object sender, RoutedEventArgs e)
         {
-            WareHouseWindow whWindow = new WareHouseWindow();
+            WareHouseWindow whWindow = new WareHouseWindow(AppLog);
             whWindow.Show();
 
             this.Close();
@@ -39,7 +43,7 @@ namespace POS
         private void GotoAdminWSButton_OnClick(object sender, RoutedEventArgs e)
         {
 
-            AdminWindow adminWindow = new AdminWindow();
+            AdminWindow adminWindow = new AdminWindow(AppLog);
             adminWindow.Show();
 
             this.Close();

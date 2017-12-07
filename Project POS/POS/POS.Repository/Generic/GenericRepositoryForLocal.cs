@@ -34,26 +34,33 @@ namespace POS.Repository.Generic
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
-            // Apply the filter expression
-            IQueryable<TEntity> query = (IQueryable<TEntity>)dbSet;
-            if (filter != null)
+            try
             {
-                query = query.Where(filter);
-            }
+                // Apply the filter expression
+                IQueryable<TEntity> query = (IQueryable<TEntity>) dbSet;
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
 
-            // Loading related data (using eager-loading)
-            foreach (var includeProperty in includeProperties.Split(
-                new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
+                // Loading related data (using eager-loading)
+                foreach (var includeProperty in includeProperties.Split(
+                    new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
 
-            // Apply the orderBy expression
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
+                // Apply the orderBy expression
+                if (orderBy != null)
+                {
+                    return orderBy(query).ToList();
+                }
+                return query.ToList();
             }
-            return query.ToList();
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public virtual TEntity GetById(object id)

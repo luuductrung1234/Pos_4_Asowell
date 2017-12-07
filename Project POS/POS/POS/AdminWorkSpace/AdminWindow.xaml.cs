@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using log4net;
 using POS.Helper.PrintHelper;
 
 namespace POS.AdminWorkSpace
@@ -38,44 +39,55 @@ namespace POS.AdminWorkSpace
         private LiveChartReceiptPage liveChartReceipt;
         private HomePage homePage;
         private ProductCreatorPage productCreator;
-        public AdminWindow()
+
+        private ILog AppLog;
+
+        public AdminWindow(ILog appLog)
         {
+            this.AppLog = appLog;
             InitializeComponent();
             _unitofwork = new AdminwsOfCloudPOS();
 
-            var getLoginAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-            curAdmin = _unitofwork.AdminreRepository.Get(x => x.AdId.Equals(getLoginAdmin.AdId)).FirstOrDefault();
-            if (curAdmin == null)
+            try
             {
-                this.Close();
-            }
-            cUser.Content = curAdmin.Name;
+                var getLoginAdmin = App.Current.Properties["AdLogin"] as AdminRe;
+                curAdmin = _unitofwork.AdminreRepository.Get(x => x.AdId.Equals(getLoginAdmin.AdId)).FirstOrDefault();
+                if (curAdmin == null)
+                {
+                    this.Close();
+                }
+                cUser.Content = curAdmin.Name;
 
-            if (curAdmin.AdRole == (int)AdminReRole.SoftwareAd)
+                if (curAdmin.AdRole == (int) AdminReRole.SoftwareAd)
+                {
+                    btnCreateAdmin.Visibility = Visibility.Visible;
+                }
+
+                empListPage = new EmployeeListPage(_unitofwork, curAdmin);
+                salarypage = new SalaryPage(_unitofwork, curAdmin);
+                liveChartReceipt = new LiveChartReceiptPage(_unitofwork);
+                productdetals = new ProductDetailPage(_unitofwork);
+                ctmP = new CustomerPage(_unitofwork);
+                ordernotepage = new OrderNotePage(_unitofwork);
+                receiptnotepage = new ReceiptNotePage(_unitofwork);
+                FoodPage = new statisticsFoodPage(_unitofwork);
+                statisticsWorkingHourPage = new StatisticsWorkingHourPage(_unitofwork);
+                homePage = new HomePage(_unitofwork);
+                productCreator = new ProductCreatorPage(_unitofwork);
+                myframe.Navigate(homePage);
+
+                DispatcherTimer RefreshTimer = new DispatcherTimer();
+                RefreshTimer.Tick += Refresh_Tick;
+                RefreshTimer.Interval = new TimeSpan(0, 2, 0);
+                RefreshTimer.Start();
+
+                Closing += AdminWindow_Closing;
+            }
+            catch (Exception ex)
             {
-                btnCreateAdmin.Visibility = Visibility.Visible;
+                MessageBox.Show("Something went wrong: \n" + ex.Message);
+                this.AppLog.Error(ex);
             }
-
-            empListPage = new EmployeeListPage(_unitofwork, curAdmin);
-            salarypage = new SalaryPage(_unitofwork, curAdmin);
-            liveChartReceipt = new LiveChartReceiptPage(_unitofwork);
-            productdetals = new ProductDetailPage( _unitofwork);
-            ctmP=new CustomerPage(_unitofwork);
-            ordernotepage = new OrderNotePage(_unitofwork);
-            receiptnotepage = new ReceiptNotePage(_unitofwork);
-            FoodPage=new statisticsFoodPage(_unitofwork);
-            statisticsWorkingHourPage=new StatisticsWorkingHourPage(_unitofwork);
-            homePage = new HomePage(_unitofwork);
-            productCreator = new ProductCreatorPage(_unitofwork);
-            myframe.Navigate(homePage);
-
-            DispatcherTimer RefreshTimer = new DispatcherTimer();
-            RefreshTimer.Tick += Refresh_Tick;
-            RefreshTimer.Interval = new TimeSpan(0, 2, 0);
-            RefreshTimer.Start();
-
-            Closing += AdminWindow_Closing;
-            
         }
 
         private void Refresh_Tick(object sender, EventArgs e)

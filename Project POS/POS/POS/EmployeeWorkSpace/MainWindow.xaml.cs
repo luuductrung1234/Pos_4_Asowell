@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Windows.Controls;
+using log4net;
+using log4net.Core;
 using POS.Helper.PrintHelper;
 using Chair = POS.BusinessModel.Chair;
 
@@ -46,8 +48,11 @@ namespace POS.EmployeeWorkSpace
         internal ChangeThemePage chtm;
         internal AllEmployeeLogin ael;
 
-        public MainWindow()
+        private ILog AppLog;
+
+        public MainWindow(ILog appLog)
         {
+            this.AppLog = appLog;
             InitializeComponent();
             currentTable = null;
             emp = App.Current.Properties["EmpLogin"] as Employee;
@@ -107,7 +112,8 @@ namespace POS.EmployeeWorkSpace
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                MessageBox.Show("Something went wrong: \n" + ex.Message);
+                this.AppLog.Error(ex);
             }
         }
 
