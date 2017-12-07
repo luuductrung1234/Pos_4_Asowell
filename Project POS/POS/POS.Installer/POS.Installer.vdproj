@@ -57,6 +57,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_08B35596F7ED4B49B1A7987A74251636"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0EF71EC4263A6EA9E8E61E54C0491E6B"
         "OwnerKey" = "8:_04A480F3334F15D53CFA6A46740EAE2F"
         "MsmSig" = "8:_UNDEFINED"
@@ -669,6 +675,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D2F78EACA35789C18DD0440EC2794141"
+        "OwnerKey" = "8:_BE9EA7C6C06B4EE499F70C8EC5B61A6C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D9946BB8A92C46D1BBA795E506E5C1F5"
         "OwnerKey" = "8:_BE9EA7C6C06B4EE499F70C8EC5B61A6C"
         "MsmSig" = "8:_UNDEFINED"
@@ -761,6 +773,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B3EAFA4D764B8E2895B154FCB67036C4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D2F78EACA35789C18DD0440EC2794141"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1094,6 +1112,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_08B35596F7ED4B49B1A7987A74251636"
+            {
+            "SourcePath" = "8:..\\POS\\log4net.config"
+            "TargetName" = "8:log4net.config"
+            "Tag" = "8:"
+            "Folder" = "8:_1D44D7723B954CDCAD62AD4F03CF4EFD"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0EF71EC4263A6EA9E8E61E54C0491E6B"
@@ -2809,6 +2847,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D2F78EACA35789C18DD0440EC2794141"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D2F78EACA35789C18DD0440EC2794141"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:log4net.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1D44D7723B954CDCAD62AD4F03CF4EFD"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D9946BB8A92C46D1BBA795E506E5C1F5"
             {
             "AssemblyRegister" = "3:1"
@@ -3092,7 +3161,7 @@
             {
             "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:TARGETDIR"
@@ -3282,7 +3351,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Asowel POS"
         "ProductCode" = "8:{EFA9A403-32D3-4EEA-8B69-D0273934F4B5}"
-        "PackageCode" = "8:{3CE22EAE-49E9-4BE2-BC63-4D01705A080E}"
+        "PackageCode" = "8:{0E23BE14-8894-406F-BD8C-2EF5B44BE813}"
         "UpgradeCode" = "8:{EC156FCC-1B52-4BF4-A749-872659781EC0}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
