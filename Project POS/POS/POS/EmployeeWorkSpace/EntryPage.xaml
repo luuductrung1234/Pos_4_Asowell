@@ -7,35 +7,29 @@
       xmlns:Uc="clr-namespace:POS"
       xmlns:employeeWorkSpace="clr-namespace:POS.EmployeeWorkSpace"
       mc:Ignorable="d"
-      d:DesignHeight="300"
-      d:DesignWidth="300"
       Background="{DynamicResource MaterialDesignPaper}"
-      Height="680"
-      Width="1366"
+      Height="610"
+      Width="1024"
       Title="Entry">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4.1*" />
+            <ColumnDefinition Width="2.9*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0"
-              Margin="0,70,0.2,0">
-            <employeeWorkSpace:UcMenu  x:Name="ucMenu"
-                        RenderTransformOrigin="0.488,0.794"
-                        Width="Auto"
-                        Margin="0,-77,10,75" />
+        <Grid Grid.Column="0">
+            <employeeWorkSpace:UcMenu x:Name="ucMenu" HorizontalAlignment="Left"
+                                      VerticalAlignment="Top"
+                                      Width="600"
+                                      Height="600"
+                                      Margin="0,0,10,0"/>
         </Grid>
         <Grid Grid.Column="1">
             <employeeWorkSpace:UcOder x:Name="ucOrder"
-                       Width="450"
-                       Margin="0,0,5.2,80"
-                       Height="595"
-                       VerticalAlignment="Bottom" />
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Top"
+                                      Width="450"
+                                      Height="600"/>
         </Grid>
-
-
-
-
     </Grid>
 </Page>

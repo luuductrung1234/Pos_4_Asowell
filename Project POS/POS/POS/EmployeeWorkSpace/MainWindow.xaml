@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="MainWindow"
         Height="768"
-        Width="1366">
+        Width="1024">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -130,7 +130,8 @@
                         <DockPanel VerticalAlignment="Center"
                                     HorizontalAlignment="Left"
                                     Height="58"
-                                    Width="1356">
+                                   Width="1014"
+                                   Margin="0,-4,-2,-3">
 
                             <Button x:Name="bntDash"
                                     Style="{StaticResource MaterialDesignFlatButton}"

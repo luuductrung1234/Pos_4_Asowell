@@ -8,13 +8,13 @@
       Background="{DynamicResource MaterialDesignPaper}"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="Setting Table Size"
-      Height="660"
-      Width="1366">
+      Height="610"
+      Width="1024">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="1.5*" />
+            <ColumnDefinition Width="0.5*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -158,7 +158,7 @@
                        Text="Printer"
                        FontSize="24"
                        Margin="10" />
-            
+
             <StackPanel Width="360"
                         HorizontalAlignment="Left"
                         Margin="10">
@@ -178,7 +178,7 @@
                              FontSize="18"
                              Margin="0,14"
                              Foreground="White"
-                             TextChanged="TxtReceptionPrinter_OnTextChanged"/>
+                             TextChanged="TxtReceptionPrinter_OnTextChanged" />
                 </StackPanel>
 
                 <StackPanel Height="60"
@@ -197,7 +197,7 @@
                              FontSize="18"
                              Margin="0,14"
                              Foreground="White"
-                             TextChanged="TxtKitPrinter_OnTextChanged"/>
+                             TextChanged="TxtKitPrinter_OnTextChanged" />
                 </StackPanel>
 
                 <StackPanel Height="60"
@@ -216,7 +216,7 @@
                              FontSize="18"
                              Margin="0,14"
                              Foreground="White"
-                             TextChanged="TxtBarPrinter_OnTextChanged"/>
+                             TextChanged="TxtBarPrinter_OnTextChanged" />
                 </StackPanel>
 
                 <StackPanel Height="60"
@@ -228,7 +228,7 @@
                                Width="140" />
                     <CheckBox x:Name="chbShowReviewWin"
                               Checked="ChbShowReviewWin_OnChecked"
-                              Unchecked="ChbShowReviewWin_OnUnchecked"/>
+                              Unchecked="ChbShowReviewWin_OnUnchecked" />
                 </StackPanel>
             </StackPanel>
 
