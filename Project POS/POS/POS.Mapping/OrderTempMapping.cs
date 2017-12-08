@@ -33,6 +33,7 @@ namespace POS.Mapping
             Property(x => x.OrdertempId).HasColumnName(@"ordertemp_id").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.CusId).HasColumnName(@"cus_id").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
             Property(x => x.EmpId).HasColumnName(@"emp_id").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(10);
+            Property(x => x.Pax).HasColumnType(@"Pax").HasColumnType("int").IsRequired();
             Property(x => x.TableOwned).HasColumnName(@"table_owned").HasColumnType("int").IsOptional();
             Property(x => x.Ordertime).HasColumnName(@"ordertime").HasColumnType("datetime").IsRequired();
             Property(x => x.TotalPrice).HasColumnName(@"total_price").HasColumnType("money").IsRequired().HasPrecision(19,4);
