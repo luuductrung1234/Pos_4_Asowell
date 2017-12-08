@@ -17,6 +17,7 @@ using POS.Entities.CustomEntities;
 using POS.Helper.PrintHelper;
 using POS.Repository.DAL;
 using Chair = POS.BusinessModel.Chair;
+using Mode = iTextSharp.text.pdf.qrcode.Mode;
 using Or = OfficeOpenXml.FormulaParsing.Excel.Functions.Logical.Or;
 
 namespace POS.EmployeeWorkSpace
@@ -71,6 +72,7 @@ namespace POS.EmployeeWorkSpace
             orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
 
             LoadTableChairData();
+            txtCusNum.SetBinding(TextBox.TextProperty, orderTempTable.Pax.ToString());
             LoadCustomerOwner();
             RefreshControlAllChair();
         }
@@ -1357,5 +1359,10 @@ namespace POS.EmployeeWorkSpace
 
         }
 
+
+        private void TxtCusNum_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _unitofwork.Save();
+        }
     }
 }

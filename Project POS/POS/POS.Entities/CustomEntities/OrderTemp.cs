@@ -14,5 +14,6 @@ namespace POS.Entities
         public decimal Vat { get; set; }    // Vat
         public string SubEmpId { get; set; }    // subEmp_id
         public int Discount { get; set; }       // discount
+        public int Pax { get; set; }        // Pax
     }
 }

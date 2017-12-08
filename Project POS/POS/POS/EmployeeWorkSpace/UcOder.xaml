@@ -99,7 +99,8 @@
                                      Width="130"
                                      FontSize="14"
                                      Margin="17,0,0,0"
-                                     PreviewTextInput="NumberOnly_PreviewTextInput" />
+                                     PreviewTextInput="NumberOnly_PreviewTextInput"
+                                     TextChanged="TxtCusNum_OnTextChanged"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
                                     Margin="0,5,0,0">
