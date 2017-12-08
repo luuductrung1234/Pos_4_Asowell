@@ -57,43 +57,78 @@ namespace POS.Repository.Generic
                 }
                 return query.ToList();
             }
-            catch (Exception ex)
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
             {
-                throw;
+                return Get(filter, orderBy, includeProperties);
             }
         }
 
         public virtual TEntity GetById(object id)
         {
-            return (TEntity)dbSet.Find(id);
+            try
+            {
+                return (TEntity) dbSet.Find(id);
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                return GetById(id);
+            }
         }
 
         public virtual void Insert(TEntity entity)
         {
-            dbSet.Add(AutoGeneteId_DBAsowell(entity));
-            //dbSet.Add(entity);
+            try
+            {
+                dbSet.Add(AutoGeneteId_DBAsowell(entity));
+                //dbSet.Add(entity);
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                Insert(entity);
+            }
         }
 
         public virtual void Delete(object id)
         {
-            TEntity entityToDelete = (TEntity)dbSet.Find(id);
-            dbSet.Remove(entityToDelete);
+            try
+            {
+                TEntity entityToDelete = (TEntity) dbSet.Find(id);
+                dbSet.Remove(entityToDelete);
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                Delete(id);
+            }
         }
 
         public virtual void Delete(TEntity entityTODelete)
         {
-            if (context.Entry(entityTODelete).State == EntityState.Deleted)
+            try
             {
-                dbSet.Attach(entityTODelete);
+                if (context.Entry(entityTODelete).State == EntityState.Deleted)
+                {
+                    dbSet.Attach(entityTODelete);
+                }
+                dbSet.Remove(entityTODelete);
             }
-            dbSet.Remove(entityTODelete);
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                Delete(entityTODelete);
+            }
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            //var state = context.Entry(entityToUpdate);
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            try
+            {
+                //var state = context.Entry(entityToUpdate);
+                dbSet.Attach(entityToUpdate);
+                context.Entry(entityToUpdate).State = EntityState.Modified;
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                Update(entityToUpdate);
+            }
         }
 
         private static int ID_SIZE_DBASOWELL = 10;

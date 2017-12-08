@@ -98,7 +98,14 @@ namespace POS.Repository.Generic
 
         public virtual TEntity GetById(object id)
         {
-            return (TEntity)dbSet.Find(id);
+            try
+            {
+                return (TEntity) dbSet.Find(id);
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                return GetById(id);
+            }
         }
 
         public virtual void Insert(TEntity entity)
