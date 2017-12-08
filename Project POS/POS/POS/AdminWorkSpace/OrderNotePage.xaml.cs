@@ -94,13 +94,13 @@ namespace POS.AdminWorkSpace
                     lvOrderNoteDetails.Items.Clear();
                     lvOrderNoteDetails.ItemsSource = od;
                 }
-            }
-            else
-            {
-                lvOrderNote.Items.Clear();
-                lvOrderNote.ItemsSource = _ordernotelist;
-                lvOrderNoteDetails.Items.Clear();
-                lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
+                else
+                {
+                    lvOrderNote.Items.Clear();
+                    lvOrderNote.ItemsSource = _ordernotelist;
+                    lvOrderNoteDetails.Items.Clear();
+                    lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
+                }
             }
         }
 
