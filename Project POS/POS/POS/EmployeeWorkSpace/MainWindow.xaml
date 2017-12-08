@@ -57,6 +57,21 @@
                                      Content="Theme"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="lbiChangeTheme_PreviewMouseLeftButtonUp" />
+                        <ListBoxItem x:Name="lbiFireStater"
+                                     Content="Fire Stater"
+                                     Foreground="Red"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="LbiFireStater_OnPreviewMouseLeftButtonUp"/>
+                        <ListBoxItem x:Name="lbiFireMain"
+                                     Content="Fire Main"
+                                     Foreground="Red"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="LbiFireMain_OnPreviewMouseLeftButtonUp" />
+                        <ListBoxItem x:Name="lbiFireDessert"
+                                     Content="Fire Dessert"
+                                     Foreground="Red"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="LbiFireDessert_OnPreviewMouseLeftButtonUp" />
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>

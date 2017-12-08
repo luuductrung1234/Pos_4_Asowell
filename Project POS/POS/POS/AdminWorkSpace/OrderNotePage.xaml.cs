@@ -33,13 +33,12 @@ namespace POS.AdminWorkSpace
             lvOrderNoteDetails.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(includeProperties: "Product");
 
             this.Loaded += OrderNotePage_Loaded;
-
-            initData();
         }
 
         private void OrderNotePage_Loaded(object sender, RoutedEventArgs e)
         {
             _proList = _unitofwork.ProductRepository.Get(x => x.Deleted == 0).ToList();
+            initData();
         }
 
         private void initData()

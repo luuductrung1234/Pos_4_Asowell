@@ -278,8 +278,8 @@ namespace POS.EmployeeWorkSpace
             var merged = App.Current.Properties["TableMerged"] as Entities.Table;
             if(merged.ChairAmount < (first.ChairAmount + second.ChairAmount))
             {
-                //MessageBoxResult mess = MessageBox.Show("Table " + merged.TableNumber + " didn't have enough chair to merge! Do you want to add chair automatically?", "Warning!", MessageBoxButton.YesNo);
-                //if(mess == MessageBoxResult.Yes)
+                //MessageBoxResult Mess = MessageBox.Show("Table " + merged.TableNumber + " didn't have enough chair to merge! Do you want to add chair automatically?", "Warning!", MessageBoxButton.YesNo);
+                //if(Mess == MessageBoxResult.Yes)
                 //{
                 //    for(int i = merged.ChairAmount; i < (first.ChairAmount + second.ChairAmount); i++)
                 //    {

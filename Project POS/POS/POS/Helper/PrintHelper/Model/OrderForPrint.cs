@@ -16,6 +16,7 @@ namespace POS.Helper.PrintHelper.Model
         public string Casher { get; set; }
         public string Customer { get; set; }
         public int Table { get; set; }
+        public int Pax { get; set; }
         public DateTime Date { get; set; }
         public decimal TotalPriceNonDisc { get; set; }
         public decimal TotalPrice { get; set; }
@@ -48,6 +49,7 @@ namespace POS.Helper.PrintHelper.Model
             Casher = targetOrder.EmpId;
             Customer = targetOrder.CusId;
             Table = targetTable.TableNumber;
+            Pax = targetOrder.Pax;
             Date = targetOrder.Ordertime;
             TotalPriceNonDisc = targetOrder.TotalPriceNonDisc;
             TotalPrice = targetOrder.TotalPrice;
@@ -65,6 +67,7 @@ namespace POS.Helper.PrintHelper.Model
             No = targetOrder.OrdernoteId;
             Casher = targetOrder.EmpId;
             Customer = targetOrder.CusId;
+            Pax = targetOrder.Pax;
             Table = targetOrder.Ordertable;
             Date = targetOrder.Ordertime;
             TotalPriceNonDisc = targetOrder.TotalPriceNonDisc;

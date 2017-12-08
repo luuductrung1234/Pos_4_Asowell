@@ -3,20 +3,13 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using POS.BusinessModel;
-using POS.Context;
 using POS.Entities;
-using POS.Repository;
 using POS.Repository.DAL;
-using POS.Repository.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using log4net;
-using log4net.Core;
 using POS.Helper.PrintHelper;
-using Chair = POS.BusinessModel.Chair;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -406,5 +399,40 @@ namespace POS.EmployeeWorkSpace
             printer.DoPrint();
         }
 
+        private void LbiFireDessert_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (currentTable == null)
+            {
+                MessageBox.Show("There is no table to send fire!");
+                return;
+            }
+                
+            var printer = new DoPrintHelper(_unitofwork, CloudPosUnitofwork, DoPrintHelper.Fire_Dessert, currentTable);
+            printer.DoPrint();
+        }
+
+        private void LbiFireStater_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (currentTable == null)
+            {
+                MessageBox.Show("There is no table to send fire!");
+                return;
+            }
+
+            var printer = new DoPrintHelper(_unitofwork, CloudPosUnitofwork, DoPrintHelper.Fire_Stater, currentTable);
+            printer.DoPrint();
+        }
+
+        private void LbiFireMain_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (currentTable == null)
+            {
+                MessageBox.Show("There is no table to send fire!");
+                return;
+            }
+
+            var printer = new DoPrintHelper(_unitofwork, CloudPosUnitofwork, DoPrintHelper.Fire_Main, currentTable);
+            printer.DoPrint();
+        }
     }
 }

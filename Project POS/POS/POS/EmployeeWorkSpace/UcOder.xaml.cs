@@ -3,22 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using NPOI.SS.Formula.Functions;
-using POS.BusinessModel;
 using POS.Entities;
-using POS.Entities.CustomEntities;
 using POS.Helper.PrintHelper;
 using POS.Repository.DAL;
-using Chair = POS.BusinessModel.Chair;
-using Mode = iTextSharp.text.pdf.qrcode.Mode;
-using Or = OfficeOpenXml.FormulaParsing.Excel.Functions.Logical.Or;
 
 namespace POS.EmployeeWorkSpace
 {
@@ -62,7 +54,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            if(currentTable != null)
+            if (currentTable != null)
             {
                 InitCus_raiseEvent = false;
                 initStatus_RaiseEvent = false;
@@ -72,7 +64,7 @@ namespace POS.EmployeeWorkSpace
             orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
 
             LoadTableChairData();
-            txtCusNum.SetBinding(TextBox.TextProperty, orderTempTable.Pax.ToString());
+            txtCusNum.Text = orderTempTable.Pax.ToString();
             LoadCustomerOwner();
             RefreshControlAllChair();
         }
@@ -176,14 +168,14 @@ namespace POS.EmployeeWorkSpace
 
                 // chuyen product_id thanh product name
                 var query = from orderdetails in chairordernotedetails
-                    join product in _cloudPosUnitofwork.ProductRepository.Get()
-                        on orderdetails.ProductId equals product.ProductId
+                            join product in _cloudPosUnitofwork.ProductRepository.Get()
+                                on orderdetails.ProductId equals product.ProductId
 
-                    select new OrderDetails_Product_Joiner
-                    {
-                        OrderDetailsTemp = orderdetails,
-                        Product = product
-                    };
+                            select new OrderDetails_Product_Joiner
+                            {
+                                OrderDetailsTemp = orderdetails,
+                                Product = product
+                            };
 
                 // binding
                 lvData.ItemsSource = query;
@@ -464,11 +456,11 @@ namespace POS.EmployeeWorkSpace
 
 
             txtTotal.Text = string.Format("{0:0.000}", TotalWithDiscount) + " VND";
-            orderTempTable.TotalPrice = (decimal)Math.Round(TotalWithDiscount,3);
-            orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total,3);
-            orderTempTable.Svc = Math.Round(Svc,3);
-            orderTempTable.Vat = Math.Round(Vat,3);
-            orderTempTable.SaleValue = Math.Round(SaleValue,3);
+            orderTempTable.TotalPrice = (decimal)Math.Round(TotalWithDiscount, 3);
+            orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
+            orderTempTable.Svc = Math.Round(Svc, 3);
+            orderTempTable.Vat = Math.Round(Vat, 3);
+            orderTempTable.SaleValue = Math.Round(SaleValue, 3);
         }
 
 
@@ -687,7 +679,7 @@ namespace POS.EmployeeWorkSpace
             {
                 if (inputnote.ShowDialog() == true)
                 {
-                    if(ordernotedetails[index].Note.Equals(inputnote.Note.ToLower()))
+                    if (ordernotedetails[index].Note.Equals(inputnote.Note.ToLower()))
                     {
                         return;
                     }
@@ -1086,13 +1078,14 @@ namespace POS.EmployeeWorkSpace
             {
                 newOrder.CusId = currentOrderTemp.CusId;
                 newOrder.EmpId = currentOrderTemp.EmpId;
+                newOrder.Pax = 1;
                 newOrder.Ordertable = currentTable.TableNumber;
                 newOrder.Ordertime = currentOrderTemp.Ordertime;
-                newOrder.TotalPriceNonDisc = Math.Round(Total,3);
-                newOrder.TotalPrice = Math.Round(TotalWithDiscount,3);
-                newOrder.Svc = Math.Round(Svc,3);
-                newOrder.Vat = Math.Round(Vat,3);
-                newOrder.SaleValue = Math.Round(SaleValue,3);
+                newOrder.TotalPriceNonDisc = Math.Round(Total, 3);
+                newOrder.TotalPrice = Math.Round(TotalWithDiscount, 3);
+                newOrder.Svc = Math.Round(Svc, 3);
+                newOrder.Vat = Math.Round(Vat, 3);
+                newOrder.SaleValue = Math.Round(SaleValue, 3);
                 newOrder.Discount = currentOrderTemp.Discount;
                 newOrder.SubEmpId = currentOrderTemp.SubEmpId;
             }
@@ -1140,6 +1133,7 @@ namespace POS.EmployeeWorkSpace
             {
                 newOrder.CusId = currentOrderTemp.CusId;
                 newOrder.EmpId = currentOrderTemp.EmpId;
+                newOrder.Pax = currentOrderTemp.Pax;
                 newOrder.Ordertable = currentTable.TableNumber;
                 newOrder.Ordertime = currentOrderTemp.Ordertime;
                 newOrder.TotalPriceNonDisc = currentOrderTemp.TotalPriceNonDisc;
@@ -1240,7 +1234,7 @@ namespace POS.EmployeeWorkSpace
                 foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
                 {
                     var quan = prodDetails.Quan;
-                    var ingd = 
+                    var ingd =
                         _cloudPosUnitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId)).FirstOrDefault();
                     if (ingd == null)
                         return;
@@ -1251,7 +1245,7 @@ namespace POS.EmployeeWorkSpace
                     wareHouse.Contain += quan;
                 }
             }
-            
+
         }
 
         private void DeleteChairOrderDetails()
@@ -1362,6 +1356,16 @@ namespace POS.EmployeeWorkSpace
 
         private void TxtCusNum_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            if (currentTable == null)
+                return;
+            TextBox txtCusnum = (sender as TextBox);
+            if (string.IsNullOrEmpty(txtCusnum.Text))
+                orderTempTable.Pax = 0;
+            else
+                orderTempTable.Pax = int.Parse(txtCusnum.Text);
+
+            // update employee ID that effect to the OrderNote
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
             _unitofwork.Save();
         }
     }

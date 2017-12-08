@@ -26,6 +26,9 @@ namespace POS.Helper.PrintHelper
         public static readonly int Bar_Printing = 3;
         public static readonly int Eod_Printing = 4;
         public static readonly int Receipt_Printing = 5;
+        public static readonly int Fire_Stater = 6;
+        public static readonly int Fire_Main = 7;
+        public static readonly int Fire_Dessert = 8;
 
         private readonly EmployeewsOfLocalPOS _unitofwork;
         private readonly EmployeewsOfCloudPOS _cloudPosUnitofwork;
@@ -231,6 +234,42 @@ namespace POS.Helper.PrintHelper
                     printDlg.PrintQueue = new PrintQueue(new PrintServer(), _receptionPrinter);
 
                 ph = new EndOfDayPrintHelper(_cloudPosUnitofwork);
+            }
+
+            if (type == Fire_Stater)
+            {
+                if (!string.IsNullOrEmpty(_kitchentPrinter))
+                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _kitchentPrinter);
+
+                ph = new FirePrintHelper()
+                {
+                    TableNumer = curTable.TableNumber,
+                    Mess = "STARTER FIRE!"
+                };
+            }
+
+            if (type == Fire_Main)
+            {
+                if (!string.IsNullOrEmpty(_kitchentPrinter))
+                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _kitchentPrinter);
+
+                ph = new FirePrintHelper()
+                {
+                    TableNumer = curTable.TableNumber,
+                    Mess = "MAIN FIRE!"
+                };
+            }
+
+            if (type == Fire_Dessert)
+            {
+                if (!string.IsNullOrEmpty(_kitchentPrinter))
+                    printDlg.PrintQueue = new PrintQueue(new PrintServer(), _kitchentPrinter);
+
+                ph = new FirePrintHelper()
+                {
+                    TableNumer = curTable.TableNumber,
+                    Mess = "DESSERT FIRE!"
+                };
             }
         }
     }
