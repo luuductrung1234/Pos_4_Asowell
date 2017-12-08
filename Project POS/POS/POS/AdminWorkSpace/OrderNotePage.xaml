@@ -62,14 +62,18 @@
                     <Border MaxHeight="30"
                             CornerRadius="3">
                         <StackPanel Orientation="Horizontal"
-                                    Width="auto"
+                                    Width="376"
                                     Height="auto">
-                            <ComboBox Foreground="Black"
+                            <ComboBox x:Name="cboProduct"
+                                      Foreground="Black"
                                       Background="White"
-                                      x:Name="cboProduct"
                                       Width="135"
                                       Margin="0,0,20,0"
-                                      ToolTip="Product"></ComboBox>
+                                      ToolTip="Filter by Product" />
+                            <DatePicker x:Name="pickOrderDate"
+                                        ToolTip="Filter by Order Date"
+                                        SelectedDateChanged="pickOrderDate_SelectedDateChanged" />
+
                         </StackPanel>
                     </Border>
                     <Button x:Name="BtnOverViewReport"

@@ -256,12 +256,12 @@ namespace POS.EmployeeWorkSpace
 
         private void btnStartWorking_Click(object sender, RoutedEventArgs e)
         {
-            if(App.Current.Properties["AdLogin"] != null)
+            if (App.Current.Properties["AdLogin"] != null)
             {
                 return;
             }
 
-            if(App.Current.Properties["CurrentEmpWorking"] != null)
+            if (App.Current.Properties["CurrentEmpWorking"] != null)
             {
                 MessageBox.Show("It's have some employee on working! Please wait!");
                 return;
@@ -273,16 +273,16 @@ namespace POS.EmployeeWorkSpace
 
         private void btnEndWorking_Click(object sender, RoutedEventArgs e)
         {
-            if(App.Current.Properties["AdLogin"] != null)
+            //check admin
+            if (App.Current.Properties["AdLogin"] != null)
             {
                 App.Current.Properties["AdLogin"] = null;
 
-                if(App.Current.Properties["CurrentEmpWorking"] != null)
+                if (App.Current.Properties["CurrentEmpWorking"] != null)
                 {
                     cUser.Content = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList).Emp.Username;
                 }
-
-                if (App.Current.Properties["CurrentEmpWorking"] == null)
+                else if (App.Current.Properties["CurrentEmpWorking"] == null)
                 {
                     cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
                 }
@@ -290,17 +290,26 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
+            //check employee
             if (App.Current.Properties["CurrentEmpWorking"] == null)
             {
                 cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
-                return;
+            }
+            else if (App.Current.Properties["CurrentEmpWorking"] != null)
+            {
+                App.Current.Properties["CurrentEmpWorking"] = null;
+                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
             }
 
-            if(App.Current.Properties["CurrentEmpWorking"] != null)
+            if(bntEntry.IsEnabled == false)
             {
-                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
-                App.Current.Properties["CurrentEmpWorking"] = null;
+                myFrame.Navigate(b);
+                bntTable.IsEnabled = false;
+                bntDash.IsEnabled = true;
+                bntEntry.IsEnabled = true;
             }
+
+            currentTable = null;
         }
 
         private void btnOtherEmp_Click(object sender, RoutedEventArgs e)
@@ -335,15 +344,17 @@ namespace POS.EmployeeWorkSpace
             AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudPosUnitofwork, cUser, 3);
             ael.ShowDialog();
 
-            if(App.Current.Properties["CurrentEmpWorking"] == null)
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
             {
-                if(en.IsEnabled == true)
+                if (en.IsEnabled == false)
                 {
                     myFrame.Navigate(b);
                     bntTable.IsEnabled = false;
                     bntDash.IsEnabled = true;
                     bntEntry.IsEnabled = true;
                 }
+
+                currentTable = null;
             }
 
             //WorkingHistory wh = App.Current.Properties["EmpWH"] as WorkingHistory;
@@ -394,6 +405,6 @@ namespace POS.EmployeeWorkSpace
             var printer = new DoPrintHelper(_unitofwork, CloudPosUnitofwork, DoPrintHelper.Eod_Printing);
             printer.DoPrint();
         }
-        
+
     }
 }
