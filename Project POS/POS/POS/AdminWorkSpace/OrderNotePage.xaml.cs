@@ -25,21 +25,24 @@ namespace POS.AdminWorkSpace
     {
         AdminwsOfCloudPOS _unitofwork;
         List<Product> _proList;
+        List<OrderNote> _ordernotelist;
+        List<OrderNoteDetail> _ordernotedetailslist;
         public OrderNotePage(AdminwsOfCloudPOS unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
-            lvOrderNote.ItemsSource = _unitofwork.OrderRepository.Get(includeProperties: "Employee,Customer");
-            lvOrderNoteDetails.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(includeProperties: "Product");
+            _ordernotelist = _unitofwork.OrderRepository.Get(includeProperties: "Employee,Customer").ToList();
+            lvOrderNote.ItemsSource = _ordernotelist;
+            _ordernotedetailslist = _unitofwork.OrderNoteDetailsRepository.Get(includeProperties: "Product").ToList();
+            lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
 
             this.Loaded += OrderNotePage_Loaded;
-
-            initData();
         }
 
         private void OrderNotePage_Loaded(object sender, RoutedEventArgs e)
         {
             _proList = _unitofwork.ProductRepository.Get(x => x.Deleted == 0).ToList();
+            initData();
         }
 
         private void initData()
@@ -47,7 +50,6 @@ namespace POS.AdminWorkSpace
             isRaiseEvent = false;
             List<dynamic> prol = new List<dynamic>();
             prol.Add(new { Id = "--", Name = "--" });
-            cboProduct.Items.Add("--");
             foreach (var p in _proList)
             {
                 prol.Add(new { Id = p.ProductId, Name = p.Name });
@@ -57,7 +59,6 @@ namespace POS.AdminWorkSpace
             cboProduct.SelectedValuePath = "Id";
             cboProduct.DisplayMemberPath = "Name";
             cboProduct.SelectedValue = "--";
-
             isRaiseEvent = true;
         }
 
@@ -68,11 +69,38 @@ namespace POS.AdminWorkSpace
         }
 
         bool isRaiseEvent = true;
-        private void cboPrduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cboProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isRaiseEvent)
             {
+                ComboBox cbopro = sender as ComboBox;
+                string proid = cbopro.SelectedValue.ToString();
+                if (!proid.Equals("--"))
+                {
+                    var od = _ordernotedetailslist.Where(x => x.ProductId.Equals(proid)).ToList();
+                    var odd = od.GroupBy(x => x.OrdernoteId).Select(y => y.ToList()).ToList();
+                    List<OrderNote> newlist = new List<OrderNote>();
+                    foreach (var i in odd)
+                    {
+                        foreach (var j in i)
+                        {
+                            newlist.Add(_ordernotelist.Where(x => x.OrdernoteId.Equals(j.OrdernoteId)).FirstOrDefault());
+                            break;
+                        }
+                    }
 
+                    lvOrderNote.Items.Clear();
+                    lvOrderNote.ItemsSource = newlist;
+                    lvOrderNoteDetails.Items.Clear();
+                    lvOrderNoteDetails.ItemsSource = od;
+                }
+            }
+            else
+            {
+                lvOrderNote.Items.Clear();
+                lvOrderNote.ItemsSource = _ordernotelist;
+                lvOrderNoteDetails.Items.Clear();
+                lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
             }
         }
 
@@ -101,6 +129,6 @@ namespace POS.AdminWorkSpace
             var optionDialog = new ReportOptionDialog(new OrderNoteReport(), _unitofwork);
             optionDialog.Show();
         }
-
+        
     }
 }

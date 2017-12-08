@@ -69,7 +69,8 @@
                                       Background="White"
                                       Width="135"
                                       Margin="0,0,20,0"
-                                      ToolTip="Filter by Product" />
+                                      ToolTip="Filter by Product"
+                                      SelectionChanged="cboProduct_SelectionChanged"/>
                             <DatePicker x:Name="pickOrderDate"
                                         ToolTip="Filter by Order Date"
                                         SelectedDateChanged="pickOrderDate_SelectedDateChanged" />
