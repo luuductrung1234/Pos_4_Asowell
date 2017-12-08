@@ -24,12 +24,41 @@ namespace POS.AdminWorkSpace
     public partial class OrderNotePage : Page
     {
         AdminwsOfCloudPOS _unitofwork;
+        List<Product> _proList;
         public OrderNotePage(AdminwsOfCloudPOS unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
-            lvOrderNote.ItemsSource = unitofwork.OrderRepository.Get(includeProperties: "Employee,Customer");
-            lvOrderNoteDetails.ItemsSource = unitofwork.OrderNoteDetailsRepository.Get(includeProperties: "Product");
+            lvOrderNote.ItemsSource = _unitofwork.OrderRepository.Get(includeProperties: "Employee,Customer");
+            lvOrderNoteDetails.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(includeProperties: "Product");
+
+            this.Loaded += OrderNotePage_Loaded;
+
+            initData();
+        }
+
+        private void OrderNotePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            _proList = _unitofwork.ProductRepository.Get(x => x.Deleted == 0).ToList();
+        }
+
+        private void initData()
+        {
+            isRaiseEvent = false;
+            List<dynamic> prol = new List<dynamic>();
+            prol.Add(new { Id = "--", Name = "--" });
+            cboProduct.Items.Add("--");
+            foreach (var p in _proList)
+            {
+                prol.Add(new { Id = p.ProductId, Name = p.Name });
+            }
+
+            cboProduct.ItemsSource = prol;
+            cboProduct.SelectedValuePath = "Id";
+            cboProduct.DisplayMemberPath = "Name";
+            cboProduct.SelectedValue = "--";
+
+            isRaiseEvent = true;
         }
 
         private void lvOrderNote_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -38,9 +67,13 @@ namespace POS.AdminWorkSpace
             lvOrderNoteDetails.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(c => c.OrdernoteId.Equals(odn.OrdernoteId));
         }
 
+        bool isRaiseEvent = true;
         private void cboPrduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (isRaiseEvent)
+            {
 
+            }
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -58,10 +91,16 @@ namespace POS.AdminWorkSpace
 
         }
 
+        private void pickOrderDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
         {
             var optionDialog = new ReportOptionDialog(new OrderNoteReport(), _unitofwork);
             optionDialog.Show();
         }
+
     }
 }

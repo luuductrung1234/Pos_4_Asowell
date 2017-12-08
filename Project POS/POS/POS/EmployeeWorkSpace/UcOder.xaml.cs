@@ -51,7 +51,20 @@ namespace POS.EmployeeWorkSpace
 
             if (currentTable == null)
             {
+                InitCus_raiseEvent = true;
+                initStatus_RaiseEvent = true;
+                txtDay.Text = "";
+                txtTable.Text = "";
+                txtTotal.Text = "";
+                wp.Children.Clear();
+                lvData.ItemsSource = new List<OrderDetails_Product_Joiner>();
                 return;
+            }
+
+            if(currentTable != null)
+            {
+                InitCus_raiseEvent = false;
+                initStatus_RaiseEvent = false;
             }
 
             orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
@@ -635,12 +648,6 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            if (currentTable.IsPrinted == 1)
-            {
-                MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
-                return;
-            }
-
             orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
             var ordernotedetails = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(currentChair.ChairId)).ToList();
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -670,6 +677,11 @@ namespace POS.EmployeeWorkSpace
             {
                 if (inputnote.ShowDialog() == true)
                 {
+                    if(ordernotedetails[index].Note.Equals(inputnote.Note.ToLower()))
+                    {
+                        return;
+                    }
+
                     tempdata.Note = inputnote.Note.ToLower();
 
                     if (ordernotedetails[index].Quan == 1)
