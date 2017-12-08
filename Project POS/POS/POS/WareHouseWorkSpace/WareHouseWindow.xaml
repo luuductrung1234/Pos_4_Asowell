@@ -39,12 +39,18 @@
                     <ListBox x:Name="DemoItemsListBox"
                              Margin="0 16 0 16"
                              SelectedIndex="0">
-                        <ListBoxItem x:Name="InputReceipt" Content="Input Receipt" PreviewMouseLeftButtonUp="InputReceipt_PreviewMouseLeftButtonUp" Foreground="White" />
+                        <ListBoxItem x:Name="InputReceipt" 
+                                     Content="Input Receipt"
+                                     FontWeight="Bold"
+                                     PreviewMouseLeftButtonUp="InputReceipt_PreviewMouseLeftButtonUp" 
+                                     Foreground="White" />
                         <ListBoxItem x:Name="ViewReceipt"
                                      Content="View Receipt"
+                                     FontWeight="Bold"
                                      PreviewMouseLeftButtonUp="ViewReceipt_PreviewMouseLeftButtonUp" Foreground="White" />
                         <ListBoxItem x:Name="ViewIngredient"
                                      Content="View Ingredient"
+                                     FontWeight="Bold"
                                      PreviewMouseLeftButtonUp="ViewIngredient_OnPreviewMouseLeftButtonUp"
                                      Foreground="White" />
                     </ListBox>
