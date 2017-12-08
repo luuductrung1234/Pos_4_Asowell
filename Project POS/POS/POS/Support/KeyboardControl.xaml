@@ -16,9 +16,10 @@
                         Height="196">
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource {x:Type TextBox}}"
-                             Width="200"
+                             Width="190"
                              Foreground="Coral"
                              FontSize="14"
+                             Margin="5,0,0,0"
                              FontWeight="Bold"
                              x:Name="TxtInputValue" 
                              TextChanged="TxtInputValue_OnTextChanged"/>

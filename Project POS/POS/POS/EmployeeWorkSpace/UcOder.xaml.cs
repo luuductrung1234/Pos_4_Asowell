@@ -268,6 +268,14 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+        private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Text))
+            {
+                e.Handled = !Char.IsNumber(e.Text[0]);
+            }
+        }
+
         private void ButtonChair_Checked(object sender, RoutedEventArgs e)
         {
             //int ii = 0;

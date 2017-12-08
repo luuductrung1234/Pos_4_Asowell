@@ -17,17 +17,20 @@
                            FontWeight="Bold"
                            Margin="0,0,5,0"
                            Text="Order Details"></TextBlock>
-
+                <materialDesign:PackIcon
+                    HorizontalAlignment="Right"
+                    Kind="EmoticonHappy"/>
             </Grid>
         </GroupBox.Header>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="132*" />
+                <RowDefinition Height="352*" />
+                <RowDefinition Height="61*" />
             </Grid.RowDefinitions>
             <Grid VerticalAlignment="Top"
-                  Grid.Row="0">
+                  Grid.Row="0"
+                  Height="128">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -70,7 +73,8 @@
                                 </ComboBox.Background>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel  Orientation="Horizontal">
+                        <StackPanel  Orientation="Horizontal"
+                                     Margin="0,5,0,0">
                             <TextBlock FontFamily="Segoe WP Black"
                                        Text="Table:"
                                        Foreground="Black"
@@ -83,9 +87,27 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontFamily="Segoe WP Black"
+                                       Text="Pax:"
+                                       VerticalAlignment="Center"
+                                       Foreground="Black"
+                                       Margin="2"
+                                       Width="62" />
+                            <TextBox FontFamily="Segoe WP Black"
+                                     x:Name="txtCusNum"
+                                     Foreground="Black"
+                                     Text="0"
+                                     Width="130"
+                                     FontSize="14"
+                                     Margin="17,0,0,0"
+                                     PreviewTextInput="NumberOnly_PreviewTextInput" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,5,0,0">
+                            <TextBlock FontFamily="Segoe WP Black"
                                        Text="Total Bill:"
                                        Foreground="Black"
-                                       Margin="2" />
+                                       Margin="2"
+                                       Width="62" />
                             <TextBlock FontFamily="Segoe WP Black"
                                        x:Name="txtTotal"
                                        Foreground="Black"
@@ -108,9 +130,9 @@
                     </ScrollViewer>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1"
+                  Margin="0,5,0,0">
                 <ListView Name="lvData"
-                          Width="460"
                           VerticalAlignment="Top"
                           Background="#FFED5C5C"
                           Foreground="#DD322112"
@@ -192,20 +214,20 @@
                             VerticalAlignment="Center">
                     <Button x:Name="bntPay"
                             Content="Pay"
-                            Margin="0,0,20,0"
+                            Margin="0,0,12,0"
                             VerticalAlignment="Top"
                             Click="bntPay_Click"
                             FontSize="18"
                             FontWeight="Bold"
-                            Width="80"
+                            Width="95"
                             ToolTip="pay the order" />
                     <Button x:Name="bntGo"
                             Content="Go"
                             VerticalAlignment="Top"
                             FontSize="18"
                             FontWeight="Bold"
-                            Width="80"
-                            Margin="0,0,20,0"
+                            Width="95"
+                            Margin="0,0,12,0"
                             Click="BtnGo_OnClick"
                             ToolTip="print bill for bar and kitchen"
                             Background="Blue" />
@@ -214,18 +236,18 @@
                             VerticalAlignment="Top"
                             FontSize="18"
                             FontWeight="Bold"
-                            Width="80"
-                            Margin="0,0,20,0"
+                            Width="95"
+                            Margin="0,0,12,0"
                             Click="BntPrint_OnClick"
                             ToolTip="print temporary bill"
                             Background="Yellow" />
                     <Button x:Name="bntDelete"
                             Content="Delete"
                             VerticalAlignment="Top"
-                            RenderTransformOrigin="2.162,0.464"
+                            RenderTransformOrigin="0.477,0.525"
                             FontSize="18"
                             FontWeight="Bold"
-                            Width="100"
+                            Width="95"
                             Click="BntDelete_OnClick"
                             ToolTip="delete order"
                             Background="Red" />

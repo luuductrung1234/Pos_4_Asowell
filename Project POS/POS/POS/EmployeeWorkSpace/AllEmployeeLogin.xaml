@@ -68,7 +68,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Login"
+                    <GridViewColumn Header="In/Out"
                                     Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -78,7 +78,7 @@
                                         Background="{DynamicResource MaterialDesignDarkBackground}"
                                         Click="BtnCodeLogin_Click">
                                     <materialDesign:PackIcon Kind="AccountKey"
-                                                             HorizontalAlignment="Center"
+                                                             HorizontalAlignment="Left"
                                                              VerticalAlignment="Center" />
                                 </Button>
                             </DataTemplate>

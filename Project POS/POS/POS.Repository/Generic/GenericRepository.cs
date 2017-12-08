@@ -90,9 +90,9 @@ namespace POS.Repository.Generic
 
                 return query.ToList();
             }
-            catch (Exception ex)
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
             {
-                throw;
+                return Get(filter, orderBy, includeProperties);
             }
         }
 
@@ -103,102 +103,131 @@ namespace POS.Repository.Generic
 
         public virtual void Insert(TEntity entity)
         {
-            if (typeof(TEntity) == typeof(AdminRe))
+            try
             {
-                var admin = entity as AdminRe;
-                string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(admin.Pass, "itcomma_luuductrung");
-                admin.Pass = encryptPass;
-            }
-            else
-            {
-                if (typeof(TEntity) == typeof(Employee))
+                if (typeof(TEntity) == typeof(AdminRe))
                 {
-                    var emp = entity as Employee;
-                    string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
-                    string encryptCode = AESThenHMAC.SimpleEncryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
-                    emp.Pass = encryptPass;
-                    emp.EmpCode = encryptCode;
+                    var admin = entity as AdminRe;
+                    string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(admin.Pass, "itcomma_luuductrung");
+                    admin.Pass = encryptPass;
                 }
+                else
+                {
+                    if (typeof(TEntity) == typeof(Employee))
+                    {
+                        var emp = entity as Employee;
+                        string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                        string encryptCode = AESThenHMAC.SimpleEncryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
+                        emp.Pass = encryptPass;
+                        emp.EmpCode = encryptCode;
+                    }
+                }
+
+
+                dbSet.Add(AutoGeneteId_DBAsowell(entity));
             }
-
-
-            dbSet.Add(AutoGeneteId_DBAsowell(entity));
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                Insert(entity);
+            }
         }
 
         public virtual void Delete(object id)
         {
-            TEntity entityToDelete = (TEntity)dbSet.Find(id);
-            dbSet.Remove(entityToDelete);
+            try
+            {
+                TEntity entityToDelete = (TEntity) dbSet.Find(id);
+                dbSet.Remove(entityToDelete);
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                Delete(id);
+            }
         }
 
         public virtual void Delete(TEntity entityTODelete)
         {
-            if (context.Entry(entityTODelete).State == EntityState.Deleted)
+            try
             {
-                dbSet.Attach(entityTODelete);
+                if (context.Entry(entityTODelete).State == EntityState.Deleted)
+                {
+                    dbSet.Attach(entityTODelete);
+                }
+                dbSet.Remove(entityTODelete);
             }
-            dbSet.Remove(entityTODelete);
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                Delete(entityTODelete);
+            }
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            if (typeof(TEntity) == typeof(AdminRe))
+            try
             {
-                var admin = entityToUpdate as AdminRe;
-
-                //check the password change
-                try
+                if (typeof(TEntity) == typeof(AdminRe))
                 {
-                    string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(admin.Pass, "itcomma_luuductrung");
-                    if (decryptPass.Equals(admin.DecryptedPass))
-                    {
-                        admin.Pass = admin.DecryptedPass;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //occur when the admin.Pass is not a encrypt password
-                }
-
-                string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(admin.Pass, "itcomma_luuductrung");
-                admin.Pass = encryptPass;
-            }
-            else
-            {
-                if (typeof(TEntity) == typeof(Employee))
-                {
-                    var emp = entityToUpdate as Employee;
+                    var admin = entityToUpdate as AdminRe;
 
                     //check the password change
                     try
                     {
-                        string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(emp.Pass, "itcomma_luuductrung");
-                        string decryptCode = AESThenHMAC.SimpleDecryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
-                        if (decryptPass.Equals(emp.DecryptedPass))
+                        string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(admin.Pass, "itcomma_luuductrung");
+                        if (decryptPass.Equals(admin.DecryptedPass))
                         {
-                            emp.Pass = emp.DecryptedPass;
-                        }
-                        if (decryptCode.Equals(emp.EmpCode))
-                        {
-                            emp.EmpCode = emp.DecryptedCode;
+                            admin.Pass = admin.DecryptedPass;
                         }
                     }
                     catch (Exception ex)
                     {
-                        //occur when the emp.Pass is not a encrypt password
+                        //occur when the admin.Pass is not a encrypt password
                     }
 
-
-                    string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
-                    string encryptCode = AESThenHMAC.SimpleEncryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
-                    emp.Pass = encryptPass;
-                    emp.EmpCode = encryptCode;
+                    string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(admin.Pass, "itcomma_luuductrung");
+                    admin.Pass = encryptPass;
                 }
+                else
+                {
+                    if (typeof(TEntity) == typeof(Employee))
+                    {
+                        var emp = entityToUpdate as Employee;
+
+                        //check the password change
+                        try
+                        {
+                            string decryptPass = AESThenHMAC.SimpleDecryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                            string decryptCode =
+                                AESThenHMAC.SimpleDecryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
+                            if (decryptPass.Equals(emp.DecryptedPass))
+                            {
+                                emp.Pass = emp.DecryptedPass;
+                            }
+                            if (decryptCode.Equals(emp.EmpCode))
+                            {
+                                emp.EmpCode = emp.DecryptedCode;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //occur when the emp.Pass is not a encrypt password
+                        }
+
+
+                        string encryptPass = AESThenHMAC.SimpleEncryptWithPassword(emp.Pass, "itcomma_luuductrung");
+                        string encryptCode = AESThenHMAC.SimpleEncryptWithPassword(emp.EmpCode, "itcomma_luuductrung");
+                        emp.Pass = encryptPass;
+                        emp.EmpCode = encryptCode;
+                    }
+                }
+
+
+                dbSet.Attach(entityToUpdate);
+                context.Entry(entityToUpdate).State = EntityState.Modified;
             }
-
-
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            catch (System.Data.Entity.Core.EntityCommandExecutionException ex)
+            {
+                Update(entityToUpdate);
+            }
         }
 
         private static int ID_SIZE_DBASOWELL = 10;
