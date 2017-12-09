@@ -48,14 +48,14 @@
                             <TextBox Foreground="Black"
                                      Grid.Column="1"
                                      Margin="5 0 0 0"
-                                     KeyDown="SearchBox_KeyDown"
+                                     KeyDown="txtSearchBox_KeyDown"
                                      materialDesign:HintAssist.Hint="Search by Name"
-                                     x:Name="SearchBox"
+                                     x:Name="txtSearchBox"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                      BorderThickness="0"
                                      MinWidth="200"
                                      VerticalAlignment="Center"
-                                     TextChanged="SearchBox_TextChanged" />
+                                     TextChanged="txtSearchBox_TextChanged" />
 
                         </Grid>
                     </Border>
@@ -74,7 +74,6 @@
                             <DatePicker x:Name="pickOrderDate"
                                         ToolTip="Filter by Order Date"
                                         SelectedDateChanged="pickOrderDate_SelectedDateChanged" />
-
                         </StackPanel>
                     </Border>
                     <Button x:Name="BtnOverViewReport"

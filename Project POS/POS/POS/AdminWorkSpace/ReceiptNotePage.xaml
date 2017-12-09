@@ -67,27 +67,29 @@
                         <Border MaxHeight="30"
                                 CornerRadius="3">
                             <StackPanel Orientation="Horizontal"
-                                        Width="430"
+                                        Width="360"
                                         Height="auto">
-                                <ComboBox x:Name="cboType"
+                                <ComboBox x:Name="cboIngre"
                                           Foreground="Black"
                                           Background="White"
                                           Width="135"
                                           Margin="0,0,20,0"
-                                          SelectionChanged="cboType_SelectionChanged"></ComboBox>
-
-                                <Button x:Name="BtnOverViewReport"
-                                        Click="BtnOverViewReport_OnClick"
-                                        Width="76"
-                                        Margin="0,0,0,-2"
-                                        ToolTip="Generate Report">
-                                    <Image Source="../Icon/Report Card_32px.png"
-                                           Width="27"
-                                           Height="32"></Image>
-                                </Button>
+                                          ToolTip="Filter by Ingredient"
+                                          SelectionChanged="cboIngre_SelectionChanged" />
+                                <DatePicker x:Name="pickOrderDate"
+                                            ToolTip="Filter by Date"
+                                            SelectedDateChanged="pickOrderDate_SelectedDateChanged" />
                             </StackPanel>
                         </Border>
-                        
+                        <Button x:Name="BtnOverViewReport"
+                                Click="BtnOverViewReport_OnClick"
+                                Width="76"
+                                Margin="0,0,0,-2"
+                                ToolTip="Generate Report">
+                            <Image Source="../Icon/Report Card_32px.png"
+                                   Width="27"
+                                   Height="32"></Image>
+                        </Button>
                     </StackPanel>
                 </materialDesign:ColorZone>
             </Grid>

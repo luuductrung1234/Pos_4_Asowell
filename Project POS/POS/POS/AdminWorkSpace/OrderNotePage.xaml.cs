@@ -65,51 +65,90 @@ namespace POS.AdminWorkSpace
         private void lvOrderNote_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             OrderNote odn = lvOrderNote.SelectedItem as OrderNote;
-            lvOrderNoteDetails.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(c => c.OrdernoteId.Equals(odn.OrdernoteId));
+            if(odn != null)
+            {
+                lvOrderNoteDetails.ItemsSource = _unitofwork.OrderNoteDetailsRepository.Get(c => c.OrdernoteId.Equals(odn.OrdernoteId)).ToList();
+            }
+            else
+            {
+                lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
+            }
         }
 
+        List<OrderNoteDetail> filterod = new List<OrderNoteDetail>();
+        List<OrderNote> filtero = new List<OrderNote>();
         bool isRaiseEvent = true;
         private void cboProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            filtero = new List<OrderNote>();
+            lvOrderNote.UnselectAll();
+            lvOrderNoteDetails.UnselectAll();
             if (isRaiseEvent)
             {
                 ComboBox cbopro = sender as ComboBox;
                 string proid = cbopro.SelectedValue.ToString();
                 if (!proid.Equals("--"))
                 {
-                    var od = _ordernotedetailslist.Where(x => x.ProductId.Equals(proid)).ToList();
-                    var odd = od.GroupBy(x => x.OrdernoteId).Select(y => y.ToList()).ToList();
-                    List<OrderNote> newlist = new List<OrderNote>();
+                    filterod = _ordernotedetailslist.Where(x => x.ProductId.Equals(proid)).ToList();
+                    var odd = filterod.GroupBy(x => x.OrdernoteId).Select(y => y.ToList()).ToList();
+
                     foreach (var i in odd)
                     {
                         foreach (var j in i)
                         {
-                            newlist.Add(_ordernotelist.Where(x => x.OrdernoteId.Equals(j.OrdernoteId)).FirstOrDefault());
+                            filtero.Add(_ordernotelist.Where(x => x.OrdernoteId.Equals(j.OrdernoteId)).FirstOrDefault());
                             break;
                         }
                     }
-
-                    lvOrderNote.Items.Clear();
-                    lvOrderNote.ItemsSource = newlist;
-                    lvOrderNoteDetails.Items.Clear();
-                    lvOrderNoteDetails.ItemsSource = od;
+                    
+                    if(filtero.Count != 0 && pickOrderDate.SelectedDate == null)
+                    {
+                        lvOrderNote.ItemsSource = filtero;
+                        lvOrderNote.Items.Refresh();
+                        lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
+                        lvOrderNoteDetails.Items.Refresh();
+                    }
+                    else if(filtero.Count != 0 && pickOrderDate.SelectedDate != null)
+                    {
+                        lvOrderNote.ItemsSource = filtero.Where(x => x.Ordertime.ToShortDateString().Equals(((DateTime)pickOrderDate.SelectedDate).ToShortDateString())).ToList();
+                        lvOrderNote.Items.Refresh();
+                        lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
+                        lvOrderNoteDetails.Items.Refresh();
+                    }
+                    else
+                    {
+                        lvOrderNote.ItemsSource = new List<OrderNote>();
+                        lvOrderNote.Items.Refresh();
+                        lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
+                        lvOrderNoteDetails.Items.Refresh();
+                    }
                 }
                 else
                 {
-                    lvOrderNote.Items.Clear();
-                    lvOrderNote.ItemsSource = _ordernotelist;
-                    lvOrderNoteDetails.Items.Clear();
-                    lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
+                    if(pickOrderDate.SelectedDate == null)
+                    {
+                        lvOrderNote.ItemsSource = _ordernotelist;
+                        lvOrderNote.Items.Refresh();
+                        lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
+                        lvOrderNoteDetails.Items.Refresh();
+                    }
+                    else
+                    {
+                        lvOrderNote.ItemsSource = _ordernotelist.Where(x => x.Ordertime.ToShortDateString().Equals(((DateTime)pickOrderDate.SelectedDate).ToShortDateString())).ToList();
+                        lvOrderNote.Items.Refresh();
+                        lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
+                        lvOrderNoteDetails.Items.Refresh();
+                    }
                 }
             }
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
 
-        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
 
         }
@@ -121,7 +160,35 @@ namespace POS.AdminWorkSpace
 
         private void pickOrderDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            DatePicker pick = sender as DatePicker;
+            if(pick.SelectedDate == null)
+            {
+                return;
+            }
 
+            if(cboProduct.SelectedValue.Equals("--"))
+            {
+                lvOrderNote.ItemsSource = _ordernotelist.Where(x => x.Ordertime.ToShortDateString().Equals(((DateTime)pick.SelectedDate).ToShortDateString()));
+                lvOrderNote.Items.Refresh();
+                lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
+                lvOrderNoteDetails.Items.Refresh();
+            }
+            else
+            {
+                if(filtero.Count != 0)
+                {
+                    lvOrderNote.ItemsSource = filtero.Where(x => x.Ordertime.ToShortDateString().Equals(((DateTime)pick.SelectedDate).ToShortDateString()));
+                    lvOrderNote.Items.Refresh();
+                }
+                else
+                {
+                    lvOrderNote.ItemsSource = new List<OrderNote>();
+                    lvOrderNote.Items.Refresh();
+                }
+                
+                lvOrderNoteDetails.ItemsSource = new List<OrderNoteDetail>();
+                lvOrderNoteDetails.Items.Refresh();
+            }
         }
 
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
@@ -129,6 +196,6 @@ namespace POS.AdminWorkSpace
             var optionDialog = new ReportOptionDialog(new OrderNoteReport(), _unitofwork);
             optionDialog.Show();
         }
-        
+
     }
 }
