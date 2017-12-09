@@ -93,7 +93,7 @@ namespace POS.Helper.PrintHelper
             TextBlock tbTime = new TextBlock()
             {
                 Text = order.Date.ToShortTimeString(),
-                Width = 155,
+                Width = 150,
                 VerticalAlignment = VerticalAlignment.Stretch,
                 TextAlignment = TextAlignment.Right,
                 FontFamily = new FontFamily("Century Gothic"),
@@ -120,10 +120,31 @@ namespace POS.Helper.PrintHelper
                 Text = order.Table.ToString(),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontSize = 18,
+                Width = 30,
+                FontWeight = FontWeights.UltraBold,
+            };
+            TextBlock tbPaxLable = new TextBlock()
+            {
+                Text = "Pax:    ",
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 18,
+                Width = 40,
+                Margin = new Thickness(95, 0, 0, 0),
+                FontWeight = FontWeights.UltraBold,
+            };
+            TextBlock tbPaxValue = new TextBlock()
+            {
+                Text = order.Pax.ToString(),
+                FontFamily = new FontFamily("Century Gothic"),
+                FontSize = 18,
+                Width = 35,
+                TextAlignment = TextAlignment.Right,
                 FontWeight = FontWeights.UltraBold,
             };
             stpTableNumber.Children.Add(tbTableNumberLabel);
             stpTableNumber.Children.Add(tbTableNumber);
+            stpTableNumber.Children.Add(tbPaxLable);
+            stpTableNumber.Children.Add(tbPaxValue);
 
 
             StackPanel stpPageName = new StackPanel();
@@ -132,6 +153,7 @@ namespace POS.Helper.PrintHelper
                 Text = "KITCHEN",
                 HorizontalAlignment = HorizontalAlignment.Center,
                 FontSize = 20,
+                Margin = new Thickness(0, 10, 0, 0),
                 FontFamily = new FontFamily("Century Gothic"),
                 FontWeight = FontWeights.UltraBold,
             };

@@ -97,13 +97,16 @@ namespace POS.AdminWorkSpace
                     return;
                 }
 
-                var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
-
-                if (newemp.Count != 0)
+                if (_emp == null)
                 {
-                    MessageBox.Show("Username is already exist! Please try again!");
-                    txtUsername.Focus();
-                    return;
+                    var newemp = _unitofwork.EmployeeRepository.Get(x => x.Username.Equals(username)).ToList();
+
+                    if (newemp.Count != 0)
+                    {
+                        MessageBox.Show("Username is already exist! Please try again!");
+                        txtUsername.Focus();
+                        return;
+                    }
                 }
 
                 //check pass

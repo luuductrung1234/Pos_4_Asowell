@@ -136,9 +136,22 @@ namespace POS.Helper.PrintHelper
             };
             stpSeeAgain.Children.Add(txtSeeAgain);
 
+            Random rand = new Random();
+            StackPanel stpEmo = new StackPanel();
+            Image imgEmo = new Image();
+            BitmapImage bimg = new BitmapImage();
+            bimg.BeginInit();
+            bimg.UriSource = new Uri(startupProjectPath + "\\Images\\rand" + rand.Next(5) + ".png", UriKind.Absolute);
+            bimg.EndInit();
+            imgEmo.Source = bimg;
+            imgEmo.HorizontalAlignment = HorizontalAlignment.Center;
+            imgEmo.Margin = new Thickness(125, 0, 0, 0);
+            stpEmo.Children.Add(imgEmo);
+
 
             stpFootText.Children.Add(stpThank);
             stpFootText.Children.Add(stpSeeAgain);
+            stpFootText.Children.Add(stpEmo);
 
             blkFootText.Child = stpFootText;
         }

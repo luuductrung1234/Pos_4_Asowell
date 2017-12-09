@@ -42,21 +42,43 @@
                              PreviewMouseLeftButtonUp="DemoItemsListBox_PreviewMouseLeftButtonUp">
                         <ListBoxItem x:Name="lbiFoodList"
                                      Content="Food List"
+                                     FontWeight="Bold"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      Visibility="Collapsed"
                                      PreviewMouseLeftButtonUp="lbiFoodList_PreviewMouseLeftButtonUp" />
                         <ListBoxItem x:Name="lbiEODReport"
                                      Content="End Of Day Report"
+                                     FontWeight="Bold"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="LbiEODReport_OnPreviewMouseLeftButtonUp" />
                         <ListBoxItem x:Name="lbiSettingTableSize"
                                      Content="Setting"
+                                     FontWeight="Bold"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="lbiTableSize_PreviewMouseLeftButtonUp" />
                         <ListBoxItem x:Name="lbiChangeTheme"
                                      Content="Theme"
+                                     FontWeight="Bold"
                                      Style="{StaticResource {x:Type ListBoxItem}}"
                                      PreviewMouseLeftButtonUp="lbiChangeTheme_PreviewMouseLeftButtonUp" />
+                        <ListBoxItem x:Name="lbiFireStater"
+                                     Content="Fire Stater"
+                                     Foreground="Red"
+                                     FontWeight="Bold"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="LbiFireStater_OnPreviewMouseLeftButtonUp"/>
+                        <ListBoxItem x:Name="lbiFireMain"
+                                     Content="Fire Main"
+                                     Foreground="Red"
+                                     FontWeight="Bold"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="LbiFireMain_OnPreviewMouseLeftButtonUp" />
+                        <ListBoxItem x:Name="lbiFireDessert"
+                                     Content="Fire Dessert"
+                                     Foreground="Red"
+                                     FontWeight="Bold"
+                                     Style="{StaticResource {x:Type ListBoxItem}}"
+                                     PreviewMouseLeftButtonUp="LbiFireDessert_OnPreviewMouseLeftButtonUp" />
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>

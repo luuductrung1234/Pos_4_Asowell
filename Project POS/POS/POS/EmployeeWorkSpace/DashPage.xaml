@@ -50,7 +50,7 @@
                                 Margin="8,24,8,0">
                         <TextBlock FontWeight="Bold">Drinking News</TextBlock>
                         <TextBlock VerticalAlignment="Center"
-                                   TextWrapping="Wrap">NHà cung cấp mới sẽ đến làm việc và soạn thảo hợp đồng trong tuần này, có thể giá beer sẽ có chút thay đổi trong thời gian tới.</TextBlock>
+                                   TextWrapping="Wrap">NHà cung cấp mới sẽ đến làm việc và soạn hợp đồng trong tuần này, có thể giá beer sẽ có chút thay đổi trong thời gian tới.</TextBlock>
                     </StackPanel>
                     <StackPanel Grid.Row="2"
                                 Margin="8"
@@ -101,7 +101,7 @@
                                 Margin="8,24,8,0">
                         <TextBlock FontWeight="Bold">Warning</TextBlock>
                         <TextBlock VerticalAlignment="Center"
-                                   TextWrapping="Wrap">Hiện tại nguyên liệu làm mì Ý nhập về trễ, nên không thể nhận order trong vài giờ tới.</TextBlock>
+                                   TextWrapping="Wrap">Hiện tại nguyên liệu làm mì Ý nhập về trễ, nên không thể nhận order trong vòng 24h tới.</TextBlock>
                     </StackPanel>
                     <StackPanel Grid.Row="2"
                                 Margin="8"
@@ -216,7 +216,7 @@
                         <TextBlock VerticalAlignment="Center"
                                    Style="{DynamicResource MaterialDesignBody1TextBlock}"
                                    TextWrapping="Wrap">
-				Một số chỉnh sửa và lỗi đã được khắc phục. Để có thể trải nghiệm phần mềm tốt hơn, xin hãy cập nhật phiên bản mới nhất
+				                    New version is now available. Some problem with printing and network connection was fixed. Please check for update.
                         </TextBlock>
                     </StackPanel>
                     <Separator Grid.Row="2"
