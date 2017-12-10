@@ -24,23 +24,123 @@ namespace POS.AdminWorkSpace
     public partial class ReceiptNotePage : Page
     {
         AdminwsOfCloudPOS _unitofwork;
+        List<Ingredient> _ingrelist;
+        List<ReceiptNote> _relist;
+        List<ReceiptNoteDetail> _rnlist;
         public ReceiptNotePage(AdminwsOfCloudPOS unitofwork)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
-            lvReceptNote.ItemsSource = unitofwork.ReceiptNoteRepository.Get(includeProperties: "Employee");
-            lvReceiptNoteDetail.ItemsSource = unitofwork.ReceiptNoteDsetailsRepository.Get(includeProperties: "Ingredient");
+            _relist = _unitofwork.ReceiptNoteRepository.Get(includeProperties: "Employee").ToList();
+            lvReceptNote.ItemsSource = _relist;
+            _rnlist = _unitofwork.ReceiptNoteDsetailsRepository.Get(includeProperties: "Ingredient").ToList();
+            lvReceiptNoteDetail.ItemsSource = _rnlist;
+
+            this.Loaded += ReceiptNotePage_Loaded;
+        }
+
+        private void ReceiptNotePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            _ingrelist = _unitofwork.IngredientRepository.Get(x => x.Deleted == 0).ToList();
+            initData();
+        }
+
+        private void initData()
+        {
+            isRaiseEvent = false;
+            List<dynamic> ingl = new List<dynamic>();
+            ingl.Add(new { Id = "--", Name = "--" });
+            foreach (var p in _ingrelist)
+            {
+                ingl.Add(new { Id = p.IgdId, Name = p.Name });
+            }
+
+            cboIngre.ItemsSource = ingl;
+            cboIngre.SelectedValuePath = "Id";
+            cboIngre.DisplayMemberPath = "Name";
+            cboIngre.SelectedValue = "--";
+            isRaiseEvent = true;
         }
 
         private void lvReceptNote_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ReceiptNote rn = lvReceptNote.SelectedItem as ReceiptNote;
-            lvReceiptNoteDetail.ItemsSource = _unitofwork.ReceiptNoteDsetailsRepository.Get(c => c.RnId.Equals(rn.RnId));
+            if(rn != null)
+            {
+                lvReceiptNoteDetail.ItemsSource = _unitofwork.ReceiptNoteDsetailsRepository.Get(c => c.RnId.Equals(rn.RnId));
+            }
+            else
+            {
+                lvReceiptNoteDetail.ItemsSource = new List<ReceiptNoteDetail>();
+            }
         }
 
-        private void cboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        List<ReceiptNoteDetail> filterrn = new List<ReceiptNoteDetail>();
+        List<ReceiptNote> filterre = new List<ReceiptNote>();
+        bool isRaiseEvent = true;
+        private void cboIngre_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            filterre = new List<ReceiptNote>();
+            lvReceptNote.UnselectAll();
+            lvReceiptNoteDetail.UnselectAll();
+            if(isRaiseEvent)
+            {
+                ComboBox cboi = sender as ComboBox;
+                string ingid = cboi.SelectedValue.ToString();
+                if (!ingid.Equals("--"))
+                {
+                    filterrn = _rnlist.Where(x => x.IgdId.Equals(ingid)).ToList();
+                    var odd = filterrn.GroupBy(x => x.RnId).Select(y => y.ToList()).ToList();
 
+                    foreach (var i in odd)
+                    {
+                        foreach (var j in i)
+                        {
+                            filterre.Add(_relist.Where(x => x.RnId.Equals(j.RnId)).FirstOrDefault());
+                            break;
+                        }
+                    }
+
+                    if (filterre.Count != 0 && pickOrderDate.SelectedDate == null)
+                    {
+                        lvReceptNote.ItemsSource = filterre;
+                        lvReceptNote.Items.Refresh();
+                        lvReceiptNoteDetail.ItemsSource = new List<ReceiptNoteDetail>();
+                        lvReceiptNoteDetail.Items.Refresh();
+                    }
+                    else if (filterre.Count != 0 && pickOrderDate.SelectedDate != null)
+                    {
+                        lvReceptNote.ItemsSource = filterre.Where(x => x.Inday.ToShortDateString().Equals(((DateTime)pickOrderDate.SelectedDate).ToShortDateString())).ToList();
+                        lvReceptNote.Items.Refresh();
+                        lvReceiptNoteDetail.ItemsSource = new List<ReceiptNoteDetail>();
+                        lvReceiptNoteDetail.Items.Refresh();
+                    }
+                    else
+                    {
+                        lvReceptNote.ItemsSource = new List<ReceiptNote>();
+                        lvReceptNote.Items.Refresh();
+                        lvReceiptNoteDetail.ItemsSource = new List<ReceiptNoteDetail>();
+                        lvReceiptNoteDetail.Items.Refresh();
+                    }
+                }
+                else
+                {
+                    if (pickOrderDate.SelectedDate == null)
+                    {
+                        lvReceptNote.ItemsSource = _relist;
+                        lvReceptNote.Items.Refresh();
+                        lvReceiptNoteDetail.ItemsSource = new List<ReceiptNoteDetail>();
+                        lvReceiptNoteDetail.Items.Refresh();
+                    }
+                    else
+                    {
+                        lvReceptNote.ItemsSource = _relist.Where(x => x.Inday.ToShortDateString().Equals(((DateTime)pickOrderDate.SelectedDate).ToShortDateString())).ToList();
+                        lvReceptNote.Items.Refresh();
+                        lvReceiptNoteDetail.ItemsSource = new List<ReceiptNoteDetail>();
+                        lvReceiptNoteDetail.Items.Refresh();
+                    }
+                }
+            }
         }
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -53,10 +153,44 @@ namespace POS.AdminWorkSpace
 
         }
 
+        private void pickOrderDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker pick = sender as DatePicker;
+            if (pick.SelectedDate == null)
+            {
+                return;
+            }
+
+            if (cboIngre.SelectedValue.Equals("--"))
+            {
+                lvReceptNote.ItemsSource = _relist.Where(x => x.Inday.ToShortDateString().Equals(((DateTime)pick.SelectedDate).ToShortDateString()));
+                lvReceptNote.Items.Refresh();
+                lvReceiptNoteDetail.ItemsSource = new List<ReceiptNoteDetail>();
+                lvReceiptNoteDetail.Items.Refresh();
+            }
+            else
+            {
+                if (filterre.Count != 0)
+                {
+                    lvReceptNote.ItemsSource = filterre.Where(x => x.Inday.ToShortDateString().Equals(((DateTime)pick.SelectedDate).ToShortDateString()));
+                    lvReceptNote.Items.Refresh();
+                }
+                else
+                {
+                    lvReceptNote.ItemsSource = new List<ReceiptNote>();
+                    lvReceptNote.Items.Refresh();
+                }
+
+                lvReceiptNoteDetail.ItemsSource = new List<ReceiptNoteDetail>();
+                lvReceiptNoteDetail.Items.Refresh();
+            }
+        }
+
         private void BtnOverViewReport_OnClick(object sender, RoutedEventArgs e)
         {
             var optionDialog = new ReportOptionDialog(new ReceiptNoteReport(), _unitofwork);
             optionDialog.Show();
         }
+        
     }
 }
