@@ -10,6 +10,7 @@ using POS.Entities;
 using POS.Entities.CustomEntities;
 using System.IO;
 using Microsoft.Win32;
+using System.Text;
 
 namespace POS.AdminWorkSpace
 {
@@ -299,7 +300,16 @@ namespace POS.AdminWorkSpace
                 decimal price = 0;
                 if (string.IsNullOrEmpty(txtPrice.Text.Trim()))
                 {
-                    price = decimal.Parse(txtSusggestPrice.Text.Trim());
+                    if(string.IsNullOrEmpty(txtSusggestPrice.Text.Trim()))
+                    {
+                        MessageBox.Show("Price is not valid!");
+                        txtPrice.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        price = decimal.Parse(txtSusggestPrice.Text.Trim());
+                    }
                 }
                 else
                 {
@@ -315,10 +325,32 @@ namespace POS.AdminWorkSpace
                 _currentProduct.StandardStats = stdstt;
                 _currentProduct.Price = price;
 
-                string destinationFile = "C:\\Program Files\\ITComma\\Asowel POS\\Project POS\\POS\\POS\\Images\\Products" + "\\Images\\Products\\" + txtImageName.Text.Trim();
+                //C:\Program Files\ITComma\Asowel POS\Project POS\POS\POS
+                string destinationFile = startupProjectPath + "\\Images\\Products\\" + txtImageName.Text.Trim();
                 try
                 {
-                    File.Delete(destinationFile);
+                    //using (FileStream fs = new FileStream("D:\\tableImagePath.txt", FileMode.Create))
+                    //{
+                    //    using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                    //    {
+                    //        sWriter.WriteLine(startupProjectPath);
+                    //    }
+                    //}
+
+                    if(File.Exists(destinationFile))
+                    {
+                        MessageBoxResult mess = MessageBox.Show("This product's image is already exist! Do you want to replace it?", "Warning!", MessageBoxButton.YesNo);
+                        if(mess == MessageBoxResult.Yes)
+                        {
+                            File.Delete(destinationFile);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please choose another image for this product or rename new image and try again!");
+                            return;
+                        }
+                    }
+                    
                     File.Copy(browseImagePath, destinationFile);
                 }
                 catch (Exception ex)
