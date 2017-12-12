@@ -99,6 +99,21 @@ namespace POS.EmployeeWorkSpace
 
                 if (isTablesDataChange)
                 {
+                    //Image img = new Image { Source = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "..\\Icon\\icons8_Meal_32px.png")) };
+                    //img.Width = 32;
+                    //img.Height = 32;
+                    //Thickness m;
+                    //m = img.Margin;
+                    //m.Left = rec.Margin.Left;
+                    //m.Top = rec.Margin.Top;
+                    //img.Margin = m;
+                    //grTable.Children.Add(img);
+
+                    //rec.Fill = new ImageBrush
+                    //{
+                    //    ImageSource = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "..\\Icon\\icons8_Meal_32px.png"))
+                    //};
+
                     rec.ToolTip = SetTooltip(rec);
                 }
             }
@@ -209,7 +224,7 @@ namespace POS.EmployeeWorkSpace
                 rec.MouseMove += btnTableAdded_MouseMove;
                 rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
-                Panel.SetZIndex(rec, 30);
+                Panel.SetZIndex(rec, 100);
                 grTable.Children.Add(rec);
 
                 rec.ToolTip = SetTooltip(rec);
@@ -1038,12 +1053,6 @@ namespace POS.EmployeeWorkSpace
 
             //foreach(var rec in currentTableList)
             //{
-            //    rec.TableRec.MouseLeftButtonDown += btnTableAdded_StartDrag;
-            //    rec.TableRec.MouseMove += btnTableAdded_MoveDrag;
-            //    rec.TableRec.MouseMove += btnTableAdded_MouseMove;
-            //    rec.TableRec.MouseLeftButtonDown += btnTableAdded_Click;
-            //    rec.TableRec.MouseRightButtonDown += btnTableAdded_ContextMenu;
-
             //    Image img = new Image { Source = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "..\\Icon\\icons8_Meal_32px.png")) };
             //    img.Width = 32;
             //    img.Height = 32;

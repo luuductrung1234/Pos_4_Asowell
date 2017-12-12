@@ -98,6 +98,14 @@
                    DragLeave="imgTable_DragLeave"
                    Drop="imgTable_Drop"
                    MouseRightButtonDown="imgTable_MouseRightContextMenu" />
+
+            <Rectangle Fill="Red"
+                       Width="100"
+                       Height="100">
+                <Rectangle.RenderTransform>
+                    <RotateTransform Angle="45" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
         </Grid>
     </Grid>
 </Page>
