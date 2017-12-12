@@ -35,8 +35,10 @@ namespace POS.EmployeeWorkSpace
             this.Unloaded += UcOder_Unloaded;
         }
 
+        private bool isUcOrderFormLoading;
         private void UcOder_Loaded(object sender, RoutedEventArgs e)
         {
+            isUcOrderFormLoading = true;
             _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
             _cloudPosUnitofwork = ((MainWindow)Window.GetWindow(this)).CloudPosUnitofwork;
             currentTable = ((MainWindow)Window.GetWindow(this)).currentTable;
@@ -67,6 +69,8 @@ namespace POS.EmployeeWorkSpace
             txtCusNum.Text = orderTempTable.Pax.ToString();
             LoadCustomerOwner();
             RefreshControlAllChair();
+
+            isUcOrderFormLoading = false;
         }
 
         private void UcOder_Unloaded(object sender, RoutedEventArgs e)
@@ -634,6 +638,11 @@ namespace POS.EmployeeWorkSpace
                     checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                     break;
                 }
+            }
+
+            if (orderDetailsTempCurrentTableList.Count == 0)
+            {
+                ClearTheTable();
             }
         }
 
@@ -1207,6 +1216,7 @@ namespace POS.EmployeeWorkSpace
             orderTempTable.CustomerPay = 0;
             orderTempTable.PayBack = 0;
             orderTempTable.SubEmpId = "";
+            orderTempTable.Pax = 0;
 
             curTable.IsOrdered = 0;
             curTable.IsPrinted = 0;
@@ -1356,7 +1366,7 @@ namespace POS.EmployeeWorkSpace
 
         private void TxtCusNum_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (currentTable == null)
+            if (currentTable == null || isUcOrderFormLoading)
                 return;
             TextBox txtCusnum = (sender as TextBox);
             if (string.IsNullOrEmpty(txtCusnum.Text))

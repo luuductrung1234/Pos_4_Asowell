@@ -778,37 +778,82 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Products\3CheeseBoard.jpg" />
-    <Resource Include="Images\Products\3DipsBoard.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\Boconccini_Bruschetta.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\Chorizo_sausage_rolls.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\Duck_liver_Pate.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\freshly-shucked-oysters.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\italian_Mix_Olives.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\roasted_garlic_bread.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\Sweet_Potatoes_fries.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\warm_Edamame.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="asowell_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="asowell_icon.ico" />
+    <Resource Include="Images\Products\3CheeseBoard.jpg" />
+    <Resource Include="Images\Products\3DipsBoard.jpg" />
+    <Resource Include="Images\Products\Americano.jpg" />
+    <Resource Include="Images\Products\Aqua.jpg" />
+    <Resource Include="Images\Products\BakeEggsWithChorizoandSpinach.jpg" />
+    <Resource Include="Images\Products\BananaBread.jpg" />
+    <Resource Include="Images\Products\BlackCoffee.jpg" />
+    <Resource Include="Images\Products\BlueCheeseMusselPot.jpg" />
+    <Resource Include="Images\Products\BoconcciniBruschetta.jpg" />
+    <Resource Include="Images\Products\BraisedMushroomOntoast.jpg" />
+    <Resource Include="Images\Products\BreadBasket.jpg" />
+    <Resource Include="Images\Products\CajunChickenSalad.jpg" />
+    <Resource Include="Images\Products\Capuchino.jpg" />
+    <Resource Include="Images\Products\CaramelCoffee.jpg" />
+    <Resource Include="Images\Products\ChcocolateFruitStack.png" />
+    <Resource Include="Images\Products\CheeseMeltOnToast.png" />
+    <Resource Include="Images\Products\ChickenCaesarSalad.jpg" />
+    <Resource Include="Images\Products\ChickenMelt.jpg" />
+    <Resource Include="Images\Products\ChocoCoffee.jpg" />
+    <Resource Include="Images\Products\ChocoLatte.jpg" />
+    <Resource Include="Images\Products\ChorizoSausageRolls.jpg" />
+    <Resource Include="Images\Products\CinamonToast.jpg" />
+    <Resource Include="Images\Products\Coffee.jpg" />
+    <Resource Include="Images\Products\CoffeeLatte.png" />
+    <Resource Include="Images\Products\CreamCoffee.jpg" />
+    <Resource Include="Images\Products\double-ipa.png" />
+    <Resource Include="Images\Products\Duck_liver_Pate.jpg" />
+    <Resource Include="Images\Products\french-toast.jpg" />
+    <Resource Include="Images\Products\FrenchToast.jpg" />
+    <Resource Include="Images\Products\freshlyShuckedOysters.jpg" />
+    <Resource Include="Images\Products\fried-egg-on-toast.jpg" />
+    <Resource Include="Images\Products\FriedEggSausageAndFruit.jpg" />
+    <Resource Include="Images\Products\FruitPlatterWithGreekYoghurt.jpeg" />
+    <Resource Include="Images\Products\GardenGreenSalad.jpg" />
+    <Resource Include="Images\Products\GrilledSalmonBrochette.jpg" />
+    <Resource Include="Images\Products\HamCheeseAndAsparagusOmelette.jpg" />
+    <Resource Include="Images\Products\HODSoakDuckBreast.jpg" />
+    <Resource Include="Images\Products\HoneyButterBread.jpg" />
+    <Resource Include="Images\Products\HouseBurger.jpg" />
+    <Resource Include="Images\Products\ItalianMixOlives.jpg" />
+    <Resource Include="Images\Products\kurtz-insane-ipa.jpg" />
+    <Resource Include="Images\Products\Lemonade.jpg" />
+    <Resource Include="Images\Products\LemonPancake.jpg" />
+    <Resource Include="Images\Products\MatchaLatte.jpg" />
+    <Resource Include="Images\Products\MilkCoffee.jpg" />
+    <Resource Include="Images\Products\MilkTea.jpg" />
+    <Resource Include="Images\Products\MinuteSteakSandwich.jpg" />
+    <Resource Include="Images\Products\MinuteSteakSandwich1.jpg" />
+    <Resource Include="Images\Products\OrangeJuice.jpg" />
+    <Resource Include="Images\Products\patient-wilderness-wheat.jpg" />
+    <Resource Include="Images\Products\PeachTea.png" />
+    <Resource Include="Images\Products\pepsi.jpg" />
+    <Resource Include="Images\Products\pitiless-folly-pale-ale.png" />
+    <Resource Include="Images\Products\PlainCaesarSalad.jpg" />
+    <Resource Include="Images\Products\PoachedEggsOnToast.jpg" />
+    <Resource Include="Images\Products\primeval-forest-dilsner.jpg" />
+    <Resource Include="Images\Products\RibeyeSteak.jpg" />
+    <Resource Include="Images\Products\RoastedBabyBackRibs.jpg" />
+    <Resource Include="Images\Products\roastedGarlicBread.jpg" />
+    <Resource Include="Images\Products\RoastedHalfChicken.jpg" />
+    <Resource Include="Images\Products\RoastedTomatoesMusselPot.jpg" />
+    <Resource Include="Images\Products\RoastedVegAndRocketSalad.jpeg" />
+    <Resource Include="Images\Products\sacred-fire-golden-ale.png" />
+    <Resource Include="Images\Products\SalmonTagliatelle.jpg" />
+    <Resource Include="Images\Products\SeafoodMarinara.jpeg" />
+    <Resource Include="Images\Products\seven.jpg" />
+    <Resource Include="Images\Products\SmokeSalmonCaesarSalad.jpg" />
+    <Resource Include="Images\Products\SpaghettiBolognese.jpg" />
+    <Resource Include="Images\Products\SpaghettiChickenPesto.jpg" />
+    <Resource Include="Images\Products\Sweet_Potatoes_fries.jpg" />
+    <Resource Include="Images\Products\TomYumMusselPot.jpg" />
+    <Resource Include="Images\Products\warm_Edamame.jpg" />
+    <Resource Include="Images\Products\WholeRackOfLamb.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

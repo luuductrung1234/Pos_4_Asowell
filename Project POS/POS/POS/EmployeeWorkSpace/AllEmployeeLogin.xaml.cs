@@ -649,12 +649,19 @@ namespace POS.EmployeeWorkSpace
                 foreach (var table in _unitofwork.TableRepository.Get())
                 {
                     var orderTemp = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(table.TableId)).First();
+                    orderTemp.EmpId = "";
                     orderTemp.CusId = "CUS0000001";
                     orderTemp.Ordertime = DateTime.Now;
+                    orderTemp.TotalPriceNonDisc = 0;
                     orderTemp.TotalPrice = 0;
                     orderTemp.CustomerPay = 0;
                     orderTemp.PayBack = 0;
+                    orderTemp.SubEmpId = "";
+                    orderTemp.Pax = 0;
+
                     table.IsOrdered = 0;
+                    table.IsPrinted = 0;
+
                     var orderDetails = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTemp.OrdertempId));
                     if (orderDetails.Count() != 0)
                     {
