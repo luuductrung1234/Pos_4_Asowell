@@ -62,26 +62,30 @@ namespace POS.EmployeeWorkSpace
         internal bool isTablesDataChange = true;
         public void TablePage_loaded(Object sender, EventArgs args)
         {
-            ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
+            if (isTablesDataChange)
+            {
+                //currentTableList = _unitofwork.TableRepository.Get().ToList();
+                ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
+            }
 
             foreach (Entities.Table t in currentTableList)
             {
                 Rectangle rec = t.TableRec;
 
-                if (t.IsPinned == 1)
-                {
-                    rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
-                    rec.MouseMove -= btnTableAdded_MoveDrag;
-                    rec.Opacity = 1;
-                    rec.Cursor = Cursors.Arrow;
-                    rec.SetValue(BitmapEffectProperty, recShadow);
-                }
-                else
-                {
-                    rec.Cursor = Cursors.SizeAll;
-                    rec.Fill = Brushes.Red;
-                    rec.Opacity = 0.65;
-                }
+                //if (t.IsPinned == 1)
+                //{
+                //    rec.MouseLeftButtonDown -= btnTableAdded_StartDrag;
+                //    rec.MouseMove -= btnTableAdded_MoveDrag;
+                //    rec.Opacity = 1;
+                //    rec.Cursor = Cursors.Arrow;
+                //    rec.SetValue(BitmapEffectProperty, recShadow);
+                //}
+                //else
+                //{
+                //    rec.Cursor = Cursors.SizeAll;
+                //    rec.Fill = Brushes.Red;
+                //    rec.Opacity = 0.65;
+                //}
 
                 if (t.IsOrdered == 1)
                 {

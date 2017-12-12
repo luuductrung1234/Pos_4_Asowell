@@ -245,8 +245,8 @@
                                     <Image Source="{Binding ImageData}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
-                                           Width="32"
-                                           Height="32" />
+                                           Width="100"
+                                           Height="100" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -294,8 +294,8 @@
                                     <Image Source="{Binding ImageData}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
-                                           Width="32"
-                                           Height="32" />
+                                           Width="100"
+                                           Height="100" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -343,8 +343,8 @@
                                     <Image Source="{Binding ImageData}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
-                                           Width="32"
-                                           Height="32" />
+                                           Width="100"
+                                           Height="100" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -392,8 +392,8 @@
                                     <Image Source="{Binding ImageData}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
-                                           Width="32"
-                                           Height="32" />
+                                           Width="100"
+                                           Height="100" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
