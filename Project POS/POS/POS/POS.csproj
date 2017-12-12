@@ -778,26 +778,13 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Products\3CheeseBoard.jpg" />
-    <Resource Include="Images\Products\3DipsBoard.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\Duck_liver_Pate.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\Sweet_Potatoes_fries.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Products\warm_Edamame.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="asowell_icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Products\3CheeseBoard.jpg" />
     <Resource Include="Images\Products\3DipsBoard.jpg" />
     <Resource Include="Images\Products\Americano.jpg" />
-    <Resource Include="Images\Products\Aqua.jpg" />
+    <Resource Include="Images\Products\aqua.jpg" />
     <Resource Include="Images\Products\BakeEggsWithChorizoandSpinach.jpg" />
     <Resource Include="Images\Products\BananaBread.jpg" />
     <Resource Include="Images\Products\BlackCoffee.jpg" />
@@ -865,7 +852,6 @@
     <Resource Include="Images\Products\SpaghettiChickenPesto.jpg" />
     <Resource Include="Images\Products\Sweet_Potatoes_fries.jpg" />
     <Resource Include="Images\Products\TomYumMusselPot.jpg" />
-    <Resource Include="Images\Products\warm_Edamame.jpg" />
     <Resource Include="Images\Products\WholeRackOfLamb.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
