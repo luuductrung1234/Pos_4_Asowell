@@ -907,23 +907,28 @@ namespace POS.EmployeeWorkSpace
 
             // check order
             bool isHaveDrink = false;
+            bool isHaveFood = false;
             int orderCount = 0;
             var chairQuery = _unitofwork.ChairRepository.Get(x => x.TableOwned.Equals(currentTable.TableId));
             foreach (var chair in chairQuery)
             {
                 var orderDetailsQuery =
-                    _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(chair.ChairId));
+                    _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(chair.ChairId) && x.IsPrinted == 0);
                 orderCount += orderDetailsQuery.Count();
                 foreach (var details in orderDetailsQuery)
                 {
-                    if (details.SelectedStats == "Drink")
+                    if (details.SelectedStats != "Drink" && !isHaveFood)
+                    {
+                        isHaveFood = true;
+                    }
+
+                    if (details.SelectedStats == "Drink" && !isHaveDrink)
                     {
                         isHaveDrink = true;
-                        break;
                     }
                 }
 
-                if (isHaveDrink)
+                if (isHaveDrink && isHaveFood)
                     break;
             }
 
@@ -933,15 +938,17 @@ namespace POS.EmployeeWorkSpace
             try
             {
                 // printing
-                var printer1 = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Kitchen_Printing, currentTable);
-                printer1.DoPrint();
+                if (isHaveFood)
+                {
+                    var printer1 = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Kitchen_Printing, currentTable);
+                    printer1.DoPrint();
+                }
                 if (isHaveDrink)
                 {
                     var printer2 = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Bar_Printing, currentTable);
                     printer2.DoPrint();
                 }
 
-                List<OrderDetailsTemp> oldOrderDetails = new List<OrderDetailsTemp>();
                 List<OrderDetailsTemp> newOrderDetails = new List<OrderDetailsTemp>();
                 orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
                 orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();

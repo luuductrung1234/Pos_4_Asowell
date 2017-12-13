@@ -564,7 +564,8 @@ namespace POS.EmployeeWorkSpace
 
                             var workH = empout.EmpWH.EndTime - empout.EmpWH.StartTime;
                             empout.EmpSal = _cloudPosUnitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(empout.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
-                            empout.EmpSal.WorkHour += workH.Hours + workH.Minutes / 60 + workH.Seconds / 3600;
+                            empout.EmpSal.WorkHour += workH.Hours + (workH.Minutes / 60.0) + (workH.Seconds / 3600.0);
+                            empout.EmpSal.SalaryValue = (decimal) (empout.EmpSal.WorkHour * empout.Emp.HourWage);
                             _cloudPosUnitofwork.SalaryNoteRepository.Update(empout.EmpSal);
                             _cloudPosUnitofwork.Save();
 
