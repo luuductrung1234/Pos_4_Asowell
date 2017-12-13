@@ -1234,9 +1234,17 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.OrderTempRepository.Update(orderTempTable);
             _unitofwork.Save();
 
-            Table b = new Table(_unitofwork, _cloudPosUnitofwork);
+            //Table b = new Table(_unitofwork, _cloudPosUnitofwork);
+            var cur = (((MainWindow)Window.GetWindow(this)).b).currentTableList.Where(x => x.TableId.Equals(curTable.TableId)).FirstOrDefault();
+            if (cur != null)
+            {
+                cur.IsOrdered = 0;
+                cur.IsPrinted = 0;
+            }
 
-            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(b);
+            ((MainWindow)Window.GetWindow(this)).currentTable = null;
+            ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
+            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(((MainWindow)Window.GetWindow(this)).b);
             ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
             ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
             ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
@@ -1304,7 +1312,7 @@ namespace POS.EmployeeWorkSpace
 
                     foreach (Entities.Chair chair in chairoftable)
                     {
-                        var chairorderdetailstemp = orderDetailsTempCurrentTableList.Where(x => x.ChairId.Equals(chair.ChairId)).ToList();
+                        var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(chair.ChairId)).ToList();
                         if (chairorderdetailstemp.Count != 0)
                         {
                             currentTable.IsOrdered = 1;
@@ -1324,9 +1332,17 @@ namespace POS.EmployeeWorkSpace
 
             if (currentTable.IsOrdered == 0)
             {
-                Table b = new Table(_unitofwork, _cloudPosUnitofwork);
+                //Table b = new Table(_unitofwork, _cloudPosUnitofwork);
+                var cur = (((MainWindow)Window.GetWindow(this)).b).currentTableList.Where(x => x.TableId.Equals(currentTable.TableId)).FirstOrDefault();
+                if (cur != null)
+                {
+                    cur.IsOrdered = 0;
+                    cur.IsPrinted = 0;
+                }
 
-                ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(b);
+                ((MainWindow)Window.GetWindow(this)).currentTable = null;
+                ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
+                ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(((MainWindow)Window.GetWindow(this)).b);
                 ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
                 ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
                 ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;

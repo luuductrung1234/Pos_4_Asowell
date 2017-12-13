@@ -26,7 +26,7 @@ namespace POS.EmployeeWorkSpace
         string startupProjectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         private EmployeewsOfLocalPOS _unitofwork;
         private EmployeewsOfCloudPOS _cloudPosUnitofwork;
-        private List<Entities.Table> currentTableList;
+        public List<Entities.Table> currentTableList;
         private DropShadowBitmapEffect recShadow, recShadowOrdered;
 
         public Table(EmployeewsOfLocalPOS unitofwork, EmployeewsOfCloudPOS cloudPosUnitofwork)
@@ -94,6 +94,11 @@ namespace POS.EmployeeWorkSpace
                 }
                 else
                 {
+                    if (t.IsPinned != 0)
+                    {
+                        rec.SetValue(BitmapEffectProperty, recShadow);
+                    }
+
                     rec.Fill = Brushes.Red;
                 }
 
@@ -117,6 +122,7 @@ namespace POS.EmployeeWorkSpace
                     rec.ToolTip = SetTooltip(rec);
                 }
             }
+
             isTablesDataChange = false;
         }
 
@@ -558,14 +564,14 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.Save();
                             }
 
-                            navigateToOrder(currentEmp, rec, founded);
+                            navigateToOrder(currentEmp, founded.TableRec, founded);
                             return;
                         }
 
                         ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
-                        checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
+                        checkCurrentEmp(currentEmp, founded.TableRec, founded, ordertempcurrenttable);
                     }
                 }
                 else
@@ -584,12 +590,12 @@ namespace POS.EmployeeWorkSpace
                         {
                             if (currentEmp.Emp.EmpId.Equals(ordertempcurrenttable.EmpId))
                             {
-                                navigateToOrder(currentEmp, rec, founded);
+                                navigateToOrder(currentEmp, founded.TableRec, founded);
                                 return;
                             }
                             else
                             {
-                                navigateToOrder(currentEmp, rec, founded);
+                                navigateToOrder(currentEmp, founded.TableRec, founded);
                                 return;
                             }
                         }
@@ -597,7 +603,7 @@ namespace POS.EmployeeWorkSpace
                         ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
-                        checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
+                        checkCurrentEmp(currentEmp, founded.TableRec, founded, ordertempcurrenttable);
                     }
                     else
                     {
@@ -612,14 +618,14 @@ namespace POS.EmployeeWorkSpace
                                 _unitofwork.Save();
                             }
 
-                            checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
+                            checkCurrentEmp(currentEmp, founded.TableRec, founded, ordertempcurrenttable);
                             return;
                         }
 
                         ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, _cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, 4);
                         ael.ShowDialog();
 
-                        checkCurrentEmp(currentEmp, rec, founded, ordertempcurrenttable);
+                        checkCurrentEmp(currentEmp, founded.TableRec, founded, ordertempcurrenttable);
                     }
                 }
             }
@@ -984,19 +990,15 @@ namespace POS.EmployeeWorkSpace
                             tt += "\nOrder Customer: " + cus.Name;
                         }
 
-
-                        if (table.IsOrdered == 1)
+                        foreach (var tableOD in orderdetailstemptable)
                         {
-                            foreach (var tableOD in orderdetailstemptable)
+                            Product prod = null;
+                            if ((prod = _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(tableOD.ProductId)).FirstOrDefault()) != null)
                             {
-                                Product prod = null;
-                                if ((prod = _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(tableOD.ProductId)).FirstOrDefault()) != null)
-                                {
-                                    tt += "\nProduct Name: " + prod.Name;
-                                }
-
-                                tt += ", Quantity: " + tableOD.Quan;
+                                tt += "\nProduct Name: " + prod.Name;
                             }
+
+                            tt += ", Quantity: " + tableOD.Quan;
                         }
                     }
 
