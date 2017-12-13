@@ -1032,7 +1032,7 @@ namespace POS.EmployeeWorkSpace
 
                         if (App.Current.Properties["AdLogin"] != null)
                         {
-                            ClearTheTable();
+                            ClearTheTable_ForDelete();
 
                             // update employee ID that effect to the OrderNote
                             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
@@ -1041,7 +1041,7 @@ namespace POS.EmployeeWorkSpace
                 }
                 else
                 {
-                    ClearTheTable();
+                    ClearTheTable_ForDelete();
 
                     // update employee ID that effect to the OrderNote
                     checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
@@ -1049,7 +1049,7 @@ namespace POS.EmployeeWorkSpace
             }
             else
             {
-                ClearTheTable();
+                ClearTheTable_ForDelete();
 
                 // update employee ID that effect to the OrderNote
                 checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
@@ -1204,6 +1204,65 @@ namespace POS.EmployeeWorkSpace
                 {
                     foreach (var ch in ordernotedetails)
                     {
+                        orderDetailsTempCurrentTableList.Remove(ch);
+                        _unitofwork.OrderDetailsTempRepository.Delete(ch);
+                        _unitofwork.Save();
+                    }
+                }
+            }
+            _cloudPosUnitofwork.Save();
+
+            orderTempTable.EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId;
+            orderTempTable.CusId = "CUS0000001";
+            orderTempTable.Discount = 0;
+            orderTempTable.TableOwned = curTable.TableId;
+            orderTempTable.Ordertime = DateTime.Now;
+            orderTempTable.TotalPriceNonDisc = 0;
+            orderTempTable.TotalPrice = 0;
+            orderTempTable.CustomerPay = 0;
+            orderTempTable.PayBack = 0;
+            orderTempTable.SubEmpId = "";
+            orderTempTable.Pax = 0;
+
+            curTable.IsOrdered = 0;
+            curTable.IsPrinted = 0;
+
+            ((MainWindow)Window.GetWindow(this)).initProgressTableChair();
+            LoadCustomerOwner();
+            RefreshControlAllChair();
+            _unitofwork.OrderTempRepository.Update(orderTempTable);
+            _unitofwork.Save();
+
+            //Table b = new Table(_unitofwork, _cloudPosUnitofwork);
+            var cur = (((MainWindow)Window.GetWindow(this)).b).currentTableList.Where(x => x.TableId.Equals(curTable.TableId)).FirstOrDefault();
+            if (cur != null)
+            {
+                cur.IsOrdered = 0;
+                cur.IsPrinted = 0;
+            }
+
+            ((MainWindow)Window.GetWindow(this)).currentTable = null;
+            ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
+            ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(((MainWindow)Window.GetWindow(this)).b);
+            ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = false;
+            ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
+            ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
+        }
+
+
+        private void ClearTheTable_ForDelete()
+        {
+            Entities.Table curTable = currentTable;
+            var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).FirstOrDefault();
+            if (orderOfTable != null)
+            {
+                var ordernotedetails = orderDetailsTempCurrentTableList
+                    .Where(x => x.OrdertempId.Equals(orderOfTable.OrdertempId))
+                    .ToList();
+                if (ordernotedetails.Count != 0)
+                {
+                    foreach (var ch in ordernotedetails)
+                    {
                         GiveBackToWareHouseData(ch);
                         orderDetailsTempCurrentTableList.Remove(ch);
                         _unitofwork.OrderDetailsTempRepository.Delete(ch);
@@ -1256,19 +1315,36 @@ namespace POS.EmployeeWorkSpace
                 _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderDetails.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
             if (prodOfOrderDetails != null)
             {
+                if (prodOfOrderDetails.ProductDetails.Count == 0)
+                {
+                    // not ingredient relate to this product for tracking
+                    return;
+                }
+
                 foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
                 {
                     var quan = prodDetails.Quan;
                     var ingd =
                         _cloudPosUnitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId)).FirstOrDefault();
                     if (ingd == null)
+                    {
+                        MessageBox.Show("Something went wrong cause of the Ingredient's information");
                         return;
+                    }
                     var wareHouse =
                         _cloudPosUnitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId)).FirstOrDefault();
                     if (wareHouse == null)
+                    {
+                        MessageBox.Show("Something went wrong cause of the WareHouse's information");
                         return;
+                    }
+
                     wareHouse.Contain += quan;
                 }
+            }
+            else
+            {
+                MessageBox.Show("This Product is not existed in database! Please check the Product's information");
             }
 
         }

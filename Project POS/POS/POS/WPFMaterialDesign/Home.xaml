@@ -165,7 +165,7 @@
                                 <TextBlock TextWrapping="Wrap"
                                            Margin="16 0 16 8"
                                            Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                           VerticalAlignment="Top">This software belong to Asowel Restaurant and under the development by ITComma team</TextBlock>
+                                           VerticalAlignment="Top">This software belong to ITComma and Asowel Restaurant. It's under the development by ITComma team</TextBlock>
                             </StackPanel>
                             <Border Grid.Row="1"
                                     Grid.ColumnSpan="2"

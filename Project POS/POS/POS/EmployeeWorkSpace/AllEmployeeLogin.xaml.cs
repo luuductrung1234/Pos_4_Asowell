@@ -556,7 +556,17 @@ namespace POS.EmployeeWorkSpace
                 {
                     if (empout != null)
                     {
-                        if((empout.Emp.Username.Equals(username) && (empout.Emp.DecryptedPass.Equals(pass)) || empout.Emp.DecryptedCode.Equals(code)))
+                        if (EmpLoginListData.emploglist.Count == 1)
+                        {
+                            var orderedTable = _unitofwork.TableRepository.Get(x => x.IsOrdered == 1).ToList();
+                            if (orderedTable.Count != 0)
+                            {
+                                MessageBox.Show("You can not logout because still have Tables that in the ordering state out there. Please check again!");
+                                return;
+                            }
+                        }
+
+                        if ((empout.Emp.Username.Equals(username) && (empout.Emp.DecryptedPass.Equals(pass)) || empout.Emp.DecryptedCode.Equals(code)))
                         {
                             empout.EmpWH.EndTime = DateTime.Now;
                             _cloudPosUnitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);

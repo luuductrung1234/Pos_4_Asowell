@@ -21,7 +21,7 @@
                             Series="{Binding SeriesCollection}">
 
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Usage"
+                <lvc:Axis Title="Money (kVND)"
                           LabelFormatter="{Binding Formatter,StringFormat=0:000}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX>
