@@ -48,19 +48,20 @@ Nền tảng trên Mobile và Web vẫn đang được lên kế hoạch
 
 
 # Software's procession:
-    - [] : áp dụng bất đồng bộ (asynchronous hay còn gọi là lập trình đa tiến đoạn) để giúp chương trình thực thi đa tác vụ hiệu quả hơn (cái này cần thảo luận)
+    - [x] : áp dụng bất đồng bộ (asynchronous hay còn gọi là lập trình đa tiến đoạn) để giúp chương trình thực thi đa tác vụ hiệu quả hơn (cái này cần thảo luận)
 
   - **Database and WebService**:
     - [x] : Kết nối vào thao tác truy xuất xử lý dữ liệu (local) bằng ADO.NET Entity Framework
-    - [] : Kết nối vào thao tác truy xuất xử lý dữ liệu (cloud/web API) bằng ADO.NET Entity Framework
-    - [] : Thiết kế cho phép dữ liệu được thao tác bởi nhiều chương trình chạy đồng thời cùng một lúc một cách an toàn, kiểm tra và ngăn chận các tình huống bất đồng bộ (concurrency error)
-    - [] : webservice cung cấp dịch vụ về dữ liệu (Data service) và xử lý các tác vụ đa tầng (n-tier architect). Kết hợp lưu trữ đồng bộ giữ local database và cloud, tăng độ an toàn khi có sự cố bất ngờ xảy ra
+    - [x] : Kết nối vào thao tác truy xuất xử lý dữ liệu (cloud/web API) bằng ADO.NET Entity Framework
+    - [x]  : Thiết kế cho phép dữ liệu được thao tác bởi nhiều chương trình chạy đồng thời cùng một lúc một cách an toàn, kiểm tra và ngăn chận các tình huống bất đồng bộ (concurrency error)
+    - [x]  : Áp dụng Silence Retries để ngầm khắc phục các lỗi liên kết và truy vấn dữ liệu từ database 
+    - []  : webservice cung cấp dịch vụ về dữ liệu (Data service) và xử lý các tác vụ đa tầng (n-tier architect). Kết hợp lưu trữ đồng bộ giữ local database và cloud, tăng độ an toàn khi có sự cố bất ngờ xảy ra
 
 
   - **LoginWindow**:
     - [x] : đăng nhập cho nhân viên và quản lý, đăng nhập bằng Employee Code
     - [x] : chức năng thay đổi cấu hình đăng nhập database, sau khi chỉnh sửa và đăng nhập thành công, chương trình tự động lưu dữ liệu của database đó (lần sau không cần điều chỉnh nữa). Thông tin database sẽ được lưu vào databaseinfo.txt
-    - [] : mã hoá mật khẩu người dùng
+    - [x] : mã hoá mật khẩu người dùng
 
   - **EmployeeWorkspaceWindow**:
     - [x] : Nhân viên đăng nhập, tự động lấy thời gian bắt đầu đăng nhập. Khi nhân viên đăng xuất, tự động lấy thời gian đăng xuất, chấm công và phát sinh WorkingHistory trong ngày (store procedure trong database se tự động cập nhật vào bảng lương của tháng hiện tại của nhân viên)
@@ -68,10 +69,11 @@ Nền tảng trên Mobile và Web vẫn đang được lên kế hoạch
     - [x] : Cửa sổ hiển thị sơ đồ chỗ ngồi (dựa trên map của nhà hàng, cho phép tùy chỉnh). Khi nhân viên chọn bàn thì tiến hành navigate đến cửa sổ Entry (order)
     - [x] : Yêu cầu danh tính cấp độ admin để có thể chỉnh sửa các Table đã được Pin
     - [x] : Yêu cầu xác thực danh tính mỗi khi tiến hành order, sau đó có thể thực thi order cho đến khi nào cá nhân đó kết thúc phiên làm việc hiện tại.
-    - [] : Xác thực bằng Employee Code
+    - [x] : Xác thực bằng Employee Code
     - [x] : Lưu thông tin ID của tất cả nhân viên tác động lên cùng một order
     - [x] : các khung xuất menu, thêm fiter món ăn theo bản chữ cái, thiết kế nút tìm món ăn (thêm ảnh cho món ăn nếu cần). Ngoài ra còn có khung xuất các nguyên liệu (để phục vụ chắc năng nhập hóa đơn mua nguyên liệu)
     - [x] : khung nhập vào thao tác order, tác động trực tiếp vào bàn hiện tại
+    - [x] : Yêu cầu danh tính admin để có thể xóa các thông tin order trong bàn hiện tại
     - [x] : xây dựng khung Setting cho các tuỳ chỉnh một số thuộc tính trong EmployeeWorkspaceWindow, các tuỳ chỉnh lưu vào settinginfo.txt
     - [x] : xây dựng khung thông tin nhân viên, cho phép nhân viên chỉnh sủa tài khoản, thông tin cá nhân
     
@@ -80,35 +82,37 @@ Nền tảng trên Mobile và Web vẫn đang được lên kế hoạch
     - [x] : Cho phép thanh toán và lưu dữ liệu đã order vào database
     - [x] : Tiến hành thiết kế form của bill
     - [x] : In bill thông qua printer. Tính năng tuỳ chỉnh hiển thị văn bản in trước khi in (order bill thì chia hai cho bar và kitchen, temporary bil và receipt bill)
-    - [] : Tùy chỉnh máy in
+    - [x] : Tùy chỉnh máy in
     - [x] : In thêm note của từng món ăn trong bill (kitchen print)
     - [x] : xuất bill dưới dạng pdf
     - [x] : In end of day report (theo dạng tài liệu pdf hoặc dạng hoá đơn liệt kê)
-    - [] : thêm chức năng lưu nhật kí phòng trường hợp chương trình bị đóng đột ngột (Nhưng lưu thông tin nhân viên thì chưa khả thi). Có thể giải quyết bằng cách cho phép sau 5-10 phút sẽ tự động lưu thời điểm hiện tại và nhân viên hiện tại vào file
-    - [] : swap/merge bill
-    - [] : cho phép chia bill ra để thanh toán theo từng ghế
+    - [x] : thêm chức năng lưu nhật kí phòng trường hợp chương trình bị đóng đột ngột (Nhưng lưu thông tin nhân viên thì chưa khả thi). Có thể giải quyết bằng cách cho phép sau 5-10 phút sẽ tự động lưu thời điểm hiện tại và nhân viên hiện tại vào file
+    - []  : Lưu lịch sử làm việc của các nhân viên 
+    - [x] : swap/merge bill
+    - [x] : cho phép chia bill ra để thanh toán theo từng ghế
+    - [x] : Không cho đăng xuất khi còn bàn đang order
     
 (*) dự kiến :  Bổ sung thông tin khách hàng, thêm chức năng xuất thông tin và hình ảnh nhận diện khách hàng quen thuộc, khi xuất danh sách khách hàng cho nhân viên xem có thể sort theo số lần khách hàng đã đến quán
 
 
   - **WareHouseWindow**:
     - [x] : đăng nhập/đăng xuất
-    - [] : khung nhập hóa đơn mua nguyên liệu vào kho (gần giống với khung nhập order)
+    - [x] : khung nhập hóa đơn mua nguyên liệu vào kho (gần giống với khung nhập order)
     - [x] : xây dựng cửa sổ theo dõi, thống kê lượng nguyên liệu sử dụng và lương nguyên liệu đưa vào kho
-    - [] : thống kê các nguyên liệu theo lượng sử dụng
-    - [] : chức năng kiểm tra và thông báo khi lượng nguyên liệu gần hết (cần thông tin các món ăn, nguyên liệu, công thức, và hệ thống quy đổi đơn vị dùng, đơn vị mua và đơn vị lưu trữ nguyên liệu)
-    - [] : xây dựng cửa sổ nhập đơn hàng, sau khi nhân viên nhập đơn hàng sẽ tự động sinh dữ liệu ReceitpNote và ReceiptNoteDetails trong database
-
+    - [x] : thống kê các nguyên liệu theo lượng sử dụng
+    - [x] : chức năng kiểm tra và thông báo khi lượng nguyên liệu gần hết (cần thông tin các món ăn, nguyên liệu, công thức, và hệ thống quy đổi đơn vị dùng, đơn vị mua và đơn vị lưu trữ nguyên liệu)
+    - [x] : xây dựng cửa sổ nhập đơn hàng, sau khi nhân viên nhập đơn hàng sẽ tự động sinh dữ liệu ReceitpNote và ReceiptNoteDetails trong database
+    - []  : Kho cho AdPress
 
   - **AdminWorkspaceWindow**:
-    - [] : Employee information form (giao diện/xem/xoá/sửa thông tin/tìm kiếm(theo tên, ?))
-    - [] : Salary N`ote information form (giao diện/xem/xoá/sửa thông tin)
-    - [] : Customer information form (giao diện/xem/xoá/sửa thông tin/tìm kiếm(theo tên, ?))
-    - [] : Product information form (giao diện/xem/xoá/tìm kiếm(theo tên, ?))
-    - [] : Ingredient information form (giao diện/xem/xoá/sửa thông tin/tìm kiếm(theo tên, ?))
-    - [] : Cho phép thiết kế món ăn mới (map món ăn và lượng nguyên liệu tho công thức)
-    - [] : Order information form (giao diện/xem/tìm kiếm(theo ngày, ?))
-    - [] : ReceiptNote information form (giao diện/xem/tìm kiếm(theo ngày, ?))
+    - [x] : Employee information form (giao diện/xem/xoá/sửa thông tin/tìm kiếm(theo tên, ?))
+    - [x] : Salary N`ote information form (giao diện/xem/xoá/sửa thông tin)
+    - [x] : Customer information form (giao diện/xem/xoá/sửa thông tin/tìm kiếm(theo tên, ?))
+    - [x] : Product information form (giao diện/xem/xoá/tìm kiếm(theo tên, ?))
+    - [x] : Ingredient information form (giao diện/xem/xoá/sửa thông tin/tìm kiếm(theo tên, ?))
+    - [x] : Cho phép thiết kế món ăn mới (map món ăn và lượng nguyên liệu tho công thức)
+    - [x] : Order information form (giao diện/xem/tìm kiếm(theo ngày, ?))
+    - [x] : ReceiptNote information form (giao diện/xem/tìm kiếm(theo ngày, ?))
     - [x] : Admin profile information form (giao diện/xem/sửa thông tin) _ không có quyền xóa bất kì admin nào
     - [x] : xuất report cho dữ liệu order/order details, empschedule/salarynote
     - [x] : xuất report cho dữ liệu receiptnote/receiptnote details
