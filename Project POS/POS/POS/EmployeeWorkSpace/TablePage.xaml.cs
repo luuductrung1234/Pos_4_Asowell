@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -192,9 +192,7 @@ namespace POS.EmployeeWorkSpace
 
                 rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
                 rec.MouseMove += btnTableAdded_MoveDrag;
-                rec.MouseMove += btnTableAdded_MouseMove;
                 rec.MouseLeftButtonDown += btnTableAdded_Click;
-                rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
                 rec.Cursor = Cursors.SizeAll;
 
@@ -229,6 +227,7 @@ namespace POS.EmployeeWorkSpace
 
                 rec.MouseMove += btnTableAdded_MouseMove;
                 rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
+                rec.MouseLeave += btnTableAdded_MouseLeave;
 
                 Panel.SetZIndex(rec, 100);
                 grTable.Children.Add(rec);
@@ -831,10 +830,39 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+        Brush ori;
+        bool checkMove = true;
         //su kien khi move qua Table
         private void btnTableAdded_MouseMove(object sender, MouseEventArgs e)
         {
-            //(sender as Rectangle).ToolTip = SetTooltip(sender as Rectangle);
+            if (checkMove)
+            {
+                ori = (sender as Rectangle).Fill;
+
+                currentRec = new Rectangle();
+                currentRec = sender as Rectangle;
+
+                //(sender as Rectangle).ToolTip = SetTooltip(sender as Rectangle);
+                if (currentRec.Fill == Brushes.Red)
+                {
+                    //currentRec.Fill = (Brush)(new BrushConverter()).ConvertFromString("#CC000000");
+                    currentRec.Fill = new SolidColorBrush(Color.FromRgb(220, 0, 0));
+                }
+                else if (currentRec.Fill == Brushes.DarkCyan)
+                {
+                    //currentRec.Fill = (Brush)(new BrushConverter()).ConvertFromString("#00CCFF00");
+                    currentRec.Fill = new SolidColorBrush(Color.FromRgb(0, 110, 110));
+                }
+
+                checkMove = false;
+            }
+        }
+
+        //su kien khi move out Table
+        private void btnTableAdded_MouseLeave(object sender, MouseEventArgs e)
+        {
+            currentRec.Fill = ori;
+            checkMove = true;
         }
 
         Point currentPointer;
