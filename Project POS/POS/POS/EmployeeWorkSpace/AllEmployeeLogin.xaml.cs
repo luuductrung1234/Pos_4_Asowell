@@ -556,7 +556,17 @@ namespace POS.EmployeeWorkSpace
                 {
                     if (empout != null)
                     {
-                        if((empout.Emp.Username.Equals(username) && (empout.Emp.DecryptedPass.Equals(pass)) || empout.Emp.DecryptedCode.Equals(code)))
+                        if (EmpLoginListData.emploglist.Count == 1)
+                        {
+                            var orderedTable = _unitofwork.TableRepository.Get(x => x.IsOrdered == 1).ToList();
+                            if (orderedTable.Count != 0)
+                            {
+                                MessageBox.Show("You can not logout because still have Tables that in the ordering state out there. Please check again!");
+                                return;
+                            }
+                        }
+
+                        if ((empout.Emp.Username.Equals(username) && (empout.Emp.DecryptedPass.Equals(pass)) || empout.Emp.DecryptedCode.Equals(code)))
                         {
                             empout.EmpWH.EndTime = DateTime.Now;
                             _cloudPosUnitofwork.WorkingHistoryRepository.Insert(empout.EmpWH);
@@ -564,7 +574,8 @@ namespace POS.EmployeeWorkSpace
 
                             var workH = empout.EmpWH.EndTime - empout.EmpWH.StartTime;
                             empout.EmpSal = _cloudPosUnitofwork.SalaryNoteRepository.Get(sle => sle.EmpId.Equals(empout.Emp.EmpId) && sle.ForMonth.Equals(DateTime.Now.Month) && sle.ForYear.Equals(DateTime.Now.Year)).First();
-                            empout.EmpSal.WorkHour += workH.Hours + workH.Minutes / 60 + workH.Seconds / 3600;
+                            empout.EmpSal.WorkHour += workH.Hours + (workH.Minutes / 60.0) + (workH.Seconds / 3600.0);
+                            empout.EmpSal.SalaryValue = (decimal) (empout.EmpSal.WorkHour * empout.Emp.HourWage);
                             _cloudPosUnitofwork.SalaryNoteRepository.Update(empout.EmpSal);
                             _cloudPosUnitofwork.Save();
 

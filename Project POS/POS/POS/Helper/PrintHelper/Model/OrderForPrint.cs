@@ -192,7 +192,21 @@ namespace POS.Helper.PrintHelper.Model
 
             if (TableOwned != null)
             {
-                //Todo: add BreakFast and KigBreakFast
+                //Todo: add BreakFast and KidBreakFast
+                //Starter
+                var BFQuery = OrderDetails.Where(od => od.SelectedStats == "BreakFast").ToList();
+                var BFList = new Dictionary<int, List<OrderDetailsForPrint>>();
+                int BFCount = 0;
+                for (int i = 1; i <= TableOwned.ChairAmount; i++)
+                {
+                    var chairBFQuery = BFQuery.Where(od => od.ChairNumber == i).ToList();
+                    BFCount += chairBFQuery.Count;
+                    BFList.Add(i, chairBFQuery);
+                }
+                if (BFCount != 0)
+                {
+                    resultList.Add("Breakfast", BFList);
+                }
 
                 //Starter
                 var starterQuery = OrderDetails.Where(od => od.SelectedStats == "Starter").ToList();
@@ -372,7 +386,7 @@ namespace POS.Helper.PrintHelper.Model
             return new string[]
             {
                 "Product Price",
-                "Quan",
+                "Qty",
                 "Price",
                 "Amt"
             };

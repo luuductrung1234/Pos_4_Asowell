@@ -39,6 +39,8 @@ namespace POS.EmployeeWorkSpace
                 {
                     _unitofwork = ((MainWindow)Window.GetWindow(this))._unitofwork;
                     _cloudPosUnitofwork = ((MainWindow)Window.GetWindow(this)).CloudPosUnitofwork;
+                    lvCategoryBreakFast.ItemsSource =
+                        _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("BreakFast"));
                     lvCategoryStarter.ItemsSource =
                         _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
                     lvCategoryMain.ItemsSource =
@@ -131,9 +133,8 @@ namespace POS.EmployeeWorkSpace
                     var foundinchairorderdetailstemp = chairorderdetailstemp.Where(x => x.ProductId.Equals(it.ProductId)).ToList();
 
                     // go to warehouse, check and get the ingredient to make product
-                    if (!TakeFromWareHouseData(o))       
+                    if (!TakeFromWareHouseData(o, it))       
                     {
-                        MessageBox.Show("This Product can not add to Order. Please check to WareHouse for Ingredient's stock!");
                         return;
                     }
 
@@ -199,12 +200,19 @@ namespace POS.EmployeeWorkSpace
 
         }
 
-        private bool TakeFromWareHouseData(OrderDetailsTemp orderDetails)
+        private bool TakeFromWareHouseData(OrderDetailsTemp orderDetails, Product orderingProduct)
         {
             var prodOfOrderDetails =
-                _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderDetails.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
+                _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderingProduct.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
             if (prodOfOrderDetails != null)
             {
+                // if product have no product details
+                if (prodOfOrderDetails.ProductDetails.Count == 0)
+                {
+                    // still allow to order but no ingredient relate to this product for tracking
+                    return true;
+                }
+
                 var wareHouseDict = new Dictionary<WareHouse, double?>();
 
                 // going to warehouse and take the contain of each ingredient
@@ -212,18 +220,27 @@ namespace POS.EmployeeWorkSpace
                 {
                     var quan = prodDetails.Quan;
                     var ingd =
-                        _cloudPosUnitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId)).FirstOrDefault();
+                        _cloudPosUnitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId))
+                            .FirstOrDefault();
                     if (ingd == null)
+                    {
+                        MessageBox.Show("Something went wrong cause of the Ingredient's information");
                         return false;
+                    }
                     var wareHouse =
-                        _cloudPosUnitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId)).FirstOrDefault();
+                        _cloudPosUnitofwork.WareHouseRepository.Get(x => x.WarehouseId.Equals(ingd.WarehouseId))
+                            .FirstOrDefault();
                     if (wareHouse == null)
+                    {
+                        MessageBox.Show("Something went wrong cause of the WareHouse's information");
                         return false;
+                    }
 
                     var temple_Contain = wareHouse.Contain;
 
                     if (temple_Contain < quan)
                     {
+                        MessageBox.Show("This Product can not order now. Please check to WareHouse for Ingredient's stock!");
                         return false;
                     }
                     else
@@ -240,6 +257,11 @@ namespace POS.EmployeeWorkSpace
                     item.Key.Contain = item.Value;
                 }
                 _cloudPosUnitofwork.Save();
+            }
+            else
+            {
+                MessageBox.Show("This Product is not existed in database! Please check the Product's information");
+                return false;
             }
 
             return true;
@@ -261,6 +283,7 @@ namespace POS.EmployeeWorkSpace
 
             if (filter.Length == 0)
             {
+                lvCategoryBreakFast.ItemsSource = _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("BreakFast"));
                 lvCategoryStarter.ItemsSource = _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter"));
                 lvCategoryMain.ItemsSource = _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Main"));
                 lvCategoryDessert.ItemsSource = _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
@@ -277,6 +300,13 @@ namespace POS.EmployeeWorkSpace
         //check khi Search
         private void checkSearch(string filter)
         {
+            if (ItemBreakFast.IsSelected == true)
+            {
+                lvCategoryBreakFast.ItemsSource = _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("BreakFast") && p.Name.Contains(filter));
+                lvCategoryBreakFast.PreviewMouseLeftButtonUp += lvCategory_PreviewMouseLeftButtonUp;
+                curItem = ItemBreakFast;
+            }
+
             if (ItemStarter.IsSelected == true)
             {
                 lvCategoryStarter.ItemsSource = _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Starter") && p.Name.Contains(filter));

@@ -271,38 +271,38 @@ values		-- thức ăn
 ('P000000124',	N'Rib Eye',					N'',		150,	1, 0, 0, 'Main',	'RibeyeSteak.jpg')
 
 
-insert into Product 
-	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
-values		-- thức ăn
-('P000000001',	N'plain yogurt',			N'',		25,		1, 0, 0, 'Dessert'),
-('P000000002',	N'choco fondue',			N'',		70,		1, 0, 0, 'Dessert'),
-('P000000003',	N'choco cloud',				N'',		55,		1, 0, 0, 'Dessert'),
-('P000000004',	N'custard bread tower',		N'',		70,		1, 0, 0, 'Dessert'),
-('P000000005',	N'choco muffin',			N'',		25,		1, 0, 0, 'Dessert'),
-('P000000006',	N'apple muffin',			N'',		25,		1, 0, 0, 'Dessert'),
-('P000000007',	N'greentea muffin',			N'',		25,		1, 0, 0, 'Dessert'),
-('P000000008',	N'banana cake',				N'',		25,		1, 0, 0, 'Dessert'),
-('P000000009',	N'carrot cake',				N'',		25,		1, 0, 0, 'Dessert'),
-('P000000010',	N'french fries',			N'',		35,		1, 0, 0, 'Starter'),
-('P000000011',	N'french toast',			N'',		45,		1, 0, 0, 'Main'),
-('P000000012',	N'tiramisu cake',			N'',		45,		1, 0, 0, 'Dessert'),
-('P000000013',	N'cheese hotdog',			N'',		35,		1, 0, 0, 'Starter'),
-('P000000014',	N'cereal & milk',			N'',		50,		1, 0, 0, 'Main'),
-('P000000015',	N'honey butter bread',		N'',		70,		1, 0, 0, 'Main'),
-('P000000016',	N'pumpkin soup',			N'',		35,		1, 0, 0, 'Starter'),
-('P000000017',	N'chilli fries',			N'',		50,		1, 0, 0, 'Starter'),
-('P000000018',	N'tortillas nachos',		N'',		50,		1, 0, 0, 'Main'),
-('P000000019',	N'chicken melt',			N'',		50,		1, 0, 0, 'Main'),
-('P000000020',	N'comma club',				N'',		55,		1, 0, 0, 'Main'),
-('P000000021',	N'gourmet berger',			N'',		60,		1, 0, 0, 'Main'),
-('P000000022',	N'spaghetti bolognese',		N'',		55,		1, 0, 0, 'Main'),
-('P000000023',	N'spaghetti carbonara',		N'',		55,		1, 0, 0, 'Main'),
-('P000000024',	N'noodle eggs omelette',	N'',		45,		1, 0, 0, 'Main'),
-('P000000025',	N'chicken burrito',			N'',		60,		1, 0, 0, 'Main'),
-('P000000026',	N'hawaiian pizza',			N'',		60,		1, 0, 0, 'Main'),
-('P000000027',	N'comma pizza',				N'',		60,		1, 0, 0, 'Main'),
-('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0, 0, 'Main'),
-('P000000029',	N'bibimbob',				N'',		60,		1, 0, 0, 'Main')	
+--insert into Product 
+--	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
+--values		-- thức ăn
+--('P000000001',	N'plain yogurt',			N'',		25,		1, 0, 0, 'Dessert'),
+--('P000000002',	N'choco fondue',			N'',		70,		1, 0, 0, 'Dessert'),
+--('P000000003',	N'choco cloud',				N'',		55,		1, 0, 0, 'Dessert'),
+--('P000000004',	N'custard bread tower',		N'',		70,		1, 0, 0, 'Dessert'),
+--('P000000005',	N'choco muffin',			N'',		25,		1, 0, 0, 'Dessert'),
+--('P000000006',	N'apple muffin',			N'',		25,		1, 0, 0, 'Dessert'),
+--('P000000007',	N'greentea muffin',			N'',		25,		1, 0, 0, 'Dessert'),
+--('P000000008',	N'banana cake',				N'',		25,		1, 0, 0, 'Dessert'),
+--('P000000009',	N'carrot cake',				N'',		25,		1, 0, 0, 'Dessert'),
+--('P000000010',	N'french fries',			N'',		35,		1, 0, 0, 'Starter'),
+--('P000000011',	N'french toast',			N'',		45,		1, 0, 0, 'Main'),
+--('P000000012',	N'tiramisu cake',			N'',		45,		1, 0, 0, 'Dessert'),
+--('P000000013',	N'cheese hotdog',			N'',		35,		1, 0, 0, 'Starter'),
+--('P000000014',	N'cereal & milk',			N'',		50,		1, 0, 0, 'Main'),
+--('P000000015',	N'honey butter bread',		N'',		70,		1, 0, 0, 'Main'),
+--('P000000016',	N'pumpkin soup',			N'',		35,		1, 0, 0, 'Starter'),
+--('P000000017',	N'chilli fries',			N'',		50,		1, 0, 0, 'Starter'),
+--('P000000018',	N'tortillas nachos',		N'',		50,		1, 0, 0, 'Main'),
+--('P000000019',	N'chicken melt',			N'',		50,		1, 0, 0, 'Main'),
+--('P000000020',	N'comma club',				N'',		55,		1, 0, 0, 'Main'),
+--('P000000021',	N'gourmet berger',			N'',		60,		1, 0, 0, 'Main'),
+--('P000000022',	N'spaghetti bolognese',		N'',		55,		1, 0, 0, 'Main'),
+--('P000000023',	N'spaghetti carbonara',		N'',		55,		1, 0, 0, 'Main'),
+--('P000000024',	N'noodle eggs omelette',	N'',		45,		1, 0, 0, 'Main'),
+--('P000000025',	N'chicken burrito',			N'',		60,		1, 0, 0, 'Main'),
+--('P000000026',	N'hawaiian pizza',			N'',		60,		1, 0, 0, 'Main'),
+--('P000000027',	N'comma pizza',				N'',		60,		1, 0, 0, 'Main'),
+--('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0, 0, 'Main'),
+--('P000000029',	N'bibimbob',				N'',		60,		1, 0, 0, 'Main')	
 
 
 --insert into ProductDetails values

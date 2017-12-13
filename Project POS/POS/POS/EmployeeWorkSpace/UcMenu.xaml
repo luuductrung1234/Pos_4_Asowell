@@ -53,6 +53,57 @@
         <dragablz:TabablzControl x:Name="tabControl"
                                  Background="DarkGray"
                                  Margin="0,0,0,45">
+
+            <!--Breakfast-->
+            <TabItem x:Name="ItemBreakFast"
+                     GotFocus="TabItem_GotFocus">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\Icon\Sunrise_32px.png"
+                               Height="25"
+                               Width="25" />
+                        <TextBlock Text="Breakfast"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid x:Name="ItemGridBreakFast">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListBox ItemsSource="{Binding Kinds}"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             x:Name="lvCategoryBreakFast"
+                             PreviewMouseLeftButtonUp="lvCategory_PreviewMouseLeftButtonUp">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemHeight="140"
+                                           ItemWidth="140" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="materialDesign:PackIconKind">
+                                <DockPanel Width="120"
+                                           Height="120"
+                                           Background="Transparent">
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               DockPanel.Dock="Bottom"
+                                               TextTrimming="CharacterEllipsis"
+                                               HorizontalAlignment="Center" />
+                                    <Image Source="{Binding ImageData}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Width="100"
+                                           Height="100" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
             <!--Starter-->
             <TabItem x:Name="ItemStarter"
                      GotFocus="TabItem_GotFocus">
@@ -158,7 +209,7 @@
                      GotFocus="TabItem_GotFocus">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\Icon\icons8_Quesadilla_32px.png"
+                        <Image Source="..\Icon\Cake_32px.png"
                                Height="25"
                                Width="25" />
                         <TextBlock Text="Dessert"
