@@ -63,7 +63,7 @@ namespace POS
 
         private void GotoAdPressWSButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
