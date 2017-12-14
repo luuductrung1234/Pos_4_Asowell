@@ -9,7 +9,9 @@ namespace POS.Entities
     public enum AdminReRole
     {
         SoftwareAd = 1,
-        UserAd = 2
+        AsowelAd = 2,
+        AdPressAd = 3,
+        HigherAd = 4
     }
 
     public partial class AdminRe

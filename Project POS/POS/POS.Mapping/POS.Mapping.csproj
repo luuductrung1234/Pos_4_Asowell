@@ -51,6 +51,12 @@
     <Compile Include="AdminReMapping.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AdPressMapping\APWareHouseMapping.cs" />
+    <Compile Include="AdPressMapping\StockInDetailsMapping.cs" />
+    <Compile Include="AdPressMapping\StockInMapping.cs" />
+    <Compile Include="AdPressMapping\StockMapping.cs" />
+    <Compile Include="AdPressMapping\StockOutDetailsMapping.cs" />
+    <Compile Include="AdPressMapping\StockOutMapping.cs" />
     <Compile Include="ApplicationLogMapping.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using log4net;
 using POS.AdminWorkSpace;
+using POS.Entities;
 using POS.WareHouseWorkSpace;
 
 namespace POS
@@ -26,6 +27,19 @@ namespace POS
         public AdminNavWindow()
         {
             InitializeComponent();
+
+            var curAd = App.Current.Properties["AdLogin"]  as AdminRe;
+            if (curAd.AdRole == (int) AdminReRole.AsowelAd)
+            {
+                stpAdpress.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                if (curAd.AdRole == (int) AdminReRole.AdPressAd)
+                {
+                    stpAsowel.Visibility = Visibility.Collapsed;
+                }
+            }
         }
 
 
@@ -45,6 +59,11 @@ namespace POS
             adminWindow.Show();
 
             this.Close();
+        }
+
+        private void GotoAdPressWSButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

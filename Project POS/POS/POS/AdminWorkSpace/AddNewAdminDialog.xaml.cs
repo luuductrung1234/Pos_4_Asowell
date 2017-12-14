@@ -33,7 +33,9 @@ namespace POS.AdminWorkSpace
             List<dynamic> roleList = new List<dynamic>
             {
                 new { role = 1, roleDisplay = "Software Admin"},
-                new { role = 2, roleDisplay = "User Admin"},
+                new { role = 2, roleDisplay = "Asowel Admin"},
+                new { role = 3, roleDisplay = "AdPress Admin"},
+                new { role = 4, roleDisplay = "Higher Admin"}
             };
             cboRole.ItemsSource = roleList;
             cboRole.SelectedValuePath = "role";

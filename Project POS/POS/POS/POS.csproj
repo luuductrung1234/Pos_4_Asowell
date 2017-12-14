@@ -231,6 +231,7 @@
     <Compile Include="AdminWorkSpace\WareHouseStdContainDialog.xaml.cs">
       <DependentUpon>WareHouseStdContainDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdPressWareHouseWorkSpace\Helper\UnitBuyTrans.cs" />
     <Compile Include="DatabaseConfigWindow.xaml.cs">
       <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
     </Compile>
@@ -862,6 +863,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Products\warm_Edamame.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Move Stock_104px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

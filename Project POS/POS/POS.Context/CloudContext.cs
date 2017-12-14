@@ -11,6 +11,7 @@
 // TargetFrameworkVersion = 4.6
 
 using System.Data.Entity;
+using POS.Mapping.AdPressMapping;
 
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
@@ -110,6 +111,13 @@ namespace POS.Context
             modelBuilder.Configurations.Add(new WareHouseMapping());
             modelBuilder.Configurations.Add(new WorkingHistoryMapping());
 
+            modelBuilder.Configurations.Add(new APWareHouseMapping());
+            modelBuilder.Configurations.Add(new StockMapping());
+            modelBuilder.Configurations.Add(new StockInMapping());
+            modelBuilder.Configurations.Add(new StockInDetailsMapping());
+            modelBuilder.Configurations.Add(new StockOutMapping());
+            modelBuilder.Configurations.Add(new StockOutDetailsMapping());
+
             OnModelCreatingPartial(modelBuilder);
         }
 
@@ -129,6 +137,14 @@ namespace POS.Context
             modelBuilder.Configurations.Add(new SalaryNoteMapping(schema));
             modelBuilder.Configurations.Add(new WareHouseMapping(schema));
             modelBuilder.Configurations.Add(new WorkingHistoryMapping(schema));
+
+            modelBuilder.Configurations.Add(new APWareHouseMapping(schema));
+            modelBuilder.Configurations.Add(new StockMapping(schema));
+            modelBuilder.Configurations.Add(new StockInMapping(schema));
+            modelBuilder.Configurations.Add(new StockInDetailsMapping(schema));
+            modelBuilder.Configurations.Add(new StockOutMapping(schema));
+            modelBuilder.Configurations.Add(new StockOutDetailsMapping(schema));
+
             return modelBuilder;
         }
 

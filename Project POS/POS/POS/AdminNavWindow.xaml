@@ -14,116 +14,182 @@
         Width="1050"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
-    <StackPanel>
-        <WPFMaterialDesign:Home Height="450" />
 
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <materialDesign:Card Width="420"
-                                 Margin="8 2 4 16"
-                                 Height="230">
-                <Grid VerticalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Image Source="../Icon/Admin_96px.png"
-                           Width="160"
-                           Height="160"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                    <StackPanel Grid.Column="1">
-                        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                   Margin="16 16 16 8">Admin WorkSpace</TextBlock>
-                        <TextBlock TextWrapping="Wrap"
-                                   Margin="16 0 16 8"
-                                   Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                   VerticalAlignment="Top">Admin WorkSpace is for target user like admin or manager to 
+    <ScrollViewer>
+        <StackPanel>
+            <WPFMaterialDesign:Home Height="450" />
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        x:Name="stpAsowel">
+                <materialDesign:Card Width="420"
+                                     Margin="8 2 4 16"
+                                     Height="230">
+                    <Grid VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="../Icon/Admin_96px.png"
+                               Width="160"
+                               Height="160"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                       Margin="16 16 16 8">Admin WorkSpace</TextBlock>
+                            <TextBlock TextWrapping="Wrap"
+                                       Margin="16 0 16 8"
+                                       Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                       VerticalAlignment="Top">Admin WorkSpace is for target user like admin or manager to 
                                         view, insert, modify,... their important data</TextBlock>
-                    </StackPanel>
-                    <Border Grid.Row="1"
-                            Grid.ColumnSpan="2"
-                            BorderThickness="0 1 0 0"
-                            BorderBrush="{DynamicResource MaterialDesignDivider}"
-                            Padding="8">
-                        <DockPanel>
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    DockPanel.Dock="Right"
-                                    x:Name="GotoAdminWSButton"
-                                    Click="GotoAdminWSButton_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Navigation" />
-                                    <TextBlock Margin="8 0 0 0"
-                                               VerticalAlignment="Center">Start</TextBlock>
-                                </StackPanel>
-                            </Button>
-                            <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       TextWrapping="Wrap"
-                                       Margin="16"
-                                       VerticalAlignment="Center">
+                        </StackPanel>
+                        <Border Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                BorderThickness="0 1 0 0"
+                                BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                Padding="8">
+                            <DockPanel>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        DockPanel.Dock="Right"
+                                        x:Name="GotoAdminWSButton"
+                                        Click="GotoAdminWSButton_OnClick">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Navigation" />
+                                        <TextBlock Margin="8 0 0 0"
+                                                   VerticalAlignment="Center">Start</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                           TextWrapping="Wrap"
+                                           Margin="16"
+                                           VerticalAlignment="Center">
                                         Go to Admin WorkSpace:
-                            </TextBlock>
-                        </DockPanel>
-                    </Border>
-                </Grid>
-            </materialDesign:Card>
-            <materialDesign:Card Width="420"
-                                 Margin="8 2 4 16"
-                                 Height="230">
-                <Grid VerticalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Image Source="../Icon/Box_104px.png"
-                           Width="160"
-                           Height="160"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                    <StackPanel Grid.Column="1">
-                        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                   Margin="16 16 16 8">WareHouse WorkSpace</TextBlock>
-                        <TextBlock TextWrapping="Wrap"
-                                   Margin="16 0 16 8"
-                                   Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                   VerticalAlignment="Top">Warehouse WorkSpace is for target user like admin or manager. It 
+                                </TextBlock>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card Width="420"
+                                     Margin="8 2 4 16"
+                                     Height="230">
+                    <Grid VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="../Icon/Box_104px.png"
+                               Width="160"
+                               Height="160"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                       Margin="16 16 16 8">WareHouse WorkSpace</TextBlock>
+                            <TextBlock TextWrapping="Wrap"
+                                       Margin="16 0 16 8"
+                                       Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                       VerticalAlignment="Top">Warehouse WorkSpace is for target user like admin or manager. It 
                                         supply many feature to manage your storage, goods, items,....</TextBlock>
-                    </StackPanel>
-                    <Border Grid.Row="1"
-                            Grid.ColumnSpan="2"
-                            BorderThickness="0 1 0 0"
-                            BorderBrush="{DynamicResource MaterialDesignDivider}"
-                            Padding="8">
-                        <DockPanel>
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                    DockPanel.Dock="Right"
-                                    x:Name="GotoWareHouseWSButton"
-                                    Click="GotoWareHouseWSButton_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Navigation" />
-                                    <TextBlock Margin="8 0 0 0"
-                                               VerticalAlignment="Center">Start</TextBlock>
-                                </StackPanel>
-                            </Button>
-                            <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       TextWrapping="Wrap"
-                                       Margin="16"
-                                       VerticalAlignment="Center">
+                        </StackPanel>
+                        <Border Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                BorderThickness="0 1 0 0"
+                                BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                Padding="8">
+                            <DockPanel>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        DockPanel.Dock="Right"
+                                        x:Name="GotoWareHouseWSButton"
+                                        Click="GotoWareHouseWSButton_OnClick">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Navigation" />
+                                        <TextBlock Margin="8 0 0 0"
+                                                   VerticalAlignment="Center">Start</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                           TextWrapping="Wrap"
+                                           Margin="16"
+                                           VerticalAlignment="Center">
                                         Go to WareHouse WorkSpace:
-                            </TextBlock>
-                        </DockPanel>
-                    </Border>
-                </Grid>
-            </materialDesign:Card>
-        </StackPanel>
+                                </TextBlock>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </materialDesign:Card>
+            </StackPanel>
 
-    </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        x:Name="stpAdpress">
+                <materialDesign:Card Width="420"
+                                     Margin="8 2 4 16"
+                                     Height="230">
+                    <Grid VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="../Icon/Move Stock_104px.png"
+                               Width="160"
+                               Height="160"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                       Margin="16 16 16 8">AdPress Warehouse</TextBlock>
+                            <TextBlock TextWrapping="Wrap"
+                                       Margin="16 0 16 8"
+                                       Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                       VerticalAlignment="Top">AdPress Warehouse WorkSpace is for target user like admin or manager to 
+                                        view, insert, modify,... their important data of Adpress</TextBlock>
+                        </StackPanel>
+                        <Border Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                BorderThickness="0 1 0 0"
+                                BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                Padding="8">
+                            <DockPanel>
+                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                        DockPanel.Dock="Right"
+                                        x:Name="GotoAdPressWSButton"
+                                        Click="GotoAdPressWSButton_OnClick">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Navigation" />
+                                        <TextBlock Margin="8 0 0 0"
+                                                   VerticalAlignment="Center">Start</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <TextBlock Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                           TextWrapping="Wrap"
+                                           Margin="16"
+                                           VerticalAlignment="Center">
+                                        Go to AdPress Warehouse:
+                                </TextBlock>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card Width="420"
+                                     Margin="8 2 4 16"
+                                     Height="230"
+                                     Visibility="Hidden">
+                </materialDesign:Card>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+
 </Window>

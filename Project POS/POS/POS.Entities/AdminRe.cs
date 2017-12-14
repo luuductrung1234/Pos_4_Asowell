@@ -31,9 +31,15 @@ namespace POS.Entities
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Employee> Employees { get; set; } // Employee.FK_dbo.Employee_dbo.AdminRes_manager
 
+        public virtual System.Collections.Generic.ICollection<StockIn> StockIns { get; set; }
+
+        public virtual System.Collections.Generic.ICollection<StockOut> StockOuts { get; set; }
+
         public AdminRe()
         {
             Employees = new System.Collections.Generic.List<Employee>();
+            StockIns = new System.Collections.Generic.List<StockIn>();
+            StockOuts = new System.Collections.Generic.List<StockOut>();
             InitializePartial();
         }
 

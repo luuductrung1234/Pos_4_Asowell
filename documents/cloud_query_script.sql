@@ -909,6 +909,36 @@ values
 
 
 
+insert into [APWareHouse]
+	([apwarehouse_id], [name], [contain], [std_contain])
+values
+('APW0000001', 'AdPress Warehouse 1', 80, 10000)
+
+-- 1: Cosmetics		2: SpaVoucher	3: GymVoucher	4: ResVoucher		5: TravVoucher		6: Food		7: Agricultural		8: Watch	9: TopTen
+insert into [Stock]
+	([sto_id], [apwarehouse_id], [name], [group], [barter_code], [barter_name], [unit_in], [unit_out], [standard_price], [info], [supplier], [deleted])
+values
+('STO0000001', 'APW0000001', 'Voucher Spa Lan Anh', 2, '1111111', 'sample_barter_name', 'pcs', 'pcs', 0, '', 'Spa Lan Anh', 0)
+
+insert into [StockIn]
+	([si_id], [ad_id], [intime], [total_amount])
+values
+('STI0000001', 'AD00000003', '2017-12-14 00:00:00', 20000)
+
+insert into [StockInDetails]
+	([si_id], [sto_id], [quan], [item_price], [note])
+values
+('STI0000001', 'STO0000001', 100, 200, 'voucher từ spa Lan Anh quận 7')
+
+insert into [StockOut]
+	([stockout_id], [ad_id], [outTime], [discount], [Vat], [total_amount])
+values
+('STO0000001', 'AD00000003', '2017-12-15 00:00:00', 0, 0, 2000)
+
+insert into [StockOutDetails]
+	([stockout_id], [stock_id], [quan], [discount])
+values
+('STO0000001', 'STO0000001', 20, 0)
 
 
 select * from AdminRes
@@ -939,6 +969,13 @@ select * from OrderNote
 select * from OrderNoteDetails
 
 
+select * from StockOutDetails
+select * from StockOut
+select * from StockInDetails
+select * from StockIn
+select * from Stock
+select * from APWareHouse
+
 --delete [ReceiptNoteDetails]
 --delete [ReceiptNote]
 
@@ -947,3 +984,10 @@ select * from OrderNoteDetails
 
 --delete [ProductDetails]
 --delete [Product]
+
+--delete [StockOutDetails]
+--delete [StockOut]
+--delete [StockInDetails]
+--delete [StockIn]
+--delete [Stock]
+--delete [APWareHouse]

@@ -52,6 +52,12 @@
     <Compile Include="AdminRe.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AdPressEntities\Stock.cs" />
+    <Compile Include="AdPressEntities\StockOut.cs" />
+    <Compile Include="AdPressEntities\StockOutDetails.cs" />
+    <Compile Include="AdPressEntities\StockIn.cs" />
+    <Compile Include="AdPressEntities\StockInDetails.cs" />
+    <Compile Include="AdPressEntities\APWareHouse.cs" />
     <Compile Include="ApplicationLog.cs">
       <DependentUpon>AsowellModel.tt</DependentUpon>
     </Compile>
