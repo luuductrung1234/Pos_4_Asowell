@@ -289,8 +289,9 @@ namespace POS.EmployeeWorkSpace
 
         private void ButtonChair_Checked(object sender, RoutedEventArgs e)
         {
-            //int ii = 0;
             curChair = sender as ToggleButton;
+            
+            //int ii = 0;
             //if(int.Parse(curChair.Name.Substring(5)) != 1)
             //{
             //    if (int.Parse(curChair.Name.Substring(5)) - ((MainWindow)Window.GetWindow(this)).currentChair.ChairNumber > 1)
@@ -319,6 +320,20 @@ namespace POS.EmployeeWorkSpace
                 {
                     ((MainWindow)Window.GetWindow(this)).currentChair = chair;
                     currentChair = chair;
+
+                    orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId) && x.ChairId.Equals(chair.ChairId)).ToList();
+                    if (orderDetailsTempCurrentTableList.Count == 0)
+                    {
+                        if (DateTime.Now.Hour >= 6 && DateTime.Now.Hour <= 12)
+                        {
+                            ((MainWindow)Window.GetWindow(this)).en.ucMenu.tabControl.SelectedIndex = 0;
+                        }
+                        else
+                        {
+                            ((MainWindow)Window.GetWindow(this)).en.ucMenu.tabControl.SelectedIndex = 1;
+                        }
+                    }
+
                     break;
                 }
             }
