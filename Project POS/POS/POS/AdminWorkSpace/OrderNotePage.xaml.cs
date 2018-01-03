@@ -27,13 +27,33 @@ namespace POS.AdminWorkSpace
         List<Product> _proList;
         List<OrderNote> _ordernotelist;
         List<OrderNoteDetail> _ordernotedetailslist;
-        public OrderNotePage(AdminwsOfCloudPOS unitofwork)
+        public OrderNotePage(AdminwsOfCloudPOS unitofwork, AdminRe admin)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
             _ordernotelist = _unitofwork.OrderRepository.Get(includeProperties: "Employee,Customer").ToList();
+            _ordernotelist = _ordernotelist.Where(x => x.Employee.Manager.Equals(admin.AdId)).ToList();
             lvOrderNote.ItemsSource = _ordernotelist;
             _ordernotedetailslist = _unitofwork.OrderNoteDetailsRepository.Get(includeProperties: "Product").ToList();
+            List<OrderNoteDetail> _orderdetailsTempList = new List<OrderNoteDetail>();
+            foreach (var orderdetails in _ordernotedetailslist)
+            {
+                bool found = false;
+                foreach(var order in _ordernotelist)
+                {
+                    if (orderdetails.OrdernoteId.Equals(order.OrdernoteId))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found)
+                {
+                    _orderdetailsTempList.Add(orderdetails);
+                }
+            }
+            _ordernotedetailslist = _orderdetailsTempList;
             lvOrderNoteDetails.ItemsSource = _ordernotedetailslist;
 
             this.Loaded += OrderNotePage_Loaded;

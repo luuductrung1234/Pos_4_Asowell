@@ -57,7 +57,7 @@ namespace POS.AdminWorkSpace
                 }
                 cUser.Content = curAdmin.Name;
 
-                if (curAdmin.AdRole == (int) AdminReRole.SoftwareAd)
+                if (curAdmin.AdRole == (int)AdminReRole.SoftwareAd)
                 {
                     btnCreateAdmin.Visibility = Visibility.Visible;
                 }
@@ -67,8 +67,8 @@ namespace POS.AdminWorkSpace
                 liveChartReceipt = new LiveChartReceiptPage(_unitofwork);
                 productdetals = new ProductDetailPage(_unitofwork);
                 ctmP = new CustomerPage(_unitofwork);
-                ordernotepage = new OrderNotePage(_unitofwork);
-                receiptnotepage = new ReceiptNotePage(_unitofwork);
+                ordernotepage = new OrderNotePage(_unitofwork, curAdmin);
+                receiptnotepage = new ReceiptNotePage(_unitofwork, curAdmin);
                 FoodPage = new statisticsFoodPage(_unitofwork);
                 statisticsWorkingHourPage = new StatisticsWorkingHourPage(_unitofwork);
                 homePage = new HomePage(_unitofwork);
@@ -138,7 +138,7 @@ namespace POS.AdminWorkSpace
 
         private void bntCustomer_Click(object sender, RoutedEventArgs e)
         {
-            
+
             myframe.Navigate(ctmP);
         }
 
@@ -164,7 +164,7 @@ namespace POS.AdminWorkSpace
 
         private void HomePage_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            
+
             myframe.Navigate(homePage);
         }
 
@@ -182,7 +182,7 @@ namespace POS.AdminWorkSpace
 
         private void ViewstaticReAndEx_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            
+
             myframe.Navigate(liveChartReceipt);
         }
 
