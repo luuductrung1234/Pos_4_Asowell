@@ -63,24 +63,21 @@ namespace POS.EmployeeWorkSpace
                 {
                     List<AdminRe> AdList = _cloudPosUnitofwork.AdminreRepository.Get().ToList();
 
+                    var ad = AdList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                     //Get Admin
                     bool isFoundAd = false;
-                    foreach (var item in AdList)
+                    if (ad != null)
                     {
-                        if (item.Username.Equals(username) && item.DecryptedPass.Equals(pass))
-                        {
-                            App.Current.Properties["AdLogin"] = item;
-
-                            isFoundAd = true;
-                            break;
-                        }
-
-                        if (!isFoundAd)
-                        {
-                            MessageBox.Show("incorrect username or password");
-                            return;
-                        }
+                        App.Current.Properties["AdLogin"] = ad;
+                        isFoundAd = true;
                     }
+
+                    if (!isFoundAd)
+                    {
+                        MessageBox.Show("incorrect username or password");
+                        return;
+                    }
+
                     Dispatcher.Invoke(() =>
                     {
                         _cUser.Content = (App.Current.Properties["AdLogin"] as AdminRe).Username;
