@@ -324,7 +324,7 @@ namespace POS.EmployeeWorkSpace
                     orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId) && x.ChairId.Equals(chair.ChairId)).ToList();
                     if (orderDetailsTempCurrentTableList.Count == 0)
                     {
-                        if (DateTime.Now.Hour >= 6 && DateTime.Now.Hour <= 12)
+                        if (DateTime.Now.Hour >= 6 && DateTime.Now.Hour < 12)
                         {
                             ((MainWindow)Window.GetWindow(this)).en.ucMenu.tabControl.SelectedIndex = 0;
                         }

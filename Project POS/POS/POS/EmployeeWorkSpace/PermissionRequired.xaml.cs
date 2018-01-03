@@ -30,6 +30,8 @@ namespace POS.EmployeeWorkSpace
             _cUser = cUser;
             InitializeComponent();
 
+            txtUsername.Focus();
+
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.NoResize;
         }
@@ -61,24 +63,21 @@ namespace POS.EmployeeWorkSpace
                 {
                     List<AdminRe> AdList = _cloudPosUnitofwork.AdminreRepository.Get().ToList();
 
+                    var ad = AdList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
                     //Get Admin
                     bool isFoundAd = false;
-                    foreach (var item in AdList)
+                    if (ad != null)
                     {
-                        if (item.Username.Equals(username) && item.DecryptedPass.Equals(pass))
-                        {
-                            App.Current.Properties["AdLogin"] = item;
-
-                            isFoundAd = true;
-                            break;
-                        }
-
-                        if (!isFoundAd)
-                        {
-                            MessageBox.Show("incorrect username or password");
-                            return;
-                        }
+                        App.Current.Properties["AdLogin"] = ad;
+                        isFoundAd = true;
                     }
+
+                    if (!isFoundAd)
+                    {
+                        MessageBox.Show("incorrect username or password");
+                        return;
+                    }
+
                     Dispatcher.Invoke(() =>
                     {
                         _cUser.Content = (App.Current.Properties["AdLogin"] as AdminRe).Username;
@@ -95,9 +94,40 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                txtPass.Focus();
+            }
+        }
+
+        private async void txtPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string username = txtUsername.Text.Trim();
+                string pass = txtPass.Password.Trim();
+                try
+                {
+                    btnAcceptLogin.IsEnabled = false;
+                    PgbLoginProcess.Visibility = Visibility.Visible;
+                    await Async(username, pass, null);
+
+                    btnAcceptLogin.IsEnabled = true;
+                    PgbLoginProcess.Visibility = Visibility.Collapsed;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
         private void btnAcceptCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
     }
 }

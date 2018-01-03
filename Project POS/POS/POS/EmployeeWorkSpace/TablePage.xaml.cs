@@ -354,6 +354,9 @@ namespace POS.EmployeeWorkSpace
                 rec.MouseLeftButtonDown += btnTableAdded_Click;
                 rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
+                rec.MouseMove += btnTableAdded_MouseMove;
+                rec.MouseLeave += btnTableAdded_MouseLeave;
+
                 Panel.SetZIndex(rec, 30);
                 grTable.Children.Add(rec);
 
@@ -432,6 +435,9 @@ namespace POS.EmployeeWorkSpace
             rec.MouseLeftButtonDown += btnTableAdded_Click;
             rec.MouseRightButtonDown += btnTableAdded_ContextMenu;
 
+            rec.MouseMove += btnTableAdded_MouseMove;
+            rec.MouseLeave += btnTableAdded_MouseLeave;
+
             rec.Cursor = Cursors.SizeAll;
 
             Panel.SetZIndex(rec, 30);
@@ -451,7 +457,7 @@ namespace POS.EmployeeWorkSpace
         }
 
         //method tao popup menu cho table
-        private void initcmRec(string cmType)
+        private void initcmRec(string cmType, Entities.Table t)
         {
             ContextMenu cmRec = new ContextMenu();
 
@@ -483,13 +489,13 @@ namespace POS.EmployeeWorkSpace
 
             if (cmType.Equals("pinned"))
             {
-                if (currentRec.Fill == Brushes.DarkCyan)
+                if (t.IsOrdered == 1)
                 {
                     cmRec.Items.Add(changeChairTable);
                     cmRec.Items.Add(removeTable);
                     //cmRec.Items.Add(payedTable);
                 }
-                else if (currentRec.Fill == Brushes.Red)
+                else if (t.IsPinned == 1)
                 {
                     cmRec.Items.Add(moveTable);
                     cmRec.Items.Add(changeChairTable);
@@ -644,11 +650,11 @@ namespace POS.EmployeeWorkSpace
                     {
                         if (t.IsPinned == 1)
                         {
-                            initcmRec("pinned");
+                            initcmRec("pinned", t);
                         }
                         else
                         {
-                            initcmRec("moved");
+                            initcmRec("moved", t);
                         }
                     }
                 }
