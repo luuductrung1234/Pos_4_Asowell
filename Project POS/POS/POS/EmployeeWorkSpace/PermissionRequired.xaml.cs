@@ -30,6 +30,8 @@ namespace POS.EmployeeWorkSpace
             _cUser = cUser;
             InitializeComponent();
 
+            txtUsername.Focus();
+
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.NoResize;
         }
@@ -95,9 +97,40 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                txtPass.Focus();
+            }
+        }
+
+        private async void txtPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string username = txtUsername.Text.Trim();
+                string pass = txtPass.Password.Trim();
+                try
+                {
+                    btnAcceptLogin.IsEnabled = false;
+                    PgbLoginProcess.Visibility = Visibility.Visible;
+                    await Async(username, pass, null);
+
+                    btnAcceptLogin.IsEnabled = true;
+                    PgbLoginProcess.Visibility = Visibility.Collapsed;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
         private void btnAcceptCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
     }
 }
