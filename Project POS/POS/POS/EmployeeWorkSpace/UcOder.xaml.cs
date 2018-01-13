@@ -26,6 +26,7 @@ namespace POS.EmployeeWorkSpace
         private OrderTemp orderTempTable;
         private List<Entities.Chair> chairlistcurrenttable;
         private List<Entities.OrderDetailsTemp> orderDetailsTempCurrentTableList;
+        private Employee currentEmp;
 
         public UcOder()
         {
@@ -43,6 +44,7 @@ namespace POS.EmployeeWorkSpace
             _cloudPosUnitofwork = ((MainWindow)Window.GetWindow(this)).CloudPosUnitofwork;
             currentTable = ((MainWindow)Window.GetWindow(this)).currentTable;
             currentChair = ((MainWindow)Window.GetWindow(this)).currentChair;
+            EmpLoginList currentEmpList = (App.Current.Properties["CurrentEmpWorking"] as EmpLoginList);
 
             if (currentTable == null)
             {
@@ -60,6 +62,23 @@ namespace POS.EmployeeWorkSpace
             {
                 InitCus_raiseEvent = false;
                 initStatus_RaiseEvent = false;
+            }
+
+            if(currentEmpList != null)
+            {
+                currentEmp = currentEmpList.Emp;
+
+                if(currentEmp != null)
+                {
+                    if (currentEmp.EmpRole == (int)EmployeeRole.Cashier)
+                    {
+                        this.bntPay.IsEnabled = true;
+                    }
+                    else
+                    {
+                        this.bntPay.IsEnabled = false;
+                    }
+                }
             }
 
             orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();

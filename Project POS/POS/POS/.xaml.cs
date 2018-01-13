@@ -135,7 +135,7 @@ namespace POS
                     if (emp != null)
                     {
                         App.Current.Properties["EmpLogin"] = emp;
-                        if (emp.EmpRole == 3)
+                        if (emp.EmpRole == (int)EmployeeRole.Stock)
                         {
                             Dispatcher.Invoke(() =>
                             {
@@ -274,7 +274,7 @@ namespace POS
                     {
                         App.Current.Properties["EmpLogin"] = loginEmp;
 
-                        if (loginEmp.EmpRole == 3)
+                        if (loginEmp.EmpRole == (int)EmployeeRole.Stock)
                         {
                             Dispatcher.Invoke(() =>
                             {
