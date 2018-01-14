@@ -957,6 +957,8 @@ go
 
 select * from WareHouse
 go 
+select * from Ingredient
+go
 select * from Product
 go
 select *  from ProductDetails
@@ -976,6 +978,9 @@ select * from StockIn
 select * from Stock
 select * from APWareHouse
 
+--delete [WorkingHistory]
+--delete [SalaryNote]
+
 --delete [ReceiptNoteDetails]
 --delete [ReceiptNote]
 
@@ -984,6 +989,9 @@ select * from APWareHouse
 
 --delete [ProductDetails]
 --delete [Product]
+
+--delete [Ingredient]
+--delete [WareHouse]
 
 --delete [StockOutDetails]
 --delete [StockOut]

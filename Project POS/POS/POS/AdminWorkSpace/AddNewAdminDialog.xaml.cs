@@ -134,7 +134,7 @@ namespace POS.AdminWorkSpace
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something went wrong. Can not add or update employee info. Please check the details again!");
+                MessageBox.Show("Something went wrong. Can not add or update admin info. Please check the details again!");
             }
         }
 

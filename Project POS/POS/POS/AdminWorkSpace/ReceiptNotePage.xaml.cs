@@ -27,13 +27,30 @@ namespace POS.AdminWorkSpace
         List<Ingredient> _ingrelist;
         List<ReceiptNote> _relist;
         List<ReceiptNoteDetail> _rnlist;
-        public ReceiptNotePage(AdminwsOfCloudPOS unitofwork)
+        public ReceiptNotePage(AdminwsOfCloudPOS unitofwork, AdminRe admin)
         {
             _unitofwork = unitofwork;
             InitializeComponent();
             _relist = _unitofwork.ReceiptNoteRepository.Get(includeProperties: "Employee").ToList();
+            _relist = _relist.Where(x => x.Employee.Manager.Equals(admin.AdId)).ToList();
             lvReceptNote.ItemsSource = _relist;
             _rnlist = _unitofwork.ReceiptNoteDsetailsRepository.Get(includeProperties: "Ingredient").ToList();
+            List<ReceiptNoteDetail> _rnTempList = new List<ReceiptNoteDetail>();
+            foreach (var receiptdetails in _rnlist)
+            {
+                bool found = false;
+                foreach (var receiptnote in _relist)
+                {
+                    if (receiptdetails.RnId.Equals(receiptnote.RnId))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (found)
+                    _rnTempList.Add(receiptdetails);
+            }
+            _rnlist = _rnTempList;
             lvReceiptNoteDetail.ItemsSource = _rnlist;
 
             this.Loaded += ReceiptNotePage_Loaded;
@@ -65,7 +82,7 @@ namespace POS.AdminWorkSpace
         private void lvReceptNote_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ReceiptNote rn = lvReceptNote.SelectedItem as ReceiptNote;
-            if(rn != null)
+            if (rn != null)
             {
                 lvReceiptNoteDetail.ItemsSource = _unitofwork.ReceiptNoteDsetailsRepository.Get(c => c.RnId.Equals(rn.RnId));
             }
@@ -83,7 +100,7 @@ namespace POS.AdminWorkSpace
             filterre = new List<ReceiptNote>();
             lvReceptNote.UnselectAll();
             lvReceiptNoteDetail.UnselectAll();
-            if(isRaiseEvent)
+            if (isRaiseEvent)
             {
                 ComboBox cboi = sender as ComboBox;
                 string ingid = cboi.SelectedValue.ToString();
@@ -191,6 +208,6 @@ namespace POS.AdminWorkSpace
             var optionDialog = new ReportOptionDialog(new ReceiptNoteReport(), _unitofwork);
             optionDialog.Show();
         }
-        
+
     }
 }

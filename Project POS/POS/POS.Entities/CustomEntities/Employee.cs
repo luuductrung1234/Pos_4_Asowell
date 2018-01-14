@@ -11,7 +11,8 @@ namespace POS.Entities
         Ministering = 0,
         Bar = 1,
         Kitchen = 2,
-        Stock = 3
+        Stock = 3,
+        Cashier = 4
     }
 
     public partial class Employee
