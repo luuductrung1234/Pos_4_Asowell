@@ -43,6 +43,9 @@ namespace POS.EmployeeWorkSpace
 
         internal static readonly ILog AppLog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        DispatcherTimer WorkTimer;
+        DispatcherTimer CheckWorkingTimer;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -75,15 +78,19 @@ namespace POS.EmployeeWorkSpace
                 st = new SettingFoodPage(CloudPosUnitofwork);
                 stts = new SettingTableSize();
 
-                DispatcherTimer workTimer = new DispatcherTimer();
-                workTimer.Tick += WorkTime_Tick;
-                workTimer.Interval = new TimeSpan(0, 0, 1);
-                workTimer.Start();
+                WorkTimer = new DispatcherTimer();
+                WorkTimer.Tick += WorkTime_Tick;
+                WorkTimer.Interval = new TimeSpan(0, 0, 1);
+                WorkTimer.Start();
 
                 DispatcherTimer RefreshTimer = new DispatcherTimer();
                 RefreshTimer.Tick += Refresh_Tick;
                 RefreshTimer.Interval = new TimeSpan(0, 2, 0);
                 RefreshTimer.Start();
+
+                CheckWorkingTimer = new DispatcherTimer();
+                CheckWorkingTimer.Tick += CheckWorking_Tick;
+                CheckWorkingTimer.Interval = new TimeSpan(0, 5, 0);
 
                 initProgressTableChair();
 
@@ -97,7 +104,7 @@ namespace POS.EmployeeWorkSpace
 
                 this.Closing += (sender, args) =>
                 {
-                    workTimer.Stop();
+                    WorkTimer.Stop();
                     _unitofwork.Dispose();
                 };
 
@@ -194,6 +201,49 @@ namespace POS.EmployeeWorkSpace
             txtTimeWk.Text = fH + ":" + fm + ":" + fs;
         }
 
+        private void CheckWorking_Tick(object sender, EventArgs e)
+        {
+            //check admin
+            if (App.Current.Properties["AdLogin"] != null)
+            {
+                App.Current.Properties["AdLogin"] = null;
+
+                if (App.Current.Properties["CurrentEmpWorking"] != null)
+                {
+                    App.Current.Properties["CurrentEmpWorking"] = null;
+                }
+                else if (App.Current.Properties["CurrentEmpWorking"] == null)
+                {
+                    cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+                }
+
+                CheckWorkingTimer.Stop();
+                return;
+            }
+
+            //check employee
+            if (App.Current.Properties["CurrentEmpWorking"] == null)
+            {
+                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+            }
+            else if (App.Current.Properties["CurrentEmpWorking"] != null)
+            {
+                App.Current.Properties["CurrentEmpWorking"] = null;
+                cUser.Content = EmpLoginListData.emploglist.Count() + " employee(s) available";
+            }
+
+            if (bntEntry.IsEnabled == false)
+            {
+                myFrame.Navigate(b);
+                bntTable.IsEnabled = false;
+                bntDash.IsEnabled = true;
+                bntEntry.IsEnabled = true;
+            }
+
+            currentTable = null;
+            CheckWorkingTimer.Stop();
+        }
+
         private void bntDash_Click(object sender, RoutedEventArgs e)
         {
             bntTable.IsEnabled = true;
@@ -262,6 +312,8 @@ namespace POS.EmployeeWorkSpace
 
             AllEmployeeLogin ael = new AllEmployeeLogin((MainWindow)Window.GetWindow(this), _unitofwork, CloudPosUnitofwork, cUser, 4);
             ael.ShowDialog();
+
+            CheckWorkingTimer.Start();
         }
 
         private void btnEndWorking_Click(object sender, RoutedEventArgs e)
@@ -303,6 +355,7 @@ namespace POS.EmployeeWorkSpace
             }
 
             currentTable = null;
+            CheckWorkingTimer.Stop();
         }
 
         private void btnOtherEmp_Click(object sender, RoutedEventArgs e)

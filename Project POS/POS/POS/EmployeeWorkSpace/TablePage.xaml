@@ -98,7 +98,7 @@
                    DragLeave="imgTable_DragLeave"
                    Drop="imgTable_Drop"
                    MouseRightButtonDown="imgTable_MouseRightContextMenu" />
-            
+
         </Grid>
     </Grid>
 </Page>

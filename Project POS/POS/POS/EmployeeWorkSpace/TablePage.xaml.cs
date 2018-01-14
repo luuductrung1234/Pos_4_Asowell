@@ -40,8 +40,8 @@ namespace POS.EmployeeWorkSpace
                 Color = new Color { A = 1, R = 255, G = 0, B = 0 },
                 ShadowDepth = 5,
                 Direction = 270,
-                Softness = 0.60,
-                Opacity = 0.75
+                Softness = 0.40,
+                Opacity = 1
             };
 
             recShadowOrdered = new DropShadowBitmapEffect
@@ -49,8 +49,8 @@ namespace POS.EmployeeWorkSpace
                 Color = new Color { A = 1, R = 0, G = 55, B = 55 },
                 ShadowDepth = 5,
                 Direction = 270,
-                Softness = 0.60,
-                Opacity = 0.75
+                Softness = 0.40,
+                Opacity = 1
             };
 
             initTableData();
@@ -89,7 +89,7 @@ namespace POS.EmployeeWorkSpace
 
                 if (t.IsOrdered == 1)
                 {
-                    rec.Fill = Brushes.DarkCyan;
+                    //rec.Fill = Brushes.DarkCyan;
                     rec.SetValue(BitmapEffectProperty, recShadowOrdered);
                 }
                 else
@@ -99,7 +99,7 @@ namespace POS.EmployeeWorkSpace
                         rec.SetValue(BitmapEffectProperty, recShadow);
                     }
 
-                    rec.Fill = Brushes.Red;
+                    //rec.Fill = Brushes.Red;
                 }
 
                 if (isTablesDataChange)
@@ -114,10 +114,11 @@ namespace POS.EmployeeWorkSpace
                     //img.Margin = m;
                     //grTable.Children.Add(img);
 
-                    //rec.Fill = new ImageBrush
-                    //{
-                    //    ImageSource = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "..\\Icon\\icons8_Meal_32px.png"))
-                    //};
+                    rec.Fill = new ImageBrush
+                    {
+                        ImageSource = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this),
+                    "..\\Images\\Number\\icons8_" + int.Parse(rec.Name.Substring(5)).ToString() + "_50px.png"))
+                    };
 
                     rec.ToolTip = SetTooltip(rec);
                 }
@@ -182,13 +183,14 @@ namespace POS.EmployeeWorkSpace
                 rec.Margin = m;
                 rec.Width = int.Parse(ReadWriteData.readTableSize()[0]);
                 rec.Height = int.Parse(ReadWriteData.readTableSize()[1]);
-                rec.Fill = Brushes.Red;
+                //rec.Fill = Brushes.Red;
                 rec.Opacity = 0.65;
 
-                //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "D:\\icons8_Pin_32px_9.png")));
-                //ImageBrush backImg = new ImageBrush(new BitmapImage(new Uri(@"/Icon/icons8_Pin_32px_9.png", UriKind.RelativeOrAbsolute)));
-                //backImg.Stretch = Stretch.Fill;
-                //rec.Fill = backImg;
+                rec.Fill = new ImageBrush
+                {
+                    ImageSource = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this),
+                    "..\\Images\\Number\\icons8_" + int.Parse(rec.Name.Substring(5)).ToString() + "_50px.png"))
+                };
 
                 rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
                 rec.MouseMove += btnTableAdded_MoveDrag;
@@ -211,18 +213,18 @@ namespace POS.EmployeeWorkSpace
                 else
                 {
                     rec.Cursor = Cursors.SizeAll;
-                    rec.Fill = Brushes.Red;
+                    //rec.Fill = Brushes.Red;
                     rec.Opacity = 0.65;
                 }
 
                 if (t.IsOrdered == 1)
                 {
-                    rec.Fill = Brushes.DarkCyan;
+                    //rec.Fill = Brushes.DarkCyan;
                     rec.SetValue(BitmapEffectProperty, recShadowOrdered);
                 }
                 else
                 {
-                    rec.Fill = Brushes.Red;
+                    //rec.Fill = Brushes.Red;
                 }
 
                 rec.MouseMove += btnTableAdded_MouseMove;
@@ -346,8 +348,14 @@ namespace POS.EmployeeWorkSpace
                 rec.Margin = m;
                 rec.Width = int.Parse(ReadWriteData.readTableSize()[0]);
                 rec.Height = int.Parse(ReadWriteData.readTableSize()[1]);
-                rec.Fill = Brushes.Red;
+                //rec.Fill = Brushes.Red;
                 rec.Opacity = 0.65;
+
+                rec.Fill = new ImageBrush
+                {
+                    ImageSource = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this),
+                    "..\\Images\\Number\\icons8_" + int.Parse(rec.Name.Substring(5)).ToString() + "_50px.png"))
+                };
 
                 rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
                 rec.MouseMove += btnTableAdded_MoveDrag;
@@ -427,8 +435,14 @@ namespace POS.EmployeeWorkSpace
             rec.Margin = m;
             rec.Width = int.Parse(ReadWriteData.readTableSize()[0]);
             rec.Height = int.Parse(ReadWriteData.readTableSize()[1]);
-            rec.Fill = Brushes.Red;
+            //rec.Fill = Brushes.Red;
             rec.Opacity = 0.65;
+
+            rec.Fill = new ImageBrush
+            {
+                ImageSource = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this),
+                    "..\\Images\\Number\\icons8_" + int.Parse(rec.Name.Substring(5)).ToString() + "_50px.png"))
+            };
 
             rec.MouseLeftButtonDown += btnTableAdded_StartDrag;
             rec.MouseMove += btnTableAdded_MoveDrag;
@@ -673,6 +687,8 @@ namespace POS.EmployeeWorkSpace
                 currentRec.Cursor = Cursors.Arrow;
 
                 Entities.Table t = currentTableList.Where(x => x.TableNumber.Equals(int.Parse(currentRec.Name.Substring(5)))).First();
+                t.PosX = Convert.ToInt32(currentRec.Margin.Left);
+                t.PosY = Convert.ToInt32(currentRec.Margin.Top);
                 t.IsPinned = 1;
                 currentRec.SetValue(BitmapEffectProperty, recShadow);
 
@@ -843,22 +859,29 @@ namespace POS.EmployeeWorkSpace
         {
             if (checkMove)
             {
-                ori = (sender as Rectangle).Fill;
+                //ori = (sender as Rectangle).Fill;
 
                 currentRec = new Rectangle();
                 currentRec = sender as Rectangle;
 
-                //(sender as Rectangle).ToolTip = SetTooltip(sender as Rectangle);
-                if (currentRec.Fill == Brushes.Red)
+                if (currentRec.Opacity == 0.65)
                 {
-                    //currentRec.Fill = (Brush)(new BrushConverter()).ConvertFromString("#CC000000");
-                    currentRec.Fill = new SolidColorBrush(Color.FromRgb(220, 0, 0));
+                    currentRec.Opacity = 0.4;
                 }
-                else if (currentRec.Fill == Brushes.DarkCyan)
+                else if (currentRec.Opacity == 1)
                 {
-                    //currentRec.Fill = (Brush)(new BrushConverter()).ConvertFromString("#00CCFF00");
-                    currentRec.Fill = new SolidColorBrush(Color.FromRgb(0, 110, 110));
+                    currentRec.Opacity = 0.75;
                 }
+
+                ////(sender as Rectangle).ToolTip = SetTooltip(sender as Rectangle);
+                //if (currentRec.Fill == Brushes.Red)
+                //{
+                //    //currentRec.Fill = new SolidColorBrush(Color.FromRgb(220, 0, 0));
+                //}
+                //else if (currentRec.Fill == Brushes.DarkCyan)
+                //{
+                //    //currentRec.Fill = new SolidColorBrush(Color.FromRgb(0, 110, 110));
+                //}
 
                 checkMove = false;
             }
@@ -867,7 +890,17 @@ namespace POS.EmployeeWorkSpace
         //su kien khi move out Table
         private void btnTableAdded_MouseLeave(object sender, MouseEventArgs e)
         {
-            currentRec.Fill = ori;
+            //currentRec.Fill = ori;
+
+            if (currentRec.Opacity == 0.4)
+            {
+                currentRec.Opacity = 0.65;
+            }
+            else if (currentRec.Opacity == 0.75)
+            {
+                currentRec.Opacity = 1;
+            }
+
             checkMove = true;
         }
 
@@ -1038,7 +1071,14 @@ namespace POS.EmployeeWorkSpace
 
                     if (table.IsPinned == 1)
                     {
-                        tt += "\nPinned";
+                        if (table.IsOrdered == 1)
+                        {
+                            tt += "\nOrdered";
+                        }
+                        else
+                        {
+                            tt += "\nPinned";
+                        }
                     }
                     else
                     {
