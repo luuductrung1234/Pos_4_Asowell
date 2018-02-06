@@ -260,6 +260,7 @@ go
 
 
 --	MAIN FOOD
+--	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other		8: Combo
 insert into Product 
 	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
 values		-- thức ăn
@@ -308,7 +309,7 @@ values		-- thức ăn
 ('P000000116',	N'Mussle Pot Blue Cheese',	N'',		195,	1, 0, 0, 'Main',	'BlueCheeseMusselPot.jpg'),
 ('P000000117',	N'Mussel Pot Tomatoes',		N'',		195,	1, 0, 0, 'Main',	'RoastedTomatoesMusselPot.jpg'),
 ('P000000118',	N'Mussel Pot Thai',			N'',		195,	1, 0, 0, 'Main',	'TomYumMusselPot.jpg'),
-('P000000128',	N'Banger and Mash',			N'',		185,	1, 0, 0, 'Main',	''),
+('P000000128',	N'Banger and Mash',			N'',		210,	1, 0, 0, 'Main',	''),
 ('P000000119',	N'Grilled Salmon',			N'',		295,	1, 0, 0, 'Main',	'GrilledSalmonBrochette.jpg'),
 ('P000000120',	N'1/2 Chicken',				N'',		250,	1, 0, 0, 'Main',	'RoastedHalfChicken.jpg'),
 ('P000000121',	N'Soak Duck',				N'',		250,	1, 0, 0, 'Main',	'HODSoakDuckBreast.jpg'),
@@ -366,7 +367,33 @@ values
 ('P000000163',	N'San Pelle 750',			N'',		120,	0, 0, 0, 'Drink',	''),
 
 ('P000000164',	N'Tiger',					N'',		50,		2, 0, 0, 'Drink',	''),
-('P000000165',	N'Heineken',				N'',		65,		2, 0, 0, 'Drink',	'')
+('P000000165',	N'Heineken',				N'',		65,		2, 0, 0, 'Drink',	''),
+
+('P000000166',	N'Dream Alone 175',			N'',		55,		2, 0, 0, 'Drink',	''),
+('P000000167',	N'Dream Alone 330',			N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000168',	N'Kirtz Insane 175',		N'',		55,		2, 0, 0, 'Drink',	''),
+('P000000169',	N'Kirtz Insane 330',		N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000170',	N'Mexican Spilner 175',		N'',		55,		2, 0, 0, 'Drink',	''),
+('P000000171',	N'Mexican Spilner 330',		N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000172',	N'Loose Rivet 175',			N'',		60,		2, 0, 0, 'Drink',	''),
+('P000000173',	N'Loose Rivet 330',			N'',		115,	2, 0, 0, 'Drink',	''),
+
+('P000000174',	N'Jasmin IPA 330',			N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000175',	N'Passion Fruit 330',		N'',		95,		2, 0, 0, 'Drink',	''),
+
+('P000000176',	N'Wine Charge',				N'',		200,	3, 0, 0, 'Drink',	'')
+--176
+
+
+-- MAIN COMBO
+--	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other	8:Combo
+insert into Product
+([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink]) 
+values
+('P000000177',	N'Combo 1',					N'',		500,	8, 0, 0, 'Combo',	''),
+('P000000178',	N'Combo 2',					N'',		400,	8, 0, 0, 'Combo',	''),
+('P000000179',	N'Combo 3',					N'',		600,	8, 0, 0, 'Combo',	''),
+('P000000180',	N'Combo 4',					N'',		1000,	8, 0, 0, 'Combo',	'')
 
 
 
