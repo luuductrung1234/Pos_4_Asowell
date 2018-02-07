@@ -161,116 +161,9 @@ go
 
 
 
---	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other
-insert into Product
-	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
-values		-- đồ uống
-('P000000030',	N'Pepsi',					N'',		25,		0, 0, 0, 'Drink',	'pepsi.jpg'),
-('P000000031',	N'7up',						N'',		25,		0, 0, 0, 'Drink',	'seven.jpg'),
-('P000000032',	N'Water',					N'',		25,		0, 0, 0, 'Drink',	'Aqua.jpg'),
-('P000000033',	N'Black Coffee',			N'',		30,		6, 0, 0, 'Drink',	'BlackCoffee.jpg'),
-('P000000034',	N'Coffee Milk',				N'',		35,		6, 0, 0, 'Drink',	'MilkCoffee.jpg'),
-('P000000035',	N'Cream Coffee',			N'',		40,		6, 0, 0, 'Drink',	'CreamCoffee.jpg'),
-('P000000036',	N'Americano',				N'',		40,		6, 0, 0, 'Drink',	'Americano.jpg'),
-('P000000037',	N'Durian Coffee',			N'',		50,		6, 0, 0, 'Drink',	''),
-('P000000038',	N'Coffee Latte',			N'',		50,		6, 0, 0, 'Drink',	'CoffeeLatte.png'),
-('P000000039',	N'Cappucino',				N'',		50,		6, 0, 0, 'Drink',	'Capuchino.jpg'),
-('P000000040',	N'Orange Coffee',			N'',		50,		6, 0, 0, 'Drink',	''),
-('P000000041',	N'Tiramisu Coffee',			N'',		50,		6, 0, 0, 'Drink',	''),
-('P000000042',	N'Chocolate Coffee',		N'',		60,		6, 0, 0, 'Drink',	'ChocoLatte.jpg'),
-('P000000043',	N'Caramel Cofffee',			N'',		60,		6, 0, 0, 'Drink',	'CaramelCoffee.jpg'),
-('P000000044',	N'Strawberry Tea',			N'',		30,		0, 0, 0, 'Drink',	''),
-('P000000045',	N'Lemon Tea',				N'',		30,		0, 0, 0, 'Drink',	''),
-('P000000046',	N'Apple Tea',				N'',		30,		0, 0, 0, 'Drink',	''),
-('P000000047',	N'Milk Tea',				N'',		40,		0, 0, 0, 'Drink',	'MilkTea.jpg'),
-('P000000048',	N'Peach Tea',				N'',		50,		0, 0, 0, 'Drink',	'PeachTea.png'),
-('P000000049',	N'Matcha Latte',			N'',		50,		0, 0, 0, 'Drink',	'MatchaLatte.jpg'),
-('P000000050',	N'Ginger Honey Latte',		N'',		50,		0, 0, 0, 'Drink',	''),
-('P000000051',	N'Hot Choco',				N'',		60,		0, 0, 0, 'Drink',	''),
-('P000000052',	N'Ice Choco',				N'',		60,		0, 0, 0, 'Drink',	''),
-('P000000053',	N'Orange Juice',			N'',		40,		0, 0, 0, 'Drink',	'OrangeJuice.jpg'),
-('P000000054',	N'Orange Ade',				N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000055',	N'Lemonade',				N'',		40,		0, 0, 0, 'Drink',	'Lemonade.jpg'),
-
-('P000000058',	N'SACRED FIRE GOLDEN ALE',	N'',		40,		2, 0, 0, 'Drink',	'sacred-fire-golden-ale.png'),
-('P000000059',	N'PITILESS FOLLY PALE ALE',	N'',		40,		2, 0, 0, 'Drink',	'pitiless-folly-pale-ale.png'),
-('P000000060',	N'KURTZ INSANE IPA',		N'',		40,		2, 0, 0, 'Drink',	'kurtz-insane-ipa.jpg'),
-('P000000061',	N'PATIENT WILDERNESS WHEAT ALE',	N'',40,		2, 0, 0, 'Drink',	'patient-wilderness-wheat.jpg'),
-('P000000062',	N'PRIMEVAL FOREST PILSNER',	N'',		40,		2, 0, 0, 'Drink',	'primeval-forest-dilsner.jpg'),
-('P000000063',	N'Double IPA (Winter)',		N'',		50,		2, 0, 0, 'Drink',	'double-ipa.png'),
-('P000000064',	N'Christmas Tripel IPA',	N'',		50,		2, 0, 0, 'Drink',	''),
-
-('P000000065',	N'Bordeaux',				N'',		40,		3, 0, 0, 'Drink',	''),
-('P000000066',	N'Champagne',				N'',		40,		3, 0, 0, 'Drink',	''),
-('P000000067',	N'Chianti',					N'',		40,		3, 0, 0, 'Drink',	''),
-('P000000068',	N'Rioja',					N'',		45,		3, 0, 0, 'Drink',	''),
-('P000000069',	N'Priorat',					N'',		40,		3, 0, 0, 'Drink',	''),
-('P000000070',	N'Port',					N'',		40,		3, 0, 0, 'Drink',	''),
-('P000000071',	N'Meritage',				N'',		40,		3, 0, 0, 'Drink',	''),
-('P000000072',	N'Côtes du Rhône',			N'',		40,		3, 0, 0, 'Drink',	''),
-('P000000073',	N'Martinez',				N'',		45,		7, 0, 0, 'Drink',	''),
-('P000000074',	N'Martini',					N'',		45,		7, 0, 0, 'Drink',	''),
-('P000000075',	N'Mint Julep',				N'',		45,		7, 0, 0, 'Drink',	''),
-('P000000076',	N'Last Word',				N'',		45,		7, 0, 0, 'Drink',	''),
-('P000000077',	N'Jack Rose',				N'',		45,		7, 0, 0, 'Drink',	''),
-('P000000078',	N'Bloody Mary',				N'',		50,		7, 0, 0, 'Drink',	''),
-('P000000079',	N'Negroni',					N'',		50,		7, 0, 0, 'Drink',	''),
-('P000000080',	N'Whiskey Sour',			N'',		50,		7, 0, 0, 'Drink',	'')
 
 
-insert into Product 
-	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
-values		-- thức ăn
-('P000000081',	N'Fruit Platter',			N'',		50,		1, 0, 0, 'BreakFast',	'FruitPlatterWithGreekYoghurt.jpeg'),
-('P000000082',	N'Bread Basket',			N'',		50,		1, 0, 0, 'BreakFast',	'BreadBasket.jpg'),
-('P000000083',	N'Banana Bread',			N'',		50,		1, 0, 0, 'BreakFast',	'BananaBread.jpg'),
-('P000000084',	N'Cinnamon Toast',			N'',		50,		1, 0, 0, 'BreakFast',	'CinamonToast.jpg'),
-('P000000085',	N'French Toast',			N'',		50,		1, 0, 0, 'BreakFast',	'FrenchToast.jpg'),
-('P000000086',	N'Lemon Pancake',			N'',		60,		1, 0, 0, 'BreakFast',	'LemonPancake.jpg'),
-('P000000087',	N'Braised Mix Mushroom',	N'',		70,		1, 0, 0, 'BreakFast',	'BraisedMushroomOntoast.jpg'),
-('P000000088',	N'Fried/Poach Eggs',		N'',		70,		1, 0, 0, 'BreakFast',	''),
-('P000000089',	N'Bake Eggs with Chorizo',	N'',		70,		1, 0, 0, 'BreakFast',	'BakeEggsWithChorizoandSpinach.jpg'),
-('P000000090',	N'Ham Cheese Omelet',		N'',		70,		1, 0, 0, 'BreakFast',	'HamCheeseAndAsparagusOmelette.jpg'),
-																
-('P000000091',	N'Cheese melt',				N'',		50,		1, 0, 0, 'KigBreakFast',	'CheeseMeltOnToast.png'),
-('P000000092',	N'Honey Butter Bread',		N'',		70,		1, 0, 0, 'KigBreakFast',	'HoneyButterBread.jpg'),
-('P000000093',	N'Chocolate Fruits',		N'',		70,		1, 0, 0, 'KigBreakFast',	'ChcocolateFruitStack.png'),
-('P000000094',	N'Fried Egg Toast',			N'',		80,		1, 0, 0, 'KigBreakFast',	'fried-egg-on-toast.jpg'),
-
-('P000000095',	N'Sweet Potatoes Fries',	N'',		50,		1, 0, 0, 'Starter',	'Sweet_Potatoes_fries.jpg'),
-('P000000096',	N'Roasted Garlic Bread',	N'',		60,		1, 0, 0, 'Starter',	'roastedGarlicBread.jpg'),
-('P000000097',	N'Mix Italian Olives',		N'',		60,		1, 0, 0, 'Starter',	'ItalianMixOlives.jpg'),
-('P000000098',	N'Freshly shuck',			N'',		80,		1, 0, 0, 'Starter',	'freshlyShuckedOysters.jpg'),
-('P000000099',	N'Warm Edamame',			N'',		80,		1, 0, 0, 'Starter',	'warm_Edamame.jpg'),
-('P000000100',	N'Bocconcini Bruschetta',	N'',		60,		1, 0, 0, 'Starter',	'BoconcciniBruschetta.jpg'),
-('P000000101',	N'Duck Liver Pate',			N'',		70,		1, 0, 0, 'Starter',	'Duck_liver_Pate.jpg'),
-('P000000102',	N'3 Cheese Board',			N'',		80,		1, 0, 0, 'Starter',	'3CheeseBoard.jpg'),
-('P000000103',	N'Dips Board',				N'',		60,		1, 0, 0, 'Starter',	'3DipsBoard.jpg'),
-('P000000104',	N'Chorizos roll',			N'',		80,		1, 0, 0, 'Starter',	'ChorizoSausageRolls.jpg'),
-
-('P000000105',	N'Garden Green',			N'',		80,		1, 0, 0, 'Starter',		'GardenGreenSalad.jpg'),
-('P000000106',	N'Roasted Vegs',			N'',		80,		1, 0, 0, 'Starter',		'RoastedVegAndRocketSalad.jpeg'),
-('P000000107',	N'Caesar Salad',			N'',		80,		1, 0, 0, 'Starter',		'ChickenCaesarSalad.jpg'),
-('P000000108',	N'Cajun Chicken',			N'',		80,		1, 0, 0, 'Starter',		'CajunChickenSalad.jpg'),
-('P000000109',	N'Minute Steak',			N'',		80,		1, 0, 0, 'Starter',		'MinuteSteakSandwich.jpg'),
-('P000000110',	N'Chicken Melt',			N'',		80,		1, 0, 0, 'Starter',		'ChickenMelt.jpg'),
-('P000000111',	N'House Burger',			N'',		80,		1, 0, 0, 'Starter',		'HouseBurger.jpg'),
-('P000000112',	N'Spaghetti Bolognese',		N'',		80,		1, 0, 0, 'Starter',		'SpaghettiBolognese.jpg'),
-('P000000113',	N'Salmon Tagliatelle',		N'',		80,		1, 0, 0, 'Starter',		'SalmonTagliatelle.jpg'),
-('P000000114',	N'Chicken Pesto',			N'',		80,		1, 0, 0, 'Starter',		'SpaghettiChickenPesto.jpg'),
-('P000000115',	N'Seafood Marinara',		N'',		80,		1, 0, 0, 'Starter',		'SeafoodMarinara.jpeg'),
-
-('P000000116',	N'Mussle Pot Blue Cheese',	N'',		100,	1, 0, 0, 'Main',	'BlueCheeseMusselPot.jpg'),
-('P000000117',	N'Mussel Pot Tomatoes',		N'',		100,	1, 0, 0, 'Main',	'RoastedTomatoesMusselPot.jpg'),
-('P000000118',	N'Mussel Pot Thai',			N'',		100,	1, 0, 0, 'Main',	'TomYumMusselPot.jpg'),
-('P000000119',	N'Grilled Salmon',			N'',		120,	1, 0, 0, 'Main',	'GrilledSalmonBrochette.jpg'),
-('P000000120',	N'1/2 Chicken',				N'',		100,	1, 0, 0, 'Main',	'RoastedHalfChicken.jpg'),
-('P000000121',	N'Soak Duck',				N'',		120,	1, 0, 0, 'Main',	'HODSoakDuckBreast.jpg'),
-('P000000122',	N'BBQ Ribs',				N'',		150,	1, 0, 0, 'Main',	'RoastedBabyBackRibs.jpg'),
-('P000000123',	N'Lamb Rack',				N'',		150,	1, 0, 0, 'Main',	'WholeRackOfLamb.jpg'),
-('P000000124',	N'Rib Eye',					N'',		150,	1, 0, 0, 'Main',	'RibeyeSteak.jpg')
-
-
+-- SAMPLE FOOD
 --insert into Product 
 --	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
 --values		-- thức ăn
@@ -303,6 +196,207 @@ values		-- thức ăn
 --('P000000027',	N'comma pizza',				N'',		60,		1, 0, 0, 'Main'),
 --('P000000028',	N'chicken cajun salad',		N'',		55,		1, 0, 0, 'Main'),
 --('P000000029',	N'bibimbob',				N'',		60,		1, 0, 0, 'Main')	
+
+
+--	SAMPLE DRINK
+--	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other
+--insert into Product
+--	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
+--values		-- đồ uống
+--('P000000030',	N'Pepsi',					N'',		25,		0, 0, 0, 'Drink',	'pepsi.jpg'),
+--('P000000031',	N'7up',						N'',		25,		0, 0, 0, 'Drink',	'seven.jpg'),
+--('P000000032',	N'Water',					N'',		25,		0, 0, 0, 'Drink',	'Aqua.jpg'),
+--('P000000033',	N'Black Coffee',			N'',		30,		6, 0, 0, 'Drink',	'BlackCoffee.jpg'),
+--('P000000034',	N'Coffee Milk',				N'',		35,		6, 0, 0, 'Drink',	'MilkCoffee.jpg'),
+--('P000000035',	N'Cream Coffee',			N'',		40,		6, 0, 0, 'Drink',	'CreamCoffee.jpg'),
+--('P000000036',	N'Americano',				N'',		40,		6, 0, 0, 'Drink',	'Americano.jpg'),
+--('P000000037',	N'Durian Coffee',			N'',		50,		6, 0, 0, 'Drink',	''),
+--('P000000038',	N'Coffee Latte',			N'',		50,		6, 0, 0, 'Drink',	'CoffeeLatte.png'),
+--('P000000039',	N'Cappucino',				N'',		50,		6, 0, 0, 'Drink',	'Capuchino.jpg'),
+--('P000000040',	N'Orange Coffee',			N'',		50,		6, 0, 0, 'Drink',	''),
+--('P000000041',	N'Tiramisu Coffee',			N'',		50,		6, 0, 0, 'Drink',	''),
+--('P000000042',	N'Chocolate Coffee',		N'',		60,		6, 0, 0, 'Drink',	'ChocoLatte.jpg'),
+--('P000000043',	N'Caramel Cofffee',			N'',		60,		6, 0, 0, 'Drink',	'CaramelCoffee.jpg'),
+--('P000000044',	N'Strawberry Tea',			N'',		30,		0, 0, 0, 'Drink',	''),
+--('P000000045',	N'Lemon Tea',				N'',		30,		0, 0, 0, 'Drink',	''),
+--('P000000046',	N'Apple Tea',				N'',		30,		0, 0, 0, 'Drink',	''),
+--('P000000047',	N'Milk Tea',				N'',		40,		0, 0, 0, 'Drink',	'MilkTea.jpg'),
+--('P000000048',	N'Peach Tea',				N'',		50,		0, 0, 0, 'Drink',	'PeachTea.png'),
+--('P000000049',	N'Matcha Latte',			N'',		50,		0, 0, 0, 'Drink',	'MatchaLatte.jpg'),
+--('P000000050',	N'Ginger Honey Latte',		N'',		50,		0, 0, 0, 'Drink',	''),
+--('P000000051',	N'Hot Choco',				N'',		60,		0, 0, 0, 'Drink',	''),
+--('P000000052',	N'Ice Choco',				N'',		60,		0, 0, 0, 'Drink',	''),
+--('P000000053',	N'Orange Juice',			N'',		40,		0, 0, 0, 'Drink',	'OrangeJuice.jpg'),
+--('P000000054',	N'Orange Ade',				N'',		40,		0, 0, 0, 'Drink',	''),
+--('P000000055',	N'Lemonade',				N'',		40,		0, 0, 0, 'Drink',	'Lemonade.jpg'),
+
+--('P000000058',	N'SACRED FIRE GOLDEN ALE',	N'',		40,		2, 0, 0, 'Drink',	'sacred-fire-golden-ale.png'),
+--('P000000059',	N'PITILESS FOLLY PALE ALE',	N'',		40,		2, 0, 0, 'Drink',	'pitiless-folly-pale-ale.png'),
+--('P000000060',	N'KURTZ INSANE IPA',		N'',		40,		2, 0, 0, 'Drink',	'kurtz-insane-ipa.jpg'),
+--('P000000061',	N'PATIENT WILDERNESS WHEAT ALE',	N'',40,		2, 0, 0, 'Drink',	'patient-wilderness-wheat.jpg'),
+--('P000000062',	N'PRIMEVAL FOREST PILSNER',	N'',		40,		2, 0, 0, 'Drink',	'primeval-forest-dilsner.jpg'),
+--('P000000063',	N'Double IPA (Winter)',		N'',		50,		2, 0, 0, 'Drink',	'double-ipa.png'),
+--('P000000064',	N'Christmas Tripel IPA',	N'',		50,		2, 0, 0, 'Drink',	''),
+
+--('P000000065',	N'Bordeaux',				N'',		40,		3, 0, 0, 'Drink',	''),
+--('P000000066',	N'Champagne',				N'',		40,		3, 0, 0, 'Drink',	''),
+--('P000000067',	N'Chianti',					N'',		40,		3, 0, 0, 'Drink',	''),
+--('P000000068',	N'Rioja',					N'',		45,		3, 0, 0, 'Drink',	''),
+--('P000000069',	N'Priorat',					N'',		40,		3, 0, 0, 'Drink',	''),
+--('P000000070',	N'Port',					N'',		40,		3, 0, 0, 'Drink',	''),
+--('P000000071',	N'Meritage',				N'',		40,		3, 0, 0, 'Drink',	''),
+--('P000000072',	N'Côtes du Rhône',			N'',		40,		3, 0, 0, 'Drink',	''),
+--('P000000073',	N'Martinez',				N'',		45,		7, 0, 0, 'Drink',	''),
+--('P000000074',	N'Martini',					N'',		45,		7, 0, 0, 'Drink',	''),
+--('P000000075',	N'Mint Julep',				N'',		45,		7, 0, 0, 'Drink',	''),
+--('P000000076',	N'Last Word',				N'',		45,		7, 0, 0, 'Drink',	''),
+--('P000000077',	N'Jack Rose',				N'',		45,		7, 0, 0, 'Drink',	''),
+--('P000000078',	N'Bloody Mary',				N'',		50,		7, 0, 0, 'Drink',	''),
+--('P000000079',	N'Negroni',					N'',		50,		7, 0, 0, 'Drink',	''),
+--('P000000080',	N'Whiskey Sour',			N'',		50,		7, 0, 0, 'Drink',	'')
+
+
+
+
+
+--	MAIN FOOD
+--	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other		8: Combo
+insert into Product 
+	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
+values		-- thức ăn
+('P000000081',	N'Fruit Platter',			N'',		65,		1, 0, 0, 'BreakFast',	'FruitPlatterWithGreekYoghurt.jpeg'),
+('P000000082',	N'Bread Basket',			N'',		65,		1, 0, 0, 'BreakFast',	'BreadBasket.jpg'),
+('P000000083',	N'Banana Bread',			N'',		50,		1, 0, 0, 'BreakFast',	'BananaBread.jpg'),
+('P000000084',	N'Cinnamon Toast',			N'',		45,		1, 0, 0, 'BreakFast',	'CinamonToast.jpg'),
+('P000000085',	N'French Toast',			N'',		55,		1, 0, 0, 'BreakFast',	'FrenchToast.jpg'),
+('P000000086',	N'Lemon Pancake',			N'',		65,		1, 0, 0, 'BreakFast',	'LemonPancake.jpg'),
+('P000000087',	N'Braised Mix Mushroom',	N'',		65,		1, 0, 0, 'BreakFast',	'BraisedMushroomOntoast.jpg'),
+('P000000088',	N'Fried/Poach Eggs',		N'',		55,		1, 0, 0, 'BreakFast',	''),
+('P000000089',	N'Bake Eggs with Chorizo',	N'',		65,		1, 0, 0, 'BreakFast',	'BakeEggsWithChorizoandSpinach.jpg'),
+('P000000090',	N'Ham Cheese Omelet',		N'',		75,		1, 0, 0, 'BreakFast',	'HamCheeseAndAsparagusOmelette.jpg'),
+																
+('P000000091',	N'Cheese melt',				N'',		45,		1, 0, 0, 'KigBreakFast',	'CheeseMeltOnToast.png'),
+('P000000092',	N'Honey Butter Bread',		N'',		55,		1, 0, 0, 'KigBreakFast',	'HoneyButterBread.jpg'),
+('P000000093',	N'Chocolate Fruits',		N'',		65,		1, 0, 0, 'KigBreakFast',	'ChcocolateFruitStack.png'),
+('P000000094',	N'Fried Egg Toast',			N'',		60,		1, 0, 0, 'KigBreakFast',	'fried-egg-on-toast.jpg'),
+
+('P000000095',	N'Sweet Potatoes Fries',	N'',		50,		1, 0, 0, 'Starter',	'Sweet_Potatoes_fries.jpg'),
+('P000000096',	N'Roasted Garlic Bread',	N'',		80,		1, 0, 0, 'Starter',	'roastedGarlicBread.jpg'),
+('P000000097',	N'Mix Italian Olives',		N'',		50,		1, 0, 0, 'Starter',	'ItalianMixOlives.jpg'),
+('P000000098',	N'Freshly shuck',			N'',		150,	1, 0, 0, 'Starter',	'freshlyShuckedOysters.jpg'),
+('P000000099',	N'Warm Edamame',			N'',		60,		1, 0, 0, 'Starter',	'warm_Edamame.jpg'),
+('P000000100',	N'Bocconcini Bruschetta',	N'',		120,	1, 0, 0, 'Starter',	'BoconcciniBruschetta.jpg'),
+('P000000101',	N'Duck Liver Pate',			N'',		150,	1, 0, 0, 'Starter',	'Duck_liver_Pate.jpg'),
+('P000000102',	N'3 Cheese Board',			N'',		175,	1, 0, 0, 'Starter',	'3CheeseBoard.jpg'),
+('P000000103',	N'Dips Board',				N'',		120,	1, 0, 0, 'Starter',	'3DipsBoard.jpg'),
+('P000000125',	N'Cold Cut Board',			N'',		175,	1, 0, 0, 'Starter',	''),
+('P000000104',	N'Chorizos roll',			N'',		195,	1, 0, 0, 'Starter',	'ChorizoSausageRolls.jpg'),
+
+('P000000105',	N'Garden Green',			N'',		50,		1, 0, 0, 'Starter',		'GardenGreenSalad.jpg'),
+('P000000106',	N'Roasted Vegs',			N'',		70,		1, 0, 0, 'Starter',		'RoastedVegAndRocketSalad.jpeg'),
+('P000000107',	N'Caesar Salad Plain',		N'',		80,		1, 0, 0, 'Starter',		'ChickenCaesarSalad.jpg'),
+('P000000126',	N'Caesar Salad Chicken',	N'',		95,		1, 0, 0, 'Starter',		'ChickenCaesarSalad.jpg'),
+('P000000127',	N'Caesar Salad Salmon',		N'',		110,	1, 0, 0, 'Starter',		'ChickenCaesarSalad.jpg'),
+('P000000108',	N'Cajun Chicken',			N'',		120,	1, 0, 0, 'Starter',		'CajunChickenSalad.jpg'),
+('P000000109',	N'Minute Steak',			N'',		180,	1, 0, 0, 'Starter',		'MinuteSteakSandwich.jpg'),
+('P000000110',	N'Chicken Melt',			N'',		150,	1, 0, 0, 'Starter',		'ChickenMelt.jpg'),
+('P000000111',	N'House Burger',			N'',		195,	1, 0, 0, 'Starter',		'HouseBurger.jpg'),
+('P000000112',	N'Spaghetti Bolognese',		N'',		185,	1, 0, 0, 'Starter',		'SpaghettiBolognese.jpg'),
+('P000000113',	N'Salmon Tagliatelle',		N'',		195,	1, 0, 0, 'Starter',		'SalmonTagliatelle.jpg'),
+('P000000114',	N'Chicken Pesto',			N'',		185,	1, 0, 0, 'Starter',		'SpaghettiChickenPesto.jpg'),
+('P000000115',	N'Seafood Marinara',		N'',		220,	1, 0, 0, 'Starter',		'SeafoodMarinara.jpeg'),
+
+('P000000116',	N'Mussle Pot Blue Cheese',	N'',		195,	1, 0, 0, 'Main',	'BlueCheeseMusselPot.jpg'),
+('P000000117',	N'Mussel Pot Tomatoes',		N'',		195,	1, 0, 0, 'Main',	'RoastedTomatoesMusselPot.jpg'),
+('P000000118',	N'Mussel Pot Thai',			N'',		195,	1, 0, 0, 'Main',	'TomYumMusselPot.jpg'),
+('P000000128',	N'Banger and Mash',			N'',		210,	1, 0, 0, 'Main',	''),
+('P000000119',	N'Grilled Salmon',			N'',		295,	1, 0, 0, 'Main',	'GrilledSalmonBrochette.jpg'),
+('P000000120',	N'1/2 Chicken',				N'',		250,	1, 0, 0, 'Main',	'RoastedHalfChicken.jpg'),
+('P000000121',	N'Soak Duck',				N'',		250,	1, 0, 0, 'Main',	'HODSoakDuckBreast.jpg'),
+('P000000122',	N'BBQ Ribs',				N'',		250,	1, 0, 0, 'Main',	'RoastedBabyBackRibs.jpg'),
+('P000000123',	N'Lamb Rack',				N'',		650,	1, 0, 0, 'Main',	'WholeRackOfLamb.jpg'),
+('P000000124',	N'Rib Eye',					N'',		350,	1, 0, 0, 'Main',	'RibeyeSteak.jpg')
+--128
+
+
+
+
+-- MAIN DRINK
+--	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other
+insert into Product
+([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink]) 
+values
+('P000000129',	N'Espresso',				N'',		45,		6, 0, 0, 'Drink',	''),
+('P000000130',	N'Americano',				N'',		50,		6, 0, 0, 'Drink',	''),
+('P000000131',	N'Latte',					N'',		55,		6, 0, 0, 'Drink',	''),
+('P000000132',	N'Cappuccino',				N'',		55,		6, 0, 0, 'Drink',	''),
+('P000000133',	N'Black Coffee',			N'',		35,		6, 0, 0, 'Drink',	''),
+('P000000134',	N'Condenses Coffee',		N'',		40,		6, 0, 0, 'Drink',	''),
+('P000000140',	N'Choco Coffee',			N'',		65,		6, 0, 0, 'Drink',	''),
+('P000000142',	N'Caramel Coffee',			N'',		65,		6, 0, 0, 'Drink',	''),
+('P000000144',	N'Coconut Coffee',			N'',		65,		6, 0, 0, 'Drink',	''),
+
+('P000000135',	N'Chamomile',				N'',		50,		0, 0, 0, 'Drink',	''),
+('P000000136',	N'Green Tea',				N'',		50,		0, 0, 0, 'Drink',	''),
+('P000000137',	N'Earl Gray',				N'',		50,		0, 0, 0, 'Drink',	''),
+('P000000138',	N'English Breakfast',		N'',		50,		0, 0, 0, 'Drink',	''),
+('P000000139',	N'Jasmine',					N'',		50,		0, 0, 0, 'Drink',	''),
+
+('P000000141',	N'Matcha',					N'',		65,		0, 0, 0, 'Drink',	''),
+('P000000143',	N'Banana Choco',			N'',		65,		0, 0, 0, 'Drink',	''),
+('P000000145',	N'Strawberries Banana',		N'',		65,		0, 0, 0, 'Drink',	''),
+('P000000146',	N'Asowel Special',			N'',		70,		0, 0, 0, 'Drink',	''),
+
+('P000000147',	N'Watermelon',				N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000148',	N'Pineapple',				N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000149',	N'Orange',					N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000150',	N'Apple',					N'',		55,		0, 0, 0, 'Drink',	''),
+('P000000151',	N'Pomelo',					N'',		60,		0, 0, 0, 'Drink',	''),
+('P000000152',	N'Carrot',					N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000153',	N'Lime',					N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000154',	N'Passion Fruit',			N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000155',	N'Coconut',					N'',		50,		0, 0, 0, 'Drink',	''),
+
+('P000000156',	N'Lavie',					N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000157',	N'Coke',					N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000158',	N'Sprite',					N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000159',	N'Soda',					N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000160',	N'Tonic',					N'',		40,		0, 0, 0, 'Drink',	''),
+('P000000161',	N'Ginger ale',				N'',		50,		0, 0, 0, 'Drink',	''),
+('P000000162',	N'San Pelle 250',			N'',		50,		0, 0, 0, 'Drink',	''),
+('P000000163',	N'San Pelle 750',			N'',		120,	0, 0, 0, 'Drink',	''),
+
+('P000000164',	N'Tiger',					N'',		50,		2, 0, 0, 'Drink',	''),
+('P000000165',	N'Heineken',				N'',		65,		2, 0, 0, 'Drink',	''),
+
+('P000000166',	N'Dream Alone 175',			N'',		55,		2, 0, 0, 'Drink',	''),
+('P000000167',	N'Dream Alone 330',			N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000168',	N'Kirtz Insane 175',		N'',		55,		2, 0, 0, 'Drink',	''),
+('P000000169',	N'Kirtz Insane 330',		N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000170',	N'Mexican Spilner 175',		N'',		55,		2, 0, 0, 'Drink',	''),
+('P000000171',	N'Mexican Spilner 330',		N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000172',	N'Loose Rivet 175',			N'',		60,		2, 0, 0, 'Drink',	''),
+('P000000173',	N'Loose Rivet 330',			N'',		115,	2, 0, 0, 'Drink',	''),
+
+('P000000174',	N'Jasmin IPA 330',			N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000175',	N'Passion Fruit 330',		N'',		95,		2, 0, 0, 'Drink',	''),
+
+('P000000176',	N'Wine Charge',				N'',		200,	3, 0, 0, 'Drink',	'')
+--176
+
+
+-- MAIN COMBO
+--	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other	8:Combo
+insert into Product
+([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink]) 
+values
+('P000000177',	N'Combo 1',					N'',		500,	8, 0, 0, 'Combo',	''),
+('P000000178',	N'Combo 2',					N'',		400,	8, 0, 0, 'Combo',	''),
+('P000000179',	N'Combo 3',					N'',		600,	8, 0, 0, 'Combo',	''),
+('P000000180',	N'Combo 4',					N'',		1000,	8, 0, 0, 'Combo',	'')
+
+
+
 
 
 --insert into ProductDetails values
