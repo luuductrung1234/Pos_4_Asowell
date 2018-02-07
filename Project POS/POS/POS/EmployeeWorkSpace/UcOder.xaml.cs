@@ -68,11 +68,11 @@ namespace POS.EmployeeWorkSpace
                 initStatus_RaiseEvent = false;
             }
 
-            if(currentEmpList != null)
+            if (currentEmpList != null)
             {
                 currentEmp = currentEmpList.Emp;
 
-                if(currentEmp != null)
+                if (currentEmp != null)
                 {
                     if (currentEmp.EmpRole == (int)EmployeeRole.Cashier)
                     {
@@ -325,7 +325,7 @@ namespace POS.EmployeeWorkSpace
         private void ButtonChair_Checked(object sender, RoutedEventArgs e)
         {
             curChair = sender as ToggleButton;
-            
+
             //int ii = 0;
             //if(int.Parse(curChair.Name.Substring(5)) != 1)
             //{
@@ -625,12 +625,6 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
-            if (currentTable.IsPrinted == 1)
-            {
-                MessageBox.Show("Invoice of this table is already printed! You can not edit this table!");
-                return;
-            }
-
             int i = 0;
             foreach (ToggleButton btn in wp.Children)
             {
@@ -643,6 +637,37 @@ namespace POS.EmployeeWorkSpace
             {
                 MessageBox.Show("Choose exactly which chair you want to decrease food's quantity!");
                 return;
+            }
+
+            if (currentTable.IsPrinted == 1)
+            {
+                MessageBoxResult mess = MessageBox.Show("Invoice of this table is already printed! You can not edit this table! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
+                if (mess == MessageBoxResult.Yes)
+                {
+                    if (App.Current.Properties["AdLogin"] != null)
+                    {
+                        DeleteConfirmDialog dcd = new DeleteConfirmDialog(((MainWindow)Window.GetWindow(this)).cUser, false);
+                        if (dcd.ShowDialog() == false)
+                        {
+                            return;
+                        }
+
+                        // update employee ID that effect to the OrderNote
+                        checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
+                    }
+                    else
+                    {
+                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, true, false);
+                        if(pr.ShowDialog() == false)
+                        {
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    return;
+                }
             }
 
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -1097,7 +1122,7 @@ namespace POS.EmployeeWorkSpace
                     MessageBoxResult mess = MessageBox.Show("This table is already printed! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                     if (mess == MessageBoxResult.Yes)
                     {
-                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, true, true);
                         pr.ShowDialog();
 
                         if (App.Current.Properties["AdLogin"] != null)
@@ -1107,6 +1132,14 @@ namespace POS.EmployeeWorkSpace
                             // update employee ID that effect to the OrderNote
                             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                         }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
                     }
                 }
                 else

@@ -247,6 +247,9 @@
     <Compile Include="EmployeeWorkSpace\DashPage.xaml.cs">
       <DependentUpon>DashPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeWorkSpace\DeleteConfirmDialog.xaml.cs">
+      <DependentUpon>DeleteConfirmDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeWorkSpace\EmployeeChangePass.xaml.cs">
       <DependentUpon>EmployeeChangePass.xaml</DependentUpon>
     </Compile>
@@ -476,6 +479,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmployeeWorkSpace\DashPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeWorkSpace\DeleteConfirmDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
