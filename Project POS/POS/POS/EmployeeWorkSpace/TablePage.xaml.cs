@@ -711,7 +711,7 @@ namespace POS.EmployeeWorkSpace
                     MessageBoxResult mess = MessageBox.Show("You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                     if (mess == MessageBoxResult.Yes)
                     {
-                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
+                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, false, false);
                         pr.ShowDialog();
 
                         if (App.Current.Properties["AdLogin"] != null)
@@ -774,12 +774,23 @@ namespace POS.EmployeeWorkSpace
                 MessageBoxResult mess = MessageBox.Show("You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
                 if (mess == MessageBoxResult.Yes)
                 {
-                    PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser);
-                    pr.ShowDialog();
-
                     if (App.Current.Properties["AdLogin"] != null)
                     {
                         pass = true;
+
+                        DeleteConfirmDialog dcd = new DeleteConfirmDialog(((MainWindow)Window.GetWindow(this)).cUser, false);
+                        if (dcd.ShowDialog() == false)
+                        {
+                            pass = false;
+                        }
+                    }
+                    else
+                    {
+                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, true, true);
+                        if(pr.ShowDialog() == false)
+                        {
+                            pass = false;
+                        }
                     }
                 }
                 else
@@ -1164,7 +1175,6 @@ namespace POS.EmployeeWorkSpace
             rec.MouseMove -= btnTableAdded_MoveDrag;
             rec.Opacity = 1;
             rec.Cursor = Cursors.Arrow;
-            rec.Fill = Brushes.DarkCyan;
             rec.SetValue(BitmapEffectProperty, recShadowOrdered);
 
             founded.IsPinned = 1;

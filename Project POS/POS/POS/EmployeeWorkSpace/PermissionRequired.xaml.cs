@@ -23,11 +23,15 @@ namespace POS.EmployeeWorkSpace
     {
         private EmployeewsOfCloudPOS _cloudPosUnitofwork;
         MaterialDesignThemes.Wpf.Chip _cUser;
+        bool _isPrinted;
+        bool _isTable;
 
-        public PermissionRequired(EmployeewsOfCloudPOS cloudPosUnitofwork, MaterialDesignThemes.Wpf.Chip cUser)
+        public PermissionRequired(EmployeewsOfCloudPOS cloudPosUnitofwork, MaterialDesignThemes.Wpf.Chip cUser, bool isPrinted, bool isTable)
         {
             _cloudPosUnitofwork = cloudPosUnitofwork;
             _cUser = cUser;
+            _isPrinted = isPrinted;
+            _isTable = isTable;
             InitializeComponent();
 
             txtUsername.Focus();
@@ -81,6 +85,17 @@ namespace POS.EmployeeWorkSpace
                     Dispatcher.Invoke(() =>
                     {
                         _cUser.Content = (App.Current.Properties["AdLogin"] as AdminRe).Username;
+                        if(_isPrinted)
+                        {
+                            DeleteConfirmDialog dcd = new DeleteConfirmDialog(_cUser, _isTable);
+                            if(dcd.ShowDialog() == false)
+                            {
+                                this.DialogResult = false;
+                            }
+
+                            this.Close();
+                        }
+
                         this.Close();
                     });
 
