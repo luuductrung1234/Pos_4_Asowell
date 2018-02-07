@@ -8,6 +8,7 @@ namespace POS.Entities
 {
     public partial class OrderTemp
     {
+        public int OrderMode { get; set; }
         public decimal SaleValue { get; set; }      //sale_value
         public decimal TotalPriceNonDisc { get; set; }  // totalPrice_nonDisc
         public decimal Svc { get; set; }    // Svc

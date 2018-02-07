@@ -45,6 +45,7 @@ namespace POS.Mapping
             Property(x => x.SaleValue).HasColumnName(@"sale_value").HasColumnType("money").HasPrecision(19, 4);
             Property(x => x.Discount).HasColumnName(@"discount").HasColumnType("int").IsRequired();
             Property(x => x.SubEmpId).HasColumnName(@"subEmp_id").HasColumnType("varchar").IsUnicode(false).IsOptional().HasMaxLength(200);
+            Property(x => x.OrderMode).HasColumnName(@"orderMode").HasColumnType("int").IsRequired();
 
             // Foreign keys
             HasOptional(a => a.Table).WithMany(b => b.OrderTemps).HasForeignKey(c => c.TableOwned).WillCascadeOnDelete(false); // fk_table_owned_order

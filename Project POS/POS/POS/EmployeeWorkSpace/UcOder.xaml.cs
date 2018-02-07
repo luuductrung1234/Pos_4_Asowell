@@ -27,6 +27,7 @@ namespace POS.EmployeeWorkSpace
         private List<Entities.Chair> chairlistcurrenttable;
         private List<Entities.OrderDetailsTemp> orderDetailsTempCurrentTableList;
         private Employee currentEmp;
+        private bool isSetOrderMode = false;
 
         public UcOder()
         {
@@ -48,6 +49,9 @@ namespace POS.EmployeeWorkSpace
 
             if (currentTable == null)
             {
+                btnSetOrder.IsChecked = false;
+                isSetOrderMode = false;
+
                 InitCus_raiseEvent = true;
                 initStatus_RaiseEvent = true;
                 txtDay.Text = "";
@@ -81,9 +85,21 @@ namespace POS.EmployeeWorkSpace
                 }
             }
 
+            
+
             orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
             orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
 
+
+            isSetOrderMode = (orderTempTable.OrderMode==1) ? true : false;
+            if (isSetOrderMode)
+            {
+                txtTotal.IsEnabled = true;
+            }
+            else
+            {
+                txtTotal.IsEnabled = false;
+            }
             LoadTableChairData();
             txtCusNum.Text = orderTempTable.Pax.ToString();
             LoadCustomerOwner();
@@ -450,55 +466,75 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+
         public void loadTotalPrice()
         {
-            //var ordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
-            var chairordernotedetails = new List<OrderDetailsTemp>();
-            foreach (Entities.Chair ch in chairlistcurrenttable)
-            {
-                var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(ch.ChairId)).ToList();
-                if (ch != null && chairorderdetailstemp != null)
+                //var ordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
+                var chairordernotedetails = new List<OrderDetailsTemp>();
+                foreach (Entities.Chair ch in chairlistcurrenttable)
                 {
-                    chairordernotedetails = chairordernotedetails.Concat(chairorderdetailstemp).ToList();
+                    var chairorderdetailstemp = _unitofwork.OrderDetailsTempRepository.Get(x => x.ChairId.Equals(ch.ChairId)).ToList();
+                    if (ch != null && chairorderdetailstemp != null)
+                    {
+                        chairordernotedetails = chairordernotedetails.Concat(chairorderdetailstemp).ToList();
+                    }
                 }
-            }
 
-            // chuyen product_id thanh product name
-            var query_item_in_ordertails = from orderdetails in chairordernotedetails
-                                           join product in _cloudPosUnitofwork.ProductRepository.Get()
-                                           on orderdetails.ProductId equals product.ProductId
-                                           select new
-                                           {
-                                               item_quan = orderdetails.Quan,
-                                               item_price = product.Price,
-                                               item_discount = product.Discount
-                                           };
+                // chuyen product_id thanh product name
+                var query_item_in_ordertails = from orderdetails in chairordernotedetails
+                                               join product in _cloudPosUnitofwork.ProductRepository.Get()
+                                               on orderdetails.ProductId equals product.ProductId
+                                               select new
+                                               {
+                                                   item_quan = orderdetails.Quan,
+                                                   item_price = product.Price,
+                                                   item_discount = product.Discount
+                                               };
 
-            // calculate totalPriceNonDisc and TotalPrice
-            decimal Svc = 0;
-            decimal Vat = 0;
-            decimal SaleValue = 0;
-            decimal TotalWithDiscount = 0;
-            decimal Total = 0;
-            foreach (var item in query_item_in_ordertails)
+                // calculate totalPriceNonDisc and TotalPrice
+                decimal Svc = 0;
+                decimal Vat = 0;
+                decimal SaleValue = 0;
+                decimal TotalWithDiscount = 0;
+                decimal Total = 0;
+                foreach (var item in query_item_in_ordertails)
+                {
+                    Total = (decimal)((float)Total + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
+                }
+
+                // tính năng giảm giá cho món có gì đó không ổn => hiện tại Total chính là SaleValue
+                SaleValue = Total;
+                Svc = (Total * 5) / 100;
+                Vat = ((Total + (Total * 5) / 100) * 10) / 100;
+                Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
+                TotalWithDiscount = (decimal)(((float)Total * (100 - orderTempTable.Discount)) / 100.0);
+
+            /*
+             * If the current order isn't in Set Order  Mode
+             * Use the casual calculate method to compute the Total Price
+             */
+            if (!isSetOrderMode)
             {
-                Total = (decimal)((float)Total + (float)(item.item_quan * ((float)item.item_price * ((100 - item.item_discount) / 100.0))));
+                txtTotal.Text = string.Format("{0:0.000}", TotalWithDiscount) + " VND";
+                orderTempTable.TotalPrice = (decimal)Math.Round(TotalWithDiscount, 3);
+                orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
+                orderTempTable.Svc = Math.Round(Svc, 3);
+                orderTempTable.Vat = Math.Round(Vat, 3);
+                orderTempTable.SaleValue = Math.Round(SaleValue, 3);
             }
-
-            // tính năng giảm giá cho món có gì đó không ổn => hiện tại Total chính là SaleValue
-            SaleValue = Total;
-            Svc = (Total * 5) / 100;
-            Vat = ((Total + (Total * 5) / 100) * 10) / 100;
-            Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
-            TotalWithDiscount = (decimal)(((float)Total * (100 - orderTempTable.Discount)) / 100.0);
-
-
-            txtTotal.Text = string.Format("{0:0.000}", TotalWithDiscount) + " VND";
-            orderTempTable.TotalPrice = (decimal)Math.Round(TotalWithDiscount, 3);
-            orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
-            orderTempTable.Svc = Math.Round(Svc, 3);
-            orderTempTable.Vat = Math.Round(Vat, 3);
-            orderTempTable.SaleValue = Math.Round(SaleValue, 3);
+            else
+            {
+                /*
+                 * If the current order is in Set Order  Mode
+                 * Just let the User(Admin) input total price
+                 */
+                txtTotal.Text = string.Format("{0:0.000}", 0);
+                orderTempTable.TotalPrice = 0;
+                orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
+                orderTempTable.Svc = Math.Round(Svc, 3);
+                orderTempTable.Vat = Math.Round(Vat, 3);
+                orderTempTable.SaleValue = Math.Round(SaleValue, 3);
+            }
         }
 
 
@@ -1506,6 +1542,49 @@ namespace POS.EmployeeWorkSpace
                 orderTempTable.Pax = 0;
             else
                 orderTempTable.Pax = int.Parse(txtCusnum.Text);
+
+            // update employee ID that effect to the OrderNote
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
+            _unitofwork.Save();
+        }
+
+        bool isCalculateTotalPrice;
+        private void btnSetOrder_Checked(object sender, RoutedEventArgs e)
+        {
+            isSetOrderMode = true;
+            txtTotal.IsEnabled = true;
+            orderTempTable.OrderMode = 1;
+            isCalculateTotalPrice = false;
+            loadTotalPrice();
+
+            // update employee ID that effect to the OrderNote
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
+            _unitofwork.Save();
+        }
+
+        private void btnSetOrder_Unchecked(object sender, RoutedEventArgs e)
+        {
+            isSetOrderMode = false;
+            txtTotal.IsEnabled = false;
+            orderTempTable.OrderMode = 0;
+            isCalculateTotalPrice = true;
+            loadTotalPrice();
+
+            // update employee ID that effect to the OrderNote
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
+            _unitofwork.Save();
+        }
+
+        private void txtTotal_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (currentTable == null || isUcOrderFormLoading || isCalculateTotalPrice)
+                return;
+            TextBox txtTotal = (sender as TextBox);
+            if (string.IsNullOrEmpty(txtTotal.Text))
+                orderTempTable.TotalPrice = 0;
+            else
+                orderTempTable.TotalPrice = decimal.Parse(txtTotal.Text);
+
 
             // update employee ID that effect to the OrderNote
             checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
