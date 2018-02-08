@@ -35,6 +35,7 @@ namespace POS.Helper.PrintHelper
 
         private IPrintHelper ph;
         private int type;
+        public int OrderMode { get; set; }
         private readonly Entities.Table curTable;
         private readonly OrderNote curOrder;
         private PrintDialog printDlg;
@@ -131,6 +132,11 @@ namespace POS.Helper.PrintHelper
             }
         }
 
+
+        /// <summary>
+        /// CHOOSING PRINT TO PAPER OR PRINT TO WINDOWS
+        /// </summary>
+        /// <param name="doc"></param>
         private void PrintToReal(FlowDocument doc)
         {
             // Create IDocumentPaginatorSource from FlowDocument
@@ -178,11 +184,13 @@ namespace POS.Helper.PrintHelper
                     {
                         ImgName = "logo.png",
                         Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
-                        Phone = "0927333668",
+                        Phone = "",
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curOrder, _unitofwork).GetAndConverOrderDetails(curOrder, _unitofwork, _cloudPosUnitofwork)
+                    Order = new OrderForPrint().GetAndConvertOrder(curOrder, _unitofwork).GetAndConverOrderDetails(curOrder, _unitofwork, _cloudPosUnitofwork),
+
+                    OrderMode = OrderMode
                 };
             }
 
@@ -198,11 +206,13 @@ namespace POS.Helper.PrintHelper
                     {
                         ImgName = "logo.png",
                         Address = "Address: f.7th, Fafilm Building, 6 St.Thai Van Lung, w.Ben Nghe, HCM City, Viet Nam",
-                        Phone = "0927333668",
+                        Phone = "",
                         PageName = "RECEIPT"
                     },
 
-                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, _cloudPosUnitofwork, TempReceipt_Printing)
+                    Order = new OrderForPrint().GetAndConvertOrder(curTable, _unitofwork).GetAndConverOrderDetails(curTable, _unitofwork, _cloudPosUnitofwork, TempReceipt_Printing),
+
+                    OrderMode = OrderMode
                 };
             }
 

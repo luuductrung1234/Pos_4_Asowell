@@ -18,6 +18,9 @@ namespace POS.Helper.PrintHelper
 
         public OrderForPrint Order { get; set; }
 
+        public int OrderMode { get; set; }
+        private int SETORDER = 1;
+
         public ReceiptPrintHelper() { }
 
         public ReceiptPrintHelper(Owner owner)
@@ -58,7 +61,7 @@ namespace POS.Helper.PrintHelper
             {
                 Generate_HeadText(blkHeadText, Owner);
             }
-            
+
 
             // Info Text
             BlockUIContainer blkInfoText = new BlockUIContainer();
@@ -112,6 +115,21 @@ namespace POS.Helper.PrintHelper
             // Main stackPanel of Foot Text
             StackPanel stpFootText = new StackPanel();
 
+
+
+            StackPanel stpExp = new StackPanel();
+            TextBlock txtExp = new TextBlock()
+            {
+                Text = "receipt is available only in one month.",
+                FontSize = 11,
+                FontFamily = new FontFamily("Century Gothic"),
+                FontWeight = FontWeights.UltraBold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 0)
+            };
+            stpExp.Children.Add(txtExp);
+
+
             StackPanel stpThank = new StackPanel();
             TextBlock txtThank = new TextBlock()
             {
@@ -149,6 +167,7 @@ namespace POS.Helper.PrintHelper
             stpEmo.Children.Add(imgEmo);
 
 
+            stpFootText.Children.Add(stpExp);
             stpFootText.Children.Add(stpThank);
             stpFootText.Children.Add(stpSeeAgain);
             stpFootText.Children.Add(stpEmo);
@@ -168,6 +187,7 @@ namespace POS.Helper.PrintHelper
             {
                 Orientation = Orientation.Vertical
             };
+
 
 
             // Sale Value
@@ -246,7 +266,7 @@ namespace POS.Helper.PrintHelper
             };
             stpVAT.Children.Add(tbVATLable);
             stpVAT.Children.Add(tbVATValue);
-            
+
 
 
             // Total Price
@@ -413,6 +433,51 @@ namespace POS.Helper.PrintHelper
             }
 
             int rowIndex = 1;
+            if (OrderMode == SETORDER)
+            {
+                TextBlock txtProductName = new TextBlock();
+                txtProductName.Width = 115;
+                txtProductName.Text = "SET";
+                txtProductName.FontSize = 11;
+                txtProductName.VerticalAlignment = VerticalAlignment.Top;
+                txtProductName.HorizontalAlignment = HorizontalAlignment.Left;
+                txtProductName.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtProductName, rowIndex);
+                Grid.SetColumn(txtProductName, 0);
+                dgDataTable.Children.Add(txtProductName);
+
+                TextBlock txtQuan = new TextBlock();
+                txtQuan.Text = Order.Pax.ToString();
+                txtQuan.FontSize = 11;
+                txtQuan.VerticalAlignment = VerticalAlignment.Top;
+                txtQuan.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtQuan, rowIndex);
+                Grid.SetColumn(txtQuan, 1);
+                dgDataTable.Children.Add(txtQuan);
+
+                TextBlock txtPrice = new TextBlock();
+                txtPrice.Text = String.Format("{0:0.000}", Order.SaleValue/Order.Pax);
+                txtPrice.FontSize = 11;
+                txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
+                txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
+                txtPrice.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtPrice, rowIndex);
+                Grid.SetColumn(txtPrice, 2);
+                dgDataTable.Children.Add(txtPrice);
+
+                TextBlock txtAmt = new TextBlock();
+                txtAmt.Text = String.Format("{0:0.000}", Order.SaleValue);
+                txtAmt.FontSize = 11;
+                txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
+                txtAmt.TextAlignment = TextAlignment.Right;
+                txtAmt.Margin = new Thickness(0, 0, 0, 5);
+                Grid.SetRow(txtAmt, rowIndex);
+                Grid.SetColumn(txtAmt, 3);
+                dgDataTable.Children.Add(txtAmt);
+
+                rowIndex++;
+            }
+
             foreach (var orderItem in listData)
             {
                 TextBlock txtProductName = new TextBlock();
@@ -421,7 +486,7 @@ namespace POS.Helper.PrintHelper
                 txtProductName.FontSize = 11;
                 txtProductName.VerticalAlignment = VerticalAlignment.Top;
                 txtProductName.HorizontalAlignment = HorizontalAlignment.Left;
-                txtProductName.Margin = new Thickness(0,0,0,5);
+                txtProductName.Margin = new Thickness(0, 0, 0, 5);
                 Grid.SetRow(txtProductName, rowIndex);
                 Grid.SetColumn(txtProductName, 0);
                 dgDataTable.Children.Add(txtProductName);
@@ -436,7 +501,15 @@ namespace POS.Helper.PrintHelper
                 dgDataTable.Children.Add(txtQuan);
 
                 TextBlock txtPrice = new TextBlock();
-                txtPrice.Text = String.Format("{0:0.000}", orderItem.ProductPrice);
+                if (OrderMode == SETORDER)
+                {
+                    txtPrice.Text = "";
+                }
+                else
+                {
+                    txtPrice.Text = String.Format("{0:0.000}", orderItem.ProductPrice);
+                }
+
                 txtPrice.FontSize = 11;
                 txtPrice.VerticalAlignment = VerticalAlignment.Stretch;
                 txtPrice.HorizontalAlignment = HorizontalAlignment.Right;
@@ -446,7 +519,14 @@ namespace POS.Helper.PrintHelper
                 dgDataTable.Children.Add(txtPrice);
 
                 TextBlock txtAmt = new TextBlock();
-                txtAmt.Text = String.Format("{0:0.000}", orderItem.Amt);
+                if (OrderMode == SETORDER)
+                {
+                    txtAmt.Text = "";
+                }
+                else
+                {
+                    txtAmt.Text = String.Format("{0:0.000}", orderItem.Amt);
+                }
                 txtAmt.FontSize = 11;
                 txtAmt.VerticalAlignment = VerticalAlignment.Stretch;
                 txtAmt.TextAlignment = TextAlignment.Right;
@@ -457,6 +537,7 @@ namespace POS.Helper.PrintHelper
 
                 rowIndex++;
             }
+
 
             blkTableText.Child = dgDataTable;
         }
@@ -500,6 +581,8 @@ namespace POS.Helper.PrintHelper
 
             blkInfoText.Child = stpMain;
         }
+
+
 
         /// <summary>
         /// Create the Head section of Receipt
@@ -578,6 +661,7 @@ namespace POS.Helper.PrintHelper
 
             blkHeadText.Child = stpHeadText;
         }
+
 
 
 

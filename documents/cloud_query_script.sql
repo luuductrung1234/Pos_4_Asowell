@@ -309,7 +309,7 @@ values		-- thức ăn
 ('P000000116',	N'Mussle Pot Blue Cheese',	N'',		195,	1, 0, 0, 'Main',	'BlueCheeseMusselPot.jpg'),
 ('P000000117',	N'Mussel Pot Tomatoes',		N'',		195,	1, 0, 0, 'Main',	'RoastedTomatoesMusselPot.jpg'),
 ('P000000118',	N'Mussel Pot Thai',			N'',		195,	1, 0, 0, 'Main',	'TomYumMusselPot.jpg'),
-('P000000128',	N'Banger and Mash',			N'',		210,	1, 0, 0, 'Main',	''),
+('P000000128',	N'Banger and Mash',			N'',		210,	1, 0, 0, 'Main',	'bangersandmash.jpg'),
 ('P000000119',	N'Grilled Salmon',			N'',		295,	1, 0, 0, 'Main',	'GrilledSalmonBrochette.jpg'),
 ('P000000120',	N'1/2 Chicken',				N'',		250,	1, 0, 0, 'Main',	'RoastedHalfChicken.jpg'),
 ('P000000121',	N'Soak Duck',				N'',		250,	1, 0, 0, 'Main',	'HODSoakDuckBreast.jpg'),
@@ -326,74 +326,76 @@ values		-- thức ăn
 insert into Product
 ([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink]) 
 values
-('P000000129',	N'Espresso',				N'',		45,		6, 0, 0, 'Drink',	''),
-('P000000130',	N'Americano',				N'',		50,		6, 0, 0, 'Drink',	''),
-('P000000131',	N'Latte',					N'',		55,		6, 0, 0, 'Drink',	''),
-('P000000132',	N'Cappuccino',				N'',		55,		6, 0, 0, 'Drink',	''),
-('P000000133',	N'Black Coffee',			N'',		35,		6, 0, 0, 'Drink',	''),
-('P000000134',	N'Condenses Coffee',		N'',		40,		6, 0, 0, 'Drink',	''),
-('P000000140',	N'Choco Coffee',			N'',		65,		6, 0, 0, 'Drink',	''),
-('P000000142',	N'Caramel Coffee',			N'',		65,		6, 0, 0, 'Drink',	''),
-('P000000144',	N'Coconut Coffee',			N'',		65,		6, 0, 0, 'Drink',	''),
+('P000000129',	N'Espresso',				N'',		45,		6, 0, 0, 'Drink',	'espresso.jpg'),
+('P000000130',	N'Americano',				N'',		50,		6, 0, 0, 'Drink',	'americano.png'),
+('P000000131',	N'Latte',					N'',		55,		6, 0, 0, 'Drink',	'latte.jpg'),
+('P000000132',	N'Cappuccino',				N'',		55,		6, 0, 0, 'Drink',	'cappuccino.jpeg'),
+('P000000133',	N'Black Coffee',			N'',		35,		6, 0, 0, 'Drink',	'blackcoffee.jpg'),
+('P000000134',	N'Condenses Coffee',		N'',		40,		6, 0, 0, 'Drink',	'condensescoffee.jpeg'),
+('P000000140',	N'Choco Coffee',			N'',		65,		6, 0, 0, 'Drink',	'chococoffee.jpg'),
+('P000000142',	N'Caramel Coffee',			N'',		65,		6, 0, 0, 'Drink',	'caramelcoffee.jpg'),
+('P000000144',	N'Coconut Coffee',			N'',		65,		6, 0, 0, 'Drink',	'coconutcoffee.jpg'),
 
-('P000000135',	N'Chamomile',				N'',		50,		0, 0, 0, 'Drink',	''),
-('P000000136',	N'Green Tea',				N'',		50,		0, 0, 0, 'Drink',	''),
-('P000000137',	N'Earl Gray',				N'',		50,		0, 0, 0, 'Drink',	''),
-('P000000138',	N'English Breakfast',		N'',		50,		0, 0, 0, 'Drink',	''),
-('P000000139',	N'Jasmine',					N'',		50,		0, 0, 0, 'Drink',	''),
+('P000000135',	N'Chamomile',				N'',		50,		0, 0, 0, 'Drink',	'chamomile.jpg'),
+('P000000136',	N'Green Tea',				N'',		50,		0, 0, 0, 'Drink',	'greentea.jpg'),
+('P000000137',	N'Earl Gray',				N'',		50,		0, 0, 0, 'Drink',	'earlgray.jpg'),
+('P000000138',	N'English Breakfast',		N'',		50,		0, 0, 0, 'Drink',	'englishbreakfast.jpg'),
+('P000000139',	N'Jasmine',					N'',		50,		0, 0, 0, 'Drink',	'jasmine.jpg'),
 
-('P000000141',	N'Matcha',					N'',		65,		0, 0, 0, 'Drink',	''),
-('P000000143',	N'Banana Choco',			N'',		65,		0, 0, 0, 'Drink',	''),
-('P000000145',	N'Strawberries Banana',		N'',		65,		0, 0, 0, 'Drink',	''),
+('P000000141',	N'Matcha',					N'',		65,		0, 0, 0, 'Drink',	'matcha.jpg'),
+('P000000143',	N'Banana Choco',			N'',		65,		0, 0, 0, 'Drink',	'bananachoco.jpg'),
+('P000000145',	N'Strawberries Banana',		N'',		65,		0, 0, 0, 'Drink',	'strawbanana.jpg'),
 ('P000000146',	N'Asowel Special',			N'',		70,		0, 0, 0, 'Drink',	''),
 
-('P000000147',	N'Watermelon',				N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000148',	N'Pineapple',				N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000149',	N'Orange',					N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000150',	N'Apple',					N'',		55,		0, 0, 0, 'Drink',	''),
-('P000000151',	N'Pomelo',					N'',		60,		0, 0, 0, 'Drink',	''),
-('P000000152',	N'Carrot',					N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000153',	N'Lime',					N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000154',	N'Passion Fruit',			N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000155',	N'Coconut',					N'',		50,		0, 0, 0, 'Drink',	''),
+('P000000147',	N'Watermelon',				N'',		40,		0, 0, 0, 'Drink',	'watermelon.jpg'),
+('P000000148',	N'Pineapple',				N'',		40,		0, 0, 0, 'Drink',	'pineapple.jpg'),
+('P000000149',	N'Orange',					N'',		40,		0, 0, 0, 'Drink',	'orange.jpg'),
+('P000000150',	N'Apple',					N'',		55,		0, 0, 0, 'Drink',	'apple.jpg'),
+('P000000151',	N'Pomelo',					N'',		60,		0, 0, 0, 'Drink',	'pomelo.jpg'),
+('P000000152',	N'Carrot',					N'',		40,		0, 0, 0, 'Drink',	'carrot.jpg'),
+('P000000153',	N'Lime',					N'',		40,		0, 0, 0, 'Drink',	'lime.jpg'),
+('P000000154',	N'Passion Fruit',			N'',		40,		0, 0, 0, 'Drink',	'passion.jpg'),
+('P000000155',	N'Coconut',					N'',		50,		0, 0, 0, 'Drink',	'coconut.jpg'),
 
-('P000000156',	N'Lavie',					N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000157',	N'Coke',					N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000158',	N'Sprite',					N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000159',	N'Soda',					N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000160',	N'Tonic',					N'',		40,		0, 0, 0, 'Drink',	''),
-('P000000161',	N'Ginger ale',				N'',		50,		0, 0, 0, 'Drink',	''),
-('P000000162',	N'San Pelle 250',			N'',		50,		0, 0, 0, 'Drink',	''),
-('P000000163',	N'San Pelle 750',			N'',		120,	0, 0, 0, 'Drink',	''),
+('P000000156',	N'Lavie',					N'',		40,		0, 0, 0, 'Drink',	'lavie.png'),
+('P000000157',	N'Coke',					N'',		40,		0, 0, 0, 'Drink',	'coke.jpg'),
+('P000000158',	N'Sprite',					N'',		40,		0, 0, 0, 'Drink',	'sprite.jpg'),
+('P000000159',	N'Soda',					N'',		40,		0, 0, 0, 'Drink',	'soda.jpg'),
+('P000000160',	N'Tonic',					N'',		40,		0, 0, 0, 'Drink',	'tonic.jpg'),
+('P000000161',	N'Ginger ale',				N'',		50,		0, 0, 0, 'Drink',	'gingerale.jpg'),
+('P000000162',	N'San Pelle 250',			N'',		50,		0, 0, 0, 'Drink',	'sanpellgrino.jpg'),
+('P000000163',	N'San Pelle 750',			N'',		120,	0, 0, 0, 'Drink',	'sanpellgrino.jpg'),
 
-('P000000164',	N'Tiger',					N'',		50,		2, 0, 0, 'Drink',	''),
-('P000000165',	N'Heineken',				N'',		65,		2, 0, 0, 'Drink',	''),
+('P000000164',	N'Tiger',					N'',		50,		2, 0, 0, 'Drink',	'tiger.jpg'),
+('P000000165',	N'Heineken',				N'',		65,		2, 0, 0, 'Drink',	'heineken.jpg'),
 
-('P000000166',	N'Dream Alone 175',			N'',		55,		2, 0, 0, 'Drink',	''),
-('P000000167',	N'Dream Alone 330',			N'',		95,		2, 0, 0, 'Drink',	''),
-('P000000168',	N'Kirtz Insane 175',		N'',		55,		2, 0, 0, 'Drink',	''),
-('P000000169',	N'Kirtz Insane 330',		N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000166',	N'Dream Alone 175',			N'',		55,		2, 0, 0, 'Drink',	'dreamalone.png'),
+('P000000167',	N'Dream Alone 330',			N'',		95,		2, 0, 0, 'Drink',	'dreamalone.png'),
+('P000000168',	N'Kirtz Insane 175',		N'',		55,		2, 0, 0, 'Drink',	'kurtzinsane.png'),
+('P000000169',	N'Kirtz Insane 330',		N'',		95,		2, 0, 0, 'Drink',	'kurtzinsane.png'),
 ('P000000170',	N'Mexican Spilner 175',		N'',		55,		2, 0, 0, 'Drink',	''),
 ('P000000171',	N'Mexican Spilner 330',		N'',		95,		2, 0, 0, 'Drink',	''),
-('P000000172',	N'Loose Rivet 175',			N'',		60,		2, 0, 0, 'Drink',	''),
-('P000000173',	N'Loose Rivet 330',			N'',		115,	2, 0, 0, 'Drink',	''),
+('P000000172',	N'Loose Rivet 175',			N'',		60,		2, 0, 0, 'Drink',	'looserivet.png'),
+('P000000173',	N'Loose Rivet 330',			N'',		115,	2, 0, 0, 'Drink',	'looserivet.png'),
 
-('P000000174',	N'Jasmin IPA 330',			N'',		95,		2, 0, 0, 'Drink',	''),
-('P000000175',	N'Passion Fruit 330',		N'',		95,		2, 0, 0, 'Drink',	''),
+('P000000174',	N'Jasmin IPA 330',			N'',		95,		2, 0, 0, 'Drink',	'jasimineipa.png'),
+('P000000177',	N'Jasmin IPA 175',			N'',		65,		2, 0, 0, 'Drink',	'jasimineipa.png'),
+('P000000175',	N'Passion Fruit 330',		N'',		95,		2, 0, 0, 'Drink',	'passionale.png'),
+('P000000178',	N'Passion Fruit 175',		N'',		65,		2, 0, 0, 'Drink',	'passionale.png'),
 
 ('P000000176',	N'Wine Charge',				N'',		200,	3, 0, 0, 'Drink',	'')
---176
+--178
 
 
 -- MAIN COMBO
 --	0:Beverage	2:Beer	3:Wine	6:Coffee	7:Cocktail		1:Food	4:Snack	 5:Other	8:Combo
-insert into Product
-([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink]) 
-values
-('P000000177',	N'Combo 1',					N'',		500,	8, 0, 0, 'Combo',	''),
-('P000000178',	N'Combo 2',					N'',		400,	8, 0, 0, 'Combo',	''),
-('P000000179',	N'Combo 3',					N'',		600,	8, 0, 0, 'Combo',	''),
-('P000000180',	N'Combo 4',					N'',		1000,	8, 0, 0, 'Combo',	'')
+--insert into Product
+--([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink]) 
+--values
+--('P000000177',	N'Combo 1',					N'',		500,	8, 0, 0, 'Combo',	''),
+--('P000000178',	N'Combo 2',					N'',		400,	8, 0, 0, 'Combo',	''),
+--('P000000179',	N'Combo 3',					N'',		600,	8, 0, 0, 'Combo',	''),
+--('P000000180',	N'Combo 4',					N'',		1000,	8, 0, 0, 'Combo',	'')
 
 
 

@@ -1183,7 +1183,7 @@ namespace POS.EmployeeWorkSpace
             ((MainWindow)Window.GetWindow(this)).currentTable = founded;
             var orderControl = (Entry)((MainWindow)Window.GetWindow(this)).en;
             ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(orderControl);
-            orderControl.ucOrder.RefreshControl(_unitofwork, founded);
+            //orderControl.ucOrder.RefreshControl(_unitofwork, founded);  thừa
             ((MainWindow)Window.GetWindow(this)).bntTable.IsEnabled = true;
             ((MainWindow)Window.GetWindow(this)).bntDash.IsEnabled = true;
             ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = false;

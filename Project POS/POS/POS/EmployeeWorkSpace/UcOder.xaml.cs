@@ -85,24 +85,28 @@ namespace POS.EmployeeWorkSpace
                 }
             }
 
-            
+
 
             orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
             orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
 
 
-            isSetOrderMode = (orderTempTable.OrderMode==1) ? true : false;
+
+            LoadTableChairData();
+            txtCusNum.Text = orderTempTable.Pax.ToString();
+            LoadCustomerOwner();
+            txtTotal.Text = "";
+            isSetOrderMode = (orderTempTable.OrderMode == 1) ? true : false;
             if (isSetOrderMode)
             {
+                btnSetOrder.IsChecked = true;
                 txtTotal.IsEnabled = true;
             }
             else
             {
+                btnSetOrder.IsChecked = false;
                 txtTotal.IsEnabled = false;
             }
-            LoadTableChairData();
-            txtCusNum.Text = orderTempTable.Pax.ToString();
-            LoadCustomerOwner();
             RefreshControlAllChair();
 
             isUcOrderFormLoading = false;
@@ -187,7 +191,10 @@ namespace POS.EmployeeWorkSpace
 
             // binding
             lvData.ItemsSource = query;
-            loadTotalPrice();
+            if (!isUnCheckChair)
+            {
+                loadTotalPrice();
+            }
         }
 
         public void RefreshControlSelectChair()
@@ -322,8 +329,10 @@ namespace POS.EmployeeWorkSpace
             }
         }
 
+        bool isOtherChairCheck = false;
         private void ButtonChair_Checked(object sender, RoutedEventArgs e)
         {
+            isOtherChairCheck = true;
             curChair = sender as ToggleButton;
 
             //int ii = 0;
@@ -382,11 +391,20 @@ namespace POS.EmployeeWorkSpace
             }
 
             RefreshControlSelectChair();
+            isOtherChairCheck = false;
         }
 
+        bool isUnCheckChair = false;
         private void ButtonChair_Unchecked(object sender, RoutedEventArgs e)
         {
-            RefreshControlAllChair();
+            
+                /*
+                 * if other chair is checked, we don't have to run this event (ButtonChair_Unchecked)
+                 */
+                isUnCheckChair = true;
+                RefreshControlAllChair();
+                isUnCheckChair = false;
+            
         }
 
 
@@ -469,6 +487,8 @@ namespace POS.EmployeeWorkSpace
 
         public void loadTotalPrice()
         {
+            if (!isSetOrderMode)
+            {
                 //var ordernotedetails = ((MainWindow)Window.GetWindow(this)).currentTable.TableOrderDetails;
                 var chairordernotedetails = new List<OrderDetailsTemp>();
                 foreach (Entities.Chair ch in chairlistcurrenttable)
@@ -509,13 +529,12 @@ namespace POS.EmployeeWorkSpace
                 Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
                 TotalWithDiscount = (decimal)(((float)Total * (100 - orderTempTable.Discount)) / 100.0);
 
-            /*
-             * If the current order isn't in Set Order  Mode
-             * Use the casual calculate method to compute the Total Price
-             */
-            if (!isSetOrderMode)
-            {
-                txtTotal.Text = string.Format("{0:0.000}", TotalWithDiscount) + " VND";
+                /*
+                 * If the current order isn't in Set Order  Mode
+                 * Use the casual calculate method to compute the Total Price
+                 */
+
+                txtTotal.Text = string.Format("{0:0.000}", TotalWithDiscount);
                 orderTempTable.TotalPrice = (decimal)Math.Round(TotalWithDiscount, 3);
                 orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
                 orderTempTable.Svc = Math.Round(Svc, 3);
@@ -528,12 +547,7 @@ namespace POS.EmployeeWorkSpace
                  * If the current order is in Set Order  Mode
                  * Just let the User(Admin) input total price
                  */
-                txtTotal.Text = string.Format("{0:0.000}", 0);
-                orderTempTable.TotalPrice = 0;
-                orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
-                orderTempTable.Svc = Math.Round(Svc, 3);
-                orderTempTable.Vat = Math.Round(Vat, 3);
-                orderTempTable.SaleValue = Math.Round(SaleValue, 3);
+                txtTotal.Text = string.Format("{0:0.000}", orderTempTable.TotalPrice);
             }
         }
 
@@ -658,7 +672,7 @@ namespace POS.EmployeeWorkSpace
                     else
                     {
                         PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, true, false);
-                        if(pr.ShowDialog() == false)
+                        if (pr.ShowDialog() == false)
                         {
                             return;
                         }
@@ -900,8 +914,20 @@ namespace POS.EmployeeWorkSpace
                     break;
                 }
             }
+
+            List<OrderDetailsTemp> newOrderDetails = new List<OrderDetailsTemp>();
+            orderTempTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(currentTable.TableId)).First();
+            orderDetailsTempCurrentTableList = _unitofwork.OrderDetailsTempRepository.Get(x => x.OrdertempId.Equals(orderTempTable.OrdertempId)).ToList();
+
+
             if (isChairChecked)
             {
+                if (isSetOrderMode)
+                {
+                    MessageBox.Show("Current table is in Set Order Mode, you can not pay per chair!");
+                    return;
+                }
+
                 // devide the chair data to another Order
                 OrderNote newOrder = new OrderNote();
                 if (!SplitChairToOrder(newOrder))
@@ -923,8 +949,8 @@ namespace POS.EmployeeWorkSpace
 
 
                 // printing
-                var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Receipt_Printing,
-                    newOrder);
+                var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Receipt_Printing, newOrder);
+                printer.OrderMode = orderTempTable.OrderMode;
                 printer.DoPrint();
 
                 //// clean the old chair order data
@@ -956,8 +982,8 @@ namespace POS.EmployeeWorkSpace
                 }
 
                 // printing
-                var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Receipt_Printing,
-                    newOrder);
+                var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.Receipt_Printing, newOrder);
+                printer.OrderMode = orderTempTable.OrderMode;
                 printer.DoPrint();
 
                 // clean the old table data
@@ -978,6 +1004,7 @@ namespace POS.EmployeeWorkSpace
 
             // printing
             var printer = new DoPrintHelper(_unitofwork, _cloudPosUnitofwork, DoPrintHelper.TempReceipt_Printing, currentTable);
+            printer.OrderMode = orderTempTable.OrderMode;
             printer.DoPrint();
 
             // update IsPrinted for Table's Order
@@ -1291,11 +1318,13 @@ namespace POS.EmployeeWorkSpace
         }
 
 
+        bool isClearingTable = false;
         /// <summary>
         /// Clean the whole Order info in  current Table
         /// </summary>
         private void ClearTheTable()
         {
+            isClearingTable = true;
             Entities.Table curTable = currentTable;
             var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).FirstOrDefault();
             if (orderOfTable != null)
@@ -1321,11 +1350,15 @@ namespace POS.EmployeeWorkSpace
             orderTempTable.TableOwned = curTable.TableId;
             orderTempTable.Ordertime = DateTime.Now;
             orderTempTable.TotalPriceNonDisc = 0;
+            orderTempTable.SaleValue = 0;
+            orderTempTable.Svc = 0;
+            orderTempTable.Vat = 0;
             orderTempTable.TotalPrice = 0;
             orderTempTable.CustomerPay = 0;
             orderTempTable.PayBack = 0;
             orderTempTable.SubEmpId = "";
             orderTempTable.Pax = 0;
+            orderTempTable.OrderMode = 0;
 
             curTable.IsOrdered = 0;
             curTable.IsPrinted = 0;
@@ -1344,6 +1377,8 @@ namespace POS.EmployeeWorkSpace
                 cur.IsPrinted = 0;
             }
 
+            isClearingTable = false;
+
             ((MainWindow)Window.GetWindow(this)).currentTable = null;
             ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
             ((MainWindow)Window.GetWindow(this)).myFrame.Navigate(((MainWindow)Window.GetWindow(this)).b);
@@ -1352,9 +1387,10 @@ namespace POS.EmployeeWorkSpace
             ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
         }
 
-
+        bool isClearingTalbe_ForDelete = false;
         private void ClearTheTable_ForDelete()
         {
+            isClearingTalbe_ForDelete = true;
             Entities.Table curTable = currentTable;
             var orderOfTable = _unitofwork.OrderTempRepository.Get(x => x.TableOwned.Equals(curTable.TableId)).FirstOrDefault();
             if (orderOfTable != null)
@@ -1381,11 +1417,15 @@ namespace POS.EmployeeWorkSpace
             orderTempTable.TableOwned = curTable.TableId;
             orderTempTable.Ordertime = DateTime.Now;
             orderTempTable.TotalPriceNonDisc = 0;
+            orderTempTable.SaleValue = 0;
+            orderTempTable.Svc = 0;
+            orderTempTable.Vat = 0;
             orderTempTable.TotalPrice = 0;
             orderTempTable.CustomerPay = 0;
             orderTempTable.PayBack = 0;
             orderTempTable.SubEmpId = "";
             orderTempTable.Pax = 0;
+            orderTempTable.OrderMode = 0;
 
             curTable.IsOrdered = 0;
             curTable.IsPrinted = 0;
@@ -1403,6 +1443,8 @@ namespace POS.EmployeeWorkSpace
                 cur.IsOrdered = 0;
                 cur.IsPrinted = 0;
             }
+
+            isClearingTalbe_ForDelete = false;
 
             ((MainWindow)Window.GetWindow(this)).currentTable = null;
             ((MainWindow)Window.GetWindow(this)).b.isTablesDataChange = true;
@@ -1566,9 +1608,10 @@ namespace POS.EmployeeWorkSpace
         }
 
 
+        // INPUT PAX
         private void TxtCusNum_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (currentTable == null || isUcOrderFormLoading)
+            if (currentTable == null || isUcOrderFormLoading || isAddInfoInOrderSetMode)
                 return;
             TextBox txtCusnum = (sender as TextBox);
             if (string.IsNullOrEmpty(txtCusnum.Text))
@@ -1581,13 +1624,66 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.Save();
         }
 
+        // INPUT TOTALPRICE
+        private void txtTotal_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (currentTable == null || isUcOrderFormLoading || isCalculateTotalPrice || isClearingTable || isClearingTalbe_ForDelete)
+                return;
+            TextBox txtTotal = (sender as TextBox);
+            if (string.IsNullOrEmpty(txtTotal.Text))
+                orderTempTable.TotalPrice = 0;
+            else
+            {
+                orderTempTable.TotalPrice = decimal.Parse(txtTotal.Text);
+            }
+
+            // update employee ID that effect to the OrderNote
+            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
+            _unitofwork.Save();
+        }
+
+        // FORMAT TOTALPRICE TEXTBOX
+        private void txtTotal_LostFocus(object sender, RoutedEventArgs e)
+        {
+            // When user leave the Total Price textbox, it will format their input value
+            TextBox txtTotal = (sender as TextBox);
+
+            decimal Total = orderTempTable.TotalPrice;
+            decimal SaleValue = Total;
+            decimal Svc = (Total * 5) / 100;
+            decimal Vat = ((Total + (Total * 5) / 100) * 10) / 100;
+            Total = (Total + (Total * 5) / 100) + (((Total + (Total * 5) / 100) * 10) / 100);
+
+            orderTempTable.TotalPrice = Total;
+            orderTempTable.TotalPriceNonDisc = (decimal)Math.Round(Total, 3);
+            orderTempTable.Svc = Math.Round(Svc, 3);
+            orderTempTable.Vat = Math.Round(Vat, 3);
+            orderTempTable.SaleValue = Math.Round(SaleValue, 3);
+
+            txtTotal.Text = string.Format("{0:0.000}", orderTempTable.TotalPrice);
+        }
+
+
+
+
         bool isCalculateTotalPrice;
+        bool isAddInfoInOrderSetMode = false;
         private void btnSetOrder_Checked(object sender, RoutedEventArgs e)
         {
+            if (currentTable == null || isUcOrderFormLoading)
+                return;
             isSetOrderMode = true;
             txtTotal.IsEnabled = true;
             orderTempTable.OrderMode = 1;
             isCalculateTotalPrice = false;
+
+            // add info when order set mode turned on
+            isAddInfoInOrderSetMode = true;
+            SetOrderModeDialog orderModeDialog = new SetOrderModeDialog(orderTempTable);
+            orderModeDialog.ShowDialog();
+            txtCusNum.Text = orderTempTable.Pax.ToString();
+            isAddInfoInOrderSetMode = false;
+
             loadTotalPrice();
 
             // update employee ID that effect to the OrderNote
@@ -1597,6 +1693,8 @@ namespace POS.EmployeeWorkSpace
 
         private void btnSetOrder_Unchecked(object sender, RoutedEventArgs e)
         {
+            if (currentTable == null || isUcOrderFormLoading)
+                return;
             isSetOrderMode = false;
             txtTotal.IsEnabled = false;
             orderTempTable.OrderMode = 0;
@@ -1608,20 +1706,5 @@ namespace POS.EmployeeWorkSpace
             _unitofwork.Save();
         }
 
-        private void txtTotal_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (currentTable == null || isUcOrderFormLoading || isCalculateTotalPrice)
-                return;
-            TextBox txtTotal = (sender as TextBox);
-            if (string.IsNullOrEmpty(txtTotal.Text))
-                orderTempTable.TotalPrice = 0;
-            else
-                orderTempTable.TotalPrice = decimal.Parse(txtTotal.Text);
-
-
-            // update employee ID that effect to the OrderNote
-            checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
-            _unitofwork.Save();
-        }
     }
 }

@@ -125,7 +125,8 @@
                                        Margin="17,0,0,0"
                                        IsEnabled="False"
                                        PreviewTextInput="NumberOnly_PreviewTextInput"
-                                       TextChanged="txtTotal_TextChanged" />
+                                       TextChanged="txtTotal_TextChanged" 
+                                       LostFocus="txtTotal_LostFocus"/>
                         </StackPanel>
 
                     </StackPanel>

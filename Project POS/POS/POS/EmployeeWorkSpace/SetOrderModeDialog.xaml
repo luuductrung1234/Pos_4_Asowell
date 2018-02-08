@@ -1,0 +1,102 @@
+﻿<Window x:Class="POS.EmployeeWorkSpace.SetOrderModeDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Background="{DynamicResource MaterialDesignPaper}"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS.EmployeeWorkSpace"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Set Order Mode"
+        Height="260 "
+        Width="415">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="Foreground"
+                        Value="White" />
+                <Setter Property="Width"
+                        Value="100" />
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"></RowDefinition>
+            <RowDefinition Height="172*"></RowDefinition>
+            <RowDefinition Height="57*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Margin="10,29,0,106"
+                    Height="47"
+                    Grid.Row="1">
+            <TextBlock x:Name="tbPax"
+                       TextWrapping="Wrap"
+                       Text="Pax:"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <TextBox x:Name="txtPax"
+                     Width="217"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     FontSize="18"
+                     Foreground="White"
+                     HorizontalScrollBarVisibility="Disabled"
+                     VerticalScrollBarVisibility="Auto"
+                     PreviewTextInput="NumberOnly_PreviewTextInput"
+                     Margin="0,0,0,10" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Margin="10,91,0,34"
+                    Height="47">
+            <TextBlock x:Name="tbPrice"
+                       TextWrapping="Wrap"
+                       Text="Price/person:"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            <TextBox Name="txtPrice"
+                     Grid.Column="1"
+                     Grid.Row="1"
+                     Width="219"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     FontSize="18"
+                     Foreground="White"
+                     HorizontalScrollBarVisibility="Disabled"
+                     VerticalScrollBarVisibility="Auto"
+                     PreviewTextInput="NumberOnly_PreviewTextInput" />
+            <TextBlock x:Name="tbUnit"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="10,0,0,0"
+                       Width="67"><Run Text="kVND" /></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Height="37"
+                    Margin="118,10,119,10"
+                    Width="170">
+            <Button x:Name="btnOK"
+                    Content="OK"
+                    Height="Auto"
+                    Width="75"
+                    Margin="5"
+                    Click="btnOK_Click" />
+            <Button x:Name="btnCancel"
+                    Content="Cancel"
+                    Height="Auto"
+                    Width="75"
+                    Margin="5"
+                    Click="btnCancel_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
