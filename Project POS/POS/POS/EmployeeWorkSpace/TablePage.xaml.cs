@@ -777,17 +777,11 @@ namespace POS.EmployeeWorkSpace
                     if (App.Current.Properties["AdLogin"] != null)
                     {
                         pass = true;
-
-                        DeleteConfirmDialog dcd = new DeleteConfirmDialog(((MainWindow)Window.GetWindow(this)).cUser, false);
-                        if (dcd.ShowDialog() == false)
-                        {
-                            pass = false;
-                        }
                     }
                     else
                     {
-                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, true, true);
-                        if(pr.ShowDialog() == false)
+                        PermissionRequired pr = new PermissionRequired(_cloudPosUnitofwork, ((MainWindow)Window.GetWindow(this)).cUser, false, false);
+                        if (pr.ShowDialog() == false)
                         {
                             pass = false;
                         }
