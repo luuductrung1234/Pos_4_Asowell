@@ -1,20 +1,20 @@
 ﻿# POS_4_ASOWELL
 
-**Status:**  building
+**Status:**  Maintaining
 
 
 **Main Feature:**
-Phần mềm quản lý nhà hàng (cung cấp các dịch vụ ăn uống, kho trữ, thống kê...)
+Restaurant Point of Sale System (ordering, stocking, data analysis,...)
 
-  o	Xây dựng phần mềm POS gồm các chức năng chính:
+  o	Include:
 
-    •	Phần làm việc dành cho nhân viên: thực hiện các thao tác order phù hợp với business requirement của Asowel restaurant, xem thông tin cá nhân của nhân viên, tự động chấm công khi nhân viên đăng nhập vào phần mềm. Nhiều nhân viên có thể tham gia đăng nhập, và cùng tham gia order
+    •	Employee workspace: thực hiện các thao tác order phù hợp với business requirement của Asowel restaurant, xem thông tin cá nhân của nhân viên, tự động chấm công khi nhân viên đăng nhập vào phần mềm. Nhiều nhân viên có thể tham gia đăng nhập, và cùng tham gia order
     
-    •	Phần làm việc dành cho quản lý: quản lý tất cả thông tin và dữ liệu liên quan đến nhà hàng: Nhân viên, Khách hàng, Sản phẩm (món ăn), Nguyên liệu, Hoá đơn bán hàng, Hoá đơn nhập kho. Thống kê tài chính, thu (lượng bán ra), chi (lượng mua nguyên liệu và các chi phí phát sinh) của toàn hệ thống nhà hàng. Xuất báo cáo
+    •	Admin workspace: quản lý tất cả thông tin và dữ liệu liên quan đến nhà hàng: Nhân viên, Khách hàng, Sản phẩm (món ăn), Nguyên liệu, Hoá đơn bán hàng, Hoá đơn nhập kho. Thống kê tài chính, thu (lượng bán ra), chi (lượng mua nguyên liệu và các chi phí phát sinh) của toàn hệ thống nhà hàng. Xuất báo cáo
     
-    •	Phần làm việc dành cho Kiểm kho: Theo dõi và thu thập dữ liệu về kho (lượng hàng tồn, lượng đã sử dụng). Nhập hoá đơn nhập kho. Thông kê dữ liệu liên quan đến kho. Xuất báo cáo
+    •	Warehouse workspace: Theo dõi và thu thập dữ liệu về kho (lượng hàng tồn, lượng đã sử dụng). Nhập hoá đơn nhập kho. Thông kê dữ liệu liên quan đến kho. Xuất báo cáo
     
-  o	Chất lượng cần đảm bảo:
+  o	Guaranty:
     
     •	An toàn  trong các sự cố bất ngờ: ví dụ như mất điện, phần cứng hỏng
     
@@ -23,23 +23,20 @@ Phần mềm quản lý nhà hàng (cung cấp các dịch vụ ăn uống, kho 
     •	Truy xuất dữ liệu, thực thi các tác vụ chuyên môn (order, xuất báo cáo) nhanh gọn.
 
 
-Phần mềm được viết trên nền tảng C# .NET với giao diện đồ hoạ WPF, phong cách Material Design. Kết hợp một số thư viện mở MaterialdesigninXAMLToolkit, dragablz, mahapp.metro, livechart, ADO.NET, EntityFramework, PDFReport,...
-Nền tảng trên Mobile và Web vẫn đang được lên kế hoạch
+**Technology Usage**: C# .NET with WPF framework, Material Design. Include some open source library: MaterialDesignInXAML Toolkit, dragablz, mahapp.metro, livechart, EntityFramework, PDFReport,...
+
 
 
 **Note:**
- - Các thành viên tham gia phát triển hãy xem kĩ phần code style requirement
+ - code style requirement not up to date
+ - Mobile and Web version are in progress
 
 
 # Develop Team:
-    - Lưu Đức Trung (team leader, back-end architecter, security)
-    - Nguyễn Hoàng Nam (main UI designer/creator, software event manipulator, data analysis)
-    - Lê Đức Anh (main back-end developer, software event manipulator)
+    - Lưu Đức Trung (team leader, software back-end architecter, security, software event manipulator)
+    - Nguyễn Hoàng Nam (main UI designer/creator, manage Warehouse and Admin workspace)
+    - Lê Đức Anh (main back-end developer, software event manipulator, manage Admin workspace)
     
-    -**Team process**(in future):
-      - Lưu Đức Trung (team leader, back-end/web service/cloud service architect)
-      - Nguyễn Hoàng Nam (Mobile version developer)
-      - Lê Đức Anh (WebApp version developer)
     
     -**Contact**:
       luuductrung@itcomma.com
@@ -47,6 +44,37 @@ Nền tảng trên Mobile và Web vẫn đang được lên kế hoạch
       0927333668
 
 
+---
+# Figure:
+## Login Window
+![Startup](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/startup.png)
+
+![Login](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/login.png)
+
+![Employee Login](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emplogin.png)
+
+![Admin Login](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminlogin.png)
+
+## Employee Workspace
+![Start](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_front.png)
+![Table map](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_table.png)
+![Validation](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_validation.png)
+![Entry](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_entry.png)
+![Sub menu](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_submenu.png)
+![Employee menu](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_emmenu.png)
+
+## Admin Workspace
+![Start](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_start.png)
+![Home](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_main.png)
+![Float button](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_floatbutton.png)
+![Food statistic](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_foodchart.png)
+![Revenue statistic](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_statistic.png)
+![Sample workspace](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_subwindows.png)
+
+
+
+
+---
 # Software's procession:
     - [x] : áp dụng bất đồng bộ (asynchronous hay còn gọi là lập trình đa tiến đoạn) để giúp chương trình thực thi đa tác vụ hiệu quả hơn (cái này cần thảo luận)
 
