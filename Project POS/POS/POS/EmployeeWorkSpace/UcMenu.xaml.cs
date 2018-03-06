@@ -48,7 +48,7 @@ namespace POS.EmployeeWorkSpace
                     lvCategoryDessert.ItemsSource =
                         _cloudPosUnitofwork.ProductRepository.Get(p => p.StandardStats.Equals("Dessert"));
                     lvCategoryBeverages.ItemsSource =
-                        _cloudPosUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beverage);
+                        _cloudPosUnitofwork.ProductRepository.Get(p => (p.Type == (int)ProductType.Beverage || p.Type == (int)ProductType.Coffee));
                     lvCategoryBeer.ItemsSource =
                         _cloudPosUnitofwork.ProductRepository.Get(p => p.Type == (int)ProductType.Beer);
                     lvCategoryWine.ItemsSource =
@@ -213,8 +213,8 @@ namespace POS.EmployeeWorkSpace
                     return true;
                 }
 
-                var wareHouseDict = new Dictionary<WareHouse, double?>();
 
+                var wareHouseDict = new Dictionary<WareHouse, double?>();
                 // going to warehouse and take the contain of each ingredient
                 foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
                 {

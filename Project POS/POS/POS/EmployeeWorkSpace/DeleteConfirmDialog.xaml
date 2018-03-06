@@ -38,14 +38,14 @@
                        Text="Is it done?"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
-            <RadioButton x:Name="rdNo"
+            <RadioButton x:Name="rdYes"
                          Content="Yes"
                          GroupName="printed"
                          Foreground="White"
                          Margin="0,0,20,0"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center" />
-            <RadioButton x:Name="rdYes"
+            <RadioButton x:Name="rdNo"
                          Content="No"
                          GroupName="printed"
                          Foreground="White"

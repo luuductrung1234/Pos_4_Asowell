@@ -44,23 +44,23 @@ namespace POS.WareHouseWorkSpace
 
 
 
-                if (App.Current.Properties["AdLogin"] != null)
-                {
-                    AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
-                    List<AdminRe> adList = _unitofwork.AdminreRepository.Get().ToList();
-                    curAdmin = adList.FirstOrDefault(x =>
-                        x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
-                    CUserChip.Content = curAdmin.Name;
-                }
-                else
-                {
+                //if (App.Current.Properties["AdLogin"] != null)
+                //{
+                //    AdminRe getAdmin = App.Current.Properties["AdLogin"] as AdminRe;
+                //    List<AdminRe> adList = _unitofwork.AdminreRepository.Get().ToList();
+                //    curAdmin = adList.FirstOrDefault(x =>
+                //        x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
+                //    CUserChip.Content = curAdmin.Name;
+                //}
+                //else
+                //{
                     Employee getEmp = App.Current.Properties["EmpLogin"] as Employee;
                     List<Employee> empList = _unitofwork.EmployeeRepository.Get().ToList();
                     curEmp = empList.FirstOrDefault(x =>
                         x.Username.Equals(getEmp.Username) && x.DecryptedPass.Equals(getEmp.DecryptedPass));
                     CUserChip.Content = curEmp.Name;
                     _inputReceipt = new InputReceiptNote(_unitofwork, IngdList);
-                }
+                //}
 
 
                 DispatcherTimer RefreshTimer = new DispatcherTimer();
@@ -110,8 +110,14 @@ namespace POS.WareHouseWorkSpace
                 }
             }
 
-            _innIngredientPage.lvItem.Items.Refresh();
-            _inputReceipt.lvDataIngredient.Items.Refresh();
+            if (isViewIngredientRun)
+            {
+                _innIngredientPage.lvItem.Items.Refresh();
+            }
+            if (isInputReceiptRun)
+            {
+                _inputReceipt.lvDataIngredient.Items.Refresh();
+            }
         }
 
 
@@ -126,25 +132,31 @@ namespace POS.WareHouseWorkSpace
         }
 
 
+        bool isInputReceiptRun = false;
         private void InputReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (App.Current.Properties["AdLogin"] != null)
-            {
-                MessageBox.Show("Your role is not allowed to do this!");
-                return;
-            }
+            //if (App.Current.Properties["AdLogin"] != null)
+            //{
+            //    MessageBox.Show("Your role is not allowed to do this!");
+            //    return;
+            //}
             
             myFrame.Navigate(_inputReceipt);
+            isInputReceiptRun = true;
         }
+
 
         private void ViewReceipt_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(_lvChartReceiptPage);
         }
 
+
+        bool isViewIngredientRun = false;
         private void ViewIngredient_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(_innIngredientPage);
+            isViewIngredientRun = true;
         }
     }
 }

@@ -1,0 +1,184 @@
+﻿<Page x:Class="POS.AdPressWareHouseWorkSpace.StockInPage"
+      Background="{DynamicResource MaterialDesignPaper}"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:POS.AdPressWareHouseWorkSpace"
+      mc:Ignorable="d"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="StockIn Page"
+      Height="630"
+      Width="1366">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="557*" />
+            <ColumnDefinition Width="810*" />
+        </Grid.ColumnDefinitions>
+        <materialDesign:ColorZone Margin="2,2,10,0"
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                  CornerRadius="3"
+                                  Mode="PrimaryDark"
+                                  Height="44">
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,0,0,0">
+                <TextBlock VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           FontSize="18">Stock List</TextBlock>
+            </StackPanel>
+        </materialDesign:ColorZone>
+        <ListView Name="lvDataStock"
+                  Width="541"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Left"
+                  Background="#FFED5C5C"
+                  Foreground="White"
+                  FontWeight="Bold"
+                  Margin="0,51,0,0"
+                  Height="579"
+                  PreviewMouseLeftButtonUp="lvDataStock_PreviewMouseLeftButtonUp">
+            <ListView.View>
+                <GridView x:Name="gvShowDetails">
+                    <GridViewColumn Header="ID"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding StoId}" />
+                    <GridViewColumn Header="Name"
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Unit In"
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding UnitIn}" />
+                    <GridViewColumn Header="Std.Price/Unit In"
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding StandardPrice, StringFormat=0.000}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid x:Name="EmployeeInfo"
+              Grid.Column="1"
+              Margin="10.2,3,-9.6,-2.6">
+
+            <materialDesign:ColorZone Height="44"
+                                      Mode="PrimaryDark">
+                <StackPanel Orientation="Horizontal"
+                            Margin="20,0,0,0">
+                    <TextBlock VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="18">Stock Info Details</TextBlock>
+                </StackPanel>
+            </materialDesign:ColorZone>
+            <ListView Name="lvDataStockOut"
+                      VerticalAlignment="Top"
+                      Background="#FFED5C5C"
+                      Foreground="White"
+                      FontWeight="Bold"
+                      Height="340"
+                      Margin="10,49,9.6,0">
+                <ListView.View>
+                    <GridView x:Name="gvDetails">
+                        <GridViewColumn Header="Item"
+                                        Width="90"
+                                        DisplayMemberBinding="{Binding StoId}" />
+                        <GridViewColumn Header="Qty"
+                                        Width="70">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="txtQuan"
+                                             Text="{Binding Quan}"
+                                             TextChanged="txtQuan_TextChanged" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Price/Unit In"
+                                        Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="txtItemPrice"
+                                             Text="{Binding ItemPrice,StringFormat=0.000}"
+                                             TextChanged="txtItemPrice_TextChanged" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Edit"
+                                        Width="90">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="bntDelete"
+                                                Content="x"
+                                                BorderBrush="DarkGray"
+                                                Background="DarkGray"
+                                                Width="40"
+                                                Click="bntDelete_Click"
+                                                Margin="0 0 0 0" />
+                                        <Button x:Name="bntEdit"
+                                                Width="45"
+                                                BorderBrush="DarkGray"
+                                                Background="DarkGray"
+                                                Margin="0 0 0 0"
+                                                Click="bntEdit_Click">
+                                            <StackPanel HorizontalAlignment="Left">
+                                                <Image Source="..\Icon\Edit_52px.png"
+                                                       Margin="0,0,0,0"
+                                                       Height="15"
+                                                       Width="13" />
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock x:Name="textBlock"
+                       HorizontalAlignment="Left"
+                       Margin="10,416,0,0"
+                       FontSize="22"
+                       TextWrapping="Wrap"
+                       Foreground="White"
+                       Text="Total Price"
+                       VerticalAlignment="Top"
+                       Height="33"
+                       Width="111" />
+            <TextBlock x:Name="txtTotalPrice"
+                       HorizontalAlignment="Left"
+                       Margin="158,416,0,0"
+                       FontSize="22"
+                       TextWrapping="Wrap"
+                       Foreground="White"
+                       VerticalAlignment="Top"
+                       Height="33"
+                       Width="180"
+                       Text="{Binding appResource}" />
+            <Button x:Name="bntAdd"
+                    Content="Add"
+                    Margin="199,530,492.4,0"
+                    Click="bntAdd_Click"
+                    FontSize="25"
+                    VerticalAlignment="Top"
+                    Height="49" />
+            <Button x:Name="bntDelAll"
+                    Content="Delete"
+                    Click="bntDelAll_Click"
+                    Margin="468,530,223.4,0"
+                    FontSize="25"
+                    Height="49"
+                    VerticalAlignment="Top" />
+            <TextBlock x:Name="txtCurrencyUnit"
+                       HorizontalAlignment="Left"
+                       Margin="374,416,0,0"
+                       FontSize="22"
+                       TextWrapping="Wrap"
+                       Foreground="White"
+                       Text="kVND"
+                       VerticalAlignment="Top"
+                       Height="33"
+                       Width="111" />
+        </Grid>
+    </Grid>
+</Page>

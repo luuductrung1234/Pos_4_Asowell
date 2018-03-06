@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\AdminwsOfCloudAPWH.cs" />
     <Compile Include="DAL\AdminwsOfCloudPOS.cs" />
     <Compile Include="DAL\EmployeewsOfCloudPOS.cs" />
     <Compile Include="DAL\EmployeewsOfLocalPOS.cs" />

@@ -82,6 +82,7 @@ go
 insert into WareHouse 
 	([warehouse_id], [contain], [std_contain])
 values
+--('WAH000000x',	2000, 5000),	--N'g',
 ('WAH0000001',	2000, 5000),		--N'ml',	   
 ('WAH0000002',	6000, 5000),		--N'ml',	   
 ('WAH0000003',	5000, 5000),		--N'ml',	   
@@ -121,6 +122,7 @@ values
 go
 
 insert into Ingredient values
+--('IGD000000x',	'WAH000000x',	N'Test-Ingredient2', 		N'',		0,	N'dry',			N'kilogram',	50,0),
 ('IGD0000001',	'WAH0000001',	N'pepsi', 					N'',		0,	N'dry',			N'liter',	    130,0),
 ('IGD0000002',	'WAH0000002',	N'aquafina', 				N'',		0,	N'dry',			N'liter',	    90,	0),
 ('IGD0000003',	'WAH0000003',	N'7up', 					N'',		0,	N'dry',			N'liter',	    150,0),
@@ -167,6 +169,7 @@ go
 --insert into Product 
 --	([product_id], [name], [info], [price], [type], [deleted], [Discount], [std_stats], [ImageLink])
 --values		-- thức ăn
+--('P00000008x',	N'Test-Product2',			N'',		65,		1, 0, 0, 'BreakFast',	'')
 --('P000000001',	N'plain yogurt',			N'',		25,		1, 0, 0, 'Dessert'),
 --('P000000002',	N'choco fondue',			N'',		70,		1, 0, 0, 'Dessert'),
 --('P000000003',	N'choco cloud',				N'',		55,		1, 0, 0, 'Dessert'),
@@ -402,6 +405,7 @@ values
 
 
 --insert into ProductDetails values
+--('PD000000xx','P00000008x',	'IGD000000x',	100,	N'gram'			)
 --('PD00000001','P000000031',	'IGD0000002',	250,	N'mililiter'			),
 --('PD00000002','P000000032',	'IGD0000003',	250,	N'mililiter'			),
 --('PD00000003','P000000033',	'IGD0000006',	50,		N'mililiter'			),
@@ -1044,13 +1048,19 @@ go
 select * from Customer
 go
 	
+-----------------------------
+select * from SalaryNote
+select * from WorkingHistory
+
+select * from OrderNote
+select * from OrderNoteDetails
 
 select *from ReceiptNote
 go
 select *from ReceiptNoteDetails
 go
 
-
+-----------------------------
 select * from WareHouse
 go 
 select * from Ingredient
@@ -1060,19 +1070,21 @@ go
 select *  from ProductDetails
 go
  
-select * from SalaryNote
-select * from WorkingHistory
 
-select * from OrderNote
-select * from OrderNoteDetails
-
+ -----------------------------
+select * from APWareHouse
+go
+select * from Stock
+go
 
 select * from StockOutDetails
+go
 select * from StockOut
+go
 select * from StockInDetails
+go
 select * from StockIn
-select * from Stock
-select * from APWareHouse
+
 
 --delete [WorkingHistory]
 --delete [SalaryNote]
@@ -1095,3 +1107,25 @@ select * from APWareHouse
 --delete [StockIn]
 --delete [Stock]
 --delete [APWareHouse]
+
+
+
+
+--update WareHouse
+--set contain = 2000
+--where warehouse_id = 'WAH0000000'
+
+
+--'P000000129',
+--'P000000130',
+--'P000000131',
+--'P000000132',
+--'P000000133',
+--'P000000134',
+--'P000000140',
+--'P000000142',
+--'P000000144',
+
+--update Product
+--set type = 6
+--where type = 6

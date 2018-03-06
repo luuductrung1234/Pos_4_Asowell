@@ -203,8 +203,11 @@ namespace POS
                         List<AdminRe> adList = _unitofwork.AdminreRepository.Get().ToList();
 
                         var ad = adList.FirstOrDefault(x => x.Username.Equals(username) && x.DecryptedPass.Equals(pass));
+                        var adEmp = empList.FirstOrDefault(x => x.EmpId.Equals("EMP0000009"));
                         if (ad != null)
                         {
+
+                            App.Current.Properties["EmpLogin"] = adEmp;
                             App.Current.Properties["AdLogin"] = ad;
 
                             Dispatcher.Invoke(() =>

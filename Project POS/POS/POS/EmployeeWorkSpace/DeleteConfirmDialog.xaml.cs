@@ -20,7 +20,7 @@ namespace POS.EmployeeWorkSpace
     public partial class DeleteConfirmDialog : Window
     {
         MaterialDesignThemes.Wpf.Chip _cUser;
-        private bool done;
+        public bool done;
         private bool _isTable;
         private string reason;
 
@@ -49,11 +49,11 @@ namespace POS.EmployeeWorkSpace
                 }
                 else if (rdYes.IsChecked == true)
                 {
-                    done = true;
+                    this.done = true;   
                 }
                 else if (rdNo.IsChecked == true)
                 {
-                    done = true;
+                    this.done = false;
                 }
             }
 

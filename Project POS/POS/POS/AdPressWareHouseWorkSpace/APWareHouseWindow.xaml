@@ -1,17 +1,21 @@
-﻿<Window x:Class="POS.WareHouseWorkSpace.WareHouseWindow"
+﻿<Window x:Class="POS.AdPressWareHouseWorkSpace.APWareHouseWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Background="{DynamicResource MaterialDesignPaper}"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POS"
+        xmlns:local="clr-namespace:POS.AdPressWareHouseWorkSpace"
+        mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d"
-        Title="WareHouse"
+        Title="AdPress WareHouse"
         Height="768"
         Width="1366">
+
+
+
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -39,19 +43,25 @@
                     <ListBox x:Name="DemoItemsListBox"
                              Margin="0 16 0 16"
                              SelectedIndex="0">
-                        <ListBoxItem x:Name="InputReceipt" 
-                                     Content="Input Receipt"
+                        <ListBoxItem x:Name="CreateStock"
+                                     Content="CreateStock"
                                      FontWeight="Bold"
-                                     PreviewMouseLeftButtonUp="InputReceipt_PreviewMouseLeftButtonUp" 
+                                     PreviewMouseLeftButtonUp="CreateStock_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
-                        <ListBoxItem x:Name="ViewReceipt"
-                                     Content="View Receipt"
+                        <ListBoxItem x:Name="StockIn"
+                                     Content="Stock In"
                                      FontWeight="Bold"
-                                     PreviewMouseLeftButtonUp="ViewReceipt_PreviewMouseLeftButtonUp" Foreground="White" />
-                        <ListBoxItem x:Name="ViewIngredient"
-                                     Content="View Ingredient"
+                                     PreviewMouseLeftButtonUp="StockIn_PreviewMouseLeftButtonUp"
+                                     Foreground="White" />
+                        <ListBoxItem x:Name="StockOut"
+                                     Content="Stock Out"
                                      FontWeight="Bold"
-                                     PreviewMouseLeftButtonUp="ViewIngredient_OnPreviewMouseLeftButtonUp"
+                                     PreviewMouseLeftButtonUp="StockOut_PreviewMouseLeftButtonUp"
+                                     Foreground="White" />
+                        <ListBoxItem x:Name="ViewStock"
+                                     Content="View Stock"
+                                     FontWeight="Bold"
+                                     PreviewMouseLeftButtonUp="ViewStock_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
                     </ListBox>
                 </DockPanel>

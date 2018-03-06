@@ -653,6 +653,7 @@ namespace POS.EmployeeWorkSpace
                 return;
             }
 
+            bool isDone = false;
             if (currentTable.IsPrinted == 1)
             {
                 MessageBoxResult mess = MessageBox.Show("Invoice of this table is already printed! You can not edit this table! You must have higher permission for this action? Do you want to continue?", "Warning!", MessageBoxButton.YesNo);
@@ -665,7 +666,7 @@ namespace POS.EmployeeWorkSpace
                         {
                             return;
                         }
-
+                        isDone = dcd.done;
                         // update employee ID that effect to the OrderNote
                         checkWorkingAction(App.Current.Properties["CurrentEmpWorking"] as EmpLoginList, orderTempTable);
                     }
@@ -710,7 +711,10 @@ namespace POS.EmployeeWorkSpace
 
                     if (chairordernotedetails[index].Quan > 1)
                     {
-                        GiveBackToWareHouseData(chairordernotedetails[index]);
+                        if (!isDone)
+                        {
+                            GiveBackToWareHouseData(chairordernotedetails[index], 1);
+                        }
                         chairordernotedetails[index].Quan--;
                         _unitofwork.OrderDetailsTempRepository.Update(chairordernotedetails[index]);
                         _unitofwork.Save();
@@ -720,7 +724,10 @@ namespace POS.EmployeeWorkSpace
                     {
                         var chairtemp = chairordernotedetails[index];
 
-                        GiveBackToWareHouseData(chairordernotedetails[index]);
+                        if (!isDone)
+                        {
+                            GiveBackToWareHouseData(chairordernotedetails[index], 1);
+                        }
                         orderDetailsTempCurrentTableList.Remove(chairordernotedetails[index]);
                         chairordernotedetails.RemoveAt(index);
                         _unitofwork.OrderDetailsTempRepository.Delete(chairtemp);
@@ -1402,7 +1409,7 @@ namespace POS.EmployeeWorkSpace
                 {
                     foreach (var ch in ordernotedetails)
                     {
-                        GiveBackToWareHouseData(ch);
+                        GiveBackToWareHouseData(ch, ch.Quan);
                         orderDetailsTempCurrentTableList.Remove(ch);
                         _unitofwork.OrderDetailsTempRepository.Delete(ch);
                         _unitofwork.Save();
@@ -1454,7 +1461,13 @@ namespace POS.EmployeeWorkSpace
             ((MainWindow)Window.GetWindow(this)).bntEntry.IsEnabled = true;
         }
 
-        private void GiveBackToWareHouseData(OrderDetailsTemp orderDetails)
+
+        /// <summary>
+        /// Give Back the Ingredient contain when delete Product from Order
+        /// </summary>
+        /// <param name="orderDetails">The OrderDetails that contain a give back Product</param>
+        /// <param name="productQuan">give back product quantity</param>
+        private void GiveBackToWareHouseData(OrderDetailsTemp orderDetails, int productQuan)
         {
             var prodOfOrderDetails =
                 _cloudPosUnitofwork.ProductRepository.Get(x => x.ProductId.Equals(orderDetails.ProductId), includeProperties: "ProductDetails").FirstOrDefault();
@@ -1466,9 +1479,11 @@ namespace POS.EmployeeWorkSpace
                     return;
                 }
 
+                var wareHouseDict = new Dictionary<WareHouse, double?>();
+                // going to warehouse and give back the contain for each ingredient
                 foreach (var prodDetails in prodOfOrderDetails.ProductDetails)
                 {
-                    var quan = prodDetails.Quan;
+                    var detailsUsingQuan = prodDetails.Quan;
                     var ingd =
                         _cloudPosUnitofwork.IngredientRepository.Get(x => x.IgdId.Equals(prodDetails.IgdId)).FirstOrDefault();
                     if (ingd == null)
@@ -1484,8 +1499,20 @@ namespace POS.EmployeeWorkSpace
                         return;
                     }
 
-                    wareHouse.Contain += quan;
+
+                    var temple_Contain = wareHouse.Contain;
+                    temple_Contain += (detailsUsingQuan * productQuan);
+                    wareHouseDict.Add(wareHouse, temple_Contain);
                 }
+
+
+                // when giving back is success full for all ingredient
+                // let update the contain data
+                foreach (var item in wareHouseDict)
+                {
+                    item.Key.Contain = item.Value;
+                }
+                //_cloudPosUnitofwork.Save();
             }
             else
             {

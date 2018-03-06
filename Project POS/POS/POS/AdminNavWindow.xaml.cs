@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using log4net;
+﻿using System.Windows;
 using POS.AdminWorkSpace;
 using POS.Entities;
 using POS.WareHouseWorkSpace;
+using POS.AdPressWareHouseWorkSpace;
 
 namespace POS
 {
@@ -29,6 +17,9 @@ namespace POS
             InitializeComponent();
 
             var curAd = App.Current.Properties["AdLogin"]  as AdminRe;
+
+
+            // Control layout depend on logging Admin
             if (curAd.AdRole == (int) AdminReRole.AsowelAd)
             {
                 stpAdpress.Visibility = Visibility.Collapsed;
@@ -63,7 +54,10 @@ namespace POS
 
         private void GotoAdPressWSButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            APWareHouseWindow apWindow = new APWareHouseWindow();
+            apWindow.Show();
+
+            this.Close();
         }
     }
 }

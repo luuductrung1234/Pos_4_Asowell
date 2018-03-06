@@ -399,7 +399,7 @@ namespace POS.Helper.PrintHelper
                 }
             }
             // set Rows
-            for (int i = 0; i < listData.Count + 1; i++)
+            for (int i = 0; i < listData.Count + 2; i++)
             {
                 dgDataTable.RowDefinitions.Add(new RowDefinition());
             }

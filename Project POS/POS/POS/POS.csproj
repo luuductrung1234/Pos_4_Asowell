@@ -231,7 +231,22 @@
     <Compile Include="AdminWorkSpace\WareHouseStdContainDialog.xaml.cs">
       <DependentUpon>WareHouseStdContainDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdPressWareHouseWorkSpace\APWareHouseWindow.xaml.cs">
+      <DependentUpon>APWareHouseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdPressWareHouseWorkSpace\CreateStockPage.xaml.cs">
+      <DependentUpon>CreateStockPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdPressWareHouseWorkSpace\Helper\UnitBuyTrans.cs" />
+    <Compile Include="AdPressWareHouseWorkSpace\StockInPage.xaml.cs">
+      <DependentUpon>StockInPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdPressWareHouseWorkSpace\StockOutPage.xaml.cs">
+      <DependentUpon>StockOutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdPressWareHouseWorkSpace\ViewStockPage.xaml.cs">
+      <DependentUpon>ViewStockPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseConfigWindow.xaml.cs">
       <DependentUpon>DatabaseConfigWindow.xaml</DependentUpon>
     </Compile>
@@ -462,6 +477,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminWorkSpace\WareHouseStdContainDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdPressWareHouseWorkSpace\APWareHouseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdPressWareHouseWorkSpace\CreateStockPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdPressWareHouseWorkSpace\StockInPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdPressWareHouseWorkSpace\StockOutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdPressWareHouseWorkSpace\ViewStockPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

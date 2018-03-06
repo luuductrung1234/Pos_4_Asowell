@@ -34,11 +34,13 @@ namespace POS.WareHouseWorkSpace
             lvDataIngredient.ItemsSource = IngdList;
 
             ReceiptDetailsList = new List<ReceiptNoteDetail>();
-            CurrentReceipt = new ReceiptNote()
-            {
-                EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
-                ReceiptNoteDetails = ReceiptDetailsList
-            };
+
+                CurrentReceipt = new ReceiptNote()
+                {
+                    EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
+                    ReceiptNoteDetails = ReceiptDetailsList
+                };
+                
             lvDataReceipt.ItemsSource = ReceiptDetailsList;
 
             LoadReceiptData();
@@ -144,11 +146,13 @@ namespace POS.WareHouseWorkSpace
                 ReceiptDetailsList = new List<ReceiptNoteDetail>();
                 lvDataReceipt.ItemsSource = ReceiptDetailsList;
                 lvDataReceipt.Items.Refresh();
-                CurrentReceipt = new ReceiptNote()
-                {
-                    EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
-                    ReceiptNoteDetails = ReceiptDetailsList
-                };
+
+                    CurrentReceipt = new ReceiptNote()
+                    {
+                        EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
+                        ReceiptNoteDetails = ReceiptDetailsList
+                    };
+                
                 
                 LoadReceiptData();
             }
