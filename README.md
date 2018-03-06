@@ -1,6 +1,6 @@
 ﻿# POS_4_ASOWELL
 
-**Status:**  building
+**Status:**  Maintaining
 
 
 **Main Feature:**
@@ -47,6 +47,37 @@ Nền tảng trên Mobile và Web vẫn đang được lên kế hoạch
       0927333668
 
 
+---
+# Figure:
+## Login Window
+![Startup](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/startup.png)
+
+![Login](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/login.png)
+
+![Employee Login](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emplogin.png)
+
+![Admin Login](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminlogin.png)
+
+## Employee Workspace
+![Start](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_front.png)
+![Table map](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_table.png)
+![Validation](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_validation.png)
+![Entry](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_entry.png)
+![Sub menu](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_submenu.png)
+![Employee menu](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/emwsp_emmenu.png)
+
+## Admin Workspace
+![Start](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_start.png)
+![Home](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_main.png)
+![Float button](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_floatbutton.png)
+![Food statistic](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_foodchart.png)
+![Revenue statistic](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_statistic.png)
+![Sample workspace](https://github.com/ITComma/POS-4-Asowel/blob/master/documents/images/adminwsp_subwindows.png)
+
+
+
+
+---
 # Software's procession:
     - [x] : áp dụng bất đồng bộ (asynchronous hay còn gọi là lập trình đa tiến đoạn) để giúp chương trình thực thi đa tác vụ hiệu quả hơn (cái này cần thảo luận)
 
