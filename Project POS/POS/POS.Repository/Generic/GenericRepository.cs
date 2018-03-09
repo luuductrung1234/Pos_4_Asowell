@@ -437,6 +437,77 @@ namespace POS.Repository.Generic
             }
 
 
+            else if (entity is StockOut)
+            {
+                sign = "STO";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                StockOut stkout = entity as StockOut;
+                stkout.StockOutId = result;
+            }
+            else if (entity is StockIn)
+            {
+                sign = "STI";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                StockIn stkIn = entity as StockIn;
+                stkIn.Si_id = result;
+            }
+            else if (entity is APWareHouse)
+            {
+                sign = "APW";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                APWareHouse wh = entity as APWareHouse;
+                wh.APWarehouseId = result;
+            }
+            else if (entity is Stock)
+            {
+                sign = "STK";
+                // lấy số thứ tự mới nhất
+                string numberWantToset = (this.Get().Count() + 1).ToString();
+
+                int blank = ID_SIZE_DBASOWELL - (sign.Length + numberWantToset.Length);
+                string result = sign;
+                for (int i = 0; i < blank; i++)
+                {
+                    result += "0";
+                }
+                result += numberWantToset;
+
+                Stock stock = entity as Stock;
+                stock.StoId = result;
+            }
+
+
+
             return entity;
         }
     }

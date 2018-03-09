@@ -31,6 +31,7 @@ namespace POS.Entities
         private string _stockoutId { get; set; } // stockout_id (Primary key) (length: 10)
         private string _stockId { get; set; } // stock_id (Primary key) (length: 10)
         private int _quan { get; set; } // quan
+        public decimal ItemPrice { get; set; } // item_price
         public int Discount { get; set; } // discount
         
 

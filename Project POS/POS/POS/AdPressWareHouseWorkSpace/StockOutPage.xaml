@@ -82,7 +82,7 @@
                     <GridView x:Name="gvDetails">
                         <GridViewColumn Header="Item"
                                         Width="90"
-                                        DisplayMemberBinding="{Binding StoId}" />
+                                        DisplayMemberBinding="{Binding StockId}" />
                         <GridViewColumn Header="Qty"
                                         Width="70">
                             <GridViewColumn.CellTemplate>
@@ -93,16 +93,16 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <!--<GridViewColumn Header="Cur.Price/Unit Buy"
+                        <GridViewColumn Header="Price/Unit Out"
                                         Width="150">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="txtItemPrice"
                                              Text="{Binding ItemPrice,StringFormat=0.000}"
-                                             TextChanged="TxtItemPrice_OnTextChanged" />
+                                             TextChanged="txtItemPrice_TextChanged" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
-                        </GridViewColumn>-->
+                        </GridViewColumn>
                         <GridViewColumn Header="Edit"
                                         Width="90">
                             <GridViewColumn.CellTemplate>
@@ -156,8 +156,8 @@
                        Width="180"
                        Text="{Binding appResource}" />
             <Button x:Name="bntAdd"
-                    Content="Add"
-                    Margin="199,530,492.4,0"
+                    Content="Take Out!"
+                    Margin="199,530,470.4,0"
                     Click="bntAdd_Click"
                     FontSize="25"
                     VerticalAlignment="Top"
@@ -175,7 +175,7 @@
                        FontSize="22"
                        TextWrapping="Wrap"
                        Foreground="White"
-                       Text="kVND"
+                       Text="VND"
                        VerticalAlignment="Top"
                        Height="33"
                        Width="111" />

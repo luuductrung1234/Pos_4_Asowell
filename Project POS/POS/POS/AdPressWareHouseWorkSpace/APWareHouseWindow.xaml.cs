@@ -48,6 +48,9 @@ namespace POS.AdPressWareHouseWorkSpace
                     curAdmin = adList.FirstOrDefault(x =>
                         x.Username.Equals(getAdmin.Username) && x.DecryptedPass.Equals(getAdmin.DecryptedPass));
                     CUserChip.Content = curAdmin.Name;
+                    _createStockPage = new CreateStockPage(_unitofwork, StockList);
+                    _stockInPage = new StockInPage(_unitofwork, StockList);
+                    _stockOutPage = new StockOutPage(_unitofwork, StockList);
                 }
 
 
@@ -63,7 +66,7 @@ namespace POS.AdPressWareHouseWorkSpace
             }
         }
 
-        private void Refresh_Tick(object sender, EventArgs e)
+        public void Refresh_Tick(object sender, EventArgs e)
         {
             foreach (var stock in _unitofwork.StockRepository.Get(includeProperties: "APWareHouse"))
             {
@@ -94,6 +97,10 @@ namespace POS.AdPressWareHouseWorkSpace
                     curStock.APWareHouse.StandardContain = stock.APWareHouse.StandardContain;
                 }
             }
+            if (isCreateStockRun)
+            {
+                _createStockPage.lvStock.Items.Refresh();
+            }
             if (isViewStockRun)
             {
                 _viewStockPage.lvItem.Items.Refresh();
@@ -108,9 +115,11 @@ namespace POS.AdPressWareHouseWorkSpace
             }
         }
 
+        bool isCreateStockRun = false;
         private void CreateStock_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             myFrame.Navigate(_createStockPage);
+            isCreateStockRun = true;
         }
 
         bool isStockInRun = false;
@@ -142,6 +151,11 @@ namespace POS.AdPressWareHouseWorkSpace
             login = new Login();
             this.Close();
             login.Show();
+        }
+
+        private void EodReport_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

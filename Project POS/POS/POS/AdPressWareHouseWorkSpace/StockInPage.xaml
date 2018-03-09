@@ -71,7 +71,7 @@
                                FontSize="18">Stock Info Details</TextBlock>
                 </StackPanel>
             </materialDesign:ColorZone>
-            <ListView Name="lvDataStockOut"
+            <ListView Name="lvDataStockIn"
                       VerticalAlignment="Top"
                       Background="#FFED5C5C"
                       Foreground="White"
@@ -82,7 +82,7 @@
                     <GridView x:Name="gvDetails">
                         <GridViewColumn Header="Item"
                                         Width="90"
-                                        DisplayMemberBinding="{Binding StoId}" />
+                                        DisplayMemberBinding="{Binding Sto_id}" />
                         <GridViewColumn Header="Qty"
                                         Width="70">
                             <GridViewColumn.CellTemplate>
@@ -156,7 +156,7 @@
                        Width="180"
                        Text="{Binding appResource}" />
             <Button x:Name="bntAdd"
-                    Content="Add"
+                    Content="Input!"
                     Margin="199,530,492.4,0"
                     Click="bntAdd_Click"
                     FontSize="25"
@@ -175,7 +175,7 @@
                        FontSize="22"
                        TextWrapping="Wrap"
                        Foreground="White"
-                       Text="kVND"
+                       Text="VND"
                        VerticalAlignment="Top"
                        Height="33"
                        Width="111" />

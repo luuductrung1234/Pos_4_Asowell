@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using POS.Entities;
 using POS.Repository.DAL;
 using POS.WareHouseWorkSpace.Helper;
@@ -46,39 +45,22 @@ namespace POS.WareHouseWorkSpace
             LoadReceiptData();
         }
 
-
-        private void BntDelete_OnClick(object sender, RoutedEventArgs e)
+        private void LoadReceiptData()
         {
-            int index;
-            ReceiptNoteDetail r = new ReceiptNoteDetail();
-            DependencyObject dep = (DependencyObject) e.OriginalSource;
-            while ((dep != null) && !(dep is ListViewItem))
+            CurrentReceipt.TotalAmount = 0;
+            foreach (var details in ReceiptDetailsList)
             {
-                dep = VisualTreeHelper.GetParent(dep);
+                CurrentReceipt.TotalAmount += details.ItemPrice * (decimal)details.Quan;
             }
-            if (dep == null)
-                return;
-            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
-
-
-
-            if (ReceiptDetailsList[index].Quan > 1 && !ErrorDetailsItem.Contains(index))
-            {
-                r.Quan = ReceiptDetailsList[index].Quan-1;
-                r.IgdId = ReceiptDetailsList[index].IgdId;
-                r.ItemPrice = ReceiptDetailsList[index].ItemPrice;
-                ReceiptDetailsList[index] = r;
-            }
-            else
-            {
-                ReceiptDetailsList.RemoveAt(index);
-                if (ErrorDetailsItem.Contains(index))
-                    ErrorDetailsItem.Remove(index);
-            }
-            lvDataReceipt.Items.Refresh();
-            LoadReceiptData();
+            txtTotalPrice.Text = string.Format("{0:0.000}", CurrentReceipt.TotalAmount);
         }
-    
+
+
+
+        /*********************************
+         * Manipulate Each Stock
+         *********************************/
+
         private void lvDataIngredient_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             
@@ -106,133 +88,11 @@ namespace POS.WareHouseWorkSpace
             LoadReceiptData();
         }
 
-        private List<int> ErrorDetailsItem = new List<int>();
-        private void BntAdd_OnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ErrorDetailsItem.Count != 0)
-                {
-                    MessageBox.Show("Something is not correct. Please check all your input again!");
-                    return;
-                }
-
-                if (CurrentReceipt.ReceiptNoteDetails.Count == 0)
-                {
-                    MessageBox.Show("You have to choose the ingredient you want to input before add");
-                    return;
-                }
-
-                // check if the Receipt Note have input Other Perchagse, must require the Note
-                foreach (var details in CurrentReceipt.ReceiptNoteDetails.ToList())
-                {
-                    if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID) && string.IsNullOrEmpty(details.Note))
-                    {
-                        MessageBox.Show(
-                            "You have inputed the \"Orther Purchase\" in your Receipt. Please input the detail description in note before save data!");
-                        return;
-                    }
-                }
-
-                CurrentReceipt.Inday = DateTime.Now;
-                _unitofwork.ReceiptNoteRepository.Insert(CurrentReceipt);
-                
-                //ToDo: Update the contain value in Warehouse database
-                UpdateWareHouseContain();
-
-                _unitofwork.Save();
 
 
-                ReceiptDetailsList = new List<ReceiptNoteDetail>();
-                lvDataReceipt.ItemsSource = ReceiptDetailsList;
-                lvDataReceipt.Items.Refresh();
-
-                    CurrentReceipt = new ReceiptNote()
-                    {
-                        EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
-                        ReceiptNoteDetails = ReceiptDetailsList
-                    };
-                
-                
-                LoadReceiptData();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Something went wrong when trying to input the new Receipt! May be you should reload this app or call for support!");
-            }
-        }
-
-        private void UpdateWareHouseContain()
-        {
-            foreach (var details in CurrentReceipt.ReceiptNoteDetails)
-            {
-                if(details.IgdId.Equals(ORTHER_PERCHAGSE_ID))
-                    continue;
-                
-
-                var ingd = IngdList.FirstOrDefault(x => x.IgdId.Equals(details.IgdId));
-                if (ingd != null)
-                {
-                    WareHouse wareHouse = _unitofwork.WareHouseRepository.GetById(ingd.WarehouseId);
-                    if (wareHouse != null)
-                    {
-                        wareHouse.Contain += details.Quan * UnitBuyTrans.ToUnitContain(ingd.UnitBuy);
-                        _unitofwork.WareHouseRepository.Update(wareHouse);
-                    }
-                }
-            }
-        }
-
-        private void BntDelAll_OnClick(object sender, RoutedEventArgs e)
-        {
-            ErrorDetailsItem.Clear();
-            ReceiptDetailsList.Clear();
-            lvDataReceipt.Items.Refresh();
-            LoadReceiptData();
-        }
-
-        private void BntEdit_OnClick(object sender, RoutedEventArgs e)
-        {
-            int index;
-            ReceiptNoteDetail r = new ReceiptNoteDetail();
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-
-            while ((dep != null) && !(dep is ListViewItem))
-            {
-                dep = VisualTreeHelper.GetParent(dep);
-            }
-
-            if (dep == null)
-                return;
-            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
-            InputNote inputNote=new InputNote(ReceiptDetailsList[index].Note);
-            if ((ReceiptDetailsList[index].Note==null||ReceiptDetailsList[index].Note.Equals("") || ReceiptDetailsList[index].Note.Equals(inputNote.Note)))
-            {
-                if (inputNote.ShowDialog() == true)
-                {
-                    r.Note = inputNote.Note;
-                    r.IgdId = ReceiptDetailsList[index].IgdId;
-                    r.Quan = ReceiptDetailsList[index].Quan;
-                    r.ItemPrice = ReceiptDetailsList[index].ItemPrice;
-                    ReceiptDetailsList[index] = r;
-                }
-            }
-            else
-            {
-                inputNote.ShowDialog();
-            }
-            lvDataReceipt.Items.Refresh();
-        }
-
-        private void LoadReceiptData()
-        {
-            CurrentReceipt.TotalAmount = 0;
-            foreach (var details in ReceiptDetailsList)
-            {
-                CurrentReceipt.TotalAmount += details.ItemPrice * (decimal)details.Quan;
-            }
-            txtTotalPrice.Text = string.Format("{0:0.000}", CurrentReceipt.TotalAmount);
-        }
+        /*********************************
+         * Manipulate Each StockInDetails
+         *********************************/
 
         private void TxtItemPrice_OnTextChanged(object sender, TextChangedEventArgs e)
         {
@@ -312,6 +172,162 @@ namespace POS.WareHouseWorkSpace
                 if (!ErrorDetailsItem.Contains(index))
                     ErrorDetailsItem.Add(index);
             }
+        }
+
+        private void BntDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            int index;
+            ReceiptNoteDetail r = new ReceiptNoteDetail();
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+            if (dep == null)
+                return;
+            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
+
+
+
+            if (ReceiptDetailsList[index].Quan > 1 && !ErrorDetailsItem.Contains(index))
+            {
+                r.Quan = ReceiptDetailsList[index].Quan - 1;
+                r.IgdId = ReceiptDetailsList[index].IgdId;
+                r.ItemPrice = ReceiptDetailsList[index].ItemPrice;
+                ReceiptDetailsList[index] = r;
+            }
+            else
+            {
+                ReceiptDetailsList.RemoveAt(index);
+                if (ErrorDetailsItem.Contains(index))
+                    ErrorDetailsItem.Remove(index);
+            }
+            lvDataReceipt.Items.Refresh();
+            LoadReceiptData();
+        }
+
+        private void BntEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            int index;
+            ReceiptNoteDetail r = new ReceiptNoteDetail();
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
+                return;
+            index = lvDataReceipt.ItemContainerGenerator.IndexFromContainer(dep);
+            InputNote inputNote = new InputNote(ReceiptDetailsList[index].Note);
+            if ((ReceiptDetailsList[index].Note == null || ReceiptDetailsList[index].Note.Equals("") || ReceiptDetailsList[index].Note.Equals(inputNote.Note)))
+            {
+                if (inputNote.ShowDialog() == true)
+                {
+                    r.Note = inputNote.Note;
+                    r.IgdId = ReceiptDetailsList[index].IgdId;
+                    r.Quan = ReceiptDetailsList[index].Quan;
+                    r.ItemPrice = ReceiptDetailsList[index].ItemPrice;
+                    ReceiptDetailsList[index] = r;
+                }
+            }
+            else
+            {
+                inputNote.ShowDialog();
+            }
+            lvDataReceipt.Items.Refresh();
+        }
+
+
+
+        /*********************************
+         * Form Manipulate
+         *********************************/
+
+        private void UpdateWareHouseContain()
+        {
+            foreach (var details in CurrentReceipt.ReceiptNoteDetails)
+            {
+                if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID))
+                    continue;
+
+
+                var ingd = IngdList.FirstOrDefault(x => x.IgdId.Equals(details.IgdId));
+                if (ingd != null)
+                {
+                    WareHouse wareHouse = _unitofwork.WareHouseRepository.GetById(ingd.WarehouseId);
+                    if (wareHouse != null)
+                    {
+                        wareHouse.Contain += details.Quan * UnitBuyTrans.ToUnitContain(ingd.UnitBuy);
+                        _unitofwork.WareHouseRepository.Update(wareHouse);
+                    }
+                }
+            }
+        }
+
+        private List<int> ErrorDetailsItem = new List<int>();
+        private void BntAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ErrorDetailsItem.Count != 0)
+                {
+                    MessageBox.Show("Something is not correct. Please check all your input again!");
+                    return;
+                }
+
+                if (CurrentReceipt.ReceiptNoteDetails.Count == 0)
+                {
+                    MessageBox.Show("You have to choose the ingredient you want to input before add");
+                    return;
+                }
+
+                // check if the Receipt Note have input Other Perchagse, must require the Note
+                foreach (var details in CurrentReceipt.ReceiptNoteDetails.ToList())
+                {
+                    if (details.IgdId.Equals(ORTHER_PERCHAGSE_ID) && string.IsNullOrEmpty(details.Note))
+                    {
+                        MessageBox.Show(
+                            "You have inputed the \"Orther Purchase\" in your Receipt. Please input the detail description in note before save data!");
+                        return;
+                    }
+                }
+
+                CurrentReceipt.Inday = DateTime.Now;
+                _unitofwork.ReceiptNoteRepository.Insert(CurrentReceipt);
+
+                //ToDo: Update the contain value in Warehouse database
+                UpdateWareHouseContain();
+
+                _unitofwork.Save();
+
+
+                ReceiptDetailsList = new List<ReceiptNoteDetail>();
+                lvDataReceipt.ItemsSource = ReceiptDetailsList;
+                lvDataReceipt.Items.Refresh();
+
+                CurrentReceipt = new ReceiptNote()
+                {
+                    EmpId = (App.Current.Properties["EmpLogin"] as Employee).EmpId,
+                    ReceiptNoteDetails = ReceiptDetailsList
+                };
+
+
+                LoadReceiptData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something went wrong when trying to input the new Receipt! May be you should reload this app or call for support!");
+            }
+        }
+
+        private void BntDelAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            ErrorDetailsItem.Clear();
+            ReceiptDetailsList.Clear();
+            lvDataReceipt.Items.Refresh();
+            LoadReceiptData();
         }
     }
 }

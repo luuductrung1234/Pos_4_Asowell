@@ -43,8 +43,13 @@
                     <ListBox x:Name="DemoItemsListBox"
                              Margin="0 16 0 16"
                              SelectedIndex="0">
+                        <ListBoxItem x:Name="EodReport"
+                                     Content="End of day Report"
+                                     FontWeight="Bold"
+                                     PreviewMouseLeftButtonUp="EodReport_PreviewMouseLeftButtonUp"
+                                     Foreground="White" Visibility="Collapsed"/>
                         <ListBoxItem x:Name="CreateStock"
-                                     Content="CreateStock"
+                                     Content="Manage Stock Info"
                                      FontWeight="Bold"
                                      PreviewMouseLeftButtonUp="CreateStock_PreviewMouseLeftButtonUp"
                                      Foreground="White" />
